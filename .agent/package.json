@@ -1,0 +1,18 @@
+{
+  "name": "soomgil-ui-harness",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "branch:status": "node tools/agent-ledger.mjs status",
+    "branch:note": "node tools/agent-ledger.mjs new",
+    "branch:check": "node tools/agent-ledger.mjs check",
+    "branch:index": "node tools/agent-ledger.mjs index",
+    "harness:index": "node tools/build-ui-knowledge.mjs",
+    "harness:smoke": "node tools/smoke-local.mjs",
+    "harness:check": "node tools/build-ui-knowledge.mjs --check && node tools/harness-check.mjs && npm run branch:check && node tools/smoke-local.mjs",
+    "lint": "npm run harness:check"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

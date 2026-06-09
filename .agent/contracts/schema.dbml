@@ -1,0 +1,1233 @@
+Project soomgil {
+  database_type: 'PostgreSQL'
+  Note: '''
+  Soomgil production V1 data model.
+
+  Source of truth:
+  - .agent/contracts/backend_contract_decisions.md
+  - .agent/docs/product-specs/service_requirements.md
+
+  Conventions:
+  - Public/product resource IDs use UUID.
+  - Internal event/audit streams may use bigserial.
+  - User-facing extensible concepts use tables or code-managed rows instead of PostgreSQL enums.
+  - Tables are grouped by PostgreSQL schema-qualified names such as auth.users and trip.trips.
+  - External place master data is not stored; places are referenced by provider + external_place_id.
+  - Routes are stored as itinerary item-to-item segments, not day-owned records.
+  - Community post snapshots store immutable display data needed to render after source changes.
+  '''
+}
+
+// ============================================================
+// Identity and Access
+// ============================================================
+
+Table auth.users {
+  id uuid [pk, default: `gen_random_uuid()`]
+  email varchar(320) [unique]
+  display_name varchar(80) [not null]
+  profile_image_url text
+  profile_media_file_id uuid
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, SUSPENDED, DELETED']
+  last_login_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    email [unique]
+    status
+    deleted_at
+  }
+}
+
+Table auth.auth_providers {
+  id smallserial [pk]
+  code varchar(40) [not null, unique, note: 'LOCAL, KAKAO, GOOGLE. Add rows for NAVER, APPLE, etc.']
+  display_name varchar(80) [not null]
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+Table auth.user_password_credentials {
+  user_id uuid [pk]
+  password_hash text [not null]
+  password_algorithm varchar(40) [not null, default: 'bcrypt']
+  password_changed_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+Table auth.user_auth_identities {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  provider_id smallint [not null]
+  provider_subject varchar(255) [not null]
+  provider_email varchar(320)
+  raw_profile jsonb
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (provider_id, provider_subject) [unique]
+    user_id
+  }
+}
+
+Table auth.user_sessions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  refresh_token_hash text [not null, unique]
+  user_agent text
+  ip_address varchar(64)
+  expires_at timestamptz [not null]
+  revoked_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_id
+    refresh_token_hash [unique]
+    expires_at
+  }
+}
+
+Table auth.roles {
+  id smallserial [pk]
+  code varchar(40) [not null, unique, note: 'SUPER_ADMIN, ADMIN, MODERATOR']
+  display_name varchar(80) [not null]
+  created_at timestamptz [not null, default: `now()`]
+}
+
+Table auth.user_roles {
+  user_id uuid [not null]
+  role_id smallint [not null]
+  granted_by_user_id uuid
+  granted_at timestamptz [not null, default: `now()`]
+  revoked_at timestamptz
+
+  Indexes {
+    (user_id, role_id) [pk]
+    role_id
+  }
+}
+
+// ============================================================
+// Social Graph
+// ============================================================
+
+Table social.user_follows {
+  follower_user_id uuid [not null]
+  following_user_id uuid [not null]
+  status varchar(20) [not null, default: 'ACTIVE', note: 'ACTIVE, DELETED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    (follower_user_id, following_user_id) [pk]
+    following_user_id
+    status
+  }
+
+  Note: 'Application prevents self-follow.'
+}
+
+// ============================================================
+// Media
+// ============================================================
+
+Table media.media_files {
+  id uuid [pk, default: `gen_random_uuid()`]
+  owner_user_id uuid
+  storage_provider varchar(40) [not null, default: 'S3_COMPATIBLE']
+  bucket varchar(120) [not null]
+  object_key text [not null]
+  public_url text
+  mime_type varchar(120)
+  byte_size bigint
+  width int
+  height int
+  linked_resource_type varchar(60)
+  linked_resource_id uuid
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, DELETED, PURGED']
+  created_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+  purge_after_at timestamptz
+  purged_at timestamptz
+
+  Indexes {
+    owner_user_id
+    (linked_resource_type, linked_resource_id)
+    status
+  }
+}
+
+// ============================================================
+// Legal Regions, Trips, Membership, Invites
+// ============================================================
+
+Table geo.legal_regions {
+  code varchar(10) [pk, note: '법정동코드 10자리']
+  name varchar(100) [not null, note: '현재 row의 지역명']
+  full_name varchar(200) [not null, note: '전체 법정동명']
+  level varchar(20) [not null, note: 'SIDO, SIGUNGU, EUPMYEONDONG']
+  parent_code varchar(10)
+  sido_code varchar(2) [not null]
+  sigungu_code varchar(5)
+  eupmyeondong_code varchar(8)
+  raw_status varchar(10) [not null, note: '존재, 폐지']
+  is_active boolean [not null, default: true]
+  synced_at timestamptz [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (level, is_active)
+    parent_code
+    sido_code
+    sigungu_code
+    is_active
+  }
+}
+
+Table geo.legal_region_sync_logs {
+  id bigserial [pk]
+  source varchar(50) [not null, note: 'code.go.kr, dump, api']
+  source_file_name varchar(255)
+  total_count int [not null, default: 0]
+  inserted_count int [not null, default: 0]
+  updated_count int [not null, default: 0]
+  deactivated_count int [not null, default: 0]
+  started_at timestamptz [not null]
+  finished_at timestamptz
+  status varchar(20) [not null, note: 'SUCCESS, FAILED']
+  error_message text
+
+  Indexes {
+    source
+    status
+    started_at
+  }
+}
+
+Table trip.trips {
+  id uuid [pk, default: `gen_random_uuid()`]
+  owner_user_id uuid [not null]
+  title varchar(160) [not null]
+  display_destination varchar(160)
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, ARCHIVED, DELETED']
+  itinerary_version bigint [not null, default: 0]
+  retripped_from_post_id uuid
+  retripped_from_snapshot_version int
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    owner_user_id
+    status
+    retripped_from_post_id
+    created_at
+  }
+}
+
+Table trip.trip_regions {
+  trip_id uuid [not null]
+  legal_region_code varchar(10) [not null, note: 'References geo.legal_regions.code.']
+  sort_order int [not null, default: 0]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (trip_id, legal_region_code) [pk]
+    legal_region_code
+  }
+}
+
+Table trip.trip_members {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  user_id uuid [not null]
+  role varchar(20) [not null, note: 'OWNER or MEMBER']
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, LEFT, REMOVED']
+  joined_at timestamptz [not null, default: `now()`]
+  left_at timestamptz
+  removed_by_user_id uuid
+
+  Indexes {
+    (trip_id, user_id) [unique]
+    user_id
+    (trip_id, role)
+    status
+  }
+}
+
+Table trip.trip_invites {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  created_by_user_id uuid [not null]
+  invitee_user_id uuid [note: 'Set for direct in-app invite to an existing user.']
+  invite_code varchar(32) [not null]
+  invite_token_hash text [not null, unique]
+  status varchar(30) [not null, default: 'PENDING', note: 'PENDING, ACCEPTED, REVOKED, EXPIRED']
+  expires_at timestamptz
+  accepted_by_user_id uuid
+  accepted_at timestamptz
+  revoked_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    trip_id
+    invitee_user_id
+    invite_code
+    invite_token_hash [unique]
+    status
+  }
+}
+
+Table notification.notifications {
+  id uuid [pk, default: `gen_random_uuid()`]
+  recipient_user_id uuid [not null]
+  actor_user_id uuid
+  trip_id uuid
+  type varchar(60) [not null, note: 'MVP creates direct trip invite notifications only.']
+  title varchar(160) [not null]
+  body text
+  payload jsonb
+  read_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (recipient_user_id, read_at)
+    (recipient_user_id, created_at)
+    trip_id
+  }
+}
+
+// ============================================================
+// Itinerary, Routes, Map Drawings, Map Matching
+// ============================================================
+
+Table itinerary.itinerary_days {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  group_type varchar(30) [not null, default: 'DAY', note: 'DAY or UNSCHEDULED. UNSCHEDULED is the 일차 미정 group.']
+  day_number int [note: 'Required for DAY, null for UNSCHEDULED.']
+  date date
+  title varchar(120)
+  sort_order int [not null, default: 0]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    trip_id
+    (trip_id, group_type, day_number) [unique, note: 'Use a partial/NULLS NOT DISTINCT unique index so each trip has only one UNSCHEDULED group.']
+    (trip_id, sort_order)
+  }
+}
+
+Table itinerary.itinerary_items {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  itinerary_day_id uuid [not null]
+  sort_order int [not null]
+  item_type varchar(30) [not null, default: 'PLACE', note: 'PLACE or CUSTOM_PLACE. Custom place details live on the item only.']
+  place_provider varchar(40)
+  external_place_id varchar(120)
+  place_name varchar(240) [not null]
+  address text
+  lat decimal(10,7)
+  lng decimal(10,7)
+  thumbnail_url text
+  source_status varchar(30) [not null, default: 'AVAILABLE', note: 'AVAILABLE, DELETED, UNKNOWN']
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id
+    itinerary_day_id
+    (itinerary_day_id, sort_order)
+    (place_provider, external_place_id)
+    deleted_at
+  }
+}
+
+Table itinerary.trip_routes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  origin_itinerary_item_id uuid [not null]
+  destination_itinerary_item_id uuid [not null]
+  mode varchar(20) [not null, note: 'DRIVING or WALKING']
+  provider varchar(40) [not null, default: 'MAPBOX']
+  provider_profile varchar(80) [not null, note: 'mapbox/driving or mapbox/walking']
+  geometry_format varchar(30) [not null, default: 'GEOJSON']
+  geometry jsonb [not null, note: 'Final snapped route geometry only. Map matching preview strokes are not persisted as route data.']
+  distance_meters decimal(12,2)
+  duration_seconds decimal(12,2)
+  confidence decimal(5,4)
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id
+    origin_itinerary_item_id
+    destination_itinerary_item_id
+    (origin_itinerary_item_id, destination_itinerary_item_id)
+    deleted_at
+  }
+
+  Note: 'A route is one snapped segment between two itinerary items. Application enforces that both items belong to the same trip.'
+}
+
+Table itinerary.route_match_requests {
+  id bigserial [pk]
+  trip_id uuid [not null]
+  trip_route_id uuid
+  origin_itinerary_item_id uuid [not null]
+  destination_itinerary_item_id uuid [not null]
+  requested_by_user_id uuid [not null]
+  provider varchar(40) [not null, default: 'MAPBOX']
+  provider_profile varchar(80) [not null]
+  input_coordinates jsonb [not null, note: 'Simplified/downsampled coordinates sent to provider.']
+  radiuses jsonb
+  tidy boolean [not null, default: false]
+  request_hash varchar(128)
+  status varchar(30) [not null, default: 'PENDING', note: 'PENDING, SUCCEEDED, FAILED']
+  confidence decimal(5,4)
+  distance_meters decimal(12,2)
+  duration_seconds decimal(12,2)
+  tracepoints jsonb
+  matchings_metadata jsonb
+  error_code varchar(120)
+  error_message text
+  created_at timestamptz [not null, default: `now()`]
+  completed_at timestamptz
+
+  Indexes {
+    trip_id
+    trip_route_id
+    origin_itinerary_item_id
+    destination_itinerary_item_id
+    requested_by_user_id
+    request_hash
+    status
+    created_at
+  }
+}
+
+Table itinerary.map_drawings {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  itinerary_day_id uuid [note: 'Optional day scope. Null means trip-wide map drawing.']
+  drawing_type varchar(30) [not null, note: 'FREEHAND, LINE, POLYGON, MARKER, TEXT']
+  geometry_format varchar(30) [not null, default: 'GEOJSON']
+  geometry jsonb [not null, note: 'Saved drawing geometry. Live preview strokes are sent over WebSocket and are not persisted until saved.']
+  style jsonb
+  label varchar(160)
+  sort_order int [not null, default: 0]
+  version bigint [not null, default: 0]
+  created_by_user_id uuid [not null]
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id
+    itinerary_day_id
+    created_by_user_id
+    drawing_type
+    (trip_id, sort_order)
+    deleted_at
+  }
+}
+
+// ============================================================
+// Collaboration Commands, Undo/Redo, Audit Trail
+// ============================================================
+
+Table collab.collaboration_command_events {
+  id bigserial [pk]
+  trip_id uuid [not null]
+  actor_user_id uuid [not null]
+  websocket_session_id varchar(120)
+  source varchar(30) [not null, note: 'USER, AI_TOOL, UNDO, REDO']
+  command_type varchar(80) [not null]
+  aggregate_type varchar(80) [not null]
+  aggregate_id uuid
+  version_before bigint
+  version_after bigint
+  payload jsonb [not null]
+  inverse_payload jsonb
+  redo_payload jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    trip_id
+    actor_user_id
+    websocket_session_id
+    command_type
+    created_at
+  }
+}
+
+// ============================================================
+// Notes and Checklists
+// ============================================================
+
+Table planning.trip_notes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  scope_type varchar(20) [not null, note: 'TRIP or DAY']
+  itinerary_day_id uuid [note: 'Required for DAY scope, null for TRIP scope. Includes UNSCHEDULED day/group.']
+  content text [not null, default: '']
+  version bigint [not null, default: 0]
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id
+    itinerary_day_id
+    (trip_id, scope_type, itinerary_day_id) [unique, note: 'Use NULLS NOT DISTINCT or partial unique indexes for singleton TRIP note.']
+  }
+}
+
+Table planning.checklists {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  scope_type varchar(20) [not null, note: 'TRIP or DAY']
+  itinerary_day_id uuid [note: 'Required for DAY scope, null for TRIP scope. Includes UNSCHEDULED day/group.']
+  title varchar(120)
+  version bigint [not null, default: 0]
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id
+    itinerary_day_id
+    (trip_id, scope_type, itinerary_day_id) [unique, note: 'Use NULLS NOT DISTINCT or partial unique indexes for singleton TRIP checklist.']
+  }
+}
+
+Table planning.checklist_items {
+  id uuid [pk, default: `gen_random_uuid()`]
+  checklist_id uuid [not null]
+  sort_order int [not null]
+  content text [not null]
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    checklist_id
+    (checklist_id, sort_order)
+    deleted_at
+  }
+}
+
+Table planning.checklist_item_member_statuses {
+  checklist_item_id uuid [not null]
+  user_id uuid [not null, note: 'Trip member whose completion state is represented.']
+  is_completed boolean [not null, default: false]
+  completed_at timestamptz
+  updated_by_user_id uuid [note: 'Actor who changed this member status. Usually the same as user_id.']
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (checklist_item_id, user_id) [pk]
+    user_id
+    is_completed
+    updated_at
+  }
+
+  Note: 'Per-member checklist state. Application enforces that user_id is an active member of the checklist trip.'
+}
+
+// ============================================================
+// Trip Chat
+// ============================================================
+
+Table chat.trip_chat_messages {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  sender_user_id uuid [not null]
+  content text [not null]
+  deleted_by_user_id uuid
+  deleted_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    trip_id
+    sender_user_id
+    created_at
+    deleted_at
+  }
+}
+
+// ============================================================
+// Places, Swipe, Preference Tags, AI Enrichment
+// ============================================================
+
+Table preference.preference_tags {
+  id uuid [pk, default: `gen_random_uuid()`]
+  code varchar(80) [not null, unique]
+  display_name varchar(120) [not null]
+  parent_tag_id uuid
+  description text
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    code [unique]
+    parent_tag_id
+    is_active
+  }
+}
+
+Table preference.place_tag_enrichments {
+  id uuid [pk, default: `gen_random_uuid()`]
+  provider varchar(40) [not null, note: 'KTO or other future provider.']
+  external_place_id varchar(120) [not null]
+  source_modified_at timestamptz
+  source_hash varchar(128)
+  status varchar(30) [not null, default: 'PENDING', note: 'PENDING, SUCCEEDED, FAILED, STALE']
+  model_provider varchar(80)
+  model_name varchar(120)
+  prompt_version varchar(80)
+  tag_dictionary_version varchar(80)
+  error_message text
+  enriched_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (provider, external_place_id)
+    source_hash
+    status
+    enriched_at
+  }
+}
+
+Table preference.place_tag_enrichment_tags {
+  enrichment_id uuid [not null]
+  tag_id uuid [not null]
+  confidence decimal(5,4)
+  weight decimal(8,4)
+  rationale text
+
+  Indexes {
+    (enrichment_id, tag_id) [pk]
+    tag_id
+  }
+}
+
+Table preference.user_place_reactions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  reaction varchar(20) [not null, note: 'LIKE, NOPE, SUPER_LIKE']
+  reaction_count int [not null, default: 1]
+  first_reacted_at timestamptz [not null, default: `now()`]
+  last_reacted_at timestamptz [not null, default: `now()`]
+  source_modified_at timestamptz
+  place_tag_enrichment_id uuid
+
+  Indexes {
+    (user_id, provider, external_place_id) [unique]
+    user_id
+    reaction
+    (provider, external_place_id)
+  }
+}
+
+Table preference.user_swipe_events {
+  id bigserial [pk]
+  user_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  reaction varchar(20) [not null, note: 'LIKE, NOPE, SUPER_LIKE']
+  previous_reaction varchar(20)
+  feed_context jsonb
+  source_modified_at timestamptz
+  place_tag_enrichment_id uuid
+  occurred_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_id
+    (provider, external_place_id)
+    reaction
+    occurred_at
+  }
+}
+
+Table preference.user_preference_tag_weights {
+  user_id uuid [not null]
+  tag_id uuid [not null]
+  raw_score decimal(14,4) [not null, default: 0]
+  normalized_score decimal(8,6) [not null, default: 0, note: 'Capped score such as tanh(raw_score / scale).']
+  like_count int [not null, default: 0]
+  super_like_count int [not null, default: 0]
+  nope_count int [not null, default: 0]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (user_id, tag_id) [pk]
+    tag_id
+    normalized_score
+  }
+}
+
+Table preference.user_saved_places {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  created_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    (user_id, provider, external_place_id) [unique]
+    (provider, external_place_id)
+    deleted_at
+  }
+
+  Note: 'Application must allow saving only when the user SUPER_LIKEs the place.'
+}
+
+// ============================================================
+// AI Agent Session and Tool Calling
+// ============================================================
+
+Table ai.ai_chat_sessions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null, unique]
+  status varchar(30) [not null, default: 'ACTIVE']
+  summary text
+  summary_updated_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  expires_at timestamptz
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id [unique]
+    status
+  }
+}
+
+Table ai.ai_chat_messages {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  requester_user_id uuid [note: 'Set for user messages and for assistant messages caused by a requester.']
+  role varchar(30) [not null, note: 'SYSTEM, USER, ASSISTANT, TOOL']
+  content text [not null]
+  tool_call_id uuid
+  metadata jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    session_id
+    requester_user_id
+    role
+    created_at
+    tool_call_id
+  }
+}
+
+Table ai.ai_tool_calls {
+  id uuid [pk, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  trip_id uuid [not null]
+  request_message_id uuid
+  result_message_id uuid
+  requested_by_user_id uuid [not null]
+  websocket_session_id varchar(120)
+  tool_name varchar(120) [not null]
+  execution_policy varchar(40) [not null, note: 'READ, REVERSIBLE_WRITE, BLOCKED_HIGH_RISK']
+  arguments jsonb [not null]
+  result jsonb
+  status varchar(40) [not null, default: 'REQUESTED', note: 'REQUESTED, SUCCEEDED, FAILED, BLOCKED']
+  version_before bigint
+  version_after bigint
+  undo_redo_available boolean [not null, default: false]
+  undo_command jsonb
+  redo_command jsonb
+  error_code varchar(120)
+  error_message text
+  created_at timestamptz [not null, default: `now()`]
+  completed_at timestamptz
+
+  Indexes {
+    session_id
+    trip_id
+    requested_by_user_id
+    tool_name
+    status
+    created_at
+  }
+}
+
+// ============================================================
+// Trip Records
+// ============================================================
+
+Table record.trip_record_entries {
+  id uuid [pk, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  itinerary_day_id uuid
+  itinerary_item_id uuid
+  uploaded_by_user_id uuid [not null]
+  title varchar(160)
+  caption text
+  location_name varchar(240)
+  lat decimal(10,7)
+  lng decimal(10,7)
+  taken_at timestamptz
+  visibility varchar(30) [not null, default: 'TRIP_MEMBERS', note: 'TRIP_MEMBERS in MVP. PUBLIC is through community shared posts.']
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, DELETED']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    trip_id
+    itinerary_day_id
+    itinerary_item_id
+    uploaded_by_user_id
+    taken_at
+    status
+    created_at
+  }
+}
+
+Table record.trip_record_media {
+  record_entry_id uuid [not null]
+  media_file_id uuid [not null]
+  sort_order int [not null, default: 0]
+  caption text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (record_entry_id, media_file_id) [pk]
+    media_file_id
+    (record_entry_id, sort_order)
+  }
+}
+
+// ============================================================
+// Community Posts, Comments, Reports, Retrip
+// ============================================================
+
+Table community.posts {
+  id uuid [pk, default: `gen_random_uuid()`]
+  source_trip_id uuid [not null]
+  published_by_user_id uuid [not null]
+  cover_media_file_id uuid
+  visibility varchar(20) [not null, note: 'PUBLIC or UNLISTED in MVP.']
+  title varchar(180) [not null]
+  summary text
+  snapshot_version int [not null, default: 1]
+  snapshot jsonb [not null, note: 'Immutable public rendering snapshot. Normalized snapshot tables support querying/rendering.']
+  like_count int [not null, default: 0]
+  retrip_count int [not null, default: 0]
+  comment_count int [not null, default: 0]
+  media_count int [not null, default: 0]
+  moderation_status varchar(30) [not null, default: 'VISIBLE', note: 'VISIBLE, HIDDEN, DELETED']
+  moderated_by_user_id uuid
+  moderated_at timestamptz
+  moderation_reason text
+  published_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    source_trip_id
+    published_by_user_id
+    cover_media_file_id
+    visibility
+    moderation_status
+    published_at
+  }
+}
+
+Table community.post_snapshot_days {
+  id uuid [pk, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  group_type varchar(30) [not null, note: 'DAY or UNSCHEDULED']
+  day_number int
+  date date
+  title varchar(120)
+  sort_order int [not null, default: 0]
+
+  Indexes {
+    post_id
+    (post_id, sort_order)
+  }
+}
+
+Table community.post_snapshot_items {
+  id uuid [pk, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  snapshot_day_id uuid [not null]
+  sort_order int [not null]
+  place_provider varchar(40)
+  external_place_id varchar(120)
+  source_status varchar(30) [not null, default: 'AVAILABLE', note: 'AVAILABLE, DELETED, UNKNOWN']
+  place_name varchar(240) [not null]
+  address text
+  lat decimal(10,7)
+  lng decimal(10,7)
+  thumbnail_url text
+
+  Indexes {
+    post_id
+    snapshot_day_id
+    (snapshot_day_id, sort_order)
+    (place_provider, external_place_id)
+  }
+}
+
+Table community.post_snapshot_routes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  origin_snapshot_item_id uuid [not null]
+  destination_snapshot_item_id uuid [not null]
+  mode varchar(20) [not null]
+  geometry_format varchar(30) [not null, default: 'GEOJSON']
+  geometry jsonb [not null]
+  distance_meters decimal(12,2)
+  duration_seconds decimal(12,2)
+
+  Indexes {
+    post_id
+    origin_snapshot_item_id
+    destination_snapshot_item_id
+    (origin_snapshot_item_id, destination_snapshot_item_id)
+  }
+
+  Note: 'Published route snapshot preserves the item-to-item segment from the source itinerary.'
+}
+
+Table community.post_media {
+  post_id uuid [not null]
+  media_file_id uuid [not null]
+  sort_order int [not null, default: 0]
+  caption text
+  created_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (post_id, media_file_id) [pk]
+    media_file_id
+    (post_id, sort_order)
+  }
+}
+
+Table community.hashtags {
+  id uuid [pk, default: `gen_random_uuid()`]
+  name varchar(80) [not null, unique]
+  normalized_name varchar(80) [not null, unique]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    name [unique]
+    normalized_name [unique]
+  }
+}
+
+Table community.post_hashtags {
+  post_id uuid [not null]
+  hashtag_id uuid [not null]
+  sort_order int [not null, default: 0]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (post_id, hashtag_id) [pk]
+    hashtag_id
+    (post_id, sort_order)
+  }
+}
+
+Table community.post_likes {
+  post_id uuid [not null]
+  user_id uuid [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (post_id, user_id) [pk]
+    user_id
+  }
+}
+
+Table community.post_retrips {
+  id uuid [pk, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  user_id uuid [not null]
+  new_trip_id uuid [not null]
+  snapshot_version int [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    post_id
+    user_id
+    new_trip_id [unique]
+    created_at
+  }
+}
+
+Table community.post_comments {
+  id uuid [pk, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  parent_comment_id uuid [note: 'Null for root comments. Non-null only for one-level replies.']
+  author_user_id uuid [not null]
+  content text [not null]
+  depth int [not null, default: 0, note: '0 comment, 1 reply. App enforces no deeper nesting.']
+  moderation_status varchar(30) [not null, default: 'VISIBLE', note: 'VISIBLE, HIDDEN, DELETED']
+  deleted_by_user_id uuid
+  deleted_at timestamptz
+  moderated_by_user_id uuid
+  moderated_at timestamptz
+  moderation_reason text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    post_id
+    parent_comment_id
+    author_user_id
+    moderation_status
+    created_at
+  }
+}
+
+Table community.report_reasons {
+  id smallserial [pk]
+  code varchar(60) [not null, unique, note: 'SPAM, INAPPROPRIATE, HARASSMENT_OR_HATE, RIGHTS_VIOLATION, OTHER']
+  display_name varchar(120) [not null]
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+}
+
+Table community.content_reports {
+  id uuid [pk, default: `gen_random_uuid()`]
+  reporter_user_id uuid [not null]
+  target_type varchar(40) [not null, note: 'POST or POST_COMMENT']
+  target_id uuid [not null, note: 'Polymorphic target id; app validates target existence.']
+  reason_id smallint [not null]
+  detail text
+  status varchar(30) [not null, default: 'OPEN', note: 'OPEN, REVIEWING, RESOLVED, REJECTED']
+  created_at timestamptz [not null, default: `now()`]
+  resolved_by_user_id uuid
+  resolved_at timestamptz
+  resolution_note text
+
+  Indexes {
+    (reporter_user_id, target_type, target_id) [unique]
+    (target_type, target_id)
+    reason_id
+    status
+    created_at
+  }
+}
+
+Table community.moderation_actions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  moderator_user_id uuid [not null]
+  target_type varchar(40) [not null, note: 'POST or POST_COMMENT']
+  target_id uuid [not null]
+  action varchar(40) [not null, note: 'HIDE, RESTORE, DELETE']
+  moderation_status varchar(30) [not null]
+  moderation_reason text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    moderator_user_id
+    (target_type, target_id)
+    action
+    created_at
+  }
+}
+
+// ============================================================
+// Operational Audit
+// ============================================================
+
+Table ops.audit_logs {
+  id bigserial [pk]
+  actor_user_id uuid
+  action varchar(120) [not null]
+  target_type varchar(80)
+  target_id uuid
+  ip_address varchar(64)
+  user_agent text
+  metadata jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    actor_user_id
+    (target_type, target_id)
+    action
+    created_at
+  }
+}
+
+// ============================================================
+// References
+// ============================================================
+
+Ref: auth.users.profile_media_file_id > media.media_files.id
+Ref: auth.user_password_credentials.user_id - auth.users.id
+Ref: auth.user_auth_identities.user_id > auth.users.id
+Ref: auth.user_auth_identities.provider_id > auth.auth_providers.id
+Ref: auth.user_sessions.user_id > auth.users.id
+Ref: auth.user_roles.user_id > auth.users.id
+Ref: auth.user_roles.role_id > auth.roles.id
+Ref: auth.user_roles.granted_by_user_id > auth.users.id
+Ref: social.user_follows.follower_user_id > auth.users.id
+Ref: social.user_follows.following_user_id > auth.users.id
+Ref: media.media_files.owner_user_id > auth.users.id
+
+Ref: geo.legal_regions.parent_code > geo.legal_regions.code
+Ref: trip.trips.owner_user_id > auth.users.id
+Ref: trip.trips.retripped_from_post_id > community.posts.id
+Ref: trip.trip_regions.trip_id > trip.trips.id
+Ref: trip.trip_regions.legal_region_code > geo.legal_regions.code
+Ref: trip.trip_members.trip_id > trip.trips.id
+Ref: trip.trip_members.user_id > auth.users.id
+Ref: trip.trip_members.removed_by_user_id > auth.users.id
+Ref: trip.trip_invites.trip_id > trip.trips.id
+Ref: trip.trip_invites.created_by_user_id > auth.users.id
+Ref: trip.trip_invites.invitee_user_id > auth.users.id
+Ref: trip.trip_invites.accepted_by_user_id > auth.users.id
+Ref: notification.notifications.recipient_user_id > auth.users.id
+Ref: notification.notifications.actor_user_id > auth.users.id
+Ref: notification.notifications.trip_id > trip.trips.id
+
+Ref: itinerary.itinerary_days.trip_id > trip.trips.id
+Ref: itinerary.itinerary_items.trip_id > trip.trips.id
+Ref: itinerary.itinerary_items.itinerary_day_id > itinerary.itinerary_days.id
+Ref: itinerary.itinerary_items.created_by_user_id > auth.users.id
+Ref: itinerary.itinerary_items.updated_by_user_id > auth.users.id
+Ref: itinerary.itinerary_items.deleted_by_user_id > auth.users.id
+Ref: itinerary.trip_routes.trip_id > trip.trips.id
+Ref: itinerary.trip_routes.origin_itinerary_item_id > itinerary.itinerary_items.id
+Ref: itinerary.trip_routes.destination_itinerary_item_id > itinerary.itinerary_items.id
+Ref: itinerary.trip_routes.created_by_user_id > auth.users.id
+Ref: itinerary.trip_routes.updated_by_user_id > auth.users.id
+Ref: itinerary.trip_routes.deleted_by_user_id > auth.users.id
+Ref: itinerary.route_match_requests.trip_id > trip.trips.id
+Ref: itinerary.route_match_requests.trip_route_id > itinerary.trip_routes.id
+Ref: itinerary.route_match_requests.origin_itinerary_item_id > itinerary.itinerary_items.id
+Ref: itinerary.route_match_requests.destination_itinerary_item_id > itinerary.itinerary_items.id
+Ref: itinerary.route_match_requests.requested_by_user_id > auth.users.id
+Ref: itinerary.map_drawings.trip_id > trip.trips.id
+Ref: itinerary.map_drawings.itinerary_day_id > itinerary.itinerary_days.id
+Ref: itinerary.map_drawings.created_by_user_id > auth.users.id
+Ref: itinerary.map_drawings.updated_by_user_id > auth.users.id
+Ref: itinerary.map_drawings.deleted_by_user_id > auth.users.id
+
+Ref: collab.collaboration_command_events.trip_id > trip.trips.id
+Ref: collab.collaboration_command_events.actor_user_id > auth.users.id
+
+Ref: planning.trip_notes.trip_id > trip.trips.id
+Ref: planning.trip_notes.itinerary_day_id > itinerary.itinerary_days.id
+Ref: planning.trip_notes.created_by_user_id > auth.users.id
+Ref: planning.trip_notes.updated_by_user_id > auth.users.id
+Ref: planning.trip_notes.deleted_by_user_id > auth.users.id
+Ref: planning.checklists.trip_id > trip.trips.id
+Ref: planning.checklists.itinerary_day_id > itinerary.itinerary_days.id
+Ref: planning.checklists.created_by_user_id > auth.users.id
+Ref: planning.checklists.updated_by_user_id > auth.users.id
+Ref: planning.checklists.deleted_by_user_id > auth.users.id
+Ref: planning.checklist_items.checklist_id > planning.checklists.id
+Ref: planning.checklist_items.created_by_user_id > auth.users.id
+Ref: planning.checklist_items.updated_by_user_id > auth.users.id
+Ref: planning.checklist_items.deleted_by_user_id > auth.users.id
+Ref: planning.checklist_item_member_statuses.checklist_item_id > planning.checklist_items.id
+Ref: planning.checklist_item_member_statuses.user_id > auth.users.id
+Ref: planning.checklist_item_member_statuses.updated_by_user_id > auth.users.id
+Ref: chat.trip_chat_messages.trip_id > trip.trips.id
+Ref: chat.trip_chat_messages.sender_user_id > auth.users.id
+Ref: chat.trip_chat_messages.deleted_by_user_id > auth.users.id
+
+Ref: preference.preference_tags.parent_tag_id > preference.preference_tags.id
+Ref: preference.place_tag_enrichment_tags.enrichment_id > preference.place_tag_enrichments.id
+Ref: preference.place_tag_enrichment_tags.tag_id > preference.preference_tags.id
+Ref: preference.user_place_reactions.user_id > auth.users.id
+Ref: preference.user_place_reactions.place_tag_enrichment_id > preference.place_tag_enrichments.id
+Ref: preference.user_swipe_events.user_id > auth.users.id
+Ref: preference.user_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id
+Ref: preference.user_preference_tag_weights.user_id > auth.users.id
+Ref: preference.user_preference_tag_weights.tag_id > preference.preference_tags.id
+Ref: preference.user_saved_places.user_id > auth.users.id
+
+Ref: ai.ai_chat_sessions.trip_id > trip.trips.id
+Ref: ai.ai_chat_messages.session_id > ai.ai_chat_sessions.id
+Ref: ai.ai_chat_messages.requester_user_id > auth.users.id
+Ref: ai.ai_chat_messages.tool_call_id > ai.ai_tool_calls.id
+Ref: ai.ai_tool_calls.session_id > ai.ai_chat_sessions.id
+Ref: ai.ai_tool_calls.trip_id > trip.trips.id
+Ref: ai.ai_tool_calls.request_message_id > ai.ai_chat_messages.id
+Ref: ai.ai_tool_calls.result_message_id > ai.ai_chat_messages.id
+Ref: ai.ai_tool_calls.requested_by_user_id > auth.users.id
+
+Ref: record.trip_record_entries.trip_id > trip.trips.id
+Ref: record.trip_record_entries.itinerary_day_id > itinerary.itinerary_days.id
+Ref: record.trip_record_entries.itinerary_item_id > itinerary.itinerary_items.id
+Ref: record.trip_record_entries.uploaded_by_user_id > auth.users.id
+Ref: record.trip_record_media.record_entry_id > record.trip_record_entries.id
+Ref: record.trip_record_media.media_file_id > media.media_files.id
+
+Ref: community.posts.source_trip_id > trip.trips.id
+Ref: community.posts.published_by_user_id > auth.users.id
+Ref: community.posts.cover_media_file_id > media.media_files.id
+Ref: community.posts.moderated_by_user_id > auth.users.id
+Ref: community.post_snapshot_days.post_id > community.posts.id
+Ref: community.post_snapshot_items.post_id > community.posts.id
+Ref: community.post_snapshot_items.snapshot_day_id > community.post_snapshot_days.id
+Ref: community.post_snapshot_routes.post_id > community.posts.id
+Ref: community.post_snapshot_routes.origin_snapshot_item_id > community.post_snapshot_items.id
+Ref: community.post_snapshot_routes.destination_snapshot_item_id > community.post_snapshot_items.id
+Ref: community.post_media.post_id > community.posts.id
+Ref: community.post_media.media_file_id > media.media_files.id
+Ref: community.post_media.created_by_user_id > auth.users.id
+Ref: community.post_hashtags.post_id > community.posts.id
+Ref: community.post_hashtags.hashtag_id > community.hashtags.id
+Ref: community.post_likes.post_id > community.posts.id
+Ref: community.post_likes.user_id > auth.users.id
+Ref: community.post_retrips.post_id > community.posts.id
+Ref: community.post_retrips.user_id > auth.users.id
+Ref: community.post_retrips.new_trip_id > trip.trips.id
+Ref: community.post_comments.post_id > community.posts.id
+Ref: community.post_comments.parent_comment_id > community.post_comments.id
+Ref: community.post_comments.author_user_id > auth.users.id
+Ref: community.post_comments.deleted_by_user_id > auth.users.id
+Ref: community.post_comments.moderated_by_user_id > auth.users.id
+Ref: community.content_reports.reporter_user_id > auth.users.id
+Ref: community.content_reports.reason_id > community.report_reasons.id
+Ref: community.content_reports.resolved_by_user_id > auth.users.id
+Ref: community.moderation_actions.moderator_user_id > auth.users.id
+
+Ref: ops.audit_logs.actor_user_id > auth.users.id

@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "rootRole": "orchestration-repo",
+  "workspaces": [
+    {
+      "name": "frontend",
+      "type": "frontend",
+      "path": "frontend",
+      "status": "planned",
+      "repoRole": "submodule",
+      "repoUrl": "https://github.com/Soomgil/soomgil-frontend.git",
+      "framework": "Vue",
+      "packageManager": "npm",
+      "devCommand": "npm --prefix frontend run dev",
+      "buildCommand": "npm --prefix frontend run build",
+      "distPath": "frontend/dist"
+    },
+    {
+      "name": "backend",
+      "type": "backend",
+      "path": "backend",
+      "status": "planned",
+      "repoRole": "submodule",
+      "repoUrl": "https://github.com/Soomgil/soomgil-backend.git",
+      "framework": "TBD",
+      "packageManager": "TBD"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Soomgil/soomgil-frontend.git
+	branch = develop
+[submodule "backend"]
+	path = backend
+	url = https://github.com/Soomgil/soomgil-backend.git
+	branch = develop
