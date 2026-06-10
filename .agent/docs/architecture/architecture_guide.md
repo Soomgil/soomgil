@@ -1,4 +1,4 @@
-# 아키텍처 가이드
+﻿# 아키텍처 가이드
 
 ## 상위 경계
 
@@ -16,7 +16,7 @@
 - `.agent/`는 orchestration repo에서만 관리합니다.
 - submodule 내부 제품 코드는 해당 submodule repo의 Git Flow를 따릅니다.
 - orchestration repo는 `.agent/` 변경과 submodule pointer 변경을 커밋합니다.
-- 상세 Git 정책은 `.agent/docs/git_workflow.md`를 따릅니다.
+- 상세 Git 정책은 `.agent/docs/process/git_workflow.md`를 따릅니다.
 
 ## frontend 책임
 
@@ -30,7 +30,7 @@
 ## backend 준비 기준
 
 - backend가 들어오면 `backend/` 내부에서 자체 빌드/테스트가 가능해야 합니다.
-- API 명세는 `.agent/docs/api_spec.md`와 연결합니다.
+- API 명세는 `.agent/docs/api/api_spec.md`와 연결합니다.
 - frontend API 클라이언트 변경과 backend endpoint 변경은 같은 PR/작업 단위에서 검증합니다.
 
 ## 금지 경계

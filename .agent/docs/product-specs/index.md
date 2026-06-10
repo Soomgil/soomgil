@@ -5,7 +5,8 @@
 현재 핵심 명세는 다음 문서를 우선 확인합니다.
 
 - `service_requirements.md`
-- `../functional_spec.md`
-- `../api_spec.md`
-- `../api_spec_reviewed.md`
+- `functional_spec.md`
+- `../api/api_spec.md`
 - `../../contracts/backend_contract_decisions.md`
+- `../../contracts/schema.dbml`
+- `../../contracts/openapi.yaml`

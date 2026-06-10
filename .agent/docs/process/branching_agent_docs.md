@@ -1,8 +1,8 @@
-# 브랜치별 AI 문서 운영
+﻿# 브랜치별 AI 문서 운영
 
 이 프로젝트는 여러 브랜치의 AI 에이전트 문맥이 섞이지 않도록 브랜치 ledger를 사용합니다.
 
-Git Flow, commit convention, submodule 운영은 `.agent/docs/git_workflow.md`를 따릅니다.
+Git Flow, commit convention, submodule 운영은 `.agent/docs/process/git_workflow.md`를 따릅니다.
 
 ## 읽기 규칙
 

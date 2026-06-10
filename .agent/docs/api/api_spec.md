@@ -1,4 +1,4 @@
-# 숨길 백엔드 API 명세 초안
+﻿# 숨길 백엔드 API 명세 초안
 
 작성일: 2026-06-09  
 상태: OpenAPI 3.1 협의 초안
@@ -13,8 +13,8 @@
 - `.agent/docs/product-specs/service_requirements.md`: V1 서비스 요구사항, 스와이프/추천/일정/지도/커뮤니티/AI/기록/알림/협업 규칙.
 - `.agent/contracts/backend_contract_decisions.md`: 백엔드 계약 결정, REST/Problem Details/권한/데이터 정책.
 - `.agent/contracts/schema.dbml`: PostgreSQL 기준 V1 데이터 모델.
-- `.agent/docs/functional_spec.md`: 사용자 유형, 화면 범위, 백엔드 필요 기능.
-- `.agent/docs/page_map.md`: 화면/라우트 보조 자료. 확정 API 근거가 아니라 관련 화면 매핑에만 사용.
+- `.agent/docs/product-specs/functional_spec.md`: 사용자 유형, 화면 범위, 백엔드 필요 기능.
+- `.agent/docs/frontend/page_map.md`: 화면/라우트 보조 자료. 확정 API 근거가 아니라 관련 화면 매핑에만 사용.
 
 브랜치 ledger:
 
@@ -33,8 +33,8 @@
 
 | 역할 | 설명 | 근거 |
 | :--- | :--- | :--- |
-| 비회원/게스트 | 공개 커뮤니티 글 조회, 로그인/회원가입 진입 | `.agent/docs/page_map.md` |
-| 일반 사용자 | 스와이프 취향 수집, 여행방 생성/참여, 커뮤니티 탐색 | `.agent/docs/functional_spec.md` |
+| 비회원/게스트 | 공개 커뮤니티 글 조회, 로그인/회원가입 진입 | `.agent/docs/frontend/page_map.md` |
+| 일반 사용자 | 스와이프 취향 수집, 여행방 생성/참여, 커뮤니티 탐색 | `.agent/docs/product-specs/functional_spec.md` |
 | 여행방 OWNER | 여행방 생성자. 설정, 초대, 삭제 권한 보유 | `.agent/contracts/backend_contract_decisions.md` |
 | 여행방 MEMBER | 일정 편집, 기록 업로드, 채팅, AI 사용 가능 | `.agent/contracts/backend_contract_decisions.md` |
 | 게시글 작성자 | 여행방 snapshot을 공개/비공개 링크 게시글로 발행 | `.agent/docs/product-specs/service_requirements.md` |
@@ -237,7 +237,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 성공 응답 예시: `201 {"accessToken":"...","refreshToken":"...","user":{"id":"...","primaryEmail":"minji@example.com","profile":{"displayName":"민지"}}}`
 - 실패 응답 예시: `409 ProblemDetails(code=EMAIL_ALREADY_USED)`.
 - 관련 유스케이스 또는 화면: `/register`.
-- 근거 문서 또는 코드 경로: `.agent/contracts/backend_contract_decisions.md`, `.agent/contracts/schema.dbml`, `.agent/docs/page_map.md`.
+- 근거 문서 또는 코드 경로: `.agent/contracts/backend_contract_decisions.md`, `.agent/contracts/schema.dbml`, `.agent/docs/frontend/page_map.md`.
 - 확인 필요 사항: 이메일 인증을 가입 완료 전 필수로 할지, 필수 약관 미동의 시 가입을 차단할지.
 
 #### POST `/auth/email-verification-requests`
@@ -279,7 +279,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 성공 응답 예시: `200 {"accessToken":"...","refreshToken":"...","user":{"id":"...","displayName":"민지"}}`
 - 실패 응답 예시: `401 ProblemDetails(code=INVALID_CREDENTIALS)`.
 - 관련 화면: `/login`.
-- 근거: `.agent/docs/api_spec.md`, `.agent/contracts/backend_contract_decisions.md`.
+- 근거: `.agent/docs/api/api_spec.md`, `.agent/contracts/backend_contract_decisions.md`.
 - 확인 필요: 계정 잠금/rate limit 기준.
 
 #### POST `/auth/password-reset-requests`
@@ -377,7 +377,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 성공 응답 예시: `204`.
 - 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
 - 관련 화면: `/settings`, 전역 auth.
-- 근거: `.agent/docs/api_spec.md`, `auth.user_sessions`.
+- 근거: `.agent/docs/api/api_spec.md`, `auth.user_sessions`.
 - 확인 필요: 전체 기기 로그아웃 지원 여부.
 
 #### GET `/me`
@@ -391,7 +391,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 성공 응답 예시: `200 {"id":"...","email":"minji@example.com","displayName":"민지","status":"ACTIVE"}`
 - 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
 - 관련 화면: `/mypage`, `/settings`.
-- 근거: `.agent/docs/api_spec.md`, `auth.users`.
+- 근거: `.agent/docs/api/api_spec.md`, `auth.users`.
 - 확인 필요: 프로필에 follow count, trip count를 포함할지.
 
 #### PATCH `/me`
@@ -577,7 +577,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 성공 응답 예시: `200 {"items":[{"id":"...","title":"부산 주말","role":"OWNER"}]}`
 - 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
 - 관련 화면: `/my-trips`, `/home`.
-- 근거: `.agent/docs/functional_spec.md`, `trip.trips`, `trip.trip_members`.
+- 근거: `.agent/docs/product-specs/functional_spec.md`, `trip.trips`, `trip.trip_members`.
 - 확인 필요: archived trip 노출 기본값.
 
 #### POST `/trips`
@@ -1373,7 +1373,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 성공 응답 예시: `200 {"items":[{"id":"...","title":"부산 2박 3일","visibility":"PUBLIC"}]}`
 - 실패 응답 예시: `400 ProblemDetails(code=INVALID_SORT)`.
 - 관련 화면: `/community`, `/community/feed`, `/community/stories`.
-- 근거: `.agent/docs/functional_spec.md`, `community.posts`.
+- 근거: `.agent/docs/product-specs/functional_spec.md`, `community.posts`.
 - 확인 필요: `/feed`와 `/stories`를 같은 API 필터로 처리할지.
 
 #### POST `/community/posts`
@@ -1691,7 +1691,7 @@ OpenAPI component enum과 DBML status text가 일치해야 한다. PostgreSQL en
 
 ## 5. OpenAPI 3.1 초안
 
-OpenAPI YAML은 별도 파일 [.agent/contracts/openapi.yaml](../contracts/openapi.yaml)에 저장했다. 미확정 사항은 schema/operation description에 `TODO` 또는 `확인 필요`로 남겼다.
+OpenAPI YAML은 별도 파일 [.agent/contracts/openapi.yaml](../../contracts/openapi.yaml)에 저장했다. 미확정 사항은 schema/operation description에 `TODO` 또는 `확인 필요`로 남겼다.
 
 ```yaml
 openapi: 3.1.0
