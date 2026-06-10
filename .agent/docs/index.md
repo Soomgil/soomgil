@@ -10,8 +10,9 @@
 - `architecture_guide.md`: frontend/backend 책임 경계.
 - `page_map.md`: Vue Router 기준 프론트 화면 맵.
 - `functional_spec.md`: 제품 기능 명세.
-- `api_spec.md`: API 경계와 백엔드 준비 기준.
+- `api_spec.md`: 백엔드 API 협의 명세, endpoint 근거, 데이터 모델, 미확정 질문과 best practice.
 - `../contracts/backend_contract_decisions.md`: DBML/OpenAPI 생성 전 확정된 백엔드 계약 결정.
+- `../contracts/openapi.yaml`: OpenAPI 3.1 REST API 계약 초안.
 - `generated/ui_inventory.md`: 자동 생성 워크스페이스/UI 인벤토리.
 - `generated/branch_ledger.md`: 통합 브랜치에서 생성하는 브랜치 AI ledger 인덱스.
 

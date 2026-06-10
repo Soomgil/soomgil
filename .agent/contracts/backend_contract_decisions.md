@@ -7,7 +7,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 
 - 계약 원본: `.agent/contracts/`
 - 예정 DBML: `.agent/contracts/schema.dbml`
-- 예정 OpenAPI: `.agent/contracts/openapi.yaml`
+- OpenAPI: `.agent/contracts/openapi.yaml`
 - 루트 `README.md`에서 바로 접근할 수 있게 링크를 유지합니다.
 
 ## 전체 범위

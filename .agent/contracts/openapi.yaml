@@ -37,6 +37,10 @@ paths:
       tags: [Auth]
       summary: 이메일/비밀번호 회원가입
       operationId: register
+      description: >
+        auth.users, auth.user_email_addresses, auth.user_profiles, auth.user_settings,
+        auth.user_password_credentials, auth.user_policy_acceptances를 함께 생성한다.
+        이메일 인증 token은 원문이 아니라 hash만 저장한다.
       security: []
       requestBody:
         required: true
@@ -53,6 +57,48 @@ paths:
                 $ref: '#/components/schemas/AuthTokenResponse'
         '409':
           $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /auth/email-verification-requests:
+    post:
+      tags: [Auth]
+      summary: 이메일 인증 메일 발송 요청
+      operationId: requestEmailVerification
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailVerificationRequest'
+      responses:
+        '202':
+          description: Accepted
+        '429':
+          description: Too Many Requests
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /auth/email-verifications:
+    post:
+      tags: [Auth]
+      summary: 이메일 인증 token 확인
+      operationId: verifyEmail
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '422':
           $ref: '#/components/responses/ValidationError'
   /auth/login:
@@ -76,6 +122,66 @@ paths:
                 $ref: '#/components/schemas/AuthTokenResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /auth/password-reset-requests:
+    post:
+      tags: [Auth]
+      summary: 비밀번호 재설정 메일 발송 요청
+      operationId: requestPasswordReset
+      security: []
+      description: 계정 존재 여부를 노출하지 않도록 성공/실패 모두 202를 권장한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequest'
+      responses:
+        '202':
+          description: Accepted
+  /auth/password-resets:
+    post:
+      tags: [Auth]
+      summary: 비밀번호 재설정 실행
+      operationId: resetPassword
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      responses:
+        '204':
+          description: No Content
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /auth/policy-documents:
+    get:
+      tags: [Auth]
+      summary: 약관/정책 문서 목록 조회
+      operationId: listPolicyDocuments
+      security: []
+      parameters:
+        - name: requiredOnly
+          in: query
+          schema:
+            type: boolean
+            default: false
+        - name: languageCode
+          in: query
+          schema:
+            type: string
+            default: ko
+            maxLength: 12
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyDocument'
   /auth/oauth/{provider}/authorization-url:
     get:
       tags: [Auth]
@@ -208,6 +314,90 @@ paths:
                 $ref: '#/components/schemas/User'
         '422':
           $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Me]
+      summary: 계정 삭제 예약
+      operationId: requestAccountDeletion
+      description: auth.users.status=PENDING_DELETION과 deletion_requested_at/deletion_scheduled_at에 대응한다. 즉시 삭제 여부는 확인 필요.
+      responses:
+        '202':
+          description: Accepted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /me/settings:
+    get:
+      tags: [Me]
+      summary: 내 사용자 설정 조회
+      operationId: getMySettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+    patch:
+      tags: [Me]
+      summary: 내 사용자 설정 수정
+      operationId: updateMySettings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserSettingsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSettings'
+  /me/sessions:
+    get:
+      tags: [Me]
+      summary: 내 로그인 세션 목록
+      operationId: listMySessions
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedUserSession'
+  /me/sessions/{sessionId}:
+    delete:
+      tags: [Me]
+      summary: 특정 로그인 세션 revoke
+      operationId: revokeMySession
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+  /me/security-events:
+    get:
+      tags: [Me]
+      summary: 내 보안 이벤트 조회
+      operationId: listMySecurityEvents
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedSecurityEvent'
   /users:
     get:
       tags: [Users]
@@ -2062,7 +2252,7 @@ components:
             type: string
     UserStatus:
       type: string
-      enum: [ACTIVE, SUSPENDED, DELETED]
+      enum: [ACTIVE, SUSPENDED, PENDING_DELETION, DELETED]
     OAuthProviderCode:
       type: string
       enum: [KAKAO, GOOGLE]
@@ -2147,7 +2337,7 @@ components:
       enum: [HIDE, RESTORE, DELETE]
     RegisterRequest:
       type: object
-      required: [email, password, displayName]
+      required: [email, password, displayName, acceptedPolicyDocumentIds]
       properties:
         email:
           type: string
@@ -2162,6 +2352,24 @@ components:
           type: string
           minLength: 1
           maxLength: 80
+        displayLanguage:
+          type: string
+          default: ko
+          maxLength: 12
+        timezone:
+          type: string
+          default: Asia/Seoul
+          maxLength: 50
+        marketingEmailOptIn:
+          type: boolean
+          default: false
+        acceptedPolicyDocumentIds:
+          type: array
+          description: auth.policy_documents 중 필수 약관 동의 id 목록.
+          minItems: 1
+          items:
+            type: string
+            format: uuid
     LoginRequest:
       type: object
       required: [email, password]
@@ -2171,6 +2379,36 @@ components:
           format: email
         password:
           type: string
+    EmailVerificationRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+    VerifyEmailRequest:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+    PasswordResetRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+    ResetPasswordRequest:
+      type: object
+      required: [token, newPassword]
+      properties:
+        token:
+          type: string
+        newPassword:
+          type: string
+          minLength: 8
+          maxLength: 128
     OAuthAuthorizationUrlResponse:
       type: object
       required: [authorizationUrl, state]
@@ -2227,27 +2465,85 @@ components:
           $ref: '#/components/schemas/User'
     User:
       type: object
-      required: [id, displayName, status, createdAt]
+      required: [id, status, profile, settings, createdAt]
       properties:
         id:
           type: string
           format: uuid
-        email:
+        primaryEmail:
           type: string
           format: email
+        primaryEmailVerifiedAt:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/UserStatus'
+        statusReason:
+          type: string
+        deletionRequestedAt:
+          type: string
+          format: date-time
+        deletionScheduledAt:
+          type: string
+          format: date-time
+        profile:
+          $ref: '#/components/schemas/UserProfile'
+        settings:
+          $ref: '#/components/schemas/UserSettings'
+        createdAt:
+          type: string
+          format: date-time
+    UserProfile:
+      type: object
+      required: [displayName]
+      properties:
         displayName:
           type: string
+          maxLength: 80
         profileImageUrl:
           type: string
           format: uri
         profileMediaFileId:
           type: string
           format: uuid
-        status:
-          $ref: '#/components/schemas/UserStatus'
-        createdAt:
+        bio:
+          type: string
+          maxLength: 500
+    UserSettings:
+      type: object
+      required: [displayLanguage, timezone, marketingEmailOptIn, tripInviteEmailOptIn]
+      properties:
+        displayLanguage:
+          type: string
+          default: ko
+          maxLength: 12
+        timezone:
+          type: string
+          default: Asia/Seoul
+          maxLength: 50
+        marketingEmailOptIn:
+          type: boolean
+        marketingEmailOptedInAt:
           type: string
           format: date-time
+        marketingEmailOptedOutAt:
+          type: string
+          format: date-time
+        tripInviteEmailOptIn:
+          type: boolean
+    UpdateUserSettingsRequest:
+      type: object
+      properties:
+        displayLanguage:
+          type: string
+          maxLength: 12
+        timezone:
+          type: string
+          maxLength: 50
+        marketingEmailOptIn:
+          type: boolean
+        tripInviteEmailOptIn:
+          type: boolean
     UserSummary:
       type: object
       required: [id, displayName]
@@ -2270,6 +2566,9 @@ components:
         profileMediaFileId:
           type: string
           format: uuid
+        bio:
+          type: string
+          maxLength: 500
     PagedUserSummary:
       type: object
       required: [items, page]
@@ -2278,6 +2577,99 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserSummary'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    PolicyDocument:
+      type: object
+      required: [id, policyCode, version, languageCode, title, isRequired, publishedAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        policyCode:
+          type: string
+          enum: [TERMS_OF_SERVICE, PRIVACY_POLICY, MARKETING_CONSENT]
+        version:
+          type: string
+        languageCode:
+          type: string
+        title:
+          type: string
+        contentUrl:
+          type: string
+          format: uri
+        contentHash:
+          type: string
+        isRequired:
+          type: boolean
+        publishedAt:
+          type: string
+          format: date-time
+    UserSession:
+      type: object
+      required: [id, refreshTokenFamilyId, refreshTokenVersion, expiresAt, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        refreshTokenFamilyId:
+          type: string
+          format: uuid
+        refreshTokenVersion:
+          type: integer
+        deviceName:
+          type: string
+        deviceOs:
+          type: string
+        lastUsedAt:
+          type: string
+          format: date-time
+        lastRefreshedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        revokedAt:
+          type: string
+          format: date-time
+        revocationReason:
+          type: string
+    PagedUserSession:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSession'
+        page:
+          $ref: '#/components/schemas/PageMeta'
+    SecurityEvent:
+      type: object
+      required: [id, eventType, success, createdAt]
+      properties:
+        id:
+          type: integer
+          format: int64
+        eventType:
+          type: string
+          enum: [LOGIN_SUCCESS, LOGIN_FAILURE, PASSWORD_RESET_REQUESTED, PASSWORD_CHANGED, SESSION_REVOKED]
+        success:
+          type: boolean
+        failureReason:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    PagedSecurityEvent:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SecurityEvent'
         page:
           $ref: '#/components/schemas/PageMeta'
     Follow:

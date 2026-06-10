@@ -36,11 +36,9 @@
 | :--- | :--- |
 | `.agent/contracts/README.md` | 백엔드 계약 문서 위치와 운영 규칙 |
 | `.agent/contracts/backend_contract_decisions.md` | DBML/OpenAPI 생성 전 확정된 설계 결정 |
-
-예정 산출물:
-
-- `.agent/contracts/schema.dbml`
-- `.agent/contracts/openapi.yaml`
+| `.agent/contracts/schema.dbml` | PostgreSQL 기준 V1 데이터 모델 |
+| `.agent/contracts/openapi.yaml` | OpenAPI 3.1 REST API 계약 초안 |
+| `.agent/docs/api_spec.md` | 백엔드 API 협의 명세와 미확정 질문 |
 
 ## 하네스 원칙
 
