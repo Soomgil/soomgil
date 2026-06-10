@@ -1542,35 +1542,173 @@ servers:
   - url: http://localhost:8080/api/v1
 ```
 
-## 6. 누락/질문 목록
+## 6. 누락/질문 목록과 Best Practice 제안
+
+이 섹션은 API 명세 확정 전에 PM/디자인/백엔드/프론트엔드가 결정해야 할 항목이다. 각 항목은 “왜 필요한지”, “권장 best practice”, “API 반영 지점”으로 나눴다.
 
 ### P0: API 확정 전 반드시 결정
 
-1. 인증: 이메일 인증, password policy, Kakao/Google OAuth redirect/callback 방식, refresh token rotation 정책.
-2. 권한: OWNER 이관, 마지막 OWNER 삭제/탈퇴, MEMBER의 여행방 설정 수정 범위.
-3. 협업 version: 메모/체크리스트/지도 도형도 `trip.itineraryVersion` 하나로 관리할지 별도 planning/map version을 둘지.
-4. WebSocket: STOMP destination, handshake 인증 방식, `X-Soomgil-WebSocket-Session-Id` 생성/전달 주체.
-5. 장소 provider: KTO API 구체 파라미터, 캐시 TTL, 장애 fallback, `provider + externalPlaceId` 포맷.
-6. Mapbox: stroke 단순화/downsampling 책임, 좌표 수 초과 처리, route match 실패 응답 세부 코드.
-7. 커뮤니티: `UNLISTED` 접근을 post id만으로 허용할지 secret slug/token을 둘지.
-8. 미디어: 업로드 최대 용량, 허용 mime type, 썸네일 생성, 삭제 retention.
+#### P0-1. 인증: 이메일 인증, password policy, OAuth, refresh token rotation
+
+- 왜 필요한가: 인증 정책은 회원가입, 로그인, 토큰 갱신, WebSocket handshake, 보안 에러 코드에 모두 영향을 준다. 이메일 인증을 필수로 할지에 따라 `UserStatus` 또는 별도 `emailVerifiedAt` 필드가 필요할 수 있다.
+- Best practice 제안: 이메일/비밀번호는 이메일 인증을 권장하되 MVP에서는 “가입 가능, 민감 기능 전 인증 요구” 방식도 허용할 수 있다. 비밀번호는 최소 8자 이상, 유출/약한 비밀번호 차단, 로그인 실패 rate limit을 적용한다. refresh token은 rotation을 적용하고, 재사용 감지 시 해당 user session family를 revoke하는 방식이 안전하다.
+- API 반영 지점: `POST /auth/register`, `POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`, `GET /me`, WebSocket handshake.
+- 확인 필요: 이메일 인증 필수 여부, 약관 동의 필드, access/refresh token TTL, 전체 기기 로그아웃 지원 여부.
+
+#### P0-2. OAuth: Kakao/Google redirect/callback 방식
+
+- 왜 필요한가: V1 활성 provider가 Kakao/Google로 정해져 있지만, 프론트가 provider authorization URL을 직접 구성할지 백엔드가 생성할지에 따라 endpoint 책임이 달라진다.
+- Best practice 제안: provider별 redirect URL, client secret, token exchange는 백엔드가 관리한다. 프론트는 `GET /auth/oauth/{provider}/authorization-url`로 URL을 받고, callback code를 `POST /auth/oauth/{provider}/callback`에 전달한다. state 검증과 provider subject 중복 방지는 서버가 담당한다.
+- API 반영 지점: `GET /auth/oauth/{provider}/authorization-url`, `POST /auth/oauth/{provider}/callback`, `auth.user_auth_identities`.
+- 확인 필요: 소셜 신규 가입 시 display name/약관 동의 보완 화면이 필요한지.
+
+#### P0-3. 권한: OWNER 이관, 마지막 OWNER 삭제/탈퇴, MEMBER 설정 권한
+
+- 왜 필요한가: 여행방 OWNER가 사라지면 초대, 삭제, 설정 변경 같은 관리 작업의 주체가 없어진다. MEMBER가 어디까지 수정 가능한지도 endpoint별 `403` 기준을 결정한다.
+- Best practice 제안: trip은 항상 active OWNER가 최소 1명 있어야 한다. OWNER가 탈퇴/삭제하려면 사전 이관을 요구하고, 마지막 OWNER 삭제는 차단한다. MEMBER는 일정/지도/메모/체크리스트/채팅/기록 생성은 가능하게 두되, 초대/멤버 제거/여행방 삭제/핵심 설정 변경은 OWNER 전용으로 둔다.
+- API 반영 지점: `PATCH /trips/{tripId}`, `DELETE /trips/{tripId}`, `POST /trips/{tripId}/invites`, `DELETE /trips/{tripId}/members/{userId}`.
+- 확인 필요: OWNER 이관 endpoint를 별도로 둘지, `PATCH /trips/{tripId}/members/{userId}` 형태로 둘지.
+
+#### P0-4. 협업 version: 단일 `itineraryVersion` vs domain별 version
+
+- 왜 필요한가: 일정, route, map drawing, 메모, 체크리스트가 모두 협업 write로 처리된다. version 정책이 정해져야 `baseVersion` 충돌 처리와 undo/redo가 일관된다.
+- Best practice 제안: MVP에서는 `trip.itineraryVersion` 단일 version을 사용한다. 협업 범위가 넓어지면 충돌이 다소 많아질 수 있지만, 프론트 동기화와 WebSocket broadcast가 단순하고 undo/redo pipeline도 하나로 유지된다. 추후 사용량이 늘면 `planningVersion`, `mapVersion` 분리를 검토한다.
+- API 반영 지점: 모든 협업 write request의 `baseVersion`, `ItineraryMutationResponse`, `PlanningMutationResponse`, `CollaborationActionResponse`.
+- 확인 필요: 메모/체크리스트 변경도 `itineraryVersion` 이름을 그대로 쓸지, 더 넓은 의미의 `collaborationVersion`으로 명칭을 바꿀지.
+
+#### P0-5. WebSocket: STOMP destination, 인증, session id
+
+- 왜 필요한가: 일정 동시 편집, 지도 preview, route matching 결과, 채팅, AI tool write 결과는 REST 응답만으로 동기화하기 어렵다. 또한 undo/redo stack은 “사용자별 활성 WebSocket 세션”에 귀속된다.
+- Best practice 제안: STOMP over WebSocket을 사용하고, handshake는 Bearer access token으로 인증한다. 서버가 handshake 성공 시 `websocketSessionId`를 발급하고, 프론트는 협업 REST write 때 `X-Soomgil-WebSocket-Session-Id`로 전달한다. destination은 도메인별로 분리한다.
+- API 반영 지점: `GET /ws`, `/topic/trips/{tripId}/itinerary`, `/topic/trips/{tripId}/map-drawings`, `/topic/trips/{tripId}/route-matching`, `/topic/trips/{tripId}/chat`, `/topic/trips/{tripId}/ai`.
+- 확인 필요: preview stroke payload 크기 제한, 재접속 시 session id 재사용 여부.
+
+#### P0-6. 장소 provider: KTO API, 캐시 TTL, fallback, place id 포맷
+
+- 왜 필요한가: 장소 master data를 저장하지 않고 `provider + externalPlaceId`로 참조하므로 provider ID 안정성이 중요하다. 추천/검색/스와이프/일정/커뮤니티 snapshot이 모두 같은 참조 포맷을 사용해야 한다.
+- Best practice 제안: 내부 API의 장소 참조는 항상 `{provider, externalPlaceId}` object로 통일한다. KTO 원본 응답은 짧은 TTL cache를 두고, itinerary/community snapshot에는 표시 가능한 최소 필드를 복사해 외부 provider 장애와 원본 삭제에 대비한다. provider 장애 시 검색/추천은 `502` 또는 stale cache 반환 중 하나를 endpoint별로 명확히 둔다.
+- API 반영 지점: `PlaceRef`, `PlaceSummary`, `PlaceDetail`, `ItineraryItem`, `CommunityPostSnapshot`, `GET /places/search`, `GET /trips/{tripId}/place-recommendations`.
+- 확인 필요: KTO content id 필드 확정, cache TTL, 원본 삭제 감지 방식.
+
+#### P0-7. Mapbox: stroke downsampling, 좌표 제한, 실패 코드
+
+- 왜 필요한가: Mapbox Map Matching은 일반적으로 좌표 수 제한이 있고, 너무 촘촘한 stroke를 그대로 보내면 실패하거나 비용/지연이 커진다.
+- Best practice 제안: 프론트는 drawing 중 preview용 원본 stroke를 로컬 관리하고, route matching 요청 전 1차 downsampling을 수행한다. 백엔드는 최종 방어선으로 좌표 개수와 거리 간격을 검증한다. 실패는 `ROUTE_MATCH_FAILED`, `TOO_MANY_COORDINATES`, `LOW_CONFIDENCE`, `UPSTREAM_PROVIDER_ERROR`처럼 UI 안내 가능한 code로 나눈다.
+- API 반영 지점: `POST /trips/{tripId}/routes/map-match`, `MapMatchRouteRequest.coordinates`, `MapMatchRouteResponse`, `ProblemDetails.code`.
+- 확인 필요: confidence threshold, route 저장 최소 기준, 실패 request log 보관 기간.
+
+#### P0-8. 커뮤니티 `UNLISTED` 접근 방식
+
+- 왜 필요한가: `UNLISTED`는 feed에는 노출되지 않지만 링크를 아는 사람은 접근할 수 있는 공개 범위다. post id만으로 접근할지 secret이 필요한지에 따라 보안 수준이 달라진다.
+- Best practice 제안: `UNLISTED`는 post id와 별도 share token 또는 slug를 함께 요구하는 방식을 권장한다. `PUBLIC`은 `/community/posts/{postId}`로 접근하고, `UNLISTED`는 `/community/posts/{postId}?shareToken=...` 또는 별도 share slug route를 사용한다.
+- API 반영 지점: `GET /community/posts/{postId}`, `CreateCommunityPostRequest`, `CommunityPostDetail`.
+- 확인 필요: share token rotate/revoke 기능을 MVP에 포함할지.
+
+#### P0-9. 미디어: 용량, mime type, 썸네일, retention
+
+- 왜 필요한가: 프로필 이미지, 기록 사진/영상, 커뮤니티 미디어가 같은 `media.media_files`를 사용한다. 제한이 없으면 비용과 보안 리스크가 커진다.
+- Best practice 제안: signed URL 직접 업로드를 기본으로 한다. 이미지/영상 mime allowlist와 용량 제한을 purpose별로 다르게 둔다. 업로드 완료 후 metadata 확정 시 object existence와 mime sniffing을 검증한다. 삭제는 soft delete 후 retention 기간이 지나면 object purge한다.
+- API 반영 지점: `POST /media/upload-urls`, `POST /media/files`, `DELETE /media/files/{mediaFileId}`, `MediaFile`.
+- 확인 필요: 동영상 지원 시 transcoding/thumbnail pipeline을 MVP에 포함할지.
 
 ### P1: 프론트 구현 전 조정 가능성이 큰 부분
 
-1. `/trips/:tripId/swipe` 화면에서 전역 `/swipe/feed`를 사용할지, `tripId` context를 optional query로 받을지.
-2. route 추천 패널의 `bbox`, `center`, `tab`, pagination 호출 타이밍.
-3. 일정 drag/drop payload를 전체 snapshot으로 보낼지 변경 delta로 보낼지.
-4. 채팅/AI message 목록을 page 기반으로 둘지 cursor 기반으로 바꿀지.
-5. AI 응답 streaming을 REST 단건 응답으로 시작할지 SSE/WebSocket stream으로 제공할지.
-6. 체크리스트 완료 상태를 본인만 수정할지, 멤버가 서로 체크할 수 있게 할지.
-7. `/record`가 전체 내 기록 feed인지 trip 선택 후 기록 관리 화면인지.
-8. 게시글 작성 화면에서 snapshot preview/validation API를 분리할지.
+#### P1-1. `/trips/:tripId/swipe`와 전역 `/swipe/feed` 관계
+
+- 왜 필요한가: 화면 route에는 `tripId`가 있지만 요구사항은 스와이프를 여행방 종속이 아닌 전역 개인 선호도 수집으로 정의한다.
+- Best practice 제안: API는 전역 `/swipe/feed`로 유지하고, 화면에서 필요한 경우 `contextTripId`를 optional query로 받는다. 단, 저장되는 reaction은 전역 개인 반응으로 유지한다. 이렇게 하면 기획의 “평소 취향 수집” 원칙을 지키면서 trip 화면 진입 UX도 지원할 수 있다.
+- API 반영 지점: `GET /swipe/feed`, `PUT /places/{provider}/{externalPlaceId}/swipe-reaction`.
+- 확인 필요: `contextTripId`가 후보 다양성이나 추천 설명에 영향을 주는지.
+
+#### P1-2. route 추천 패널의 bbox/center/tab/pagination 호출 타이밍
+
+- 왜 필요한가: 지도 viewport가 바뀔 때마다 추천 API를 호출하면 UX는 즉각적이지만 API 부하가 크다. 반대로 수동 갱신만 허용하면 사용자는 현재 지도의 추천이 최신인지 알기 어렵다.
+- Best practice 제안: `bbox`는 필수, `center`는 거리 동점 처리용 optional로 둔다. 지도 이동 종료 후 debounce 호출을 기본으로 하고, 큰 이동에는 “이 지역에서 다시 추천” 버튼을 제공한다. `tab=BASIC|SUPER_LIKE`는 같은 endpoint에서 처리한다.
+- API 반영 지점: `GET /trips/{tripId}/place-recommendations`.
+- 확인 필요: debounce 시간, 첫 진입 기본 viewport, page reset 조건.
+
+#### P1-3. 일정 drag/drop payload: 전체 snapshot vs delta
+
+- 왜 필요한가: drag/drop은 동시 편집 충돌이 자주 발생하는 영역이다. payload 모양이 서버 검증 난이도와 충돌 범위를 결정한다.
+- Best practice 제안: MVP에서는 day별 전체 item order snapshot을 보낸다. 서버는 `baseVersion`을 검사하고, item 소유 trip/day 유효성을 검증한 뒤 적용한다. delta 방식은 동시 편집과 부분 reorder 최적화가 필요해질 때 도입한다.
+- API 반영 지점: `PUT /trips/{tripId}/itinerary/reorder`, `ReorderItineraryRequest`.
+- 확인 필요: day reorder와 item reorder를 같은 endpoint로 유지할지 분리할지.
+
+#### P1-4. 채팅/AI message pagination: page vs cursor
+
+- 왜 필요한가: 채팅과 AI 메시지는 계속 뒤에 추가되는 append-only 성격이다. page 기반은 중간 삽입/새 메시지 도착 시 목록이 흔들릴 수 있다.
+- Best practice 제안: 일반 목록은 `page/size`, 채팅과 AI 메시지는 cursor 기반을 권장한다. MVP에서 page 기반으로 시작하더라도 response에 `nextCursor`를 추가할 수 있게 schema를 열어 둔다.
+- API 반영 지점: `GET /trips/{tripId}/chat/messages`, `GET /trips/{tripId}/ai/messages`.
+- 확인 필요: cursor를 message `createdAt + id` 복합 기준으로 할지, opaque token으로 할지.
+
+#### P1-5. AI 응답 streaming: REST 단건 vs SSE/WebSocket
+
+- 왜 필요한가: AI 응답은 지연 시간이 길 수 있고, tool calling이 실행되면 중간 상태와 최종 변경 broadcast가 필요하다.
+- Best practice 제안: MVP는 `POST /trips/{tripId}/ai/messages`의 REST 단건 응답으로 시작한다. 동시에 AI message 생성/완료 이벤트는 WebSocket `/topic/trips/{tripId}/ai`로 broadcast한다. 토큰 단위 streaming은 V1 이후 SSE 또는 WebSocket으로 확장한다.
+- API 반영 지점: `POST /trips/{tripId}/ai/messages`, AI WebSocket topic, `AiMessageResponse`.
+- 확인 필요: 사용자에게 “생각 중/도구 실행 중” 상태를 보여줄지.
+
+#### P1-6. 체크리스트 완료 상태 수정 권한
+
+- 왜 필요한가: 체크리스트 항목은 멤버별 완료 상태를 가진다. 다른 멤버 상태를 누가 수정할 수 있는지 명확하지 않으면 권한 분쟁과 감사 추적 문제가 생긴다.
+- Best practice 제안: 기본은 본인 상태만 수정 가능하게 둔다. OWNER 또는 모든 멤버가 타인 상태를 수정하는 기능은 MVP 이후 옵션으로 둔다. 타인 상태 수정이 필요하면 `updatedByUserId`를 반드시 기록하고 UI에 actor를 표시한다.
+- API 반영 지점: `PUT /trips/{tripId}/checklists/{checklistId}/items/{itemId}/member-statuses/{userId}`.
+- 확인 필요: OWNER가 멤버 상태를 대신 체크할 수 있어야 하는 실제 사용 시나리오가 있는지.
+
+#### P1-7. `/record` 화면의 범위
+
+- 왜 필요한가: 현재 API는 trip 기준 기록(`GET /trips/{tripId}/records`)으로 설계되어 있다. 하지만 화면 경로 `/record`는 전역 내 기록 feed처럼 해석될 수 있다.
+- Best practice 제안: MVP에서는 trip 선택 후 기록을 관리하는 구조로 시작한다. 전역 `/record`는 내 여행방 목록과 최근 기록 preview를 보여주고, 실제 CRUD는 trip scoped API를 사용한다. 나중에 필요하면 `GET /records`를 추가한다.
+- API 반영 지점: `GET /trips/{tripId}/records`, `POST /trips/{tripId}/records`.
+- 확인 필요: `/record` 첫 화면이 trip selector인지, 전체 timeline인지.
+
+#### P1-8. 게시글 snapshot preview/validation API
+
+- 왜 필요한가: 커뮤니티 게시글은 원본 trip이 아니라 게시 시점 snapshot을 저장한다. 사용자가 발행 전 어떤 일정/경로/미디어가 공개될지 확인해야 한다.
+- Best practice 제안: MVP라도 발행 직전 preview는 제공하는 것이 안전하다. 다만 별도 저장 리소스를 만들기보다 `POST /community/posts/preview` 같은 stateless validation/preview endpoint를 두거나, 프론트가 `GET /trips/{tripId}/itinerary`를 조합해 preview하고 발행 시 서버가 최종 snapshot을 생성한다.
+- API 반영 지점: `POST /community/posts`, 향후 `POST /community/posts/preview` 후보.
+- 확인 필요: preview snapshot과 실제 publish snapshot 사이의 version conflict 처리.
 
 ### P2: 운영/확장 전 결정
 
-1. 신고 사유 목록 조회 endpoint와 관리자 사유 관리 기능.
-2. 운영 감사 로그 조회 API 범위.
-3. AI 대화/도구 로그 보관 기간과 summary 생성 주기.
-4. 법정동 sync admin endpoint와 실패 재처리 방식.
-5. rate limit 정책과 quota key: IP, user, trip, provider별 제한.
-6. OpenAPI schema generation을 backend repo build에 연결하는 방식.
+#### P2-1. 신고 사유 목록 조회와 관리자 사유 관리
+
+- 왜 필요한가: 신고 사유는 구조화 코드로 저장되지만, 프론트가 하드코딩하면 운영 중 사유명 변경/비활성화가 어렵다.
+- Best practice 제안: MVP에서는 `GET /community/report-reasons`로 active reason 목록만 제공하고, 관리자 사유 CRUD는 V1 이후로 미룬다. reason code는 안정적으로 유지하고 display name만 바꿀 수 있게 한다.
+- API 반영 지점: `CreateContentReportRequest.reasonCode`, 향후 `GET /community/report-reasons`.
+- 확인 필요: 다국어 reason display name 필요 여부.
+
+#### P2-2. 운영 감사 로그 조회 API 범위
+
+- 왜 필요한가: moderation, 권한 변경, 민감 데이터 접근은 운영 감사가 필요하다. 하지만 감사 로그 API는 개인정보와 내부 운영 정보 노출 위험이 크다.
+- Best practice 제안: 감사 로그는 먼저 DB/운영 도구에서만 조회하고, 관리자 콘솔 API는 필요한 필터가 확정된 뒤 만든다. API를 만들 경우 SUPER_ADMIN 전용으로 제한하고, IP/user agent 등 민감 필드는 마스킹한다.
+- API 반영 지점: `ops.audit_logs`, 향후 `/admin/audit-logs`.
+- 확인 필요: 운영 콘솔 MVP 범위에 감사 로그 화면이 포함되는지.
+
+#### P2-3. AI 대화/도구 로그 보관 기간과 summary 생성 주기
+
+- 왜 필요한가: AI 대화 원문 전체 저장은 context 품질에는 좋지만 개인정보/비용/보관 정책 이슈가 있다. summary가 없으면 긴 여행방에서 AI 품질이 떨어지고 token 비용이 커진다.
+- Best practice 제안: 원문은 서비스 정책상 일정 기간 보관하고, trip 삭제/사용자 삭제 시 처리 정책을 둔다. summary는 메시지 수 또는 token 추정량 기준으로 비동기 생성한다. tool call audit log는 일반 대화보다 더 오래 보관할 수 있지만, undo 가능 기간과는 분리한다.
+- API 반영 지점: `ai.ai_chat_sessions.summary`, `ai.ai_chat_messages`, `ai.ai_tool_calls`.
+- 확인 필요: 사용자에게 AI 대화 삭제 기능을 제공할지.
+
+#### P2-4. 법정동 sync admin endpoint와 실패 재처리
+
+- 왜 필요한가: 지역 데이터는 trip region 선택의 기준 데이터다. sync 실패나 폐지 지역 반영 오류가 있으면 여행방 지역 선택과 추천 범위가 흔들린다.
+- Best practice 제안: 자동 sync job과 sync log를 기본으로 두고, 관리자 수동 재시도 endpoint는 운영 단계에서 추가한다. 실패 로그에는 source, file name, count, error message를 저장하고, 재시도는 idempotent하게 설계한다.
+- API 반영 지점: `geo.legal_region_sync_logs`, 향후 `/admin/legal-regions/sync-runs`.
+- 확인 필요: 원천이 파일 업로드인지 외부 API인지.
+
+#### P2-5. rate limit 정책과 quota key
+
+- 왜 필요한가: 로그인, OAuth, 추천, 장소 검색, Mapbox route matching은 abuse와 비용 리스크가 크다. 특히 외부 provider 호출은 서비스 비용으로 직결된다.
+- Best practice 제안: endpoint 그룹별 quota key를 다르게 둔다. 인증은 IP+email, 일반 API는 user, trip 협업 write는 user+trip, Mapbox/KTO 호출은 user+provider 또는 trip+provider 기준으로 제한한다. rate limit 초과는 `429`와 `Retry-After`를 반환한다.
+- API 반영 지점: 모든 외부 호출성 endpoint, `ProblemDetails(code=RATE_LIMITED)`.
+- 확인 필요: MVP에서 Redis 기반 rate limiter를 포함할지.
+
+#### P2-6. OpenAPI schema generation과 backend build 연결
+
+- 왜 필요한가: 현재 `openapi.yaml`은 수동 초안이다. 백엔드 구현이 시작되면 코드와 문서가 어긋날 수 있다.
+- Best practice 제안: 초반에는 `docs/api/openapi.yaml`을 contract source로 두고, backend controller/schema가 이를 만족하는지 CI에서 검증한다. 구현이 안정되면 Springdoc 등으로 생성한 OpenAPI와 contract 파일의 diff를 검증한다. 프론트 타입 생성은 tagged release 또는 PR 단위로 고정된 OpenAPI 파일에서 수행한다.
+- API 반영 지점: `docs/api/openapi.yaml`, backend CI, frontend API client generation.
+- 확인 필요: source of truth를 수동 contract 파일로 유지할지, backend generated OpenAPI로 전환할지.
