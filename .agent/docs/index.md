@@ -4,13 +4,15 @@
 
 ## 핵심 문서
 
-- `harness/ai_harness_guide.md`: 하네스 실행 흐름.
-- `process/git_workflow.md`: orchestration repo, submodule, Git Flow, commit convention 운영 규칙.
-- `process/branching_agent_docs.md`: 브랜치별 AI 문서 격리와 통합 규칙.
-- `architecture/architecture_guide.md`: frontend/backend 책임 경계.
-- `frontend/page_map.md`: Vue Router 기준 프론트 화면 맵.
-- `product-specs/functional_spec.md`: 제품 기능 명세.
-- `api/api_spec.md`: 백엔드 API 협의 명세, endpoint 근거, 데이터 모델, 미확정 질문과 best practice.
+- `ai_harness_guide.md`: 하네스 실행 흐름.
+- `git_workflow.md`: orchestration repo, submodule, Git Flow, commit convention 운영 규칙.
+- `branching_agent_docs.md`: 브랜치별 AI 문서 격리와 통합 규칙.
+- `architecture_guide.md`: frontend/backend 책임 경계.
+- `page_map.md`: Vue Router 기준 프론트 화면 맵.
+- `functional_spec.md`: 제품 기능 명세.
+- `design-docs/design.md`: `frontend/` 현재 구현 기준 디자인 문서.
+- `design-docs/design_system_todo.md`: 디자인 시스템 수렴과 Settings 화면 통일 작업 TODO.
+- `api_spec.md`: API 경계와 백엔드 준비 기준.
 - `../contracts/backend_contract_decisions.md`: DBML/OpenAPI 생성 전 확정된 백엔드 계약 결정.
 - `../contracts/openapi.yaml`: OpenAPI 3.1 REST API 계약 초안.
 - `generated/ui_inventory.md`: 자동 생성 워크스페이스/UI 인벤토리.

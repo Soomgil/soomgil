@@ -1,37 +1,193 @@
-# OS files
+# Curated from gitignore.io/Toptal and GitHub gitignore templates for Soomgil.
+# Keep package lockfiles, wrapper scripts, and .env.example files tracked.
+
+# OS files - macOS
 .DS_Store
+._*
+.AppleDouble
+.LSOverride
+.DocumentRevisions-V100/
+.fseventsd/
+.Spotlight-V100/
+.TemporaryItems/
+.Trashes/
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder/
+Temporary Items/
+.apdisk
+*.icloud
+Icon?
+
+# OS files - Windows
 Thumbs.db
-db.json
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+*.stackdump
+
+# OS files - Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*/
+.nfs*
 
 # IDEs and editors
-.vscode/
-.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+.ionide
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+.idea/**/aws.xml
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/gradle.xml
+.idea/**/libraries/
+.idea/**/mongoSettings.xml
+.idea/**/httpRequests/
+.idea/**/caches/
+.idea/**/sonarlint/
+.idea/**/sonarIssues.xml
+.idea/**/markdown-navigator.xml
+.idea/**/markdown-navigator-enh.xml
+.idea/**/markdown-navigator/
+.idea/**/azureSettings.xml
+.idea/codestream.xml
+.idea/$CACHE_FILE$
+.idea_modules/
+cmake-build-*/
+atlassian-ide-plugin.xml
+*.iws
+*.iml
+*.ipr
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.swp
+*.swo
 
-# Logs
+# Logs and runtime data
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+pids/
+*.pid
+*.seed
+*.pid.lock
 
-# Build output
-dist/
-coverage/
-
-# Dependencies
+# Node, package managers, and frontend caches
 node_modules/
 jspm_packages/
+bower_components/
+web_modules/
+.pnp.*
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.yarn-integrity
+*.tgz
+
+# Build output and tool caches
+dist/
+build/
+out/
+coverage/
+*.lcov
+.nyc_output/
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+.next/
+.nuxt/
+.temp/
+.docusaurus/
+.serverless/
+.webpack/
+.fusebox/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
 
 # Local environment
 .env
 .env.*
 !.env.example
+!.env.*.example
 
-# AI agent directories
+# Local databases, dumps, and generated fixtures
+db.json
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.sql.gz
+
+# Local containers and overrides
+docker-compose.override.yml
+docker-compose.override.yaml
+compose.override.yml
+compose.override.yaml
+
+# Python/automation scratch files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local secrets and certificates
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+# AI agent local directories
 .agents/
 .antigravitycli/
 .claude/
