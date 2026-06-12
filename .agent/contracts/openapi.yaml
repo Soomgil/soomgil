@@ -318,12 +318,16 @@ paths:
       tags: [Me]
       summary: 계정 삭제 예약
       operationId: requestAccountDeletion
-      description: auth.users.status=PENDING_DELETION과 deletion_requested_at/deletion_scheduled_at에 대응한다. 즉시 삭제 여부는 확인 필요.
+      description: >
+        auth.users.status=PENDING_DELETION과 deletion_requested_at/deletion_scheduled_at에 대응한다.
+        즉시 hard delete하지 않는다. 요청자가 owner_user_id인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 409를 반환하고 삭제 예약을 차단한다.
       responses:
         '202':
           description: Accepted
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
   /me/settings:
     get:
       tags: [Me]
@@ -419,6 +423,7 @@ paths:
       tags: [Users]
       summary: 사용자 공개 프로필 조회
       operationId: getUser
+      description: PRIVATE 프로필은 승인된 follower에게만 전체 프로필을 반환하고, 미승인 사용자에게는 제한된 summary를 반환한다. block account는 MVP에서 제공하지 않는다.
       parameters:
         - $ref: '#/components/parameters/userId'
       responses:
@@ -427,7 +432,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserSummary'
+                $ref: '#/components/schemas/UserPublicProfile'
         '404':
           $ref: '#/components/responses/NotFound'
   /users/{userId}/follow:
@@ -435,6 +440,7 @@ paths:
       tags: [Users]
       summary: 사용자 팔로우
       operationId: followUser
+      description: self-follow는 CANNOT_FOLLOW_SELF로 거절한다. 대상 프로필이 PRIVATE이면 PENDING follow request를 생성하고, PUBLIC이면 ACTIVE follow를 생성한다.
       parameters:
         - $ref: '#/components/parameters/userId'
       responses:
@@ -450,6 +456,50 @@ paths:
       tags: [Users]
       summary: 팔로우 취소
       operationId: unfollowUser
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /me/follow-requests:
+    get:
+      tags: [Users]
+      summary: 내 비공개 프로필 follow 요청 목록
+      operationId: listMyFollowRequests
+      description: 내 PRIVATE 프로필에 대한 PENDING follow request를 조회한다.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedFollowRequest'
+  /me/follow-requests/{userId}/accept:
+    put:
+      tags: [Users]
+      summary: follow 요청 승인
+      operationId: acceptFollowRequest
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Follow'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /me/follow-requests/{userId}:
+    delete:
+      tags: [Users]
+      summary: follow 요청 거절
+      operationId: rejectFollowRequest
       parameters:
         - $ref: '#/components/parameters/userId'
       responses:
@@ -502,7 +552,7 @@ paths:
         - name: role
           in: query
           schema:
-            $ref: '#/components/schemas/TripMemberRole'
+            $ref: '#/components/schemas/TripAccessRole'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/size'
         - $ref: '#/components/parameters/sort'
@@ -556,7 +606,7 @@ paths:
       tags: [Trips]
       summary: 여행방 설정 수정
       operationId: updateTrip
-      description: OWNER 권한을 기본으로 한다. MEMBER 수정 가능 범위 확인 필요.
+      description: trip.owner_user_id 사용자 권한을 기본으로 한다. MEMBER 수정 가능 범위 확인 필요.
       parameters:
         - $ref: '#/components/parameters/tripId'
       requestBody:
@@ -610,7 +660,7 @@ paths:
       tags: [Trips]
       summary: 멤버 제거 또는 나가기
       operationId: removeTripMember
-      description: OWNER self leave와 ownership transfer 정책 확인 필요.
+      description: MVP는 OWNER 이관을 제공하지 않는다. owner_user_id 사용자의 나가기/삭제 정책 확인 필요.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/userId'
@@ -721,7 +771,7 @@ paths:
       tags: [Swipe]
       summary: 전역 스와이프 feed
       operationId: getSwipeFeed
-      description: trip 종속이 아닌 전역 개인 선호도 수집 feed. 화면 tripId context 전달 여부 확인 필요.
+      description: trip 종속이 아닌 전역 개인 선호도 수집 feed. MVP에서는 trip context를 받거나 저장하지 않는다.
       parameters:
         - name: legalRegionCode
           in: query
@@ -829,10 +879,19 @@ paths:
       tags: [Places]
       summary: 여행방 추천 장소 목록
       operationId: listTripPlaceRecommendations
-      description: matchedMembers는 avatar/id/name 수준만 반환하고 raw/normalized score는 반환하지 않는다.
+      description: >
+        matchedMembers는 avatar/id/name 수준만 반환하고 raw/normalized score는 반환하지 않는다.
+        bbox는 필수이며, 클라이언트는 검색 실행 또는 수동 새로고침 시점의 현재 지도 viewport를 전달한다.
+        지도 pan/zoom만으로 자동 재호출하지 않는다.
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/bbox'
+        - name: bbox
+          in: query
+          required: true
+          description: minLng,minLat,maxLng,maxLat. 추천 후보는 이 지도 viewport 안의 장소로 제한한다.
+          schema:
+            type: string
+            pattern: '^-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?,-?\d+(\.\d+)?$'
         - name: centerLat
           in: query
           schema:
@@ -969,6 +1028,7 @@ paths:
       tags: [Itinerary]
       summary: itinerary item 수정
       operationId: updateItineraryItem
+      description: route 연결이 없는 item의 표시 정보 수정 또는 제한적 day 이동에 사용한다. active route segment로 연결된 item을 단독 이동하려면 먼저 해당 route를 명시적으로 삭제해야 한다.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/itemId'
@@ -1014,6 +1074,11 @@ paths:
       tags: [Itinerary]
       summary: itinerary 일괄 재정렬
       operationId: reorderItinerary
+      description: >
+        여행방 active day/item 전체 순서 snapshot을 전송한다. 부분 delta가 아니다.
+        active route segment로 연결된 item들은 UI와 서버 검증에서 하나의 묶음처럼 취급하며,
+        route 연결을 깨는 snapshot은 ROUTE_CONNECTION_LOCKED로 거절한다.
+        연결을 끊고 이동하려면 먼저 DELETE /trips/{tripId}/routes/{routeId}로 route를 명시적으로 삭제한다.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/websocketSessionId'
@@ -1032,6 +1097,8 @@ paths:
                 $ref: '#/components/schemas/ItineraryMutationResponse'
         '409':
           $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/ValidationError'
   /trips/{tripId}/routes/map-match:
     post:
       tags: [Itinerary]
@@ -1424,7 +1491,7 @@ paths:
       tags: [Planning]
       summary: 체크리스트 멤버별 완료 상태 변경
       operationId: updateChecklistMemberStatus
-      description: 본인 상태만 수정할지 전체 멤버 상태를 수정할 수 있을지 확인 필요.
+      description: MVP에서는 현재 사용자 본인의 member status만 수정할 수 있다. userId가 현재 사용자와 다르면 403을 반환한다.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
@@ -1444,16 +1511,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
+        '403':
+          $ref: '#/components/responses/Forbidden'
   /trips/{tripId}/chat/messages:
     get:
       tags: [Chat]
       summary: 채팅 메시지 목록
       operationId: listTripChatMessages
+      description: MVP는 offset 기반 무한스크롤을 사용한다. 정렬은 createdAt DESC, id DESC로 고정하며 cursor는 사용하지 않는다.
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
           description: OK
@@ -1518,11 +1587,11 @@ paths:
       tags: [AI]
       summary: AI 메시지 목록
       operationId: listAiMessages
+      description: MVP는 offset 기반 무한스크롤을 사용한다. 정렬은 createdAt DESC, id DESC로 고정하며 cursor는 사용하지 않는다.
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
           description: OK
@@ -1534,7 +1603,7 @@ paths:
       tags: [AI]
       summary: AI 사용자 메시지 생성 및 assistant 응답
       operationId: createAiMessage
-      description: Streaming(SSE/WebSocket) 도입 여부 확인 필요.
+      description: REST 요청으로 메시지 생성을 시작하고, message/tool 상태 변화는 /topic/trips/{tripId}/ai WebSocket topic으로 broadcast한다. 토큰 단위 streaming은 MVP에서 제공하지 않는다.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/websocketSessionId'
@@ -1554,6 +1623,30 @@ paths:
                 $ref: '#/components/schemas/AiMessageResponse'
         '409':
           $ref: '#/components/responses/Conflict'
+  /records/photos:
+    get:
+      tags: [Records]
+      summary: 내가 참여한 모든 여행방의 기록 사진 모아보기
+      operationId: listMyTripRecordPhotos
+      description: 현재 사용자가 active member로 참여 중인 모든 여행방의 기록 사진을 모아 반환한다. 기록 CRUD는 trip scoped endpoint를 사용한다.
+      parameters:
+        - name: tripId
+          in: query
+          required: false
+          description: 특정 여행방 사진만 필터링할 때 사용한다.
+          schema:
+            type: string
+            format: uuid
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/sort'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedTripRecordPhoto'
   /trips/{tripId}/records:
     get:
       tags: [Records]
@@ -1605,7 +1698,7 @@ paths:
       tags: [Records]
       summary: 여행 기록 수정
       operationId: updateTripRecord
-      description: uploader만 수정할지 OWNER도 가능한지 확인 필요.
+      description: uploader만 수정할지 여행방 소유자도 가능한지 확인 필요.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/recordId'
@@ -1637,6 +1730,7 @@ paths:
       tags: [Media]
       summary: 업로드 signed URL 발급
       operationId: createUploadUrl
+      description: purpose별 mime/size allowlist를 검증한 뒤 S3 호환 object storage 직접 업로드용 signed URL을 발급한다. 백엔드 proxy upload는 MVP에서 제공하지 않는다.
       parameters:
         - $ref: '#/components/parameters/idempotencyKey'
       requestBody:
@@ -1657,6 +1751,7 @@ paths:
       tags: [Media]
       summary: 업로드 완료 media metadata 등록
       operationId: createMediaFile
+      description: object existence, byte size, mime sniffing 결과, linked resource 권한을 검증한 뒤 ACTIVE media metadata를 생성한다.
       requestBody:
         required: true
         content:
@@ -1675,6 +1770,7 @@ paths:
       tags: [Media]
       summary: media file 삭제
       operationId: deleteMediaFile
+      description: media file을 soft delete하고 purge_after_at 이후 object storage에서 물리 삭제한다.
       parameters:
         - $ref: '#/components/parameters/mediaFileId'
       responses:
@@ -1727,6 +1823,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityPostDetail'
+        '409':
+          $ref: '#/components/responses/Conflict'
   /community/posts/{postId}:
     get:
       tags: [Community]
@@ -1737,6 +1835,13 @@ paths:
         - bearerAuth: []
       parameters:
         - $ref: '#/components/parameters/postId'
+        - name: shareToken
+          in: query
+          required: false
+          description: UNLISTED 게시글 비작성자 접근 시 필수. Raw token은 서버가 저장하지 않는다.
+          schema:
+            type: string
+            maxLength: 256
       responses:
         '200':
           description: OK
@@ -1775,6 +1880,22 @@ paths:
       responses:
         '204':
           description: No Content
+  /community/posts/{postId}/share-token/rotate:
+    post:
+      tags: [Community]
+      summary: UNLISTED 공유 토큰 재발급
+      operationId: rotateCommunityPostShareToken
+      description: 게시글 작성자만 호출할 수 있다. 새 raw shareToken은 이 응답에서만 반환하며, 서버는 hash만 저장한다.
+      parameters:
+        - $ref: '#/components/parameters/postId'
+        - $ref: '#/components/parameters/idempotencyKey'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityPostShareTokenResponse'
   /community/posts/{postId}/like:
     put:
       tags: [Community]
@@ -1877,6 +1998,24 @@ paths:
       responses:
         '204':
           description: No Content
+  /community/report-reasons:
+    get:
+      tags: [Community]
+      summary: 활성 신고 사유 목록
+      operationId: listReportReasons
+      security:
+        - {}
+        - bearerAuth: []
+      description: MVP에서는 active 신고 사유 목록만 조회한다. 관리자 사유 CRUD는 제공하지 않는다.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReportReason'
   /community/reports:
     post:
       tags: [Community]
@@ -1998,6 +2137,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/ContentReport'
   /admin/moderation-actions:
+    get:
+      tags: [Admin]
+      summary: 콘텐츠 moderation action 이력 조회
+      operationId: listModerationActions
+      description: 콘텐츠 운영 이력만 제공한다. 범용 audit log API는 MVP에서 제공하지 않는다.
+      parameters:
+        - name: targetType
+          in: query
+          schema:
+            $ref: '#/components/schemas/ReportTargetType'
+        - name: targetId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/sort'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedModerationAction'
+        '403':
+          $ref: '#/components/responses/Forbidden'
     post:
       tags: [Admin]
       summary: 콘텐츠 moderation action 실행
@@ -2127,6 +2293,23 @@ components:
         minimum: 1
         maximum: 100
         default: 20
+    offset:
+      name: offset
+      in: query
+      description: Offset 기반 무한스크롤 시작 위치. Chat/AI message 목록에서 사용한다.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: Offset 기반 무한스크롤 page size. Chat/AI message 목록에서 사용한다.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
     sort:
       name: sort
       in: query
@@ -2199,6 +2382,16 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
+    TooManyRequests:
+      description: Rate limit exceeded. Retry-After header is included when a retry time is known.
+      headers:
+        Retry-After:
+          schema:
+            type: string
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
     BadGateway:
       description: Upstream provider error
       content:
@@ -2250,6 +2443,26 @@ components:
           type: array
           items:
             type: string
+    OffsetPageMeta:
+      type: object
+      required: [offset, limit, hasMore]
+      properties:
+        offset:
+          type: integer
+          minimum: 0
+        limit:
+          type: integer
+          minimum: 1
+        nextOffset:
+          type: integer
+          minimum: 0
+        hasMore:
+          type: boolean
+        sort:
+          type: array
+          description: Fixed order for MVP chat/AI message lists.
+          items:
+            type: string
     UserStatus:
       type: string
       enum: [ACTIVE, SUSPENDED, PENDING_DELETION, DELETED]
@@ -2262,10 +2475,21 @@ components:
       enum: [ACTIVE, ARCHIVED, DELETED]
     TripMemberRole:
       type: string
+      enum: [MEMBER]
+      description: MVP trip.trip_members.role value. OWNER is not stored in trip_members.
+    TripAccessRole:
+      type: string
       enum: [OWNER, MEMBER]
+      description: Derived API role. OWNER means user.id equals trip.owner_user_id.
     TripMemberStatus:
       type: string
       enum: [ACTIVE, LEFT, REMOVED]
+    UserProfileVisibility:
+      type: string
+      enum: [PUBLIC, PRIVATE]
+    FollowStatus:
+      type: string
+      enum: [PENDING, ACTIVE, DELETED]
     InviteStatus:
       type: string
       enum: [PENDING, ACCEPTED, REVOKED, EXPIRED]
@@ -2329,6 +2553,17 @@ components:
     ReportReasonCode:
       type: string
       enum: [SPAM, INAPPROPRIATE, HARASSMENT_OR_HATE, RIGHTS_VIOLATION, OTHER]
+    ReportReason:
+      type: object
+      required: [code, displayName]
+      properties:
+        code:
+          $ref: '#/components/schemas/ReportReasonCode'
+        displayName:
+          type: string
+        isActive:
+          type: boolean
+          description: listReportReasons returns active reasons only.
     ReportStatus:
       type: string
       enum: [OPEN, REVIEWING, RESOLVED, REJECTED]
@@ -2495,7 +2730,7 @@ components:
           format: date-time
     UserProfile:
       type: object
-      required: [displayName]
+      required: [displayName, profileVisibility]
       properties:
         displayName:
           type: string
@@ -2509,6 +2744,8 @@ components:
         bio:
           type: string
           maxLength: 500
+        profileVisibility:
+          $ref: '#/components/schemas/UserProfileVisibility'
     UserSettings:
       type: object
       required: [displayLanguage, timezone, marketingEmailOptIn, tripInviteEmailOptIn]
@@ -2556,6 +2793,28 @@ components:
         profileImageUrl:
           type: string
           format: uri
+    UserPublicProfile:
+      allOf:
+        - $ref: '#/components/schemas/UserSummary'
+        - type: object
+          properties:
+            bio:
+              type: string
+            followerCount:
+              type: integer
+              minimum: 0
+              description: Optional MVP aggregate/read-model value.
+            followingCount:
+              type: integer
+              minimum: 0
+              description: Optional MVP aggregate/read-model value.
+            followedByMe:
+              type: boolean
+              description: Present for authenticated callers.
+            followStatus:
+              $ref: '#/components/schemas/FollowStatus'
+            profileVisibility:
+              $ref: '#/components/schemas/UserProfileVisibility'
     UpdateMeRequest:
       type: object
       properties:
@@ -2569,6 +2828,8 @@ components:
         bio:
           type: string
           maxLength: 500
+        profileVisibility:
+          $ref: '#/components/schemas/UserProfileVisibility'
     PagedUserSummary:
       type: object
       required: [items, page]
@@ -2683,11 +2944,32 @@ components:
           type: string
           format: uuid
         status:
-          type: string
-          enum: [ACTIVE, DELETED]
+          $ref: '#/components/schemas/FollowStatus'
         createdAt:
           type: string
           format: date-time
+    FollowRequest:
+      type: object
+      required: [follower, status, createdAt]
+      properties:
+        follower:
+          $ref: '#/components/schemas/UserSummary'
+        status:
+          type: string
+          const: PENDING
+        createdAt:
+          type: string
+          format: date-time
+    PagedFollowRequest:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FollowRequest'
+        page:
+          $ref: '#/components/schemas/PageMeta'
     LegalRegion:
       type: object
       required: [code, name, fullName, level, isActive]
@@ -2729,7 +3011,7 @@ components:
         status:
           $ref: '#/components/schemas/TripStatus'
         myRole:
-          $ref: '#/components/schemas/TripMemberRole'
+          $ref: '#/components/schemas/TripAccessRole'
         itineraryVersion:
           type: integer
           format: int64
@@ -2809,7 +3091,7 @@ components:
               format: uuid
     TripMember:
       type: object
-      required: [id, tripId, user, role, status, joinedAt]
+      required: [id, tripId, user, role, accessRole, status, joinedAt]
       properties:
         id:
           type: string
@@ -2821,6 +3103,8 @@ components:
           $ref: '#/components/schemas/UserSummary'
         role:
           $ref: '#/components/schemas/TripMemberRole'
+        accessRole:
+          $ref: '#/components/schemas/TripAccessRole'
         status:
           $ref: '#/components/schemas/TripMemberStatus'
         joinedAt:
@@ -3251,6 +3535,7 @@ components:
               type: string
               format: uri
     ReorderItineraryRequest:
+      description: Full active itinerary order snapshot. Client must include every non-deleted day and every non-deleted item exactly once; this is not a delta payload.
       allOf:
         - $ref: '#/components/schemas/VersionedCommandRequest'
         - type: object
@@ -3258,6 +3543,7 @@ components:
           properties:
             days:
               type: array
+              description: Full ordered list of active itinerary day/group records for the trip.
               items:
                 type: object
                 required: [dayId, sortOrder, itemOrders]
@@ -3269,6 +3555,7 @@ components:
                     type: integer
                   itemOrders:
                     type: array
+                    description: Full ordered list of active item ids in this day/group. Route-connected items must remain connected unless the route was explicitly deleted first.
                     items:
                       type: object
                       required: [itemId, sortOrder]
@@ -3298,7 +3585,7 @@ components:
           $ref: '#/components/schemas/MapDrawing'
         affectedRouteIds:
           type: array
-          description: item reorder/delete로 stale/delete된 route ids.
+          description: item delete 또는 명시적 route 삭제로 영향을 받은 route ids. Reorder는 active route 연결을 자동 삭제하지 않고, 연결을 깨면 ROUTE_CONNECTION_LOCKED로 거절한다.
           items:
             type: string
             format: uuid
@@ -3637,7 +3924,7 @@ components:
           items:
             $ref: '#/components/schemas/TripChatMessage'
         page:
-          $ref: '#/components/schemas/PageMeta'
+          $ref: '#/components/schemas/OffsetPageMeta'
     AiChatSession:
       type: object
       required: [id, tripId, status]
@@ -3739,7 +4026,7 @@ components:
           items:
             $ref: '#/components/schemas/AiChatMessage'
         page:
-          $ref: '#/components/schemas/PageMeta'
+          $ref: '#/components/schemas/OffsetPageMeta'
     Viewport:
       type: object
       properties:
@@ -3858,6 +4145,43 @@ components:
             $ref: '#/components/schemas/TripRecordEntry'
         page:
           $ref: '#/components/schemas/PageMeta'
+    TripRecordPhoto:
+      type: object
+      required: [tripId, recordId, media, createdAt]
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        tripTitle:
+          type: string
+        recordId:
+          type: string
+          format: uuid
+        itineraryDayId:
+          type: string
+          format: uuid
+        itineraryItemId:
+          type: string
+          format: uuid
+        media:
+          $ref: '#/components/schemas/MediaFile'
+        uploadedBy:
+          $ref: '#/components/schemas/UserSummary'
+        takenAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    PagedTripRecordPhoto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripRecordPhoto'
+        page:
+          $ref: '#/components/schemas/PageMeta'
     CreateUploadUrlRequest:
       type: object
       required: [fileName, mimeType, byteSize]
@@ -3872,7 +4196,7 @@ components:
         purpose:
           type: string
           enum: [PROFILE_IMAGE, TRIP_RECORD, COMMUNITY_POST]
-          description: 확인 필요.
+          description: purpose별 mime allowlist와 size limit을 적용한다.
     UploadUrlResponse:
       type: object
       required: [uploadUrl, objectKey, expiresAt]
@@ -3913,6 +4237,7 @@ components:
           type: integer
         linkedResourceType:
           type: string
+          description: Optional resource binding target. Server validates caller permission for the target.
         linkedResourceId:
           type: string
           format: uuid
@@ -3994,6 +4319,19 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MediaFile'
+            shareToken:
+              type: string
+              description: UNLISTED 생성 또는 PUBLIC에서 UNLISTED 전환 직후 작성자 응답에만 포함한다. 서버는 hash만 저장한다.
+            shareUrl:
+              type: string
+              format: uri
+              description: shareToken을 포함한 공유 URL. 생성/전환/재발급 직후 작성자 응답에만 포함한다.
+            shareTokenCreatedAt:
+              type: string
+              format: date-time
+            shareTokenRotatedAt:
+              type: string
+              format: date-time
     CommunityPostSnapshot:
       type: object
       description: 게시 시점 표시용 immutable snapshot.
@@ -4010,11 +4348,15 @@ components:
           $ref: '#/components/schemas/UserSummary'
     CreateCommunityPostRequest:
       type: object
-      required: [sourceTripId, visibility, title]
+      required: [sourceTripId, visibility, title, baseVersion]
       properties:
         sourceTripId:
           type: string
           format: uuid
+        baseVersion:
+          type: integer
+          format: int64
+          description: Source trip itineraryVersion used to detect publish-after-preview drift.
         visibility:
           $ref: '#/components/schemas/PostVisibility'
         title:
@@ -4057,6 +4399,22 @@ components:
           type: array
           items:
             type: string
+    CommunityPostShareTokenResponse:
+      type: object
+      required: [postId, shareToken, shareUrl, rotatedAt]
+      properties:
+        postId:
+          type: string
+          format: uuid
+        shareToken:
+          type: string
+          description: Raw token. 이 응답 이후 다시 조회할 수 없다.
+        shareUrl:
+          type: string
+          format: uri
+        rotatedAt:
+          type: string
+          format: date-time
     PagedCommunityPostSummary:
       type: object
       properties:
@@ -4232,9 +4590,18 @@ components:
         createdAt:
           type: string
           format: date-time
+    PagedModerationAction:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModerationAction'
+        page:
+          $ref: '#/components/schemas/PageMeta'
     Notification:
       type: object
-      required: [id, type, title, createdAt]
+      required: [id, type, title, payload, createdAt]
       properties:
         id:
           type: string
@@ -4253,14 +4620,28 @@ components:
         body:
           type: string
         payload:
-          type: object
-          additionalProperties: true
+          $ref: '#/components/schemas/TripInviteNotificationPayload'
         readAt:
           type: string
           format: date-time
         createdAt:
           type: string
           format: date-time
+    TripInviteNotificationPayload:
+      type: object
+      required: [tripId, inviteId, inviteCode]
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        inviteId:
+          type: string
+          format: uuid
+        inviteCode:
+          type: string
+        route:
+          type: string
+          example: /trips/invites/{inviteCode}
     PagedNotification:
       type: object
       properties:
