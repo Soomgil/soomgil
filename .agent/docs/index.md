@@ -10,6 +10,8 @@
 - `architecture_guide.md`: frontend/backend 책임 경계.
 - `page_map.md`: Vue Router 기준 프론트 화면 맵.
 - `functional_spec.md`: 제품 기능 명세.
+- `design-docs/design.md`: `frontend/` 현재 구현 기준 디자인 문서.
+- `design-docs/design_system_todo.md`: 디자인 시스템 수렴과 Settings 화면 통일 작업 TODO.
 - `api_spec.md`: API 경계와 백엔드 준비 기준.
 - `../contracts/backend_contract_decisions.md`: DBML/OpenAPI 생성 전 확정된 백엔드 계약 결정.
 - `generated/ui_inventory.md`: 자동 생성 워크스페이스/UI 인벤토리.
