@@ -13,6 +13,61 @@
 - 기능 개발 전에는 사용자 흐름과 테스트 계획을 설명하고 OK를 받은 뒤 테스트를 먼저 작성한다.
 - 테스트가 실패하는 이유를 확인한 뒤 구현한다.
 - 구현 완료는 테스트 통과와 커밋까지 포함한다.
+- 이 문서의 담당자별 TODO 체크박스는 "계획 완료"가 아니라 "기능 개발 완료"를 뜻한다.
+- 모든 담당자별 TODO와 후순위 TODO가 체크됐다는 것은 backend 기능 개발이 실제로 완료됐다는 뜻이어야 한다.
+
+## 체크박스 완료 기준
+
+담당자별 TODO, 후순위 TODO, 기능 카드의 최종 검증 체크박스는 아래 조건을 모두 만족할 때만 체크한다.
+
+- 사용자 흐름과 수용 기준을 설명했다.
+- 테스트 계획을 설명하고 OK를 받았다.
+- 테스트를 먼저 작성했다.
+- 테스트 실패를 확인했다.
+- 구현을 완료했다.
+- 관련 테스트가 통과했다.
+- 필요한 migration, mapper, controller, 문서 반영이 끝났다.
+- 변경 사항을 커밋했다.
+
+테스트 계획만 세웠거나 interface만 만든 상태는 기능 완료가 아니다. 그런 중간 상태는 기능 카드 안의 "이해/설명" 또는 "테스트" 항목에만 표시하고, 담당자별 TODO는 체크하지 않는다.
+
+완료 근거는 기능 카드, PR 본문, 또는 커밋 메시지/해시로 추적 가능해야 한다.
+
+## 다음 작업 안내 규칙
+
+누군가 본인 이름을 대고 "이제 뭐해야 해?"라고 물으면 이 문서를 기준으로 답한다.
+
+예:
+
+```text
+윤정 이제 뭐해야 해?
+김지훈 이제 뭐해야 해?
+민경철 이제 뭐해야 해?
+```
+
+응답 순서:
+
+1. 해당 담당자의 담당 디렉토리와 TODO에서 아직 체크되지 않은 첫 번째 작업을 찾는다.
+2. 그 작업의 관련 문서와 의존 interface를 알려준다.
+3. 바로 구현하라고 하지 말고, 먼저 사용자 흐름/수용 기준/테스트 계획을 작성하라고 안내한다.
+4. 필요한 경우 다른 담당자에게 받아야 하는 interface를 명시한다.
+5. 이미 담당자 TODO가 모두 끝났으면 후순위 모듈 또는 통합 테스트에서 다음 작업을 찾는다.
+
+응답 형식:
+
+```text
+다음 작업:
+담당 디렉토리:
+먼저 읽을 문서:
+의존하는 interface:
+TDD 순서:
+1. 이해/설명
+2. 테스트 작성
+3. 실패 확인
+4. 구현
+5. 테스트 통과
+6. 커밋
+```
 
 ## 개발 흐름
 
@@ -65,15 +120,15 @@ flowchart TD
 
 공통 합의 TODO:
 
-- [ ] `Command`, `CommandHandler`, `Query`, `QueryHandler` 형태 확정
-- [ ] command/query/handler 이름 규칙 확정
-- [ ] handler return type 규칙 확정
-- [ ] `CurrentUser` 표현 확정
-- [ ] 공통 `ErrorCode`, `BusinessException`, `ProblemDetails` 규칙 확정
-- [ ] page response 규칙 확정
-- [ ] 권한 실패와 validation 실패 응답 규칙 확정
-- [ ] 공통 event envelope 필드 확정
-- [ ] storage object key/public URL 규칙 확정
+- [ ] `Command`, `CommandHandler`, `Query`, `QueryHandler` 형태 확정 및 compile/test 통과
+- [ ] command/query/handler 이름 규칙 확정 및 예시 적용
+- [ ] handler return type 규칙 확정 및 예시 적용
+- [ ] `CurrentUser` 표현 확정 및 인증 테스트 통과
+- [ ] 공통 `ErrorCode`, `BusinessException`, `ProblemDetails` 규칙 확정 및 실패 응답 테스트 통과
+- [ ] page response 규칙 확정 및 list API 예시 테스트 통과
+- [ ] 권한 실패와 validation 실패 응답 규칙 확정 및 테스트 통과
+- [ ] 공통 event envelope 필드 확정 및 협업 이벤트 예시 테스트 통과
+- [ ] storage object key/public URL 규칙 확정 및 storage metadata 테스트 통과
 
 ## 담당자별 소유 범위
 
@@ -102,16 +157,16 @@ backend/src/main/java/com/soomgil/planning/
 
 윤정 TODO:
 
-- [ ] `auth` 로그인/토큰/세션 최소 흐름 테스트 계획
-- [ ] `user` 현재 사용자 조회 테스트 계획
-- [ ] `global/security` 인증 context 테스트 계획
-- [ ] `global/error` Problem Details 응답 테스트 계획
-- [ ] `ai` session/message 저장 테스트 계획
-- [ ] `ai` tool registry 테스트 계획
-- [ ] `ai` tool 실행 audit log 테스트 계획
-- [ ] `ai` context 권한 제한 테스트 계획
-- [ ] `chat` 여행방 채팅 메시지 테스트 계획
-- [ ] `planning` note/checklist tool 호출 테스트 계획
+- [ ] `auth` 로그인/토큰/세션 최소 흐름 개발 완료
+- [ ] `user` 현재 사용자 조회 개발 완료
+- [ ] `global/security` 인증 context 개발 완료
+- [ ] `global/error` Problem Details 응답 개발 완료
+- [ ] `ai` session/message 저장 개발 완료
+- [ ] `ai` tool registry 개발 완료
+- [ ] `ai` tool 실행 audit log 개발 완료
+- [ ] `ai` context 권한 제한 개발 완료
+- [ ] `chat` 여행방 채팅 메시지 개발 완료
+- [ ] `planning` note/checklist tool 호출 개발 완료
 
 의존 규칙:
 
@@ -145,18 +200,18 @@ backend/src/main/java/com/soomgil/global/event/
 
 김지훈 TODO:
 
-- [ ] `trip` 여행방 생성/멤버/권한 테스트 계획
-- [ ] `trip` invite/link/code 테스트 계획
-- [ ] `itinerary` day/item 추가 테스트 계획
-- [ ] `itinerary` item 이동/재정렬 테스트 계획
-- [ ] `itinerary` "일차 미정" 테스트 계획
-- [ ] `itinerary` version 증가 테스트 계획
-- [ ] `itinerary` map drawing 저장 테스트 계획
-- [ ] `itinerary` route segment 저장 테스트 계획
-- [ ] `itinerary` Mapbox map matching 성공/실패 테스트 계획
-- [ ] `collaboration` undo/redo stack 테스트 계획
-- [ ] `collaboration` WebSocket event broadcast 테스트 계획
-- [ ] `geo` legal region/viewport/coordinate 테스트 계획
+- [ ] `trip` 여행방 생성/멤버/권한 개발 완료
+- [ ] `trip` invite/link/code 개발 완료
+- [ ] `itinerary` day/item 추가 개발 완료
+- [ ] `itinerary` item 이동/재정렬 개발 완료
+- [ ] `itinerary` "일차 미정" 개발 완료
+- [ ] `itinerary` version 증가 개발 완료
+- [ ] `itinerary` map drawing 저장 개발 완료
+- [ ] `itinerary` route segment 저장 개발 완료
+- [ ] `itinerary` Mapbox map matching 성공/실패 개발 완료
+- [ ] `collaboration` undo/redo stack 개발 완료
+- [ ] `collaboration` WebSocket event broadcast 개발 완료
+- [ ] `geo` legal region/viewport/coordinate 개발 완료
 
 의존 규칙:
 
@@ -192,20 +247,20 @@ backend/src/main/resources/preference/
 
 민경철 TODO:
 
-- [ ] `common/cqrs` Command/Query/Handler 테스트 또는 compile contract 확인
-- [ ] `place` 관광지 조회/detail 테스트 계획
-- [ ] `place` viewport 후보 조회 테스트 계획
-- [ ] `place` 일반 이미지 + 수상작 이미지 후보 테스트 계획
-- [ ] `tourism_source` 원천 import manifest 테스트 계획
-- [ ] `tourism_source` 수상작 사진 매칭 테스트 계획
-- [ ] `preference` 고정 태그 whitelist seed 테스트 계획
-- [ ] `preference` tag enrichment 후보/확정 테스트 계획
-- [ ] `preference` swipe feed 테스트 계획
-- [ ] `preference` swipe reaction 저장 테스트 계획
-- [ ] `preference` user preference projection 테스트 계획
-- [ ] `preference` recommendation score 테스트 계획
-- [ ] `social` follower reaction lookup 테스트 계획
-- [ ] `global/storage` S3 object metadata 테스트 계획
+- [ ] `common/cqrs` Command/Query/Handler compile contract 개발 완료
+- [ ] `place` 관광지 조회/detail 개발 완료
+- [ ] `place` viewport 후보 조회 개발 완료
+- [ ] `place` 일반 이미지 + 수상작 이미지 후보 개발 완료
+- [ ] `tourism_source` 원천 import manifest 개발 완료
+- [ ] `tourism_source` 수상작 사진 매칭 개발 완료
+- [ ] `preference` 고정 태그 whitelist seed 개발 완료
+- [ ] `preference` tag enrichment 후보/확정 개발 완료
+- [ ] `preference` swipe feed 개발 완료
+- [ ] `preference` swipe reaction 저장 개발 완료
+- [ ] `preference` user preference projection 개발 완료
+- [ ] `preference` recommendation score 개발 완료
+- [ ] `social` follower reaction lookup 개발 완료
+- [ ] `global/storage` S3 object metadata 개발 완료
 
 의존 규칙:
 
@@ -228,10 +283,10 @@ backend/src/main/resources/preference/
 
 후순위 TODO:
 
-- [ ] `media` upload URL/file metadata 테스트 계획
-- [ ] `record` trip record entry/media 테스트 계획
-- [ ] `community` post/snapshot/comment/report 테스트 계획
-- [ ] `notification` trip invite notification 테스트 계획
+- [ ] `media` upload URL/file metadata 개발 완료
+- [ ] `record` trip record entry/media 개발 완료
+- [ ] `community` post/snapshot/comment/report 개발 완료
+- [ ] `notification` trip invite notification 개발 완료
 
 ## Merge Conflict 방지 규칙
 
@@ -281,4 +336,9 @@ backend/src/main/resources/preference/
 - [ ] 전체 backend test 통과
 - [ ] 변경 요약 작성
 - [ ] 커밋
+
+완료 근거:
+- 테스트 명령:
+- 커밋:
+- 남은 위험:
 ```
