@@ -6,6 +6,7 @@
 
 - `service_requirements.md`
 - `functional_spec.md`
+- `preference_tagging_policy.md`
 - `../api/api_spec.md`
 - `../../contracts/backend_contract_decisions.md`
 - `../../contracts/schema.dbml`
