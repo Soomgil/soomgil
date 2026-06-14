@@ -20,7 +20,7 @@
 - smoke test, regression test, 최종 QA 통과
 - main/develop 통합과 submodule pointer 정리 완료
 
-따라서 이 문서의 모든 담당자별 TODO와 후순위 TODO가 체크되면 "backend 기능 개발 완료"라고 부른다. "서비스 개발 완료"라고 부르려면 별도의 서비스 전체 release checklist가 필요하다.
+따라서 이 문서의 모든 담당자별 TODO가 체크되면 "backend 기능 개발 완료"라고 부른다. "서비스 개발 완료"라고 부르려면 별도의 서비스 전체 release checklist가 필요하다.
 
 ## 핵심 규칙
 
@@ -32,12 +32,12 @@
 - 테스트가 실패하는 이유를 확인한 뒤 구현한다.
 - 구현 완료는 테스트 통과와 커밋까지 포함한다.
 - 이 문서의 담당자별 TODO 체크박스는 "계획 완료"가 아니라 "기능 개발 완료"를 뜻한다.
-- 모든 담당자별 TODO와 후순위 TODO가 체크됐다는 것은 backend 기능 개발이 실제로 완료됐다는 뜻이어야 한다.
+- 모든 담당자별 TODO가 체크됐다는 것은 backend 기능 개발이 실제로 완료됐다는 뜻이어야 한다.
 - 서비스 전체 완료 여부를 이 문서 하나로 판단하지 않는다.
 
 ## 체크박스 완료 기준
 
-담당자별 TODO, 후순위 TODO, 기능 카드의 최종 검증 체크박스는 아래 조건을 모두 만족할 때만 체크한다.
+담당자별 TODO와 기능 카드의 최종 검증 체크박스는 아래 조건을 모두 만족할 때만 체크한다.
 
 - 사용자 흐름과 수용 기준을 설명했다.
 - 테스트 계획을 설명하고 OK를 받았다.
@@ -133,9 +133,41 @@ flowchart TD
 | 공통 API DTO | `backend/src/main/java/com/soomgil/common/api/dto/` | 3명 합의 | 모든 controller |
 | Pagination | `backend/src/main/java/com/soomgil/common/pagination/` | 3명 합의 | 모든 list API |
 | 공통 error | `backend/src/main/java/com/soomgil/global/error/` | 윤정 | 모든 실패 응답 |
-| 현재 사용자/security | `backend/src/main/java/com/soomgil/global/security/` | 윤정 | 모든 인증 API |
+| 현재 인증 사용자/security | `backend/src/main/java/com/soomgil/global/security/` | 윤정 | 모든 인증 API |
 | 공통 event envelope | `backend/src/main/java/com/soomgil/global/event/` | 김지훈 | 협업/실시간 이벤트 |
 | S3/storage 기본 계약 | `backend/src/main/java/com/soomgil/global/storage/` | 민경철 | 이미지/미디어 |
+
+## 전체 모듈 소유권
+
+아래 표는 backend Java 최상위 디렉토리와 DBML source namespace를 빠짐없이 배정한 기준이다.
+
+| 모듈/namespace | 디렉토리 또는 영역 | 담당 | 범위 |
+| :--- | :--- | :--- | :--- |
+| `ai` | `backend/src/main/java/com/soomgil/ai/` | 윤정 | AI chat session/message, tool registry, tool call audit |
+| `auth` | `backend/src/main/java/com/soomgil/auth/` | 윤정 | 로그인, 토큰, OAuth, 세션, 인증 identity |
+| `chat` | `backend/src/main/java/com/soomgil/chat/` | 윤정 | 여행방 사용자 채팅 |
+| `collaboration` | `backend/src/main/java/com/soomgil/collaboration/` | 김지훈 | version, undo/redo, 협업 command event |
+| `common` | `backend/src/main/java/com/soomgil/common/` | 3명 합의 | CQRS, API DTO, pagination, id/time/validation |
+| `community` | `backend/src/main/java/com/soomgil/community/` | 윤정 | 공개 게시글, 댓글, 신고, moderation, retrip surface |
+| `geo` | `backend/src/main/java/com/soomgil/geo/` | 김지훈 | 법정동, 좌표, viewport, 지도 지역 조회 |
+| `global` | `backend/src/main/java/com/soomgil/global/` | 3명 분담 | error/security/event/storage/config/web/persistence |
+| `itinerary` | `backend/src/main/java/com/soomgil/itinerary/` | 김지훈 | 일정 day/item, 일차 미정, route, map drawing, Mapbox |
+| `media` | `backend/src/main/java/com/soomgil/media/` | 민경철 | upload URL, media metadata, S3 연동 surface |
+| `notification` | `backend/src/main/java/com/soomgil/notification/` | 윤정 | 알림, 여행방 초대 알림 |
+| `place` | `backend/src/main/java/com/soomgil/place/` | 민경철 | 장소 조회, 상세, viewport 후보, 이미지 후보 |
+| `planning` | `backend/src/main/java/com/soomgil/planning/` | 윤정 | 메모, 체크리스트, AI tool surface |
+| `preference` | `backend/src/main/java/com/soomgil/preference/` | 민경철 | 태그, 스와이프, projection, 추천 점수 |
+| `record` | `backend/src/main/java/com/soomgil/record/` | 김지훈 | 여행 기록, 기록 미디어 연결 |
+| `social` | `backend/src/main/java/com/soomgil/social/` | 민경철 | 팔로우 관계, 팔로우 기반 반응 조회 |
+| `trip` | `backend/src/main/java/com/soomgil/trip/` | 김지훈 | 여행방, 멤버, 초대, 권한 |
+| `user` | `backend/src/main/java/com/soomgil/user/` | 민경철 | user profile, summary, avatar, settings |
+| `tourism_source` | `.agent/contracts/schema.dbml`, `backend/src/main/resources/tourism-source/` | 민경철 | 관광공사 원천, 수상작 사진, source import/matching |
+| `ops` | `.agent/contracts/schema.dbml`의 `ops.*` | 윤정 | 운영/audit log 정책. 각 모듈은 자기 이벤트를 남긴다. |
+
+`auth`와 `user`는 분리한다.
+
+- 윤정: 현재 로그인한 사용자를 식별하는 인증/session/security 흐름
+- 민경철: 식별된 `userId`로 조회하는 profile, avatar, summary, settings
 
 공통 합의 TODO:
 
@@ -157,10 +189,12 @@ flowchart TD
 
 - AI chat
 - tool calling
-- auth/user/security
+- auth/security/current user identity
 - 공통 error
 - 여행방 사용자 채팅
 - note/checklist tool surface
+- community
+- notification
 
 주요 디렉토리:
 
@@ -168,16 +202,16 @@ flowchart TD
 backend/src/main/java/com/soomgil/ai/
 backend/src/main/java/com/soomgil/chat/
 backend/src/main/java/com/soomgil/auth/
-backend/src/main/java/com/soomgil/user/
 backend/src/main/java/com/soomgil/global/security/
 backend/src/main/java/com/soomgil/global/error/
 backend/src/main/java/com/soomgil/planning/
+backend/src/main/java/com/soomgil/community/
+backend/src/main/java/com/soomgil/notification/
 ```
 
 윤정 TODO:
 
 - [ ] `auth` 로그인/토큰/세션 최소 흐름 개발 완료
-- [ ] `user` 현재 사용자 조회 개발 완료
 - [ ] `global/security` 인증 context 개발 완료
 - [ ] `global/error` Problem Details 응답 개발 완료
 - [ ] `ai` session/message 저장 개발 완료
@@ -186,6 +220,8 @@ backend/src/main/java/com/soomgil/planning/
 - [ ] `ai` context 권한 제한 개발 완료
 - [ ] `chat` 여행방 채팅 메시지 개발 완료
 - [ ] `planning` note/checklist tool 호출 개발 완료
+- [ ] `community` post/snapshot/comment/report/moderation 개발 완료
+- [ ] `notification` trip invite notification 개발 완료
 
 의존 규칙:
 
@@ -206,6 +242,7 @@ backend/src/main/java/com/soomgil/planning/
 - undo/redo
 - WebSocket event
 - geo/Mapbox
+- record
 
 주요 디렉토리:
 
@@ -215,6 +252,7 @@ backend/src/main/java/com/soomgil/itinerary/
 backend/src/main/java/com/soomgil/collaboration/
 backend/src/main/java/com/soomgil/geo/
 backend/src/main/java/com/soomgil/global/event/
+backend/src/main/java/com/soomgil/record/
 ```
 
 김지훈 TODO:
@@ -231,6 +269,7 @@ backend/src/main/java/com/soomgil/global/event/
 - [ ] `collaboration` undo/redo stack 개발 완료
 - [ ] `collaboration` WebSocket event broadcast 개발 완료
 - [ ] `geo` legal region/viewport/coordinate 개발 완료
+- [ ] `record` trip record entry/media 개발 완료
 
 의존 규칙:
 
@@ -251,14 +290,18 @@ backend/src/main/java/com/soomgil/global/event/
 - recommendation
 - social follower signal
 - S3 이미지 후보
+- user profile/summary/avatar/settings
+- media
 
 주요 디렉토리:
 
 ```text
 backend/src/main/java/com/soomgil/common/cqrs/
+backend/src/main/java/com/soomgil/user/
 backend/src/main/java/com/soomgil/place/
 backend/src/main/java/com/soomgil/preference/
 backend/src/main/java/com/soomgil/social/
+backend/src/main/java/com/soomgil/media/
 backend/src/main/java/com/soomgil/global/storage/
 backend/src/main/resources/tourism-source/
 backend/src/main/resources/preference/
@@ -267,6 +310,7 @@ backend/src/main/resources/preference/
 민경철 TODO:
 
 - [ ] `common/cqrs` Command/Query/Handler compile contract 개발 완료
+- [ ] `user` profile/summary/avatar/settings 개발 완료
 - [ ] `place` 관광지 조회/detail 개발 완료
 - [ ] `place` viewport 후보 조회 개발 완료
 - [ ] `place` 일반 이미지 + 수상작 이미지 후보 개발 완료
@@ -279,6 +323,7 @@ backend/src/main/resources/preference/
 - [ ] `preference` user preference projection 개발 완료
 - [ ] `preference` recommendation score 개발 완료
 - [ ] `social` follower reaction lookup 개발 완료
+- [ ] `media` upload URL/file metadata 개발 완료
 - [ ] `global/storage` S3 object metadata 개발 완료
 
 의존 규칙:
@@ -289,23 +334,16 @@ backend/src/main/resources/preference/
 - 수상작 사진 존재 여부를 추천 점수에 직접 더하지 않는다.
 - `UNMATCHED`, `CANDIDATE`, `AMBIGUOUS` 수상작 사진은 public serving 후보에서 제외한다.
 
-## 후순위 모듈
+## 후순위 시작 조건
 
-아래 모듈은 1차 핵심 흐름 이후 시작한다. 시작 전에도 동일한 TDD 흐름을 따른다.
+아래 모듈은 담당자별 TODO에 포함되어 있지만, 1차 핵심 흐름 이후 시작한다. 시작 전에도 동일한 TDD 흐름을 따른다.
 
-| 모듈 | 디렉토리 | 임시 주도 | 시작 조건 |
+| 모듈 | 디렉토리 | 담당 | 시작 조건 |
 | :--- | :--- | :--- | :--- |
 | media | `backend/src/main/java/com/soomgil/media/` | 민경철 | storage 계약 확정 후 |
 | record | `backend/src/main/java/com/soomgil/record/` | 김지훈 | trip/itinerary/place 참조 안정화 후 |
 | community | `backend/src/main/java/com/soomgil/community/` | 윤정 | auth/user/media/trip snapshot 안정화 후 |
 | notification | `backend/src/main/java/com/soomgil/notification/` | 윤정 | auth/user/trip invite 흐름 안정화 후 |
-
-후순위 TODO:
-
-- [ ] `media` upload URL/file metadata 개발 완료
-- [ ] `record` trip record entry/media 개발 완료
-- [ ] `community` post/snapshot/comment/report 개발 완료
-- [ ] `notification` trip invite notification 개발 완료
 
 ## Merge Conflict 방지 규칙
 
