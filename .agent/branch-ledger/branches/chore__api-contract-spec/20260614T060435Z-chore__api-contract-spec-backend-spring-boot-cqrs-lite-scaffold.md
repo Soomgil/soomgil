@@ -28,6 +28,7 @@ status: draft
 - `.agent/contracts/schema.dbml`의 preference 영역을 고정 태그 whitelist, 후보/확정 태그 분리, `tag_statistic_runs`, 50개 합성 페르소나/합성 스와이프 이벤트 구조에 맞게 확장했습니다.
 - `.agent/contracts/schema.dbml`에 `tourism_source` schema를 추가해 SSAFY/KTO 스타일 관광지 원천 DB, 일반 관광지 이미지 후보, 콘텐츠랩 공모전 수상작 사진/S3 metadata/관광지 매칭 후보를 서비스 DB와 분리했습니다.
 - `.agent/docs/product-specs/tourism_source_policy.md`에 관광지 원천 DB, 콘텐츠랩 수상작 사진, S3 저장, 권리 검토, 매칭 확정, 이미지 fallback, public serving 금지 조건을 정리했습니다.
+- backend `chore/backend-scaffold`의 로컬 resource 문서 커밋들을 원격 API controller scaffold 커밋 위로 재배치해 분기된 scaffold 히스토리를 한 줄로 정리했습니다.
 - 루트 README, `.agent/workspaces.json`, architecture guide, generated UI inventory에서 backend 상태를 `active`로 갱신했습니다.
 
 ## 에이전트 주의사항
