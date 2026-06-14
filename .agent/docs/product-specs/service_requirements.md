@@ -46,8 +46,10 @@
 - 추천 리스트에는 별도 SUPER_LIKE 탭이 있습니다.
 - SUPER_LIKE 탭은 여행방 참여자들이 평소에 SUPER_LIKE한 장소를 SUPER_LIKE 강도/수 기준으로 우선 보여줍니다.
 - 참여자 태그 매칭은 서비스 내부 태그 사전을 기준으로 합니다.
+- 서비스 내부 태그 사전은 `preference_tagging_policy.md`의 고정 whitelist만 사용하며, whitelist 밖 태그는 확정 태그로 저장하지 않습니다.
 - 관광공사 장소 데이터의 카테고리, 제목, 설명, 주소, 부가 정보를 AI로 분석해 내부 선호 태그를 추출/매핑합니다.
 - AI 태그 추출은 사용자에게 직접 노출되는 AI 경로 추천 기능이 아니라, 추천 리스트 정렬과 선호도 매칭을 위한 백엔드 enrichment 기능입니다.
+- 추천 태그 계산은 `confidence`, `weight`, `preference_discrimination` 중심으로 설계합니다.
 - 추천 근거는 긴 설명보다 멤버 매칭 표시를 우선합니다.
 - 지도 협업은 일정 아이템 변경뿐 아니라 자유 드로잉 과정과 도로 보정 경로 이벤트 모델을 추가로 검토해야 합니다.
 - WebSocket/STOMP 이벤트는 itinerary 변경, map drawing preview, route snapping 결과 변경을 구분해야 합니다.
@@ -69,6 +71,7 @@
 - AI는 미정 장소를 배치하면서 기존 실제 day 안의 장소 순서를 동선에 맞게 조정할 수 있습니다.
 - AI는 명시적 요청 없이 기존 실제 day에 배치된 장소를 다른 day로 이동하지 않습니다.
 - 선호도 계산은 원본 스와이프 이벤트 로그와 현재 선호도 projection을 함께 사용합니다.
+- cold-start 단계의 합성 스와이프 데이터는 50개 고정 페르소나 기반으로 생성하고, 실제 사용자 이벤트와 source/storage를 분리합니다.
 - `user_preference_tag_weights`는 현재 선호도 상태를 빠르게 조회하기 위한 materialized projection입니다.
 - 선호도 projection은 raw 누적 점수와 추천에 사용하는 capped normalized score를 함께 저장합니다.
 - 추천 계산에는 raw score가 아니라 사용자별 normalized score를 사용합니다.

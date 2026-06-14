@@ -147,11 +147,16 @@ street_alley: 거리/골목
 | :--- | :--- |
 | `preference.preference_tags` | 고정 태그 사전. 위 whitelist의 `code`, `display_name`, group, parent 관계, 활성 여부를 관리한다. |
 | `preference.place_tag_enrichments` | 장소 태깅 실행 기록. provider/place/model/prompt/dictionary version/status를 기록한다. |
-| `preference.place_tag_enrichment_tags` | whitelist 안에서 장소에 붙은 태그와 `confidence`, `weight`를 저장한다. 후보 전체를 보존하려면 `is_selected`를 추가하거나 후보 테이블을 분리한다. |
+| `preference.place_tag_enrichment_candidates` | 모델이 출력한 후보 전체를 저장한다. whitelist 밖 후보는 `REJECTED_OUT_OF_DICTIONARY`로 남긴다. |
+| `preference.place_tag_enrichment_tags` | whitelist 안에서 확정된 serving 태그와 `confidence`, `weight`, 선택 당시 `preference_discrimination` snapshot을 저장한다. |
+| `preference.tag_statistic_runs` | `AI_ONLY_DEFAULT`, `SYNTHETIC_PERSONA`, `REAL_USER` 통계 계산 run과 serving 여부를 기록한다. |
+| `preference.tag_statistics` | 태그별 `preference_discrimination`, smoothing 결과, sample count를 저장한다. |
+| `preference.synthetic_personas` | 50개 고정 페르소나 정의를 저장한다. |
+| `preference.synthetic_persona_tag_preferences` | 각 페르소나가 어떤 태그를 hard/soft like/dislike하는지 저장한다. |
+| `preference.synthetic_swipe_events` | 페르소나 기반 cold-start 합성 스와이프 이벤트를 실제 사용자 이벤트와 분리해 저장한다. |
 | `preference.user_swipe_events` | 모든 스와이프 이벤트 원본 로그. 통계 재계산의 기준이다. |
 | `preference.user_place_reactions` | 사용자-장소 최종 반응 상태. 빠른 조회와 중복 반응 처리에 사용한다. |
 | `preference.user_preference_tag_weights` | 사용자별 현재 태그 선호도 projection. 추천 API는 이 projection을 읽는다. |
-| `tag_statistics` 후보 | 태그별 `preference_discrimination`, sample count, source를 저장하는 projection. 구현 전 DBML에 반영한다. |
 
 원본 실행 로그와 후보 태그는 감사/재계산을 위해 보관한다. 다만 cold-start용 합성 통계와 모델 기본값은 실제 사용자 통계가 안정화되면 추천 serving 경로에서 제외한다.
 

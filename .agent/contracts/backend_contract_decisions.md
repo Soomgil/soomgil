@@ -101,8 +101,11 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 거리는 보조 점수 또는 동점 처리 기준으로 사용합니다.
 - 추천 패널에는 SUPER_LIKE 탭이 있으며, 이 탭은 여행방 참여자들이 평소 SUPER_LIKE한 장소를 SUPER_LIKE 강도/수 기준으로 우선 정렬합니다.
 - 태그 매칭은 서비스 내부 태그 사전을 기준으로 합니다.
+- 서비스 내부 태그 사전은 `.agent/docs/product-specs/preference_tagging_policy.md`의 고정 whitelist만 사용합니다.
+- 모델이 whitelist 밖 태그를 출력하면 확정 태그로 저장하지 않고 후보 로그에만 거절 상태로 남깁니다.
 - 관광공사 장소 데이터는 AI 태그 추출/매핑 과정을 거쳐 내부 선호 태그로 변환합니다.
 - AI 태그 추출은 사용자-facing AI 경로 초안 기능이 아니라 추천/매칭 품질을 위한 backend enrichment 기능입니다.
+- 장소 태그 추천 계산은 `confidence`, `weight`, `preference_discrimination`을 중심으로 하며 `rarity`나 tree depth 기반 specificity는 MVP 추천 점수 필수 입력으로 사용하지 않습니다.
 - 추천 장소 API는 `matched_members` 또는 이에 준하는 필드로 매칭 멤버의 id, name, avatar/profile image를 반환해야 합니다.
 - 추천 장소 API는 필수 viewport bounds, 선택적 center 또는 route anchor, tab mode, pagination을 받을 수 있어야 합니다.
 - 스와이프 반응은 최종 상태 테이블과 이벤트 로그 테이블을 분리합니다.
@@ -115,6 +118,8 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - normalized score 공식은 `tanh(raw_score / scale)`을 기본으로 합니다.
 - `scale`은 운영 튜닝 가능한 설정값으로 둡니다.
 - 스와이프 저장 후 비동기 worker가 projection을 갱신합니다.
+- cold-start 통계는 `AI_ONLY_DEFAULT`, `SYNTHETIC_PERSONA`, `REAL_USER` source를 분리하고, 실제 사용자 통계가 안정화되면 합성 통계는 serving 경로에서 제거합니다.
+- cold-start 합성 스와이프 데이터는 50개 고정 페르소나를 기반으로 생성하고 실제 사용자 `user_swipe_events`와 분리해 보관합니다.
 - V1에서는 시간 감쇠 기반 선호도 재계산과 daily summary를 사용하지 않습니다.
 - projection 갱신은 스와이프 이벤트가 발생할 때 해당 장소의 태그만 반영하는 incremental update를 기본으로 합니다.
 - 원본 이벤트 로그는 projection 복구, 가중치 공식 변경 시 재처리, 감사 용도로 남기며 일반 추천 요청에서 매번 재계산하지 않습니다.
