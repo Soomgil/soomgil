@@ -11,7 +11,7 @@
 | `.agent/` | active | frontend/backend를 함께 이해하기 위한 AI 하네스, 문서, 생성 인벤토리, 검사 스크립트 |
 | `.agent/branch-ledger/` | active | 브랜치별 AI 문맥을 격리해 기록하는 Flyway식 ledger |
 | `frontend/` | planned | 빈 프론트엔드 앱 submodule. 추후 Vue 앱 scaffold |
-| `backend/` | planned | 빈 백엔드 앱 submodule. 추후 Spring Boot 앱 scaffold |
+| `backend/` | active | Spring Boot 백엔드 앱 submodule. CQRS-lite 패키지 구조와 Gradle scaffold |
 
 루트에는 정적 `index.html`, `pages/`, `assets/`, 제품 `src/`를 두지 않습니다. 정적 HTML/CSS/JS 목업은 더 이상 활성 제품 기준이 아닙니다.
 
@@ -21,6 +21,8 @@
 | :--- | :--- |
 | `npm --prefix frontend run dev` | 프론트엔드 scaffold 이후 개발 서버 실행 |
 | `npm --prefix frontend run build` | 프론트엔드 scaffold 이후 production 빌드 |
+| `./backend/gradlew -p backend bootRun` | 백엔드 개발 서버 실행 |
+| `./backend/gradlew -p backend test` | 백엔드 테스트 실행 |
 | `npm --prefix .agent run branch:status` | 현재 브랜치에서 읽어도 되는 AI 문맥 확인 |
 | `npm --prefix .agent run branch:note -- --title "제목"` | 현재 브랜치용 AI ledger 기록 생성 |
 | `npm --prefix .agent run branch:check` | 다른 브랜치 ledger 오염 검사 |
@@ -48,7 +50,7 @@
 - `.agent/contracts/backend_contract_decisions.md`는 backend DBML/OpenAPI 생성 기준입니다.
 - `.agent/branch-ledger/`는 브랜치별 AI 문맥을 분리합니다. 기능 브랜치는 자기 ledger만 보고, develop/main에서 통합합니다.
 - `frontend/`, `backend/` 제품 코드는 각각의 submodule repo에서 커밋하고, 이 orchestration repo는 submodule pointer와 `.agent/`를 관리합니다.
-- 백엔드가 서브모듈로 들어오면 `.agent/workspaces.json`, `.agent/docs/architecture/architecture_guide.md`, `.agent/tools/*`를 같은 기준으로 확장합니다.
+- 백엔드 구조 변경 시 `.agent/workspaces.json`, `.agent/docs/architecture/architecture_guide.md`, `.agent/tools/*`를 같은 기준으로 확장합니다.
 - 제품 코드 수정 시 관련 `.agent/docs/` 문서와 생성 인벤토리를 함께 갱신합니다.
 
 ## 참고 문서

@@ -23,13 +23,15 @@
       "name": "backend",
       "type": "backend",
       "path": "backend",
-      "status": "planned",
+      "status": "active",
       "repoRole": "submodule",
       "repoUrl": "https://github.com/Soomgil/soomgil-backend.git",
-      "framework": "TBD",
-      "packageManager": "TBD",
+      "framework": "Spring Boot",
+      "packageManager": "gradle",
+      "devCommand": "./backend/gradlew -p backend bootRun",
+      "buildCommand": "./backend/gradlew -p backend build",
       "summary": {
-        "status": "planned"
+        "status": "active"
       }
     }
   ]
