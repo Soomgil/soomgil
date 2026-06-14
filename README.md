@@ -63,6 +63,7 @@
 | `.agent/docs/harness/ai_harness_guide.md` | 하네스 운영 방식 |
 | `.agent/docs/process/git_workflow.md` | Git Flow, commit convention, submodule 운영 정책 |
 | `.agent/docs/process/branching_agent_docs.md` | 브랜치별 AI 문서 격리와 통합 규칙 |
+| `.agent/docs/process/domain_development_policy.md` | 도메인 개발 전 설명, test-first, 검증 보고 정책 |
 | `.agent/docs/architecture/architecture_guide.md` | frontend/backend 책임 경계 |
 | `.agent/docs/frontend/page_map.md` | 프론트엔드 라우트와 페이지 |
 | `.agent/docs/generated/ui_inventory.md` | 자동 생성 UI/워크스페이스 인벤토리 |
