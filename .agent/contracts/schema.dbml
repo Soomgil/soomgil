@@ -12,10 +12,214 @@ Project soomgil {
   - Internal event/audit streams may use bigserial.
   - User-facing extensible concepts use tables or code-managed rows instead of PostgreSQL enums.
   - Tables are grouped by PostgreSQL schema-qualified names such as auth.users and trip.trips.
-  - External place master data is not stored; places are referenced by provider + external_place_id.
+  - Production service schemas do not store external place master data; places are referenced by provider + external_place_id.
+  - tourism_source.* is a separate enrichment/source namespace for tag extraction, source matching, and public tourism image candidates.
+  - tourism_source may be deployed as a physically separate database; this DBML keeps it in one contract file for cross-domain visibility.
   - Routes are stored as itinerary item-to-item segments, not day-owned records.
   - Community post snapshots store immutable display data needed to render after source changes.
   '''
+}
+
+// ============================================================
+// External Tourism Source Data for Tag Extraction
+// ============================================================
+
+Table tourism_source.sidos {
+  no int [pk, increment, note: 'Source row id.']
+  sido_code int [not null, unique, note: 'KTO/SSAFY sido code.']
+  sido_name varchar(20)
+
+  Indexes {
+    sido_code [unique]
+  }
+
+  Note: 'Source-region table imported from KTO/SSAFY-style tourism data. Not a production service domain table.'
+}
+
+Table tourism_source.guguns {
+  no int [pk, increment, note: 'Source row id.']
+  sido_code int [not null]
+  gugun_code int [not null]
+  gugun_name varchar(20)
+
+  Indexes {
+    (sido_code, gugun_code) [unique]
+    sido_code
+    gugun_code
+  }
+
+  Note: 'Source subregion table. Composite sido_code + gugun_code identifies a region within the source dataset.'
+}
+
+Table tourism_source.contenttypes {
+  content_type_id int [pk, note: 'KTO content type id.']
+  content_type_name varchar(45)
+
+  Note: 'Source content type dictionary used for attraction import and tag extraction hints.'
+}
+
+Table tourism_source.attractions {
+  no int [pk, increment, note: 'Source attraction row id.']
+  content_id int [note: 'KTO content id. Used as external_place_id when present.']
+  title varchar(500)
+  content_type_id int
+  area_code int [note: 'Sido code.']
+  si_gun_gu_code int [note: 'Gugun code within area_code.']
+  first_image1 text
+  first_image2 text
+  map_level int
+  latitude decimal(20,17)
+  longitude decimal(20,17)
+  tel varchar(40)
+  addr1 varchar(200)
+  addr2 varchar(200)
+  homepage text
+  overview text
+  source_hash varchar(128)
+  source_modified_at timestamptz
+  imported_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    content_id
+    title
+    content_type_id
+    area_code
+    (area_code, si_gun_gu_code)
+    (latitude, longitude)
+  }
+
+  Note: 'Attraction source data used for tag extraction and source matching. This is not the user-facing service place master.'
+}
+
+Table tourism_source.attraction_images {
+  id uuid [pk, default: `gen_random_uuid()`]
+  attraction_no int [not null]
+  source_provider varchar(80) [not null, default: 'KTO']
+  source_type varchar(40) [not null, note: 'FIRST_IMAGE1, FIRST_IMAGE2, DETAIL_IMAGE, MANUAL']
+  original_url text
+  storage_provider varchar(40) [note: 'EXTERNAL_URL, S3']
+  bucket varchar(120)
+  object_key text
+  public_url text [not null]
+  display_order int [not null, default: 999]
+  width int
+  height int
+  checksum_sha256 varchar(128)
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    attraction_no
+    source_provider
+    source_type
+    display_order
+    is_active
+  }
+
+  Note: 'Normal tourism image candidates used before mixing in contest award photos. Enables the 4 normal + 1 award-photo display policy.'
+}
+
+Table tourism_source.region_aliases {
+  id uuid [pk, default: `gen_random_uuid()`]
+  alias varchar(120) [not null]
+  normalized_alias varchar(120) [not null]
+  sido_code int
+  gugun_code int
+  alias_type varchar(40) [not null, note: 'FILE_NAME_TOKEN, COMMON_NAME, ADMIN_NAME, MANUAL']
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    normalized_alias
+    (sido_code, gugun_code)
+    alias_type
+    is_active
+  }
+
+  Note: 'Region alias dictionary for matching award photo file names to source regions.'
+}
+
+Table tourism_source.photo_contests {
+  id uuid [pk, default: `gen_random_uuid()`]
+  provider varchar(80) [not null, default: 'KTO_CONTENTS_LAB']
+  contest_name varchar(200) [not null]
+  award_year int [not null]
+  contest_round varchar(80)
+  source_url text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    provider
+    award_year
+    contest_name
+  }
+
+  Note: 'Korea Tourism Organization Contents Lab contest metadata for downloaded award photos.'
+}
+
+Table tourism_source.contest_award_photos {
+  id uuid [pk, default: `gen_random_uuid()`]
+  contest_id uuid
+  award_year int [not null]
+  award_name varchar(160)
+  award_rank int [not null, default: 999, note: 'Lower rank sorts first within the same award year.']
+  title varchar(240)
+  photographer_name varchar(120)
+  original_file_name varchar(500) [not null]
+  extracted_region_text varchar(240)
+  storage_provider varchar(40) [not null, default: 'S3']
+  bucket varchar(120)
+  object_key text [not null]
+  public_url text
+  mime_type varchar(120)
+  byte_size bigint
+  width int
+  height int
+  checksum_sha256 varchar(128)
+  upload_status varchar(30) [not null, default: 'DOWNLOADED', note: 'DOWNLOADED, UPLOADED, FAILED']
+  license_note text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    contest_id
+    award_year
+    award_rank
+    original_file_name
+    object_key
+    upload_status
+  }
+
+  Note: 'Downloaded contest award photo metadata. Binary files live in S3-compatible storage, not in the database.'
+}
+
+Table tourism_source.contest_award_photo_matches {
+  id uuid [pk, default: `gen_random_uuid()`]
+  photo_id uuid [not null]
+  attraction_no int
+  sido_code int
+  gugun_code int
+  match_scope varchar(30) [not null, note: 'ATTRACTION, REGION, UNMATCHED']
+  match_status varchar(30) [not null, note: 'CANDIDATE, SELECTED, REJECTED, AMBIGUOUS']
+  match_method varchar(40) [not null, note: 'FILE_NAME_REGION, TITLE_TEXT, MANUAL, IMPORT_METADATA']
+  confidence decimal(5,4)
+  is_selected boolean [not null, default: false]
+  rationale text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    photo_id
+    attraction_no
+    (sido_code, gugun_code)
+    match_scope
+    match_status
+    match_method
+    is_selected
+  }
+
+  Note: 'A contest photo may be matched to an exact attraction, region only, or remain unmatched for future use.'
 }
 
 // ============================================================
@@ -1457,6 +1661,19 @@ Table ops.audit_logs {
 // ============================================================
 // References
 // ============================================================
+
+Ref: tourism_source.guguns.sido_code > tourism_source.sidos.sido_code
+Ref: tourism_source.attractions.content_type_id > tourism_source.contenttypes.content_type_id
+Ref: tourism_source.attractions.area_code > tourism_source.sidos.sido_code
+Ref: tourism_source.attractions.(area_code, si_gun_gu_code) > tourism_source.guguns.(sido_code, gugun_code)
+Ref: tourism_source.attraction_images.attraction_no > tourism_source.attractions.no
+Ref: tourism_source.region_aliases.sido_code > tourism_source.sidos.sido_code
+Ref: tourism_source.region_aliases.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code)
+Ref: tourism_source.contest_award_photos.contest_id > tourism_source.photo_contests.id
+Ref: tourism_source.contest_award_photo_matches.photo_id > tourism_source.contest_award_photos.id
+Ref: tourism_source.contest_award_photo_matches.attraction_no > tourism_source.attractions.no
+Ref: tourism_source.contest_award_photo_matches.sido_code > tourism_source.sidos.sido_code
+Ref: tourism_source.contest_award_photo_matches.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code)
 
 Ref: auth.user_email_addresses.user_id > auth.users.id
 Ref: auth.user_profiles.user_id > auth.users.id

@@ -145,6 +145,9 @@ street_alley: 거리/골목
 
 | 저장소 | 책임 |
 | :--- | :--- |
+| `tourism_source.sidos`, `tourism_source.guguns`, `tourism_source.contenttypes`, `tourism_source.attractions` | 태그 추출에 사용하는 관광지 원천 DB. 서비스 production 장소 마스터와 분리한다. |
+| `tourism_source.attraction_images` | 관광지별 일반 이미지 후보를 저장한다. 콘텐츠랩 수상작 사진과 섞어 보여줄 때 기본 4장 후보로 사용한다. |
+| `tourism_source.contest_award_photos`, `tourism_source.contest_award_photo_matches` | 콘텐츠랩 공모전 수상작 사진 metadata와 관광지/지역 매칭 후보를 저장한다. 태그 추출/추천 display 후보로 사용할 수 있다. |
 | `preference.preference_tags` | 고정 태그 사전. 위 whitelist의 `code`, `display_name`, group, parent 관계, 활성 여부를 관리한다. |
 | `preference.place_tag_enrichments` | 장소 태깅 실행 기록. provider/place/model/prompt/dictionary version/status를 기록한다. |
 | `preference.place_tag_enrichment_candidates` | 모델이 출력한 후보 전체를 저장한다. whitelist 밖 후보는 `REJECTED_OUT_OF_DICTIONARY`로 남긴다. |

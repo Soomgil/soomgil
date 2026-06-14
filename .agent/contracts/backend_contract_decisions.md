@@ -74,12 +74,30 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 ## 장소와 관광공사 데이터
 
 - 장소 주 데이터는 관광공사 데이터랩 API를 사용합니다.
-- 장소 마스터 상세 데이터는 저장하지 않습니다.
+- production 서비스 schema에는 장소 마스터 상세 데이터를 저장하지 않습니다.
 - 서비스 내부 참조는 `provider + external_place_id`를 기준으로 합니다.
+- 태그 추출, 원천 검색, 공모전 사진 매칭을 위한 별도 source/enrichment namespace는 `tourism_source.*`로 분리합니다.
+- `tourism_source.*`는 배포 시 production 서비스 DB와 물리적으로 다른 DB로 둘 수 있으며, DBML에서는 계약 가시성을 위해 같은 파일에 둡니다.
+- `tourism_source.*`는 사용자/여행/커뮤니티 도메인 테이블이 아니라 backend enrichment와 import pipeline용 데이터입니다.
+- SSAFY/KTO 스타일 원천 테이블인 `sidos`, `guguns`, `contenttypes`, `attractions`는 `tourism_source` schema에 보관합니다.
+- `tourism_source.attractions.content_id`가 있으면 서비스의 `external_place_id` 후보로 사용합니다.
+- 관광지 일반 이미지 후보는 `tourism_source.attraction_images`에 정규화해 보관합니다.
 - 관광공사 데이터에 없는 장소는 별도 `custom_places` 테이블 없이 일정 아이템 안에 임시 정보로만 저장합니다.
 - 커뮤니티/공유 루트 snapshot에는 게시 시점 표시용 최소 장소 정보를 저장합니다.
 - snapshot 표시 정보 예: `place_name`, `address`, `lat`, `lng`, `thumbnail_url`, `provider`, `external_place_id`, `source_status`.
 - 원본 관광공사 데이터가 삭제/조회 불가이면 `source_status = DELETED`로 표시하고 UI에는 삭제된 데이터로 보여줍니다.
+
+## 관광공사 콘텐츠랩 공모전 사진
+
+- 한국관광공사 콘텐츠랩 공모전 수상작 사진은 서비스 업로드 미디어와 분리해 `tourism_source.contest_award_photos`에 source metadata로 저장합니다.
+- 실제 이미지 파일은 S3 호환 object storage에 업로드하고 DB에는 bucket, object key, public URL 또는 serving URL, checksum, dimension 같은 metadata만 저장합니다.
+- 공모전 사진 파일명에 지역명이 포함될 수 있으므로 `tourism_source.region_aliases`와 `contest_award_photo_matches`로 지역/관광지 매칭 후보를 관리합니다.
+- 공모전 사진은 정확한 관광지에 연결될 수도 있고, 지역 수준으로만 연결되거나, 연결되지 않을 수도 있습니다.
+- 연결되지 않은 수상작 사진도 삭제하지 않고 `UNMATCHED` 또는 후보 상태로 보관해 추후 활용 가능성을 남깁니다.
+- 동일 관광지 또는 동일 지역에 수상작 사진이 여러 장 있으면 `award_year DESC`, `award_rank ASC`, `created_at DESC` 순으로 우선 사용합니다.
+- 관광지 이미지 구성은 기본적으로 `tourism_source.attraction_images`에서 일반 관광지 이미지 4개와 연결 가능한 수상작 사진 1개를 섞는 정책을 우선합니다.
+- 해당 관광지/지역에 연결 가능한 수상작 사진이 없으면 일반 관광지 이미지와 보유 이미지로만 구성합니다.
+- 수상작 사진은 태그 추출과 추천 display 후보에 활용할 수 있지만, 사용자 기록/커뮤니티 업로드 미디어와 소유권/삭제 정책을 섞지 않습니다.
 
 ## 스와이프와 저장
 
