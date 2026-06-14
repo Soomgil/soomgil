@@ -160,14 +160,14 @@ flowchart TD
 | `record` | `backend/src/main/java/com/soomgil/record/` | 김지훈 | 여행 기록, 기록 미디어 연결 |
 | `social` | `backend/src/main/java/com/soomgil/social/` | 민경철 | 팔로우 관계, 팔로우 기반 반응 조회 |
 | `trip` | `backend/src/main/java/com/soomgil/trip/` | 김지훈 | 여행방, 멤버, 초대, 권한 |
-| `user` | `backend/src/main/java/com/soomgil/user/` | 민경철 | user profile, summary, avatar, settings |
+| `user` | `backend/src/main/java/com/soomgil/user/` | 윤정 | user profile, summary, avatar, settings |
 | `tourism_source` | `.agent/contracts/schema.dbml`, `backend/src/main/resources/tourism-source/` | 민경철 | 관광공사 원천, 수상작 사진, source import/matching |
 | `ops` | `.agent/contracts/schema.dbml`의 `ops.*` | 윤정 | 운영/audit log 정책. 각 모듈은 자기 이벤트를 남긴다. |
 
-`auth`와 `user`는 분리한다.
+`auth`와 `user`는 책임을 분리하되 윤정이 함께 담당한다.
 
 - 윤정: 현재 로그인한 사용자를 식별하는 인증/session/security 흐름
-- 민경철: 식별된 `userId`로 조회하는 profile, avatar, summary, settings
+- 윤정: 식별된 `userId`로 조회하는 profile, avatar, summary, settings
 
 공통 합의 TODO:
 
@@ -190,6 +190,7 @@ flowchart TD
 - AI chat
 - tool calling
 - auth/security/current user identity
+- user profile/summary/avatar/settings
 - 공통 error
 - 여행방 사용자 채팅
 - note/checklist tool surface
@@ -202,6 +203,7 @@ flowchart TD
 backend/src/main/java/com/soomgil/ai/
 backend/src/main/java/com/soomgil/chat/
 backend/src/main/java/com/soomgil/auth/
+backend/src/main/java/com/soomgil/user/
 backend/src/main/java/com/soomgil/global/security/
 backend/src/main/java/com/soomgil/global/error/
 backend/src/main/java/com/soomgil/planning/
@@ -212,6 +214,7 @@ backend/src/main/java/com/soomgil/notification/
 윤정 TODO:
 
 - [ ] `auth` 로그인/토큰/세션 최소 흐름 개발 완료
+- [ ] `user` profile/summary/avatar/settings 개발 완료
 - [ ] `global/security` 인증 context 개발 완료
 - [ ] `global/error` Problem Details 응답 개발 완료
 - [ ] `ai` session/message 저장 개발 완료
@@ -290,14 +293,12 @@ backend/src/main/java/com/soomgil/record/
 - recommendation
 - social follower signal
 - S3 이미지 후보
-- user profile/summary/avatar/settings
 - media
 
 주요 디렉토리:
 
 ```text
 backend/src/main/java/com/soomgil/common/cqrs/
-backend/src/main/java/com/soomgil/user/
 backend/src/main/java/com/soomgil/place/
 backend/src/main/java/com/soomgil/preference/
 backend/src/main/java/com/soomgil/social/
@@ -310,7 +311,6 @@ backend/src/main/resources/preference/
 민경철 TODO:
 
 - [ ] `common/cqrs` Command/Query/Handler compile contract 개발 완료
-- [ ] `user` profile/summary/avatar/settings 개발 완료
 - [ ] `place` 관광지 조회/detail 개발 완료
 - [ ] `place` viewport 후보 조회 개발 완료
 - [ ] `place` 일반 이미지 + 수상작 이미지 후보 개발 완료

@@ -32,7 +32,7 @@ status: draft
 - `.agent/docs/process/backend_team_tdd_checklist.md`에 윤정/김지훈/민경철의 백엔드 담당 디렉토리, TDD 흐름, TODO, merge conflict 방지 기준을 정리했습니다.
 - `backend_team_tdd_checklist.md`의 담당자별 TODO는 계획 완료가 아니라 테스트 통과와 커밋까지 끝난 기능 개발 완료 기준으로 체크하도록 명시했습니다.
 - `backend_team_tdd_checklist.md`가 전체 서비스 완료가 아니라 backend 기능 개발 완료 판단 문서임을 명시했습니다.
-- `backend_team_tdd_checklist.md`에 backend 전체 모듈 소유권을 추가하고 `auth/security/current identity`는 윤정, `user profile/summary/avatar/settings`는 민경철로 분리했습니다.
+- `backend_team_tdd_checklist.md`에 backend 전체 모듈 소유권을 추가하고 `auth/security/current identity`와 `user profile/summary/avatar/settings`를 윤정 담당으로 정리했습니다.
 - 루트 README, `.agent/workspaces.json`, architecture guide, generated UI inventory에서 backend 상태를 `active`로 갱신했습니다.
 
 ## 에이전트 주의사항
