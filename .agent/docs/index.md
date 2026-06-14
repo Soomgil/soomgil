@@ -12,6 +12,7 @@
 - `page_map.md`: Vue Router 기준 프론트 화면 맵.
 - `functional_spec.md`: 제품 기능 명세.
 - `product-specs/preference_tagging_policy.md`: 장소 태그, 선호도 계산, 50개 페르소나 스와이프 cold-start 필수 정책.
+- `product-specs/tourism_source_policy.md`: 관광지 원천 DB, 콘텐츠랩 수상작 사진, S3 저장, 매칭, 이미지 노출 정책.
 - `design-docs/design.md`: `frontend/` 현재 구현 기준 디자인 문서.
 - `design-docs/design_system_todo.md`: 디자인 시스템 수렴과 Settings 화면 통일 작업 TODO.
 - `api_spec.md`: API 경계와 백엔드 준비 기준.

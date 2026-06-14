@@ -178,6 +178,7 @@ Table tourism_source.contest_award_photos {
   height int
   checksum_sha256 varchar(128)
   upload_status varchar(30) [not null, default: 'DOWNLOADED', note: 'DOWNLOADED, UPLOADED, FAILED']
+  rights_status varchar(30) [not null, default: 'PENDING_REVIEW', note: 'PENDING_REVIEW, APPROVED, REJECTED']
   license_note text
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
@@ -189,6 +190,7 @@ Table tourism_source.contest_award_photos {
     original_file_name
     object_key
     upload_status
+    rights_status
   }
 
   Note: 'Downloaded contest award photo metadata. Binary files live in S3-compatible storage, not in the database.'

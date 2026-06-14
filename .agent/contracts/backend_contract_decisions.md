@@ -89,8 +89,10 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 
 ## 관광공사 콘텐츠랩 공모전 사진
 
+- 상세 운영 정책은 `.agent/docs/product-specs/tourism_source_policy.md`를 따릅니다.
 - 한국관광공사 콘텐츠랩 공모전 수상작 사진은 서비스 업로드 미디어와 분리해 `tourism_source.contest_award_photos`에 source metadata로 저장합니다.
 - 실제 이미지 파일은 S3 호환 object storage에 업로드하고 DB에는 bucket, object key, public URL 또는 serving URL, checksum, dimension 같은 metadata만 저장합니다.
+- 수상작 사진은 `upload_status = UPLOADED`와 `rights_status = APPROVED`를 모두 만족해야 public serving 후보가 됩니다.
 - 공모전 사진 파일명에 지역명이 포함될 수 있으므로 `tourism_source.region_aliases`와 `contest_award_photo_matches`로 지역/관광지 매칭 후보를 관리합니다.
 - 공모전 사진은 정확한 관광지에 연결될 수도 있고, 지역 수준으로만 연결되거나, 연결되지 않을 수도 있습니다.
 - 연결되지 않은 수상작 사진도 삭제하지 않고 `UNMATCHED` 또는 후보 상태로 보관해 추후 활용 가능성을 남깁니다.
