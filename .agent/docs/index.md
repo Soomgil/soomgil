@@ -8,6 +8,7 @@
 - `git_workflow.md`: orchestration repo, submodule, Git Flow, commit convention 운영 규칙.
 - `branching_agent_docs.md`: 브랜치별 AI 문서 격리와 통합 규칙.
 - `domain_development_policy.md`: 도메인 개발 전 사용자 흐름 설명과 test-first 강제 정책.
+- `process/backend_team_tdd_checklist.md`: 백엔드 3인 담당 디렉토리, TDD 흐름, TODO, merge conflict 방지 기준.
 - `architecture_guide.md`: frontend/backend 책임 경계.
 - `page_map.md`: Vue Router 기준 프론트 화면 맵.
 - `functional_spec.md`: 제품 기능 명세.

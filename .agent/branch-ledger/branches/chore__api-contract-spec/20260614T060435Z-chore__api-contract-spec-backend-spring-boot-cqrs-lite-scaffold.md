@@ -29,6 +29,7 @@ status: draft
 - `.agent/contracts/schema.dbml`에 `tourism_source` schema를 추가해 SSAFY/KTO 스타일 관광지 원천 DB, 일반 관광지 이미지 후보, 콘텐츠랩 공모전 수상작 사진/S3 metadata/관광지 매칭 후보를 서비스 DB와 분리했습니다.
 - `.agent/docs/product-specs/tourism_source_policy.md`에 관광지 원천 DB, 콘텐츠랩 수상작 사진, S3 저장, 권리 검토, 매칭 확정, 이미지 fallback, public serving 금지 조건을 정리했습니다.
 - backend `chore/backend-scaffold`의 로컬 resource 문서 커밋들을 원격 API controller scaffold 커밋 위로 재배치해 분기된 scaffold 히스토리를 한 줄로 정리했습니다.
+- `.agent/docs/process/backend_team_tdd_checklist.md`에 윤정/김지훈/민경철의 백엔드 담당 디렉토리, TDD 흐름, TODO, merge conflict 방지 기준을 정리했습니다.
 - 루트 README, `.agent/workspaces.json`, architecture guide, generated UI inventory에서 backend 상태를 `active`로 갱신했습니다.
 
 ## 에이전트 주의사항
@@ -38,6 +39,7 @@ status: draft
 - Windows 협업자는 Docker Desktop with WSL2 backend, JDK 21, `.\gradlew.bat` 명령을 사용합니다.
 - Spring Modulith 경계 검증을 고려해 도메인 패키지를 `com.soomgil.{domain}` 형태로 두었습니다.
 - 앞으로 사용자 기능/도메인 로직 개발은 요청자에게 도메인 맥락, 사용자 흐름, 수용 기준, 테스트 계획을 먼저 설명하고 테스트를 작성한 뒤 구현해야 합니다.
+- 백엔드 3인 개발은 `backend_team_tdd_checklist.md`를 먼저 확인하고 담당 디렉토리와 의존 interface를 벗어나지 않아야 합니다.
 - 선호도/추천 구현은 `preference_tagging_policy.md`를 먼저 읽고, 고정 whitelist 밖 태그를 저장하지 않으며, `confidence`, `weight`, `preference_discrimination` 중심 계산과 50개 페르소나 hard constraint를 지켜야 합니다.
 - 관광지 원천/콘텐츠랩 수상작 사진 구현은 `tourism_source_policy.md`를 먼저 읽고, 파일명 기반 후보를 곧바로 public 노출하지 않아야 합니다.
 - 백엔드 seed 정의 위치는 `backend/src/main/resources/preference/tags/`, `backend/src/main/resources/preference/personas/`입니다.

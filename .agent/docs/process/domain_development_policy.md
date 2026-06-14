@@ -3,6 +3,8 @@
 이 문서는 숨길 제품 코드를 도메인 단위로 개발할 때 반드시 지킬 작업 순서를 정의합니다.
 대상은 `frontend/`, `backend/`의 사용자 기능, API, 도메인 로직, persistence, 화면 흐름 변경입니다.
 
+백엔드 3인 개발은 `backend_team_tdd_checklist.md`를 최우선 체크리스트로 사용합니다.
+
 ## 핵심 원칙
 
 - 도메인 개발은 test-first로 시작합니다.
