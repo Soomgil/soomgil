@@ -1,5 +1,16 @@
 {
-  "generatedAt": "2026-06-09T08:44:39.111Z",
-  "integrationBranch": "main",
-  "entries": []
+  "generatedAt": "2026-06-15T16:23:18.153Z",
+  "integrationBranch": "develop",
+  "entries": [
+    {
+      "id": "20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold",
+      "branch": "chore/api-contract-spec",
+      "branchKey": "chore__api-contract-spec",
+      "createdAt": "2026-06-14T06:04:35.214Z",
+      "scope": "shared",
+      "status": "draft",
+      "title": "Backend Spring Boot CQRS-lite scaffold",
+      "file": ".agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md"
+    }
+  ]
 }
