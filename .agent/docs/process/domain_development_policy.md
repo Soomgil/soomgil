@@ -12,6 +12,7 @@
 - 요청자가 이해하고 진행을 허용하기 전에는 제품 구현 코드를 작성하지 않습니다.
 - 테스트 없이 구현부터 시작하지 않습니다.
 - 테스트가 실패하는 이유를 확인한 뒤 구현합니다.
+- 새 public 계약 타입은 `javadoc_policy.md`에 따라 한국어 JavaDoc을 작성합니다.
 - 변경 완료 후에는 테스트 결과와 남은 위험을 공유합니다.
 
 ## 필수 순서
@@ -63,7 +64,7 @@
 백엔드는 CQRS-lite 구조를 기준으로 테스트를 먼저 둡니다.
 
 - command 기능은 command handler 테스트를 우선 작성합니다.
-- query 기능은 query service 또는 mapper/repository 테스트를 우선 작성합니다.
+- query 기능은 query handler 또는 mapper/repository 테스트를 우선 작성합니다.
 - DB가 필요한 기능은 Flyway migration과 MyBatis mapper 테스트를 함께 고려합니다.
 - 권한/인증이 관련되면 controller/security 테스트를 포함합니다.
 - 실패 응답은 RFC7807 Problem Details 형태까지 확인합니다.
@@ -72,7 +73,7 @@
 
 - domain model/policy 단위 테스트
 - command handler 테스트
-- query service 테스트
+- query handler 테스트
 - MyBatis mapper 또는 repository 테스트
 - controller slice/integration 테스트
 
@@ -106,6 +107,7 @@
 - command와 query 책임을 한 서비스에 무분별하게 섞기 금지
 - DB schema 변경 후 migration/test 누락 금지
 - 권한/실패 케이스가 있는 기능에서 성공 케이스만 테스트 금지
+- 새 public 계약 타입의 JavaDoc 누락 금지
 
 ## 완료 보고 형식
 
@@ -115,4 +117,5 @@
 - 사용자가 이해해야 할 흐름
 - 먼저 작성한 테스트
 - 실행한 검증 명령과 결과
+- 새로 추가한 JavaDoc 적용 여부
 - 남은 리스크 또는 다음 작업
