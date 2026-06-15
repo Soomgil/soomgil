@@ -1,4 +1,4 @@
-# 컴포넌트 가이드
+﻿# 컴포넌트 가이드
 
 프론트 컴포넌트는 `frontend/src/components/` 아래에서 관리합니다.
 
@@ -13,4 +13,4 @@
 ## 하네스 연결
 
 - 컴포넌트나 페이지를 추가하면 `npm --prefix .agent run harness:index`를 실행합니다.
-- 라우트에 연결된 Page는 `.agent/docs/page_map.md`에도 반영합니다.
+- 라우트에 연결된 Page는 `.agent/docs/frontend/page_map.md`에도 반영합니다.

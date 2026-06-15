@@ -13,3 +13,7 @@
 - backend 서브모듈이 들어오면 backend build/test를 하네스에 추가합니다.
 - frontend API 클라이언트와 backend endpoint contract 검사를 추가합니다.
 - TypeScript 유지 여부 또는 JavaScript 전환 기준을 명확히 결정합니다.
+
+## 참고 리뷰
+
+- `api_spec_initial_review.md`: 초기 API 명세 초안에 대한 리뷰 기록. 최신 기준은 `.agent/docs/api/api_spec.md`와 `.agent/contracts/openapi.yaml`입니다.

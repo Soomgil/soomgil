@@ -7,7 +7,7 @@
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | frontend | frontend | `frontend` | planned | Vue | - | planned |
-| backend | backend | `backend` | planned | TBD | - | planned |
+| backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## 하네스 사용법
 

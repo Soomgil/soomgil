@@ -1,6 +1,6 @@
-# API 명세 리뷰
+# API 명세 초기 리뷰
 
-`api_spec.md`는 backend 서브모듈 연결 전의 초안입니다.
+이 문서는 현재 상세 API 계약으로 확장되기 전의 초기 `api_spec.md`에 대한 리뷰 기록입니다. 최신 API 명세는 `.agent/docs/api/api_spec.md`, 기계 판독 계약은 `.agent/contracts/openapi.yaml`을 기준으로 합니다.
 
 ## 현재 적합한 점
 

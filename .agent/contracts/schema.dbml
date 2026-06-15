@@ -12,10 +12,216 @@ Project soomgil {
   - Internal event/audit streams may use bigserial.
   - User-facing extensible concepts use tables or code-managed rows instead of PostgreSQL enums.
   - Tables are grouped by PostgreSQL schema-qualified names such as auth.users and trip.trips.
-  - External place master data is not stored; places are referenced by provider + external_place_id.
+  - Production service schemas do not store external place master data; places are referenced by provider + external_place_id.
+  - tourism_source.* is a separate enrichment/source namespace for tag extraction, source matching, and public tourism image candidates.
+  - tourism_source may be deployed as a physically separate database; this DBML keeps it in one contract file for cross-domain visibility.
   - Routes are stored as itinerary item-to-item segments, not day-owned records.
   - Community post snapshots store immutable display data needed to render after source changes.
   '''
+}
+
+// ============================================================
+// External Tourism Source Data for Tag Extraction
+// ============================================================
+
+Table tourism_source.sidos {
+  no int [pk, increment, note: 'Source row id.']
+  sido_code int [not null, unique, note: 'KTO/SSAFY sido code.']
+  sido_name varchar(20)
+
+  Indexes {
+    sido_code [unique]
+  }
+
+  Note: 'Source-region table imported from KTO/SSAFY-style tourism data. Not a production service domain table.'
+}
+
+Table tourism_source.guguns {
+  no int [pk, increment, note: 'Source row id.']
+  sido_code int [not null]
+  gugun_code int [not null]
+  gugun_name varchar(20)
+
+  Indexes {
+    (sido_code, gugun_code) [unique]
+    sido_code
+    gugun_code
+  }
+
+  Note: 'Source subregion table. Composite sido_code + gugun_code identifies a region within the source dataset.'
+}
+
+Table tourism_source.contenttypes {
+  content_type_id int [pk, note: 'KTO content type id.']
+  content_type_name varchar(45)
+
+  Note: 'Source content type dictionary used for attraction import and tag extraction hints.'
+}
+
+Table tourism_source.attractions {
+  no int [pk, increment, note: 'Source attraction row id.']
+  content_id int [note: 'KTO content id. Used as external_place_id when present.']
+  title varchar(500)
+  content_type_id int
+  area_code int [note: 'Sido code.']
+  si_gun_gu_code int [note: 'Gugun code within area_code.']
+  first_image1 text
+  first_image2 text
+  map_level int
+  latitude decimal(20,17)
+  longitude decimal(20,17)
+  tel varchar(40)
+  addr1 varchar(200)
+  addr2 varchar(200)
+  homepage text
+  overview text
+  source_hash varchar(128)
+  source_modified_at timestamptz
+  imported_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    content_id
+    title
+    content_type_id
+    area_code
+    (area_code, si_gun_gu_code)
+    (latitude, longitude)
+  }
+
+  Note: 'Attraction source data used for tag extraction and source matching. This is not the user-facing service place master.'
+}
+
+Table tourism_source.attraction_images {
+  id uuid [pk, default: `gen_random_uuid()`]
+  attraction_no int [not null]
+  source_provider varchar(80) [not null, default: 'KTO']
+  source_type varchar(40) [not null, note: 'FIRST_IMAGE1, FIRST_IMAGE2, DETAIL_IMAGE, MANUAL']
+  original_url text
+  storage_provider varchar(40) [note: 'EXTERNAL_URL, S3']
+  bucket varchar(120)
+  object_key text
+  public_url text [not null]
+  display_order int [not null, default: 999]
+  width int
+  height int
+  checksum_sha256 varchar(128)
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    attraction_no
+    source_provider
+    source_type
+    display_order
+    is_active
+  }
+
+  Note: 'Normal tourism image candidates used before mixing in contest award photos. Enables the 4 normal + 1 award-photo display policy.'
+}
+
+Table tourism_source.region_aliases {
+  id uuid [pk, default: `gen_random_uuid()`]
+  alias varchar(120) [not null]
+  normalized_alias varchar(120) [not null]
+  sido_code int
+  gugun_code int
+  alias_type varchar(40) [not null, note: 'FILE_NAME_TOKEN, COMMON_NAME, ADMIN_NAME, MANUAL']
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    normalized_alias
+    (sido_code, gugun_code)
+    alias_type
+    is_active
+  }
+
+  Note: 'Region alias dictionary for matching award photo file names to source regions.'
+}
+
+Table tourism_source.photo_contests {
+  id uuid [pk, default: `gen_random_uuid()`]
+  provider varchar(80) [not null, default: 'KTO_CONTENTS_LAB']
+  contest_name varchar(200) [not null]
+  award_year int [not null]
+  contest_round varchar(80)
+  source_url text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    provider
+    award_year
+    contest_name
+  }
+
+  Note: 'Korea Tourism Organization Contents Lab contest metadata for downloaded award photos.'
+}
+
+Table tourism_source.contest_award_photos {
+  id uuid [pk, default: `gen_random_uuid()`]
+  contest_id uuid
+  award_year int [not null]
+  award_name varchar(160)
+  award_rank int [not null, default: 999, note: 'Lower rank sorts first within the same award year.']
+  title varchar(240)
+  photographer_name varchar(120)
+  original_file_name varchar(500) [not null]
+  extracted_region_text varchar(240)
+  storage_provider varchar(40) [not null, default: 'S3']
+  bucket varchar(120)
+  object_key text [not null]
+  public_url text
+  mime_type varchar(120)
+  byte_size bigint
+  width int
+  height int
+  checksum_sha256 varchar(128)
+  upload_status varchar(30) [not null, default: 'DOWNLOADED', note: 'DOWNLOADED, UPLOADED, FAILED']
+  rights_status varchar(30) [not null, default: 'PENDING_REVIEW', note: 'PENDING_REVIEW, APPROVED, REJECTED']
+  license_note text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    contest_id
+    award_year
+    award_rank
+    original_file_name
+    object_key
+    upload_status
+    rights_status
+  }
+
+  Note: 'Downloaded contest award photo metadata. Binary files live in S3-compatible storage, not in the database.'
+}
+
+Table tourism_source.contest_award_photo_matches {
+  id uuid [pk, default: `gen_random_uuid()`]
+  photo_id uuid [not null]
+  attraction_no int
+  sido_code int
+  gugun_code int
+  match_scope varchar(30) [not null, note: 'ATTRACTION, REGION, UNMATCHED']
+  match_status varchar(30) [not null, note: 'CANDIDATE, SELECTED, REJECTED, AMBIGUOUS']
+  match_method varchar(40) [not null, note: 'FILE_NAME_REGION, TITLE_TEXT, MANUAL, IMPORT_METADATA']
+  confidence decimal(5,4)
+  is_selected boolean [not null, default: false]
+  rationale text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    photo_id
+    attraction_no
+    (sido_code, gugun_code)
+    match_scope
+    match_status
+    match_method
+    is_selected
+  }
+
+  Note: 'A contest photo may be matched to an exact attraction, region only, or remain unmatched for future use.'
 }
 
 // ============================================================
@@ -24,27 +230,87 @@ Project soomgil {
 
 Table auth.users {
   id uuid [pk, default: `gen_random_uuid()`]
-  email varchar(320) [unique]
-  display_name varchar(80) [not null]
-  profile_image_url text
-  profile_media_file_id uuid
-  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, SUSPENDED, DELETED']
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, SUSPENDED, PENDING_DELETION, DELETED']
+  status_reason varchar(255)
+  status_changed_at timestamptz [not null, default: `now()`]
   last_login_at timestamptz
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
+  deletion_requested_at timestamptz
+  deletion_scheduled_at timestamptz
   deleted_at timestamptz
 
   Indexes {
-    email [unique]
     status
+    status_changed_at
+    created_at
+    deletion_scheduled_at
     deleted_at
   }
+
+  Note: 'Account lifecycle anchor. Login identifiers, profile display fields, settings, and credentials are separated for privacy, uniqueness, and provider expansion.'
+}
+
+Table auth.user_email_addresses {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  email varchar(320) [not null]
+  normalized_email varchar(320) [not null, note: 'Lowercase/canonical email used for login and uniqueness.']
+  is_primary boolean [not null, default: false]
+  verified_at timestamptz
+  verification_last_sent_at timestamptz
+  removed_at timestamptz
+  removed_reason varchar(120)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (normalized_email, `case when removed_at is null then normalized_email else id::text end`) [unique, name: 'uq_auth_user_email_addresses_active_normalized_email']
+    (user_id, `case when is_primary and removed_at is null then user_id else id end`) [unique, name: 'uq_auth_user_email_addresses_one_active_primary']
+    user_id
+    normalized_email
+    verified_at
+    removed_at
+  }
+
+  Note: 'Stores login email history. Raw verification tokens are never stored; token tables keep hashes only.'
+}
+
+Table auth.user_profiles {
+  user_id uuid [pk]
+  display_name varchar(80) [not null]
+  profile_image_url text
+  profile_media_file_id uuid
+  bio varchar(500)
+  profile_visibility varchar(20) [not null, default: 'PUBLIC', note: 'PUBLIC or PRIVATE. PRIVATE profiles require approved follow for full profile visibility.']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    display_name
+    profile_media_file_id
+    profile_visibility
+  }
+}
+
+Table auth.user_settings {
+  user_id uuid [pk]
+  display_language varchar(12) [not null, default: 'ko']
+  timezone varchar(50) [not null, default: 'Asia/Seoul']
+  marketing_email_opt_in boolean [not null, default: false]
+  marketing_email_opted_in_at timestamptz
+  marketing_email_opted_out_at timestamptz
+  trip_invite_email_opt_in boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
 }
 
 Table auth.auth_providers {
   id smallserial [pk]
   code varchar(40) [not null, unique, note: 'LOCAL, KAKAO, GOOGLE. Add rows for NAVER, APPLE, etc.']
   display_name varchar(80) [not null]
+  auth_type varchar(30) [not null, default: 'OAUTH2', note: 'LOCAL, OAUTH2, OIDC']
+  issuer text
   is_active boolean [not null, default: true]
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
@@ -52,11 +318,19 @@ Table auth.auth_providers {
 
 Table auth.user_password_credentials {
   user_id uuid [pk]
-  password_hash text [not null]
-  password_algorithm varchar(40) [not null, default: 'bcrypt']
+  password_hash varchar(255) [not null]
+  password_algorithm varchar(40) [not null, default: 'bcrypt', note: 'bcrypt or argon2id; raw passwords are never stored.']
+  password_hash_params jsonb
   password_changed_at timestamptz [not null, default: `now()`]
+  failed_login_count int [not null, default: 0]
+  locked_until timestamptz
+  last_failed_login_at timestamptz
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    locked_until
+  }
 }
 
 Table auth.user_auth_identities {
@@ -65,30 +339,122 @@ Table auth.user_auth_identities {
   provider_id smallint [not null]
   provider_subject varchar(255) [not null]
   provider_email varchar(320)
-  raw_profile jsonb
+  provider_email_verified boolean [not null, default: false]
+  provider_display_name varchar(120)
+  provider_profile jsonb
+  linked_at timestamptz [not null, default: `now()`]
+  last_login_at timestamptz
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
 
   Indexes {
     (provider_id, provider_subject) [unique]
     user_id
+    (provider_id, provider_email)
   }
+
+  Note: 'External social login identity. OAuth access/refresh tokens are not stored here.'
 }
 
 Table auth.user_sessions {
   id uuid [pk, default: `gen_random_uuid()`]
   user_id uuid [not null]
-  refresh_token_hash text [not null, unique]
-  user_agent text
-  ip_address varchar(64)
+  refresh_token_hash varchar(255) [not null, unique]
+  refresh_token_family_id uuid [not null, default: `gen_random_uuid()`]
+  refresh_token_version int [not null, default: 1]
+  device_name varchar(120)
+  device_os varchar(120)
+  ip_address_hash varchar(255)
+  user_agent_hash varchar(255)
+  last_used_at timestamptz
+  last_refreshed_at timestamptz
   expires_at timestamptz [not null]
   revoked_at timestamptz
+  revoked_by_user_id uuid
+  revocation_reason varchar(120)
   created_at timestamptz [not null, default: `now()`]
 
   Indexes {
     user_id
     refresh_token_hash [unique]
+    refresh_token_family_id
     expires_at
+    revoked_at
+  }
+
+  Note: 'Refresh/session token store for rotation and revocation. Store token hashes only.'
+}
+
+Table auth.user_email_verification_tokens {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_email_address_id uuid [not null]
+  token_hash varchar(255) [not null, unique]
+  requested_by_ip_hash varchar(255)
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_email_address_id
+    token_hash [unique]
+    expires_at
+    used_at
+  }
+}
+
+Table auth.user_password_reset_tokens {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  token_hash varchar(255) [not null, unique]
+  requested_by_ip_hash varchar(255)
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_id
+    token_hash [unique]
+    expires_at
+    used_at
+  }
+}
+
+Table auth.policy_documents {
+  id uuid [pk, default: `gen_random_uuid()`]
+  policy_code varchar(80) [not null, note: 'TERMS_OF_SERVICE, PRIVACY_POLICY, MARKETING_CONSENT']
+  version varchar(40) [not null]
+  language_code varchar(12) [not null, default: 'ko']
+  title varchar(160) [not null]
+  content_url text
+  content_hash varchar(128)
+  is_required boolean [not null, default: true]
+  published_at timestamptz [not null]
+  retired_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (policy_code, version, language_code) [unique]
+    policy_code
+    published_at
+    retired_at
+  }
+}
+
+Table auth.user_policy_acceptances {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  policy_document_id uuid [not null]
+  acceptance_method varchar(40) [not null, note: 'SIGNUP, SETTINGS, FORCED_UPDATE, ADMIN']
+  accepted_at timestamptz [not null, default: `now()`]
+  ip_address_hash varchar(255)
+  user_agent_hash varchar(255)
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (user_id, policy_document_id) [unique]
+    policy_document_id
+    accepted_at
   }
 }
 
@@ -96,7 +462,10 @@ Table auth.roles {
   id smallserial [pk]
   code varchar(40) [not null, unique, note: 'SUPER_ADMIN, ADMIN, MODERATOR']
   display_name varchar(80) [not null]
+  description text
+  is_system boolean [not null, default: true]
   created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
 }
 
 Table auth.user_roles {
@@ -105,10 +474,40 @@ Table auth.user_roles {
   granted_by_user_id uuid
   granted_at timestamptz [not null, default: `now()`]
   revoked_at timestamptz
+  revoked_by_user_id uuid
+  revocation_reason varchar(120)
 
   Indexes {
     (user_id, role_id) [pk]
     role_id
+    granted_by_user_id
+    revoked_by_user_id
+    revoked_at
+  }
+}
+
+Table auth.user_security_events {
+  id bigserial [pk]
+  user_id uuid
+  actor_user_id uuid
+  provider_id smallint
+  normalized_identifier varchar(320)
+  event_type varchar(80) [not null, note: 'LOGIN_SUCCESS, LOGIN_FAILURE, PASSWORD_RESET_REQUESTED, PASSWORD_CHANGED, SESSION_REVOKED']
+  success boolean [not null, default: false]
+  failure_reason varchar(120)
+  ip_address_hash varchar(255)
+  user_agent_hash varchar(255)
+  metadata jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    user_id
+    actor_user_id
+    provider_id
+    normalized_identifier
+    event_type
+    (ip_address_hash, created_at)
+    created_at
   }
 }
 
@@ -119,7 +518,7 @@ Table auth.user_roles {
 Table social.user_follows {
   follower_user_id uuid [not null]
   following_user_id uuid [not null]
-  status varchar(20) [not null, default: 'ACTIVE', note: 'ACTIVE, DELETED']
+  status varchar(20) [not null, default: 'ACTIVE', note: 'PENDING for private profile follow request, ACTIVE for approved follow, DELETED for unfollow/rejected request.']
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
   deleted_at timestamptz
@@ -127,10 +526,11 @@ Table social.user_follows {
   Indexes {
     (follower_user_id, following_user_id) [pk]
     following_user_id
+    (following_user_id, status)
     status
   }
 
-  Note: 'Application prevents self-follow.'
+  Note: 'Application prevents self-follow. Private profile follow starts as PENDING and becomes ACTIVE only after approval.'
 }
 
 // ============================================================
@@ -150,7 +550,7 @@ Table media.media_files {
   height int
   linked_resource_type varchar(60)
   linked_resource_id uuid
-  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, DELETED, PURGED']
+  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE after upload metadata is verified, DELETED after soft delete, PURGED after object deletion.']
   created_at timestamptz [not null, default: `now()`]
   deleted_at timestamptz
   purge_after_at timestamptz
@@ -248,7 +648,7 @@ Table trip.trip_members {
   id uuid [pk, default: `gen_random_uuid()`]
   trip_id uuid [not null]
   user_id uuid [not null]
-  role varchar(20) [not null, note: 'OWNER or MEMBER']
+  role varchar(20) [not null, default: 'MEMBER', note: 'MVP stores MEMBER only. OWNER privileges are derived from trip.trips.owner_user_id; OWNER member role is reserved for a future multi-owner model if introduced.']
   status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, LEFT, REMOVED']
   joined_at timestamptz [not null, default: `now()`]
   left_at timestamptz
@@ -293,7 +693,7 @@ Table notification.notifications {
   type varchar(60) [not null, note: 'MVP creates direct trip invite notifications only.']
   title varchar(160) [not null]
   body text
-  payload jsonb
+  payload jsonb [note: 'For MVP TRIP_INVITE notifications, typed payload contains tripId, inviteId, inviteCode, and routing fields.']
   read_at timestamptz
   created_at timestamptz [not null, default: `now()`]
 
@@ -560,7 +960,7 @@ Table planning.checklist_item_member_statuses {
     updated_at
   }
 
-  Note: 'Per-member checklist state. Application enforces that user_id is an active member of the checklist trip.'
+  Note: 'Per-member checklist state. Application enforces that user_id is an active member of the checklist trip. MVP allows a member to update only their own status; updated_by_user_id records the actor.'
 }
 
 // ============================================================
@@ -580,8 +980,11 @@ Table chat.trip_chat_messages {
     trip_id
     sender_user_id
     created_at
+    (trip_id, created_at, id)
     deleted_at
   }
+
+  Note: 'MVP chat message list uses offset/limit infinite scroll ordered by created_at DESC, id DESC.'
 }
 
 // ============================================================
@@ -592,17 +995,28 @@ Table preference.preference_tags {
   id uuid [pk, default: `gen_random_uuid()`]
   code varchar(80) [not null, unique]
   display_name varchar(120) [not null]
+  group_code varchar(80) [not null, note: 'One of fixed groups: nature_scene, history_culture, activity, mood, space_context.']
+  tag_type varchar(20) [not null, default: 'TAG', note: 'GROUP, TAG. GROUP rows organize the fixed whitelist and cannot be assigned to places.']
   parent_tag_id uuid
   description text
+  is_selectable boolean [not null, default: true, note: 'Only selectable TAG rows can be assigned to places.']
   is_active boolean [not null, default: true]
+  dictionary_version varchar(80) [not null, default: 'preference-tags-v1']
+  sort_order int
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
 
   Indexes {
     code [unique]
+    group_code
+    tag_type
     parent_tag_id
+    is_selectable
     is_active
+    dictionary_version
   }
+
+  Note: 'Fixed whitelist only. Seed data must match .agent/docs/product-specs/preference_tagging_policy.md exactly.'
 }
 
 Table preference.place_tag_enrichments {
@@ -616,6 +1030,10 @@ Table preference.place_tag_enrichments {
   model_name varchar(120)
   prompt_version varchar(80)
   tag_dictionary_version varchar(80)
+  selection_policy_version varchar(80)
+  tag_statistic_run_id uuid
+  candidate_count int [not null, default: 0]
+  selected_count int [not null, default: 0]
   error_message text
   enriched_at timestamptz
   created_at timestamptz [not null, default: `now()`]
@@ -625,21 +1043,152 @@ Table preference.place_tag_enrichments {
     (provider, external_place_id)
     source_hash
     status
+    tag_statistic_run_id
     enriched_at
   }
+
+  Note: 'Tag dictionary, prompt, and model versions determine stale marking and background re-enrichment.'
+}
+
+Table preference.place_tag_enrichment_candidates {
+  id uuid [pk, default: `gen_random_uuid()`]
+  enrichment_id uuid [not null]
+  candidate_code varchar(80) [not null]
+  matched_tag_id uuid
+  confidence decimal(5,4)
+  weight decimal(8,4)
+  selection_score decimal(8,6)
+  status varchar(40) [not null, note: 'SELECTED, REJECTED_OUT_OF_DICTIONARY, REJECTED_LOW_CONFIDENCE, REJECTED_LOW_SCORE, REJECTED_DUPLICATE, REJECTED_LIMIT']
+  rationale text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    enrichment_id
+    candidate_code
+    matched_tag_id
+    status
+  }
+
+  Note: 'Stores all model candidates. Whitelist misses are preserved only as rejected candidates and never become serving tags.'
 }
 
 Table preference.place_tag_enrichment_tags {
   enrichment_id uuid [not null]
   tag_id uuid [not null]
-  confidence decimal(5,4)
-  weight decimal(8,4)
+  confidence decimal(5,4) [not null]
+  weight decimal(8,4) [not null]
+  preference_discrimination_snapshot decimal(8,6)
+  selection_score decimal(8,6)
+  rank_order int [not null]
+  tag_statistic_run_id uuid
   rationale text
 
   Indexes {
     (enrichment_id, tag_id) [pk]
     tag_id
+    tag_statistic_run_id
+    rank_order
   }
+
+  Note: 'Serving place tags selected from the fixed whitelist. Recommendation uses confidence, weight, and preference_discrimination snapshot/statistics.'
+}
+
+Table preference.tag_statistic_runs {
+  id uuid [pk, default: `gen_random_uuid()`]
+  source varchar(30) [not null, note: 'AI_ONLY_DEFAULT, SYNTHETIC_PERSONA, REAL_USER']
+  status varchar(30) [not null, default: 'PENDING', note: 'PENDING, RUNNING, SUCCEEDED, FAILED, ARCHIVED']
+  alpha decimal(8,4) [not null, default: 100]
+  global_positive_rate decimal(8,6)
+  total_reaction_count bigint [not null, default: 0]
+  positive_reaction_count bigint [not null, default: 0]
+  generator_version varchar(80)
+  error_message text
+  is_serving boolean [not null, default: false]
+  started_at timestamptz
+  completed_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    source
+    status
+    is_serving
+    completed_at
+  }
+
+  Note: 'Projection run for preference_discrimination. Serving path must not mix SYNTHETIC_PERSONA and REAL_USER runs.'
+}
+
+Table preference.tag_statistics {
+  run_id uuid [not null]
+  tag_id uuid [not null]
+  preference_discrimination decimal(8,6) [not null]
+  smoothed_positive_rate decimal(8,6)
+  positive_count bigint [not null, default: 0]
+  reaction_count bigint [not null, default: 0]
+  calculated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (run_id, tag_id) [pk]
+    tag_id
+    preference_discrimination
+  }
+}
+
+Table preference.synthetic_personas {
+  id uuid [pk, default: `gen_random_uuid()`]
+  persona_key varchar(80) [not null, unique]
+  display_name varchar(120) [not null]
+  description text [not null]
+  generator_version varchar(80) [not null]
+  seed bigint [not null]
+  noise_rate decimal(5,4) [not null, default: 0]
+  is_active boolean [not null, default: true]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    persona_key [unique]
+    generator_version
+    is_active
+  }
+
+  Note: 'Exactly 50 active personas per generator version for cold-start synthetic swipe generation.'
+}
+
+Table preference.synthetic_persona_tag_preferences {
+  persona_id uuid [not null]
+  tag_id uuid [not null]
+  preference_type varchar(30) [not null, note: 'HARD_LIKE, HARD_DISLIKE, SOFT_LIKE, SOFT_DISLIKE, NEUTRAL']
+  preference_strength decimal(8,4) [not null, note: 'Signed strength used by the persona swipe generator.']
+
+  Indexes {
+    (persona_id, tag_id) [pk]
+    tag_id
+    preference_type
+  }
+}
+
+Table preference.synthetic_swipe_events {
+  id bigserial [pk]
+  persona_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  reaction varchar(20) [not null, note: 'LIKE, NOPE, SUPER_LIKE']
+  place_tag_enrichment_id uuid
+  generator_version varchar(80) [not null]
+  seed bigint [not null]
+  persona_place_score decimal(10,6)
+  generated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    persona_id
+    (provider, external_place_id)
+    reaction
+    generator_version
+    generated_at
+  }
+
+  Note: 'Synthetic cold-start events are kept separate from real user_swipe_events.'
 }
 
 Table preference.user_place_reactions {
@@ -669,7 +1218,7 @@ Table preference.user_swipe_events {
   external_place_id varchar(120) [not null]
   reaction varchar(20) [not null, note: 'LIKE, NOPE, SUPER_LIKE']
   previous_reaction varchar(20)
-  feed_context jsonb
+  feed_context jsonb [note: 'Reserved for future feed metadata. MVP does not store trip context and does not derive preferences per trip.']
   source_modified_at timestamptz
   place_tag_enrichment_id uuid
   occurred_at timestamptz [not null, default: `now()`]
@@ -752,8 +1301,11 @@ Table ai.ai_chat_messages {
     requester_user_id
     role
     created_at
+    (session_id, created_at, id)
     tool_call_id
   }
+
+  Note: 'MVP AI message list uses offset/limit infinite scroll ordered by created_at DESC, id DESC.'
 }
 
 Table ai.ai_tool_calls {
@@ -846,6 +1398,9 @@ Table community.posts {
   published_by_user_id uuid [not null]
   cover_media_file_id uuid
   visibility varchar(20) [not null, note: 'PUBLIC or UNLISTED in MVP.']
+  share_token_hash varchar(255) [unique, note: 'Required when visibility is UNLISTED. Raw share token is returned only when generated/rotated and is never stored.']
+  share_token_created_at timestamptz
+  share_token_rotated_at timestamptz
   title varchar(180) [not null]
   summary text
   snapshot_version int [not null, default: 1]
@@ -867,9 +1422,12 @@ Table community.posts {
     published_by_user_id
     cover_media_file_id
     visibility
+    share_token_hash [unique]
     moderation_status
     published_at
   }
+
+  Note: 'Denormalized counters are updated in the same transaction as like/comment/retrip/media writes and can be repaired by an operational recompute job.'
 }
 
 Table community.post_snapshot_days {
@@ -1028,6 +1586,13 @@ Table community.report_reasons {
   display_name varchar(120) [not null]
   is_active boolean [not null, default: true]
   created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    code [unique]
+    is_active
+  }
+
+  Note: 'MVP exposes active reasons through GET /community/report-reasons. Admin CRUD is deferred.'
 }
 
 Table community.content_reports {
@@ -1091,20 +1656,47 @@ Table ops.audit_logs {
     action
     created_at
   }
+
+  Note: 'Generic audit logs are not exposed through a broad MVP admin API. If exposed later, restrict to SUPER_ADMIN and mask sensitive fields.'
 }
 
 // ============================================================
 // References
 // ============================================================
 
-Ref: auth.users.profile_media_file_id > media.media_files.id
-Ref: auth.user_password_credentials.user_id - auth.users.id
+Ref: tourism_source.guguns.sido_code > tourism_source.sidos.sido_code
+Ref: tourism_source.attractions.content_type_id > tourism_source.contenttypes.content_type_id
+Ref: tourism_source.attractions.area_code > tourism_source.sidos.sido_code
+Ref: tourism_source.attractions.(area_code, si_gun_gu_code) > tourism_source.guguns.(sido_code, gugun_code)
+Ref: tourism_source.attraction_images.attraction_no > tourism_source.attractions.no
+Ref: tourism_source.region_aliases.sido_code > tourism_source.sidos.sido_code
+Ref: tourism_source.region_aliases.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code)
+Ref: tourism_source.contest_award_photos.contest_id > tourism_source.photo_contests.id
+Ref: tourism_source.contest_award_photo_matches.photo_id > tourism_source.contest_award_photos.id
+Ref: tourism_source.contest_award_photo_matches.attraction_no > tourism_source.attractions.no
+Ref: tourism_source.contest_award_photo_matches.sido_code > tourism_source.sidos.sido_code
+Ref: tourism_source.contest_award_photo_matches.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code)
+
+Ref: auth.user_email_addresses.user_id > auth.users.id
+Ref: auth.user_profiles.user_id > auth.users.id
+Ref: auth.user_profiles.profile_media_file_id > media.media_files.id
+Ref: auth.user_settings.user_id > auth.users.id
+Ref: auth.user_password_credentials.user_id > auth.users.id
 Ref: auth.user_auth_identities.user_id > auth.users.id
 Ref: auth.user_auth_identities.provider_id > auth.auth_providers.id
 Ref: auth.user_sessions.user_id > auth.users.id
+Ref: auth.user_sessions.revoked_by_user_id > auth.users.id
+Ref: auth.user_email_verification_tokens.user_email_address_id > auth.user_email_addresses.id
+Ref: auth.user_password_reset_tokens.user_id > auth.users.id
+Ref: auth.user_policy_acceptances.user_id > auth.users.id
+Ref: auth.user_policy_acceptances.policy_document_id > auth.policy_documents.id
 Ref: auth.user_roles.user_id > auth.users.id
 Ref: auth.user_roles.role_id > auth.roles.id
 Ref: auth.user_roles.granted_by_user_id > auth.users.id
+Ref: auth.user_roles.revoked_by_user_id > auth.users.id
+Ref: auth.user_security_events.user_id > auth.users.id
+Ref: auth.user_security_events.actor_user_id > auth.users.id
+Ref: auth.user_security_events.provider_id > auth.auth_providers.id
 Ref: social.user_follows.follower_user_id > auth.users.id
 Ref: social.user_follows.following_user_id > auth.users.id
 Ref: media.media_files.owner_user_id > auth.users.id
@@ -1173,8 +1765,18 @@ Ref: chat.trip_chat_messages.sender_user_id > auth.users.id
 Ref: chat.trip_chat_messages.deleted_by_user_id > auth.users.id
 
 Ref: preference.preference_tags.parent_tag_id > preference.preference_tags.id
+Ref: preference.place_tag_enrichments.tag_statistic_run_id > preference.tag_statistic_runs.id
+Ref: preference.place_tag_enrichment_candidates.enrichment_id > preference.place_tag_enrichments.id
+Ref: preference.place_tag_enrichment_candidates.matched_tag_id > preference.preference_tags.id
 Ref: preference.place_tag_enrichment_tags.enrichment_id > preference.place_tag_enrichments.id
 Ref: preference.place_tag_enrichment_tags.tag_id > preference.preference_tags.id
+Ref: preference.place_tag_enrichment_tags.tag_statistic_run_id > preference.tag_statistic_runs.id
+Ref: preference.tag_statistics.run_id > preference.tag_statistic_runs.id
+Ref: preference.tag_statistics.tag_id > preference.preference_tags.id
+Ref: preference.synthetic_persona_tag_preferences.persona_id > preference.synthetic_personas.id
+Ref: preference.synthetic_persona_tag_preferences.tag_id > preference.preference_tags.id
+Ref: preference.synthetic_swipe_events.persona_id > preference.synthetic_personas.id
+Ref: preference.synthetic_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id
 Ref: preference.user_place_reactions.user_id > auth.users.id
 Ref: preference.user_place_reactions.place_tag_enrichment_id > preference.place_tag_enrichments.id
 Ref: preference.user_swipe_events.user_id > auth.users.id

@@ -1,4 +1,4 @@
-import { readdir, readFile, stat } from "node:fs/promises";
+﻿import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -54,13 +54,25 @@ async function checkRequiredFiles() {
     ".agent/workspaces.json",
     ".agent/contracts/README.md",
     ".agent/contracts/backend_contract_decisions.md",
+    ".agent/contracts/openapi.yaml",
     ".agent/contracts/schema.dbml",
     ".agent/docs/index.md",
-    ".agent/docs/ai_harness_guide.md",
-    ".agent/docs/git_workflow.md",
-    ".agent/docs/branching_agent_docs.md",
-    ".agent/docs/architecture_guide.md",
-    ".agent/docs/page_map.md",
+    ".agent/docs/api/index.md",
+    ".agent/docs/api/api_spec.md",
+    ".agent/docs/architecture/index.md",
+    ".agent/docs/harness/ai_harness_guide.md",
+    ".agent/docs/harness/index.md",
+    ".agent/docs/process/index.md",
+    ".agent/docs/process/git_workflow.md",
+    ".agent/docs/process/branching_agent_docs.md",
+    ".agent/docs/architecture/architecture_guide.md",
+    ".agent/docs/frontend/index.md",
+    ".agent/docs/frontend/page_map.md",
+    ".agent/docs/frontend/component_guide.md",
+    ".agent/docs/frontend/carousel_guide.md",
+    ".agent/docs/frontend/style_effects_guide.md",
+    ".agent/docs/product-specs/index.md",
+    ".agent/docs/product-specs/functional_spec.md",
     ".agent/docs/generated/branch_ledger.md",
     ".agent/docs/generated/branch_ledger.json",
     ".agent/docs/generated/ui_inventory.md",
@@ -75,6 +87,21 @@ async function checkRequiredFiles() {
   for (const filePath of required) {
     if (!await pathExists(filePath)) {
       recordFailure(filePath, "필수 파일이 없습니다.");
+    }
+  }
+}
+
+async function checkDocsArchitecture() {
+  const docsDir = path.join(rootDir, ".agent", "docs");
+  const entries = await readdir(docsDir, { withFileTypes: true });
+  const allowedRootFiles = new Set(["index.md"]);
+
+  for (const entry of entries) {
+    if (entry.isFile() && !allowedRootFiles.has(entry.name)) {
+      recordFailure(
+        `.agent/docs/${entry.name}`,
+        "OpenAI Harness Engineering 원칙에 따라 .agent/docs 루트에는 index.md만 둡니다. 역할별 하위 폴더로 이동하세요.",
+      );
     }
   }
 }
@@ -196,6 +223,7 @@ async function run() {
   const files = await walk(rootDir);
 
   await checkRequiredFiles();
+  await checkDocsArchitecture();
   await checkRootBoundary();
   await checkWorkspaceConfig();
   await checkFrontend();

@@ -1,4 +1,4 @@
-# 캐러셀 가이드
+﻿# 캐러셀 가이드
 
 캐러셀과 반복 슬라이더는 Vue 컴포넌트로 관리합니다.
 
@@ -11,4 +11,4 @@
 
 ## 갱신 기준
 
-- 캐러셀 컴포넌트를 새로 만들면 `.agent/docs/component_guide.md`와 인벤토리를 갱신합니다.
+- 캐러셀 컴포넌트를 새로 만들면 `.agent/docs/frontend/component_guide.md`와 인벤토리를 갱신합니다.
