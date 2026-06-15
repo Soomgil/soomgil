@@ -35,6 +35,7 @@ status: draft
 - `backend_team_tdd_checklist.md`에 backend 전체 모듈 소유권을 추가하고 `auth/security/current identity`와 `user profile/summary/avatar/settings`를 윤정 담당으로 정리했습니다.
 - `.agent/docs/exec-plans/active/2026-06-15-recommendation-weight-plan.md`에 추천 시스템과 가중치 계산 자동화 계획을 추가했습니다.
 - 루트 README, `.agent/workspaces.json`, architecture guide, generated UI inventory에서 backend 상태를 `active`로 갱신했습니다.
+- backend `feature/common-contracts`에서 공통 계약 baseline(CQRS handler 제네릭 순서, `ProblemDetails` 응답, `CurrentUserProvider`, pagination 계약 테스트)을 TDD 흐름으로 추가했습니다.
 
 ## 에이전트 주의사항
 
@@ -50,6 +51,7 @@ status: draft
 - 관광지 원천/콘텐츠랩 수상작 사진 구현은 `tourism_source_policy.md`를 먼저 읽고, 파일명 기반 후보를 곧바로 public 노출하지 않아야 합니다.
 - 백엔드 seed 정의 위치는 `backend/src/main/resources/preference/tags/`, `backend/src/main/resources/preference/personas/`입니다.
 - 관광지 원천 import/공모전 사진 manifest/matching rule 위치는 `backend/src/main/resources/tourism-source/`입니다. 실제 공모전 사진 바이너리는 repo가 아니라 S3 호환 storage에 올립니다.
+- 공통 계약 baseline은 backend `feature/common-contracts` 브랜치의 `6561970` 커밋을 기준으로 하며, 루트 submodule pointer가 이를 가리킵니다.
 
 ## develop 통합 시 반영할 내용
 
