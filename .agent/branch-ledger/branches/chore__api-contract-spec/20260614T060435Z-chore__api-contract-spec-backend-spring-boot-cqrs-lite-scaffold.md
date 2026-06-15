@@ -37,6 +37,7 @@ status: draft
 - 루트 README, `.agent/workspaces.json`, architecture guide, generated UI inventory에서 backend 상태를 `active`로 갱신했습니다.
 - backend `feature/common-contracts`에서 공통 계약 baseline(CQRS handler 제네릭 순서, `ProblemDetails` 응답, `CurrentUserProvider`, pagination 계약 테스트)을 TDD 흐름으로 추가했습니다.
 - `.agent/docs/process/javadoc_policy.md`에 backend JavaDoc 한국어 작성 기준을 추가하고 도메인 개발 정책/팀 체크리스트/AGENTS 지도에 연결했습니다.
+- backend `feature/common-contracts`를 backend `develop`에 fast-forward merge해 공통 계약(CQRS, ProblemDetails, security 401/403, pagination, event envelope, storage metadata, id/time/validation helper, JavaDoc)을 통합했습니다.
 
 ## 에이전트 주의사항
 
@@ -54,6 +55,7 @@ status: draft
 - 관광지 원천 import/공모전 사진 manifest/matching rule 위치는 `backend/src/main/resources/tourism-source/`입니다. 실제 공모전 사진 바이너리는 repo가 아니라 S3 호환 storage에 올립니다.
 - 공통 계약 baseline은 backend `feature/common-contracts` 브랜치의 `6561970` 커밋을 기준으로 하며, 루트 submodule pointer가 이를 가리킵니다.
 - 새 backend public 계약 타입은 `javadoc_policy.md`에 따라 한국어 JavaDoc을 작성해야 하며, JavaDoc 누락은 기능 완료로 체크하지 않습니다.
+- backend 공통 계약 통합 기준은 backend `develop`의 `f266e1f` 커밋입니다. 도메인 개발자는 이 커밋 이후의 `develop`에서 브랜치를 시작합니다.
 
 ## develop 통합 시 반영할 내용
 
