@@ -263,23 +263,23 @@ backend/src/main/java/com/soomgil/record/
 
 김지훈 TODO:
 
-- [ ] `trip` 여행방 생성/멤버/권한 개발 완료
-- [ ] `trip` invite/link/code 개발 완료
-- [ ] `itinerary` day/item 추가 개발 완료
-- [ ] `itinerary` item 이동/재정렬 개발 완료
-- [ ] `itinerary` "일차 미정" 개발 완료
-- [ ] `itinerary` version 증가 개발 완료
-- [ ] `itinerary` map drawing 저장 개발 완료
-- [ ] `itinerary` route segment 저장 개발 완료
-- [ ] `itinerary` Mapbox map matching 성공/실패 개발 완료
-- [ ] `collaboration` undo/redo stack 개발 완료
-- [ ] `collaboration` WebSocket event broadcast 개발 완료
-- [ ] `geo` legal region/viewport/coordinate 개발 완료
-- [ ] `record` trip record entry/media 개발 완료
+- [x] `trip` 여행방 생성/멤버/권한 개발 완료
+- [x] `trip` invite/link/code 개발 완료
+- [x] `itinerary` day/item 추가 개발 완료
+- [x] `itinerary` item 이동/재정렬 개발 완료
+- [x] `itinerary` "일차 미정" 개발 완료
+- [x] `itinerary` version 증가 개발 완료
+- [x] `itinerary` map drawing 저장 개발 완료
+- [x] `itinerary` route segment 저장 개발 완료
+- [x] `itinerary` Mapbox map matching 성공/실패 개발 완료
+- [x] `collaboration` undo/redo stack 개발 완료
+- [x] `collaboration` WebSocket event broadcast 개발 완료
+- [x] `geo` legal region/viewport/coordinate 개발 완료
+- [x] `record` trip record entry/media 개발 완료
 
 김지훈 담당 기능의 추가 완료 조건:
 
-- `PATCH` 요청은 생략한 필드를 기존 값으로 유지하고, 명시적으로 전달한 `null`만 값을 제거한다.
+- record `PATCH` 요청은 생략한 필드를 기존 값으로 유지하고, 명시적으로 전달한 `null`만 값을 제거한다.
 - record가 참조하는 itinerary day/item은 같은 trip에 속해야 하며, day와 item을 함께 지정하면 item이 해당 day에 속해야 한다.
 - record media 연결 전 현재 사용자 소유, `ACTIVE` 상태, linked resource 충돌 여부를 검증한다.
 - 협업 WebSocket은 인증된 HTTP principal을 사용하고, trip topic 구독 전에 active member 권한을 검증한다.
