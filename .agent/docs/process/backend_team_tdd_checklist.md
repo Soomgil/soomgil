@@ -277,6 +277,17 @@ backend/src/main/java/com/soomgil/record/
 - [ ] `geo` legal region/viewport/coordinate 개발 완료
 - [ ] `record` trip record entry/media 개발 완료
 
+김지훈 담당 기능의 추가 완료 조건:
+
+- `PATCH` 요청은 생략한 필드를 기존 값으로 유지하고, 명시적으로 전달한 `null`만 값을 제거한다.
+- record가 참조하는 itinerary day/item은 같은 trip에 속해야 하며, day와 item을 함께 지정하면 item이 해당 day에 속해야 한다.
+- record media 연결 전 현재 사용자 소유, `ACTIVE` 상태, linked resource 충돌 여부를 검증한다.
+- 협업 WebSocket은 인증된 HTTP principal을 사용하고, trip topic 구독 전에 active member 권한을 검증한다.
+- `X-Soomgil-WebSocket-Session-Id`는 서버가 등록한 현재 사용자의 활성 STOMP session ID만 허용한다.
+- command event broadcast는 DB transaction commit 이후에만 전송한다.
+- nullable snapshot을 복원하는 undo/redo SQL은 일반 partial update SQL과 분리해 명시적 `null`도 복원한다.
+- persistence와 Flyway를 포함한 최종 완료 판정은 Docker가 실행되는 환경에서 Testcontainers context test까지 통과한 뒤 체크한다.
+
 의존 규칙:
 
 - 지도 추천 패널은 preference DB를 직접 읽지 않고 민경철의 recommendation query를 호출한다.
