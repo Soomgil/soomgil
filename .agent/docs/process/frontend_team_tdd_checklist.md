@@ -40,26 +40,30 @@
 
 | 영역 | 파일 | 주도 | 규칙 |
 | :--- | :--- | :--- | :--- |
-| 앱 진입점 | `frontend/src/app/` | 3명 합의 | plugin과 전역 provider 변경은 별도 PR |
+| 앱 진입점 | `frontend/src/app/` | 윤정 | plugin과 전역 provider 변경은 별도 합의 PR |
 | Router | `frontend/src/router/` | 윤정 | 인증 guard는 윤정, 도메인 route 추가는 페이지 담당자와 합의 |
 | HTTP/auth error | `frontend/src/api/http.ts` | 윤정 | token, refresh, Problem Details, 공통 retry 처리 |
-| 공통 타입 | `frontend/src/types/api.ts` | 3명 합의 | pagination과 Problem Details 계약만 배치 |
-| 공통 UI | `frontend/src/components/common/` | 3명 합의 | 도메인 로직을 넣지 않음 |
+| 공통 타입 | `frontend/src/types/api.ts` | 민경철 | pagination과 Problem Details 계약만 배치 |
+| 공통 UI | `frontend/src/components/common/` | 민경철 | 도메인 로직을 넣지 않고 변경 전 3명 합의 |
 | Layout | `frontend/src/components/layout/` | 윤정 | 인증 사용자 shell과 전역 navigation 담당 |
-| 전역 UI 상태 | `frontend/src/stores/ui.store.ts` | 3명 합의 | modal/toast 등 화면 공통 상태만 배치 |
-| 전역 style | `frontend/src/styles/` | 3명 합의 | 토큰 변경과 대규모 정리는 별도 PR |
-| OpenAPI 정합성 | `.agent/contracts/openapi.yaml` | 3명 합의 | controller와 client 경로를 함께 검증 |
-| 테스트 기반 | frontend test config | 3명 합의 | Vitest/Vue Test Utils와 Playwright 기준 통일 |
+| 전역 UI 상태 | `frontend/src/stores/ui.store.ts` | 윤정 | modal/toast 등 화면 공통 상태만 배치 |
+| 전역 style | `frontend/src/styles/` | 민경철 | 토큰 변경과 대규모 정리는 별도 합의 PR |
+| WebSocket transport | `frontend/src/realtime/` | 김지훈 | 연결, 재접속, session ID와 topic transport 제공 |
+| OpenAPI 정합성 | `.agent/contracts/openapi.yaml` | 민경철 | 도메인 담당자와 controller/client 경로를 함께 검증 |
+| 테스트 기반 | frontend test config | 민경철 | Vitest/Vue Test Utils와 Playwright 기준 통일 |
 
 공통 합의 TODO:
 
-- [ ] frontend unit/component test runner와 명령을 확정한다.
-- [ ] Playwright E2E 실행 기준과 테스트 계정/seed 정책을 확정한다.
-- [ ] RFC 7807 Problem Details 공통 표시 방식을 확정한다.
-- [ ] access token refresh와 인증 만료 이동 규칙을 확정한다.
-- [ ] pagination, infinite scroll과 요청 취소 규칙을 확정한다.
-- [ ] OpenAPI와 frontend type/client 계약 diff 검증 방식을 확정한다.
-- [ ] 공통 loading, empty, error, toast와 modal 접근성 기준을 확정한다.
+- [ ] 민경철: Vitest/Vue Test Utils unit/component test runner와 명령을 확정한다.
+- [ ] 민경철: Playwright E2E 실행 기준과 테스트 계정/seed 정책을 확정한다.
+- [ ] 민경철: `package-lock.json`을 `package.json`과 동기화하고 깨끗한 환경의 `npm ci`를 통과시킨다.
+- [ ] 윤정: RFC 7807 Problem Details 공통 표시 방식을 확정한다.
+- [ ] 윤정: access token refresh와 인증 만료 이동 규칙을 확정한다.
+- [ ] 민경철: pagination, infinite scroll과 요청 취소 규칙을 확정한다.
+- [ ] 민경철: OpenAPI와 frontend type/client 계약 diff 검증 방식을 확정한다.
+- [ ] 민경철: 공통 loading, empty, error, toast와 modal 접근성 기준을 확정한다.
+- [ ] 윤정: `429`, `Retry-After`, `RATE_LIMITED`의 안내와 재시도 차단 규칙을 확정한다.
+- [ ] 김지훈: WebSocket 연결, 재접속, session ID 교체와 resync 공통 transport 계약을 확정한다.
 
 ## 페이지 소유권
 
@@ -69,9 +73,10 @@
 | `LoginPage`, `RegisterPage` | 윤정 | 없음 |
 | `MyPage`, `UserProfilePage`, `SettingsPage` | 윤정 | 민경철 팔로우/좋아요 장소 컴포넌트 |
 | `CommunityPage`, `FeedPage`, `StoriesPage`, `StoryWritePage` | 윤정 | 민경철 media uploader와 storage 결과 |
+| `AdminModerationPage` | 윤정 | 민경철 공통 table/pagination 컴포넌트 |
 | `MyTripsPage` | 김지훈 | 없음 |
 | `RoutePage` | 김지훈 | 윤정 AI/chat/note/checklist 패널, 민경철 장소 검색/추천 패널 |
-| `RecordPage` | 김지훈 | 민경철 media uploader와 metadata |
+| `RecordPage` | 김지훈 | `/trips/:tripId/records`로 이동, 민경철 media uploader와 metadata |
 | `SwipePage` | 민경철 | 김지훈 trip access 상태 |
 | `NotFoundPage` | 공통 | 윤정이 기본 navigation 흐름 관리 |
 
@@ -83,7 +88,7 @@
 | :--- | :--- | :--- |
 | `auth`, `user`, `global/security`, `global/error` | auth/user page, guard, auth store, HTTP 인증/오류 | 윤정 |
 | `ai`, `chat`, `planning` | AI/chat/note/checklist 패널과 상태 | 윤정 |
-| `community`, `notification` | community page/component/API와 알림 UI | 윤정 |
+| `community`, `notification`, `ops` | community/notification과 moderation action 운영 화면. 범용 audit log UI는 MVP 제외 | 윤정 |
 | `trip` | 내 여행, 여행방 설정, 멤버, 초대, 접근 권한 | 김지훈 |
 | `itinerary`, `geo` | 일정 편집, Mapbox 지도, route/drawing, 지역/viewport | 김지훈 |
 | `collaboration`, `global/event` | WebSocket, version conflict, undo/redo와 실시간 반영 | 김지훈 |
@@ -108,25 +113,37 @@ frontend/src/pages/CommunityPage.vue
 frontend/src/pages/FeedPage.vue
 frontend/src/pages/StoriesPage.vue
 frontend/src/pages/StoryWritePage.vue
+frontend/src/pages/AdminModerationPage.vue
 frontend/src/components/community/
-frontend/src/components/{auth,user,ai,chat,planning,notification}/
-frontend/src/api/{auth,ai,community,notification}.api.ts
+frontend/src/components/{auth,user,ai,chat,planning,notification,admin}/
+frontend/src/api/{auth,user,ai,chat,planning,community,notification,admin}.api.ts
 frontend/src/stores/auth.store.ts
-frontend/src/composables/useAuth.ts
+frontend/src/composables/{useAuth,useAi,useChat,usePlanning}.ts
 frontend/src/router/guards.ts
-frontend/src/types/{auth,user,ai,community,notification}.ts
+frontend/src/types/{auth,user,ai,chat,planning,community,notification,admin}.ts
 ```
 
 윤정 TODO:
 
-- [ ] 로그인, 회원가입, token refresh와 로그아웃 실제 API 연동
+- [ ] 로그인, 회원가입, access/refresh token rotation과 로그아웃 실제 API 연동
+- [ ] 이메일 인증, 재발송 cooldown과 비밀번호 재설정 흐름
+- [ ] 필수 약관 동의, 버전 변경 시 재동의와 가입 완료 차단 흐름
+- [ ] Kakao/Google authorization URL, callback와 소셜 가입 보완 화면
+- [ ] 로그인 후 명시적 소셜 계정 연결과 provider 충돌 오류 처리
 - [ ] guest/auth route guard와 인증 만료 복구 흐름
 - [ ] 사용자 profile, avatar, settings 조회/수정
+- [ ] 로그인 세션/기기 조회, 개별 해제와 전체 로그아웃
+- [ ] 계정 삭제 예약, 활성 여행방 소유자 차단과 취소 가능 상태 표시
 - [ ] 공통 Problem Details, validation error와 권한 오류 표시
 - [ ] AI session/message와 tool 실행 상태 UI
 - [ ] 여행방 chat 메시지와 실시간 수신 UI
 - [ ] 여행방/일차 note와 checklist 패널
-- [ ] community feed, story, comment, report와 moderation surface
+- [ ] community feed, 공개 범위, immutable snapshot과 UNLISTED 공유 흐름
+- [ ] story 작성 preview, source trip version 충돌과 private media 제외 처리
+- [ ] comment/1단계 reply, like, retrip와 삭제 tombstone 처리
+- [ ] API 기반 신고 사유, 신고 제출과 사용자 상태 표시
+- [ ] 관리자 신고 큐, 숨김/복구/삭제와 moderation action 이력 화면
+- [ ] 범용 `ops.audit_logs`는 MVP 화면과 client에서 제외
 - [ ] 여행방 초대 notification 목록과 이동/처리
 - [ ] Home/Landing의 실제 데이터 및 인증 상태 연결
 
@@ -147,26 +164,32 @@ frontend/src/pages/RecordPage.vue
 frontend/src/components/trip/
 frontend/src/components/{itinerary,map,collaboration,record}/
 frontend/src/api/{trip,itinerary,record,geo,collaboration}.api.ts
+frontend/src/realtime/
 frontend/src/stores/trip.store.ts
-frontend/src/composables/useItinerary.ts
+frontend/src/composables/{useItinerary,useTripCollaboration}.ts
 frontend/src/types/{trip,itinerary,record,geo,collaboration}.ts
 ```
 
 김지훈 TODO:
 
 - [ ] 여행방 목록, 생성, 수정, 삭제와 실제 API 연동
-- [ ] 여행방 멤버, 초대 코드, 수락, 취소와 권한 UI
+- [ ] 여행방 멤버, 직접/링크 초대 코드, 수락, 취소와 권한 UI
+- [ ] 초대 링크 딥링크, 로그인 후 복귀와 만료/취소/중복 수락 처리
 - [ ] 일정 day/item 생성, 수정, 삭제와 일차 미정 처리
 - [ ] 일정 drag/drop 재정렬과 version conflict 복구
 - [ ] Kakao mock 지도를 Mapbox 기반 지도 adapter로 교체
 - [ ] viewport 이동, 법정동 검색과 coordinate 단순화 연동
 - [ ] 자유 drawing canvas, 펜/색상/굵기, 지우개와 표시 toggle
 - [ ] 저장 전 drawing preview의 로컬 undo/redo
+- [ ] drawing preview를 STOMP로 송수신하고 좌표를 throttle/downsample
 - [ ] drawing 저장/수정/삭제와 Mapbox map matching 연동
 - [ ] route segment 표시, 갱신, 삭제와 실패/재시도 UI
 - [ ] STOMP 연결, 서버 session ID 전달과 trip topic 구독
+- [ ] 연결 종료 시 undo/redo 비활성화, 지수 backoff 재접속과 새 session ID 교체
+- [ ] missed event 발생 시 최신 일정 resync, 중복/역순 event 방어
 - [ ] 협업 event 반영, 서버 undo/redo와 version 충돌 처리
-- [ ] 여행 기록 entry CRUD, 일정 참조와 사진 피드 연동
+- [ ] 기록 route를 `/trips/:tripId/records`로 변경하고 여행방 context를 명시
+- [ ] 여행 기록 entry CRUD, 일정 참조, 여행방 사진과 전역 사진 피드 연동
 
 의존 규칙:
 
@@ -183,9 +206,9 @@ frontend/src/types/{trip,itinerary,record,geo,collaboration}.ts
 frontend/src/pages/SwipePage.vue
 frontend/src/components/swipe/
 frontend/src/components/{place,preference,social,media}/
-frontend/src/api/{place,swipe,media}.api.ts
+frontend/src/api/{place,swipe,preference,recommendation,social,media}.api.ts
 frontend/src/composables/useSwipe.ts
-frontend/src/types/{place,swipe,media}.ts
+frontend/src/types/{place,swipe,preference,recommendation,social,media}.ts
 ```
 
 민경철 TODO:
@@ -198,7 +221,8 @@ frontend/src/types/{place,swipe,media}.ts
 - [ ] 사용자 preference projection 요약 UI
 - [ ] 지도 추천 패널과 참여자 태그 기반 정렬/필터
 - [ ] SUPER_LIKE/거리/viewport 추천 상태 표시
-- [ ] follower reaction과 profile의 social surface
+- [ ] follow/unfollow, follower/following 목록과 공개 profile social surface
+- [ ] 저장/좋아요 장소 목록과 profile 연동
 - [ ] upload URL 발급, 진행률, 실패 재시도와 metadata 확정
 - [ ] community/record/profile에서 재사용할 media uploader 제공
 
