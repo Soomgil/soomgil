@@ -12,7 +12,7 @@
 - 기능 브랜치에서는 다른 브랜치의 ledger와 `.agent/docs/generated/branch_ledger.*`를 읽거나 수정하지 않습니다.
 - `develop` 또는 `main`에서는 merge 후 `npm --prefix .agent run branch:index`로 브랜치 ledger를 통합합니다.
 - 활성 프론트엔드 제품 코드는 `frontend/`에 둡니다.
-- 백엔드는 추후 `backend/` 서브모듈로 연결하며, 현재는 `.agent/workspaces.json`에서 `planned`로 관리합니다.
+- `frontend/`와 `backend/`는 활성 submodule이며 `.agent/workspaces.json`의 build 명령과 경계를 따릅니다.
 - 루트에는 정적 `index.html`, `pages/`, `assets/`, 제품 `src/`를 두지 않습니다.
 - 정적 HTML/CSS/JS 목업은 더 이상 활성 제품 기준이 아닙니다.
 

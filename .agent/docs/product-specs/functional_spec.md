@@ -37,5 +37,5 @@
 ## 현재 구현 기준
 
 - 활성 제품은 `frontend/` Vue 앱입니다.
-- 백엔드는 아직 planned 상태입니다.
+- `backend/`는 활성 Spring Boot 앱이며 담당자별 구현 진척은 backend TDD checklist에서 관리합니다.
 - API 클라이언트는 `frontend/src/api/`에 있으며, 실제 backend 연결 시 이 경계를 기준으로 맞춥니다.

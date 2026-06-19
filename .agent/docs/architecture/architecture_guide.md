@@ -6,7 +6,7 @@
 | :--- | :--- |
 | 루트 | orchestration repo README, 짧은 AGENTS, 워크스페이스 경계, submodule pointer |
 | `.agent/` | AI 하네스 문서, 생성 인벤토리, 검사 스크립트 |
-| `frontend/` | 프론트엔드 앱 submodule. 현재 빈 repo이며 추후 Vue 앱 scaffold |
+| `frontend/` | 활성 Vue 3 프론트엔드 앱 submodule. 화면, 상태와 API client 관리 |
 | `backend/` | Spring Boot 백엔드 앱 submodule. CQRS-lite 기준으로 command/query 경계를 분리 |
 
 ## 저장소 운영 경계
