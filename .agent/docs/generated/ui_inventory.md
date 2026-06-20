@@ -344,7 +344,7 @@
 - headings: h1 내 여행, h2 {{ trip.title }}, h3 새 여행 만들기
 - forms: 1, images: 0
 - asset refs: 없음
-- classes: `===`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `lead`, `load-more-error`, `load-more-row`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `primary`, `search-box`, `section`, `section-title`, `sr-only`, `timeline-card-status-badge`, `travel-card`, `travel-card__access`
+- classes: `===`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `lead`, `load-more-error`, `load-more-row`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `primary`, `search-box`, `section`, `section-title`, `show:`, `sr-only`, `timeline-card-status-badge`, `travel-card`
 
 #### frontend/src/pages/NotFoundPage.vue
 
