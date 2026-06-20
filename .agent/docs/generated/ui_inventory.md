@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 16, pages 16, components 23 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 17, pages 17, components 26 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -14,7 +14,7 @@
 - package: `soomgil-frontend`
 - language: TypeScript
 - dependencies: `@tailwindcss/vite`, `axios`, `mapbox-gl`, `pinia`, `tailwindcss`, `vue`, `vue-router`
-- devDependencies: `@types/node`, `@vitejs/plugin-vue`, `@vue/tsconfig`, `typescript`, `vite`, `vue-tsc`
+- devDependencies: `@types/node`, `@vitejs/plugin-vue`, `@vue/test-utils`, `@vue/tsconfig`, `jsdom`, `typescript`, `vite`, `vitest`, `vue-tsc`
 
 ### 라우트
 
@@ -25,6 +25,7 @@
 | `/register` | Register | `src/pages/RegisterPage.vue` | 공개 | 예 |
 | `/home` | Home | `src/pages/HomePage.vue` | 필요 | 아니오 |
 | `/my-trips` | MyTrips | `src/pages/MyTripsPage.vue` | 필요 | 아니오 |
+| `/trip-invites/:inviteCode` | TripInviteAccept | `src/pages/TripInviteAcceptPage.vue` | 필요 | 아니오 |
 | `/trips/:tripId/swipe` | Swipe | `src/pages/SwipePage.vue` | 필요 | 아니오 |
 | `/trips/:tripId/route` | Route | `src/pages/RoutePage.vue` | 필요 | 아니오 |
 | `/community` | Community | `src/pages/CommunityPage.vue` | 공개 | 아니오 |
@@ -192,6 +193,15 @@
 - asset refs: 없음
 - classes: `flex`, `flex-1`, `flex-col`, `min-h-screen`
 
+#### frontend/src/components/map/MapboxItineraryMap.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `btn`, `ghost`, `itinerary-map`, `itinerary-map__canvas`, `itinerary-map__error`
+
 #### frontend/src/components/mypage/LikedPlacesModal.vue
 
 - 종류: component
@@ -237,6 +247,15 @@
 - asset refs: `@/assets/images/soomgil_logo_none_text.png`
 - classes: `-bottom-3`, `-left-3`, `-space-x-2`, `-top-3`, `absolute`, `bg-bg`, `bg-brand-violet/10`, `bg-line`, `bg-surface-2`, `bg-transparent`, `block`, `boarding-pass-card`, `border`, `border-2`, `border-dashed`, `border-l`, `border-line`, `border-line/50`, `border-surface`, `flex`, `flex-1`, `flex-col`, `font-black`, `font-bold`, `gap-1`, `gap-2`, `gap-4`, `gap-x-6`, `gap-y-2`, `grid`
 
+#### frontend/src/components/trip/TripAccessModal.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 {{ isOwner ? '멤버 및 초대 관리' : '여행 멤버' }}, h3 멤버, h3 초대 코드
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `access-content`, `access-error`, `access-header`, `access-list`, `access-list__body`, `access-modal`, `access-overlay`, `access-section`, `access-section__head`, `btn`, `compact`, `danger`, `eyebrow`, `icon-btn`, `invite-actions`, `invite-list`, `material-symbols-rounded`, `member-avatar`, `primary`, `text-action`
+
 #### frontend/src/components/trip/TripCard.vue
 
 - 종류: component
@@ -245,6 +264,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `-space-x-1.5`, `bg-center`, `bg-cover`, `bg-surface`, `border`, `border-line`, `flex`, `flex-1`, `font-bold`, `gap-4`, `h-16`, `hover:border-brand-violet/30`, `hover:shadow-[0_8px_24px_rgba(0,102,255,0.06)]`, `items-center`, `material-symbols-rounded`, `min-w-0`, `mt-0.5`, `mt-2`, `p-4`, `rounded-2xl`, `rounded-xl`, `shrink-0`, `text-ink`, `text-left`, `text-muted`, `text-xs`, `transition-all`, `truncate`, `w-16`, `w-full`
+
+#### frontend/src/components/trip/TripSettingsModal.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 여행 설정, h3 여행 삭제
+- forms: 1, images: 0
+- asset refs: 없음
+- classes: `===`, `active:`, `btn`, `danger-button`, `danger-zone`, `delete-confirmation`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `material-symbols-rounded`, `primary`, `settings-actions`, `settings-error`, `settings-form`, `settings-header`, `settings-modal`, `settings-overlay`, `status`, `status-fieldset`, `status-segments`, `{`
 
 #### frontend/src/pages/CommunityPage.vue
 
@@ -304,10 +332,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 내 여행 준비 를 이어가세요
-- forms: 0, images: 1
-- asset refs: `/images/soomgil_logo_none_text.png`, `/images/랜딩페이지/busan.png`
-- classes: `airport-code`, `app-shell`, `avatar`, `boarding-pass-card`, `boarding-pass-container`, `btn`, `city-name`, `d-day-badge`, `departure`, `destination`, `detail-item`, `eyebrow`, `label`, `lead`, `line`, `logo-image`, `logo-text`, `material-symbols-rounded`, `my-trips-dashboard`, `next-trip-members`, `next-trip-panel`, `plane-icon`, `primary`, `route-path`, `route-point`, `section`, `ticket-badge`, `ticket-details`, `ticket-header`, `ticket-logo`
+- headings: h1 내 여행, h2 {{ trip.title }}, h3 새 여행 만들기
+- forms: 1, images: 0
+- asset refs: 없음
+- classes: `===`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `lead`, `load-more-error`, `load-more-row`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `primary`, `search-box`, `section`, `section-title`, `sr-only`, `timeline-card-status-badge`, `travel-card`, `travel-card__access`
 
 #### frontend/src/pages/NotFoundPage.vue
 
@@ -343,7 +371,7 @@
 - headings: h3 {{ trip.title }}
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `[`, `avatar`, `avatars`, `avatars-group`, `btn`, `compact-settings-btn`, `day-date`, `day-pill`, `day-scroll-btn`, `day-tabs`, `day-tabs-container`, `day-title`, `full-screen`, `ghost`, `grip-icon`, `itinerary`, `line`, `material-symbols-rounded`, `members-count`, `muted`, `next`, `prev`, `route-connector`, `route-connector-line`, `route-page-section`, `route-unlink-icon`, `section`, `sidebar`, `sidebar-content`, `small`
+- classes: `[`, `avatar`, `avatars`, `avatars-group`, `btn`, `compact-settings-btn`, `day-date`, `day-pill`, `day-scroll-btn`, `day-tabs`, `day-tabs-container`, `day-title`, `full-screen`, `ghost`, `grip-icon`, `icon-btn`, `itinerary`, `itinerary-action-error`, `itinerary-day-actions`, `itinerary-delete-btn`, `line`, `material-symbols-rounded`, `members-count`, `muted`, `next`, `prev`, `route-connector`, `route-connector-line`, `route-page-section`, `route-unlink-icon`
 
 #### frontend/src/pages/SettingsPage.vue
 
@@ -380,6 +408,15 @@
 - forms: 0, images: 1
 - asset refs: 없음
 - classes: `[swipeClass,`, `app-shell`, `btn`, `community-hero-header`, `eyebrow`, `lead`, `material-symbols-rounded`, `meta-row`, `muted`, `panel`, `primary`, `section`, `section-title`, `swipe-body`, `swipe-card`, `swipe-layout`, `swipe-main-column`, `swipe-stage`, `swipe-workspace-card`, `swipe-xp-bar`, `swipe-xp-count`, `swipe-xp-fill`, `swipe-xp-track`, `tag`, `tag-row`, `{`
+
+#### frontend/src/pages/TripInviteAcceptPage.vue
+
+- 종류: page
+- script: setup / ts
+- headings: h1 초대 수락 완료
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
 
 #### frontend/src/pages/UserProfilePage.vue
 

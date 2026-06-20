@@ -29,9 +29,12 @@
       "devDependencies": [
         "@types/node",
         "@vitejs/plugin-vue",
+        "@vue/test-utils",
         "@vue/tsconfig",
+        "jsdom",
         "typescript",
         "vite",
+        "vitest",
         "vue-tsc"
       ],
       "routes": [
@@ -67,6 +70,13 @@
           "path": "/my-trips",
           "name": "MyTrips",
           "page": "src/pages/MyTripsPage.vue",
+          "requiresAuth": true,
+          "guestOnly": false
+        },
+        {
+          "path": "/trip-invites/:inviteCode",
+          "name": "TripInviteAccept",
+          "page": "src/pages/TripInviteAcceptPage.vue",
           "requiresAuth": true,
           "guestOnly": false
         },
@@ -645,6 +655,24 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/map/MapboxItineraryMap.vue",
+          "relativePath": "src/components/map/MapboxItineraryMap.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "btn",
+            "ghost",
+            "itinerary-map",
+            "itinerary-map__canvas",
+            "itinerary-map__error"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/mypage/LikedPlacesModal.vue",
           "relativePath": "src/components/mypage/LikedPlacesModal.vue",
           "kind": "component",
@@ -944,6 +972,55 @@
           ]
         },
         {
+          "path": "frontend/src/components/trip/TripAccessModal.vue",
+          "relativePath": "src/components/trip/TripAccessModal.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "trip-access-title",
+              "text": "{{ isOwner ? '멤버 및 초대 관리' : '여행 멤버' }}"
+            },
+            {
+              "level": 3,
+              "id": "member-list-title",
+              "text": "멤버"
+            },
+            {
+              "level": 3,
+              "id": "invite-list-title",
+              "text": "초대 코드"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "access-content",
+            "access-error",
+            "access-header",
+            "access-list",
+            "access-list__body",
+            "access-modal",
+            "access-overlay",
+            "access-section",
+            "access-section__head",
+            "btn",
+            "compact",
+            "danger",
+            "eyebrow",
+            "icon-btn",
+            "invite-actions",
+            "invite-list",
+            "material-symbols-rounded",
+            "member-avatar",
+            "primary",
+            "text-action"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/trip/TripCard.vue",
           "relativePath": "src/components/trip/TripCard.vue",
           "kind": "component",
@@ -989,6 +1066,54 @@
             "truncate",
             "w-16",
             "w-full"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/trip/TripSettingsModal.vue",
+          "relativePath": "src/components/trip/TripSettingsModal.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "trip-settings-title",
+              "text": "여행 설정"
+            },
+            {
+              "level": 3,
+              "id": "delete-trip-title",
+              "text": "여행 삭제"
+            }
+          ],
+          "images": [],
+          "forms": 1,
+          "classNames": [
+            "===",
+            "active:",
+            "btn",
+            "danger-button",
+            "danger-zone",
+            "delete-confirmation",
+            "eyebrow",
+            "field",
+            "form-label",
+            "form-label-text",
+            "ghost",
+            "icon-btn",
+            "material-symbols-rounded",
+            "primary",
+            "settings-actions",
+            "settings-error",
+            "settings-form",
+            "settings-header",
+            "settings-modal",
+            "settings-overlay",
+            "status",
+            "status-fieldset",
+            "status-segments",
+            "{"
           ],
           "assetRefs": []
         },
@@ -1771,59 +1896,73 @@
             {
               "level": 1,
               "id": "",
-              "text": "내 여행 준비 를 이어가세요"
-            }
-          ],
-          "images": [
+              "text": "내 여행"
+            },
             {
-              "src": "logoImg",
-              "alt": "숨길 로고"
+              "level": 2,
+              "id": "",
+              "text": "{{ trip.title }}"
+            },
+            {
+              "level": 3,
+              "id": "trip-create-title",
+              "text": "새 여행 만들기"
             }
           ],
-          "forms": 0,
+          "images": [],
+          "forms": 1,
           "classNames": [
-            "airport-code",
+            "===",
+            "active:",
+            "activeFilter",
             "app-shell",
-            "avatar",
-            "boarding-pass-card",
-            "boarding-pass-container",
             "btn",
-            "city-name",
-            "d-day-badge",
-            "departure",
-            "destination",
-            "detail-item",
+            "compact-title",
+            "createModal.isOpen.value",
             "eyebrow",
-            "label",
+            "field",
+            "filter.value",
+            "form-label",
+            "form-label-text",
+            "ghost",
+            "icon-btn",
             "lead",
-            "line",
-            "logo-image",
-            "logo-text",
+            "load-more-error",
+            "load-more-row",
             "material-symbols-rounded",
+            "modal-card",
+            "modal-header",
+            "modal-overlay",
             "my-trips-dashboard",
-            "next-trip-members",
-            "next-trip-panel",
-            "plane-icon",
             "primary",
-            "route-path",
-            "route-point",
+            "search-box",
             "section",
-            "ticket-badge",
-            "ticket-details",
-            "ticket-header",
-            "ticket-logo",
-            "ticket-main",
-            "ticket-members-wrapper",
-            "ticket-route",
+            "section-title",
+            "sr-only",
+            "timeline-card-status-badge",
+            "travel-card",
+            "travel-card__access",
+            "travel-card__actions",
+            "travel-card__body",
+            "travel-card__date",
+            "travel-card__header",
+            "travel-card__main",
+            "travel-card__role",
+            "travel-card__settings",
             "travel-page-head",
-            "trip-dashboard-layout",
-            "trip-dashboard-main",
-            "value"
+            "trip-card-grid",
+            "trip-create-actions",
+            "trip-create-card",
+            "trip-create-error",
+            "trip-create-form",
+            "trip-create-modal",
+            "trip-list-head",
+            "trip-search",
+            "trip-tabs",
+            "{",
+            "}"
           ],
-          "assetRefs": [
-            "/images/soomgil_logo_none_text.png",
-            "/images/랜딩페이지/busan.png"
-          ]
+          "assetRefs": []
         },
         {
           "path": "frontend/src/pages/NotFoundPage.vue",
@@ -2066,7 +2205,11 @@
             "full-screen",
             "ghost",
             "grip-icon",
+            "icon-btn",
             "itinerary",
+            "itinerary-action-error",
+            "itinerary-day-actions",
+            "itinerary-delete-btn",
             "line",
             "material-symbols-rounded",
             "members-count",
@@ -2088,7 +2231,6 @@
             "trip-card-divider",
             "trip-card-footer",
             "trip-card-title",
-            "trip-dday-badge",
             "trip-info-badge-row",
             "trip-stat-item",
             "trip-stats-grid",
@@ -2360,6 +2502,36 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/pages/TripInviteAcceptPage.vue",
+          "relativePath": "src/pages/TripInviteAcceptPage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "초대 수락 완료"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "app-shell",
+            "btn",
+            "eyebrow",
+            "ghost",
+            "invite-actions",
+            "invite-icon",
+            "invite-page",
+            "invite-status",
+            "material-symbols-rounded",
+            "primary",
+            "success"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/pages/UserProfilePage.vue",
           "relativePath": "src/pages/UserProfilePage.vue",
           "kind": "page",
@@ -2548,6 +2720,37 @@
           ]
         },
         {
+          "path": "frontend/src/api/geo.api.test.ts",
+          "relativePath": "src/api/geo.api.test.ts",
+          "imports": [
+            "./geo.api",
+            "./http",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/api/geo.api.ts",
+          "relativePath": "src/api/geo.api.ts",
+          "imports": [
+            "./http",
+            "@/types/geo"
+          ],
+          "exports": [
+            "formatViewportBbox",
+            "geoApi"
+          ]
+        },
+        {
+          "path": "frontend/src/api/http.test.ts",
+          "relativePath": "src/api/http.test.ts",
+          "imports": [
+            "./http",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/api/http.ts",
           "relativePath": "src/api/http.ts",
           "imports": [
@@ -2555,15 +2758,25 @@
             "axios"
           ],
           "exports": [
-            "apiCall"
+            "apiCall",
+            "buildLoginRedirectUrl"
           ]
+        },
+        {
+          "path": "frontend/src/api/itinerary.api.test.ts",
+          "relativePath": "src/api/itinerary.api.test.ts",
+          "imports": [
+            "./http",
+            "./itinerary.api",
+            "vitest"
+          ],
+          "exports": []
         },
         {
           "path": "frontend/src/api/itinerary.api.ts",
           "relativePath": "src/api/itinerary.api.ts",
           "imports": [
             "./http",
-            "@/types/api",
             "@/types/itinerary"
           ],
           "exports": [
@@ -2621,12 +2834,21 @@
           ]
         },
         {
+          "path": "frontend/src/api/trip.api.test.ts",
+          "relativePath": "src/api/trip.api.test.ts",
+          "imports": [
+            "./http",
+            "./trip.api",
+            "@/types/trip",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/api/trip.api.ts",
           "relativePath": "src/api/trip.api.ts",
           "imports": [
             "./http",
-            "@/mocks/mockTrips",
-            "@/types/api",
             "@/types/trip"
           ],
           "exports": [
@@ -2641,6 +2863,72 @@
             "@/router",
             "pinia",
             "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/common/BaseButton.test.ts",
+          "relativePath": "src/components/common/BaseButton.test.ts",
+          "imports": [
+            "./BaseButton.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/itinerary/itineraryViewModel.test.ts",
+          "relativePath": "src/components/itinerary/itineraryViewModel.test.ts",
+          "imports": [
+            "./itineraryViewModel",
+            "@/types/itinerary",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/itinerary/itineraryViewModel.ts",
+          "relativePath": "src/components/itinerary/itineraryViewModel.ts",
+          "imports": [
+            "@/types/itinerary"
+          ],
+          "exports": [
+            "DayPlanViewModel",
+            "RouteStopViewModel",
+            "dayPlanLabel",
+            "toDayPlans"
+          ]
+        },
+        {
+          "path": "frontend/src/components/map/MapboxItineraryMap.test.ts",
+          "relativePath": "src/components/map/MapboxItineraryMap.test.ts",
+          "imports": [
+            "./MapboxItineraryMap.vue",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/trip/TripAccessModal.test.ts",
+          "relativePath": "src/components/trip/TripAccessModal.test.ts",
+          "imports": [
+            "./TripAccessModal.vue",
+            "@/types/trip",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/trip/TripSettingsModal.test.ts",
+          "relativePath": "src/components/trip/TripSettingsModal.test.ts",
+          "imports": [
+            "./TripSettingsModal.vue",
+            "@/types/trip",
+            "@vue/test-utils",
+            "vitest"
           ],
           "exports": []
         },
@@ -2667,6 +2955,17 @@
           ]
         },
         {
+          "path": "frontend/src/composables/useItinerary.test.ts",
+          "relativePath": "src/composables/useItinerary.test.ts",
+          "imports": [
+            "./useItinerary",
+            "@/api/itinerary.api",
+            "@/types/itinerary",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/composables/useItinerary.ts",
           "relativePath": "src/composables/useItinerary.ts",
           "imports": [
@@ -2676,6 +2975,29 @@
           ],
           "exports": [
             "useItinerary"
+          ]
+        },
+        {
+          "path": "frontend/src/composables/useMapViewport.test.ts",
+          "relativePath": "src/composables/useMapViewport.test.ts",
+          "imports": [
+            "./useMapViewport",
+            "@/api/geo.api",
+            "@/types/geo",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/composables/useMapViewport.ts",
+          "relativePath": "src/composables/useMapViewport.ts",
+          "imports": [
+            "@/api/geo.api",
+            "@/types/geo",
+            "vue"
+          ],
+          "exports": [
+            "useMapViewport"
           ]
         },
         {
@@ -2767,6 +3089,38 @@
           ]
         },
         {
+          "path": "frontend/src/pages/MyTripsPage.test.ts",
+          "relativePath": "src/pages/MyTripsPage.test.ts",
+          "imports": [
+            "./MyTripsPage.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/pages/RoutePage.test.ts",
+          "relativePath": "src/pages/RoutePage.test.ts",
+          "imports": [
+            "./RoutePage.vue",
+            "@/components/map/MapboxItineraryMap.vue",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/pages/TripInviteAcceptPage.test.ts",
+          "relativePath": "src/pages/TripInviteAcceptPage.test.ts",
+          "imports": [
+            "./TripInviteAcceptPage.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/router/guards.ts",
           "relativePath": "src/router/guards.ts",
           "imports": [
@@ -2800,6 +3154,18 @@
           ]
         },
         {
+          "path": "frontend/src/stores/trip.store.test.ts",
+          "relativePath": "src/stores/trip.store.test.ts",
+          "imports": [
+            "./trip.store",
+            "@/api/trip.api",
+            "@/types/trip",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/stores/trip.store.ts",
           "relativePath": "src/stores/trip.store.ts",
           "imports": [
@@ -2823,6 +3189,15 @@
             "Toast",
             "useUiStore"
           ]
+        },
+        {
+          "path": "frontend/src/test/setup.ts",
+          "relativePath": "src/test/setup.ts",
+          "imports": [
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
         },
         {
           "path": "frontend/src/types/ai.ts",
@@ -2890,22 +3265,52 @@
           ]
         },
         {
+          "path": "frontend/src/types/geo.ts",
+          "relativePath": "src/types/geo.ts",
+          "imports": [],
+          "exports": [
+            "LegalRegion",
+            "LegalRegionLevel",
+            "LegalRegionPage",
+            "LegalRegionSearchParams",
+            "LngLat",
+            "SimplifiedCoordinates",
+            "SimplifyCoordinatesRequest",
+            "Viewport",
+            "ViewportSummary"
+          ]
+        },
+        {
           "path": "frontend/src/types/itinerary.ts",
           "relativePath": "src/types/itinerary.ts",
           "imports": [],
           "exports": [
+            "CreateItineraryDayInput",
+            "CreateItineraryDayRequest",
+            "CreateItineraryItemInput",
+            "CreateItineraryItemRequest",
             "DayGroupType",
             "DrawingType",
-            "GenericGeometry",
+            "GeometryFormat",
             "ItemType",
+            "Itinerary",
             "ItineraryDay",
+            "ItineraryDayOrderRequest",
             "ItineraryItem",
-            "ItineraryPutRequest",
+            "ItineraryItemOrderRequest",
+            "ItineraryMutationResponse",
             "LineStringGeometry",
             "MapDrawing",
+            "PlaceRef",
+            "ReorderItineraryInput",
+            "ReorderItineraryRequest",
             "RouteMode",
             "SourceStatus",
-            "TripRoute"
+            "TripRoute",
+            "UpdateItineraryDayInput",
+            "UpdateItineraryDayRequest",
+            "UpdateItineraryItemInput",
+            "UpdateItineraryItemRequest"
           ]
         },
         {
@@ -2957,17 +3362,28 @@
         {
           "path": "frontend/src/types/trip.ts",
           "relativePath": "src/types/trip.ts",
-          "imports": [],
+          "imports": [
+            "./geo"
+          ],
           "exports": [
+            "CreateTripInviteRequest",
+            "PageMeta",
+            "PagedTripSummary",
             "Trip",
+            "TripAccessRole",
             "TripCreateRequest",
+            "TripDetail",
+            "TripDetailMember",
             "TripFilter",
             "TripInvite",
             "TripInviteStatus",
+            "TripListParams",
             "TripMember",
             "TripMemberRole",
             "TripMemberStatus",
-            "TripStatus"
+            "TripStatus",
+            "TripSummary",
+            "TripUpdateRequest"
           ]
         },
         {
@@ -3443,12 +3859,12 @@
         }
       ],
       "summary": {
-        "routes": 16,
-        "pages": 16,
-        "components": 23,
-        "sourceFiles": 42,
+        "routes": 17,
+        "pages": 17,
+        "components": 26,
+        "sourceFiles": 62,
         "styleFiles": 4,
-        "typeScriptSignals": 80
+        "typeScriptSignals": 104
       }
     },
     {
