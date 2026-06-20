@@ -539,6 +539,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedLegalRegion'
+  /viewport:
+    get:
+      tags: [Regions]
+      summary: 지도 viewport 요약
+      operationId: summarizeViewport
+      parameters:
+        - name: bbox
+          in: query
+          required: true
+          description: minLng,minLat,maxLng,maxLat 순서의 지도 경계
+          schema:
+            type: string
+            example: 126.9,37.4,127.2,37.7
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ViewportSummary'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /coordinates/simplify:
+    post:
+      tags: [Regions]
+      summary: 지도 좌표 목록 단순화
+      operationId: simplifyCoordinates
+      description: 첫 좌표와 마지막 좌표를 유지하면서 좌표 수를 제한한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimplifyCoordinatesRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimplifiedCoordinates'
+        '422':
+          $ref: '#/components/responses/ValidationError'
   /trips:
     get:
       tags: [Trips]
@@ -3718,9 +3761,13 @@ components:
         lng:
           type: number
           format: double
+          minimum: -180
+          maximum: 180
         lat:
           type: number
           format: double
+          minimum: -90
+          maximum: 90
     Note:
       type: object
       required: [id, tripId, scopeType, content, version]
@@ -4029,15 +4076,79 @@ components:
           $ref: '#/components/schemas/OffsetPageMeta'
     Viewport:
       type: object
+      required: [minLng, minLat, maxLng, maxLat]
       properties:
         minLng:
           type: number
+          format: double
+          minimum: -180
+          maximum: 180
         minLat:
           type: number
+          format: double
+          minimum: -90
+          maximum: 90
         maxLng:
           type: number
+          format: double
+          minimum: -180
+          maximum: 180
         maxLat:
           type: number
+          format: double
+          minimum: -90
+          maximum: 90
+    ViewportSummary:
+      type: object
+      required: [viewport, center, widthMeters, heightMeters]
+      properties:
+        viewport:
+          $ref: '#/components/schemas/Viewport'
+        center:
+          $ref: '#/components/schemas/LngLat'
+        widthMeters:
+          type: number
+          format: double
+          minimum: 0
+        heightMeters:
+          type: number
+          format: double
+          minimum: 0
+    SimplifyCoordinatesRequest:
+      type: object
+      required: [coordinates]
+      properties:
+        coordinates:
+          type: array
+          minItems: 2
+          items:
+            $ref: '#/components/schemas/LngLat'
+        maxPoints:
+          type: integer
+          minimum: 2
+          maximum: 100
+          default: 100
+    SimplifiedCoordinates:
+      type: object
+      required: [coordinates, originalCount, simplifiedCount, maxPoints]
+      properties:
+        coordinates:
+          type: array
+          minItems: 2
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/LngLat'
+        originalCount:
+          type: integer
+          minimum: 2
+        simplifiedCount:
+          type: integer
+          minimum: 2
+          maximum: 100
+        maxPoints:
+          type: integer
+          minimum: 2
+          maximum: 100
     TripRecordEntry:
       type: object
       required: [id, tripId, uploadedBy, visibility, status, createdAt]
