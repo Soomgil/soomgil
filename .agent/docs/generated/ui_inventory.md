@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 17, pages 17, components 26 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 17, pages 17, components 27 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -246,6 +246,15 @@
 - forms: 0, images: 1
 - asset refs: `@/assets/images/soomgil_logo_none_text.png`
 - classes: `-bottom-3`, `-left-3`, `-space-x-2`, `-top-3`, `absolute`, `bg-bg`, `bg-brand-violet/10`, `bg-line`, `bg-surface-2`, `bg-transparent`, `block`, `boarding-pass-card`, `border`, `border-2`, `border-dashed`, `border-l`, `border-line`, `border-line/50`, `border-surface`, `flex`, `flex-1`, `flex-col`, `font-black`, `font-bold`, `gap-1`, `gap-2`, `gap-4`, `gap-x-6`, `gap-y-2`, `grid`
+
+#### frontend/src/components/trip/LegalRegionCombobox.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `===`, `active:`, `activeIndex`, `field`, `index`, `is-error`, `legal-region-combobox`, `legal-region-input-wrap`, `legal-region-option`, `legal-region-options`, `legal-region-search-icon`, `legal-region-spinner`, `legal-region-state`, `material-symbols-rounded`, `{`, `}`
 
 #### frontend/src/components/trip/TripAccessModal.vue
 

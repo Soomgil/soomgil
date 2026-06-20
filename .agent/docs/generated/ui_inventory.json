@@ -972,6 +972,35 @@
           ]
         },
         {
+          "path": "frontend/src/components/trip/LegalRegionCombobox.vue",
+          "relativePath": "src/components/trip/LegalRegionCombobox.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "===",
+            "active:",
+            "activeIndex",
+            "field",
+            "index",
+            "is-error",
+            "legal-region-combobox",
+            "legal-region-input-wrap",
+            "legal-region-option",
+            "legal-region-options",
+            "legal-region-search-icon",
+            "legal-region-spinner",
+            "legal-region-state",
+            "material-symbols-rounded",
+            "{",
+            "}"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/trip/TripAccessModal.vue",
           "relativePath": "src/components/trip/TripAccessModal.vue",
           "kind": "component",
@@ -2911,6 +2940,17 @@
           "exports": []
         },
         {
+          "path": "frontend/src/components/trip/LegalRegionCombobox.test.ts",
+          "relativePath": "src/components/trip/LegalRegionCombobox.test.ts",
+          "imports": [
+            "./LegalRegionCombobox.vue",
+            "@/api/geo.api",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/trip/TripAccessModal.test.ts",
           "relativePath": "src/components/trip/TripAccessModal.test.ts",
           "imports": [
@@ -3861,10 +3901,10 @@
       "summary": {
         "routes": 17,
         "pages": 17,
-        "components": 26,
-        "sourceFiles": 62,
+        "components": 27,
+        "sourceFiles": 63,
         "styleFiles": 4,
-        "typeScriptSignals": 104
+        "typeScriptSignals": 106
       }
     },
     {
