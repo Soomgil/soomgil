@@ -23,13 +23,17 @@ status: ready
 - 일정 추가 패널에서 기본 추천, 슈퍼라이크 추천, 직접 검색을 전환할 수 있다.
 - 추천 장소 상세 조회, 저장/저장 취소, 일정 추가를 기존 Route 화면 흐름에 연결했다.
 - media는 upload URL 발급, object storage 직접 PUT, metadata 등록 순서로 업로드한다.
-- frontend commit은 `721e70d`, `6bb3d22`, `0bf4381`, `9d26af2`, `88b07fa`다.
-- frontend 전체 테스트 15개와 production build를 통과했고 데스크톱 화면에서 스와이프와 장소 추천 패널을 확인했다.
+- frontend `origin/feature/trip-ui`의 실제 일정, Mapbox, 지도 그리기, 실시간 preview 구현을 병합했다.
+- Route 충돌은 `trip-ui` 구현을 기준으로 해결하고 목 파리 검색 영역만 실제 장소 탐색 패널로 교체했다.
+- 스와이프 장소/친구 이미지가 없을 때 깨진 이미지 대신 안정적인 placeholder를 표시한다.
+- frontend 기능 commit은 `721e70d`, `6bb3d22`, `0bf4381`, `9d26af2`, `88b07fa`, trip-ui 병합 commit은 `d3cd567`이다.
+- frontend 전체 테스트 102개와 production build를 통과했고 데스크톱 스와이프와 Route 장소 추천 패널을 확인했다.
 
 ## 에이전트 주의사항
 
 - 추천 응답의 내부 점수는 화면에 노출하지 않고 추천 이유와 매칭 멤버만 표시한다.
-- Route 화면의 기존 mock 일정과 지도 로직은 김지훈 담당 범위이므로 이 브랜치에서 교체하지 않았다.
+- Route 일정·지도 로직은 `origin/feature/trip-ui`를 기준으로 유지하며 장소 패널은 현재 지도 viewport를 bbox로 사용한다.
+- 실제 지도 렌더링에는 frontend `.env.local`의 `VITE_MAPBOX_ACCESS_TOKEN`이 필요하다.
 - frontend와 backend submodule pointer 변경은 로컬 orchestration 상태이며 root commit에 포함하지 않는다.
 - frontend 제품 기능은 별도 `feature/place-search-detail` 브랜치에 커밋되어 있다.
 
