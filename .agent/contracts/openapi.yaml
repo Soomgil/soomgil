@@ -463,6 +463,54 @@ paths:
           description: No Content
         '404':
           $ref: '#/components/responses/NotFound'
+  /users/{userId}/followers:
+    get:
+      tags: [Users]
+      summary: 사용자 팔로워 목록
+      operationId: listUserFollowers
+      description: PUBLIC 프로필은 누구나 조회할 수 있고, PRIVATE 프로필은 본인만 조회할 수 있다.
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedUserSummary'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /users/{userId}/following:
+    get:
+      tags: [Users]
+      summary: 사용자 팔로잉 목록
+      operationId: listUserFollowing
+      description: PUBLIC 프로필은 누구나 조회할 수 있고, PRIVATE 프로필은 본인만 조회할 수 있다.
+      security:
+        - {}
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedUserSummary'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /me/follow-requests:
     get:
       tags: [Users]
@@ -1939,8 +1987,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityPostShareTokenResponse'
-  /community/posts/{postId}/like:
-    put:
+  /community/posts/{postId}/likes:
+    post:
       tags: [Community]
       summary: 게시글 좋아요
       operationId: likeCommunityPost
