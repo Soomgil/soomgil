@@ -655,6 +655,27 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/map/MapDrawingOverlay.vue",
+          "relativePath": "src/components/map/MapDrawingOverlay.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "===",
+            "editable,",
+            "erasing:",
+            "is-current",
+            "map-drawing-overlay",
+            "map-drawing-stroke",
+            "tool",
+            "{"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/map/MapboxItineraryMap.vue",
           "relativePath": "src/components/map/MapboxItineraryMap.vue",
           "kind": "component",
@@ -2930,9 +2951,21 @@
           ]
         },
         {
+          "path": "frontend/src/components/map/MapDrawingOverlay.test.ts",
+          "relativePath": "src/components/map/MapDrawingOverlay.test.ts",
+          "imports": [
+            "./MapDrawingOverlay.vue",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/map/MapboxItineraryMap.test.ts",
           "relativePath": "src/components/map/MapboxItineraryMap.test.ts",
           "imports": [
+            "./MapDrawingOverlay.vue",
             "./MapboxItineraryMap.vue",
             "@vue/test-utils",
             "vitest",
@@ -3902,10 +3935,10 @@
       "summary": {
         "routes": 17,
         "pages": 17,
-        "components": 27,
-        "sourceFiles": 63,
+        "components": 28,
+        "sourceFiles": 64,
         "styleFiles": 4,
-        "typeScriptSignals": 106
+        "typeScriptSignals": 108
       }
     },
     {

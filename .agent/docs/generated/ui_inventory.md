@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 17, pages 17, components 27 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 17, pages 17, components 28 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -192,6 +192,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `flex`, `flex-1`, `flex-col`, `min-h-screen`
+
+#### frontend/src/components/map/MapDrawingOverlay.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `===`, `editable,`, `erasing:`, `is-current`, `map-drawing-overlay`, `map-drawing-stroke`, `tool`, `{`
 
 #### frontend/src/components/map/MapboxItineraryMap.vue
 
