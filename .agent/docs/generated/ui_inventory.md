@@ -13,7 +13,7 @@
 
 - package: `soomgil-frontend`
 - language: TypeScript
-- dependencies: `@tailwindcss/vite`, `axios`, `mapbox-gl`, `pinia`, `tailwindcss`, `vue`, `vue-router`
+- dependencies: `@stomp/stompjs`, `@tailwindcss/vite`, `axios`, `mapbox-gl`, `pinia`, `tailwindcss`, `vue`, `vue-router`
 - devDependencies: `@types/node`, `@vitejs/plugin-vue`, `@vue/test-utils`, `@vue/tsconfig`, `jsdom`, `typescript`, `vite`, `vitest`, `vue-tsc`
 
 ### 라우트

@@ -18,6 +18,7 @@
       "packageName": "soomgil-frontend",
       "language": "TypeScript",
       "dependencies": [
+        "@stomp/stompjs",
         "@tailwindcss/vite",
         "axios",
         "mapbox-gl",
@@ -3195,6 +3196,55 @@
           "exports": []
         },
         {
+          "path": "frontend/src/realtime/drawingPreview.test.ts",
+          "relativePath": "src/realtime/drawingPreview.test.ts",
+          "imports": [
+            "./drawingPreview",
+            "./stompTransport",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/realtime/drawingPreview.ts",
+          "relativePath": "src/realtime/drawingPreview.ts",
+          "imports": [
+            "./stompTransport",
+            "@/components/map/MapDrawingOverlay.vue",
+            "@/types/collaboration",
+            "@/types/geo",
+            "vue"
+          ],
+          "exports": [
+            "downsampleCoordinates",
+            "drawingPreviewSendDestination",
+            "drawingPreviewTopic",
+            "useDrawingPreviewChannel"
+          ]
+        },
+        {
+          "path": "frontend/src/realtime/stompTransport.test.ts",
+          "relativePath": "src/realtime/stompTransport.test.ts",
+          "imports": [
+            "./stompTransport",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/realtime/stompTransport.ts",
+          "relativePath": "src/realtime/stompTransport.ts",
+          "imports": [
+            "@stomp/stompjs"
+          ],
+          "exports": [
+            "RealtimeTransport",
+            "StompTransport",
+            "StompTransportOptions",
+            "resolveWebSocketUrl"
+          ]
+        },
+        {
           "path": "frontend/src/router/guards.ts",
           "relativePath": "src/router/guards.ts",
           "imports": [
@@ -3313,6 +3363,18 @@
             "User",
             "UserStatus",
             "getUserAvatar"
+          ]
+        },
+        {
+          "path": "frontend/src/types/collaboration.ts",
+          "relativePath": "src/types/collaboration.ts",
+          "imports": [
+            "./geo"
+          ],
+          "exports": [
+            "DrawingPreviewEvent",
+            "DrawingPreviewMessage",
+            "DrawingPreviewPhase"
           ]
         },
         {
@@ -3936,9 +3998,9 @@
         "routes": 17,
         "pages": 17,
         "components": 28,
-        "sourceFiles": 64,
+        "sourceFiles": 69,
         "styleFiles": 4,
-        "typeScriptSignals": 108
+        "typeScriptSignals": 113
       }
     },
     {
