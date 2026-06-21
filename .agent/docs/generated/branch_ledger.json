@@ -1,16 +1,46 @@
 {
-  "generatedAt": "2026-06-15T16:23:18.153Z",
+  "generatedAt": "2026-06-21T13:49:48.788Z",
   "integrationBranch": "develop",
   "entries": [
     {
       "id": "20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold",
-      "branch": "chore/api-contract-spec",
+      "branch": "chore__api-contract-spec",
       "branchKey": "chore__api-contract-spec",
-      "createdAt": "2026-06-14T06:04:35.214Z",
-      "scope": "shared",
-      "status": "draft",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
       "title": "Backend Spring Boot CQRS-lite scaffold",
       "file": ".agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md"
+    },
+    {
+      "id": "20260618T065800Z-feature__trip-basic-access-note",
+      "branch": "feature__trip-basic-access",
+      "branchKey": "feature__trip-basic-access",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "김지훈 백엔드 완료 조건 보완",
+      "file": ".agent/branch-ledger/branches/feature__trip-basic-access/20260618T065800Z-feature__trip-basic-access-note.md"
+    },
+    {
+      "id": "20260619T131321Z-feature__trip-basic-access-note",
+      "branch": "feature__trip-basic-access",
+      "branchKey": "feature__trip-basic-access",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "프론트엔드 3인 역할 배분",
+      "file": ".agent/branch-ledger/branches/feature__trip-basic-access/20260619T131321Z-feature__trip-basic-access-note.md"
+    },
+    {
+      "id": "20260619T132309Z-feature__trip-basic-access-note",
+      "branch": "feature__trip-basic-access",
+      "branchKey": "feature__trip-basic-access",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "프론트 역할 최종 검토 보완",
+      "file": ".agent/branch-ledger/branches/feature__trip-basic-access/20260619T132309Z-feature__trip-basic-access-note.md"
     }
   ]
 }

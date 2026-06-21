@@ -61,6 +61,20 @@
           "guestOnly": true
         },
         {
+          "path": "/verify-email",
+          "name": "VerifyEmail",
+          "page": "src/pages/VerifyEmailPage.vue",
+          "requiresAuth": false,
+          "guestOnly": true
+        },
+        {
+          "path": "/reset-password",
+          "name": "ResetPassword",
+          "page": "src/pages/ResetPasswordPage.vue",
+          "requiresAuth": false,
+          "guestOnly": false
+        },
+        {
           "path": "/home",
           "name": "Home",
           "page": "src/pages/HomePage.vue",
@@ -82,14 +96,14 @@
           "guestOnly": false
         },
         {
-          "path": "/trips/:tripId/swipe",
+          "path": "/swipe",
           "name": "Swipe",
           "page": "src/pages/SwipePage.vue",
           "requiresAuth": true,
           "guestOnly": false
         },
         {
-          "path": "/trips/:tripId/route",
+          "path": "/trips/:tripId/swipe",
           "name": "Route",
           "page": "src/pages/RoutePage.vue",
           "requiresAuth": true,
@@ -394,7 +408,12 @@
               "text": "{{ title }}"
             }
           ],
-          "images": [],
+          "images": [
+            {
+              "src": "user.profileImageUrl",
+              "alt": "프로필 이미지"
+            }
+          ],
           "forms": 0,
           "classNames": [
             "material-symbols-rounded",
@@ -525,8 +544,8 @@
           ],
           "images": [
             {
-              "src": "photo.url",
-              "alt": "`업로드한 여행 사진 ${idx + 1}`"
+              "src": "photo.media.publicUrl ?? ",
+              "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
               "src": "addedPhotos[previewImageIndex]",
@@ -788,6 +807,43 @@
             "story-overlay-close",
             "story-overlay-panel",
             "story-stats-row"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/place/PlaceDiscoveryPanel.vue",
+          "relativePath": "src/components/place/PlaceDiscoveryPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [
+            {
+              "src": "item.place.thumbnailUrl",
+              "alt": "item.place.placeName"
+            },
+            {
+              "src": "member.profileImageUrl",
+              "alt": "member.displayName"
+            }
+          ],
+          "forms": 1,
+          "classNames": [
+            "discovery-actions",
+            "discovery-copy",
+            "discovery-members",
+            "discovery-meta",
+            "discovery-panel",
+            "discovery-reason",
+            "discovery-result",
+            "discovery-results",
+            "discovery-search",
+            "discovery-spinner",
+            "discovery-state",
+            "discovery-state--error",
+            "discovery-tabs",
+            "discovery-thumb",
+            "material-symbols-rounded"
           ],
           "assetRefs": []
         },
@@ -1226,8 +1282,16 @@
               "alt": "story.title"
             },
             {
-              "src": "story.image",
+              "src": "story.authorProfileImageUrl",
+              "alt": "`${story.author} 프로필 사진`"
+            },
+            {
+              "src": "currentStoryPhoto(story)",
               "alt": "story.title"
+            },
+            {
+              "src": "comment.profileImageUrl",
+              "alt": "`${comment.name} 프로필 사진`"
             }
           ],
           "forms": 0,
@@ -1252,11 +1316,12 @@
             "fc-actions",
             "fc-author-badge",
             "fc-avatar",
+            "fc-avatar-button",
             "fc-body",
             "fc-item",
             "fc-meta",
             "fc-name",
-            "fc-reply",
+            "fc-name-button",
             "fc-text",
             "fc-time",
             "feed-comment-composer",
@@ -1266,13 +1331,17 @@
             "feed-comment-scroll",
             "feed-comment-widget",
             "feed-layout",
+            "feed-photo-count",
+            "feed-photo-nav",
             "feed-scroll-guide",
             "feed-scroll-guide-pill",
             "feed-sidebar",
+            "ghost",
             "guide-text",
             "lead",
             "material-symbols-rounded",
             "muted",
+            "next",
             "next-btn",
             "page",
             "pagination-btn",
@@ -1284,9 +1353,10 @@
             "popular-story-column",
             "popular-story-label",
             "post-type",
+            "prev",
             "prev-btn",
             "primary",
-            "reason.value",
+            "reason.code",
             "report-reason-option",
             "reportReason",
             "search-box",
@@ -1303,17 +1373,13 @@
             "story-carousel-controls",
             "story-feed",
             "story-feed-window",
+            "story-like-button",
             "story-list-card",
-            "story-list-grid",
-            "story-overlay",
-            "story-overlay-backdrop",
-            "story-overlay-close",
-            "story-overlay-panel",
-            "story-post",
-            "story-post-head",
-            "story-report-btn"
+            "story-list-grid"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/랜딩페이지/korea_hero.png"
+          ]
         },
         {
           "path": "frontend/src/pages/FeedPage.vue",
@@ -1405,7 +1471,9 @@
             "widget-title",
             "{"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/랜딩페이지/korea_hero.png"
+          ]
         },
         {
           "path": "frontend/src/pages/HomePage.vue",
@@ -1774,7 +1842,6 @@
             "kakao",
             "material-symbols-rounded",
             "muted",
-            "naver",
             "oauth-btn",
             "oauth-row",
             "primary",
@@ -1799,7 +1866,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "{{ mockUser.displayName }}"
+              "text": "{{ displayName }}"
             },
             {
               "level": 2,
@@ -1835,14 +1902,13 @@
               "level": 2,
               "id": "",
               "text": "person_edit 프로필 수정"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "취향 정보를 초기화하시겠습니까?"
             }
           ],
           "images": [
+            {
+              "src": "displayUser.profileImageUrl",
+              "alt": "프로필 이미지"
+            },
             {
               "src": "(place.thumbnailUrl ?? ",
               "alt": "place.placeName"
@@ -1850,35 +1916,35 @@
             {
               "src": "story.image",
               "alt": "story.title"
+            },
+            {
+              "src": "displayUser.profileImageUrl",
+              "alt": "프로필 이미지"
             }
           ],
           "forms": 0,
           "classNames": [
             "avatar-link-badge",
-            "btn-more-map",
-            "cafe",
-            "circular-progress-bar",
-            "city",
-            "culture",
-            "divider",
             "edit",
             "eyebrow",
             "gradient-text",
             "insight-card",
             "insight-card-header",
             "insight-subtitle",
-            "korea-map-container",
             "liked-places-layout",
             "map-insight-card",
-            "map-insight-content",
-            "map-stats-list",
-            "map-stats-panel",
             "material-symbols-rounded",
             "minimal-stat-icon",
             "minimal-stat-item",
             "minimal-stat-label",
             "minimal-stat-value",
             "mypage-body-container",
+            "mypage-empty-cta",
+            "mypage-empty-desc",
+            "mypage-empty-icon",
+            "mypage-empty-state",
+            "mypage-empty-state--inline",
+            "mypage-empty-title",
             "mypage-glass-container",
             "mypage-header-search-row",
             "mypage-hero",
@@ -1914,7 +1980,6 @@
             "mypage-shell",
             "mypage-stories-magazine",
             "mypage-story-magazine-item",
-            "nature",
             "next",
             "place-desc-text",
             "place-heart-btn",
@@ -1925,15 +1990,20 @@
             "place-tag-row",
             "place-title-h3",
             "places-slider-btn",
-            "preference-chart-item",
-            "preference-charts-row",
-            "preference-delete-btn",
             "preference-insight-card",
-            "preference-insight-content",
-            "preference-keyword-pill",
-            "preference-keywords-row",
-            "preference-label-badge",
-            "prev"
+            "prev",
+            "profile-card-details",
+            "profile-card-left-group",
+            "section",
+            "section-icon",
+            "section-icon--rose",
+            "section-icon--violet",
+            "share",
+            "story-date",
+            "story-magazine-body",
+            "story-magazine-meta",
+            "story-magazine-thumb",
+            "story-magazine-title"
           ],
           "assetRefs": []
         },
@@ -2063,6 +2133,46 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/pages/OAuthCallbackPage.vue",
+          "relativePath": "src/pages/OAuthCallbackPage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "로그인 처리 중..."
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "로그인 실패"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "app-shell",
+            "auth-card",
+            "auth-form",
+            "auth-main-action",
+            "auth-modern-card",
+            "auth-modern-form",
+            "auth-modern-page",
+            "auth-page",
+            "btn",
+            "material-symbols-rounded",
+            "muted",
+            "oauth-callback-state",
+            "oauth-error-icon",
+            "oauth-spinner",
+            "primary",
+            "small"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/pages/RecordPage.vue",
           "relativePath": "src/pages/RecordPage.vue",
           "kind": "page",
@@ -2186,7 +2296,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "회원가입"
+              "text": "{{ isOAuthOnboarding ? '가입 완료' : '회원가입' }}"
             }
           ],
           "images": [],
@@ -2194,7 +2304,45 @@
           "classNames": [
             "app-shell",
             "auth-card",
-            "auth-check",
+            "auth-form",
+            "auth-form-head",
+            "auth-modern-card",
+            "auth-modern-form",
+            "auth-modern-page",
+            "auth-page",
+            "auth-visual-content",
+            "auth-visual-image",
+            "auth-visual-panel",
+            "divider",
+            "eyebrow",
+            "google",
+            "kakao",
+            "naver",
+            "oauth-btn",
+            "oauth-row"
+          ],
+          "assetRefs": [
+            "/images/랜딩페이지/jeonju.png"
+          ]
+        },
+        {
+          "path": "frontend/src/pages/ResetPasswordPage.vue",
+          "relativePath": "src/pages/ResetPasswordPage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "비밀번호 재설정"
+            }
+          ],
+          "images": [],
+          "forms": 1,
+          "classNames": [
+            "app-shell",
+            "auth-card",
             "auth-field-wrap",
             "auth-form",
             "auth-form-head",
@@ -2203,28 +2351,14 @@
             "auth-modern-form",
             "auth-modern-page",
             "auth-page",
-            "auth-switch",
-            "auth-terms-check",
-            "auth-visual-content",
-            "auth-visual-image",
-            "auth-visual-panel",
             "btn",
-            "divider",
-            "eyebrow",
             "field",
-            "google",
-            "kakao",
             "material-symbols-rounded",
             "muted",
-            "naver",
-            "oauth-btn",
-            "oauth-row",
             "primary",
             "small"
           ],
-          "assetRefs": [
-            "/images/랜딩페이지/jeonju.png"
-          ]
+          "assetRefs": []
         },
         {
           "path": "frontend/src/pages/RoutePage.vue",
@@ -2310,12 +2444,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "알림"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "계정"
+              "text": "환경 설정"
             }
           ],
           "images": [],
@@ -2324,9 +2453,11 @@
             "accent-brand-violet",
             "bg-brand-violet",
             "bg-surface",
+            "block",
             "border",
             "border-brand-rose/30",
             "border-line",
+            "disabled:opacity-50",
             "flex",
             "font-black",
             "font-bold",
@@ -2334,34 +2465,31 @@
             "gap-4",
             "h-16",
             "hover:bg-brand-rose/5",
-            "hover:bg-surface-2",
             "items-center",
             "justify-between",
             "justify-center",
-            "material-symbols-rounded",
             "max-w-2xl",
+            "mb-1",
+            "mb-3",
             "mb-4",
             "mb-6",
             "mb-8",
-            "ml-auto",
+            "mt-4",
             "mx-auto",
             "p-6",
             "px-4",
             "px-6",
             "py-12",
             "py-2",
-            "py-3",
             "py-4",
             "rounded-2xl",
             "rounded-3xl",
             "rounded-full",
             "rounded-xl",
-            "space-y-3",
             "space-y-4",
             "text-2xl",
             "text-brand-rose",
             "text-ink",
-            "text-left",
             "text-muted",
             "text-sm",
             "text-white",
@@ -2392,7 +2520,7 @@
           ],
           "images": [
             {
-              "src": "story.image",
+              "src": "story.coverMedia?.publicUrl ?? ",
               "alt": "story.title + "
             }
           ],
@@ -2412,7 +2540,9 @@
             "story-list-card",
             "story-list-grid"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/랜딩페이지/korea_hero.png"
+          ]
         },
         {
           "path": "frontend/src/pages/StoryWritePage.vue",
@@ -2439,8 +2569,8 @@
           ],
           "images": [
             {
-              "src": "photo.url",
-              "alt": "`업로드한 여행 사진 ${idx + 1}`"
+              "src": "photo.media.publicUrl ?? ",
+              "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
               "src": "addedPhotos[previewImageIndex]",
@@ -2483,7 +2613,6 @@
             "tag",
             "tag-row",
             "text-area",
-            "upload-box",
             "upload-grid",
             "write-form",
             "write-layout",
@@ -2518,7 +2647,7 @@
           ],
           "images": [
             {
-              "src": "activePhotoIdx === 0 ? (currentPlace.thumbnailUrl ?? ",
+              "src": "activePhoto",
               "alt": "currentPlace.placeName"
             }
           ],
@@ -2541,6 +2670,7 @@
             "swipe-card",
             "swipe-layout",
             "swipe-main-column",
+            "swipe-place-placeholder",
             "swipe-stage",
             "swipe-workspace-card",
             "swipe-xp-bar",
@@ -2638,6 +2768,10 @@
           ],
           "images": [
             {
+              "src": "user.profileImageUrl",
+              "alt": "프로필 이미지"
+            },
+            {
               "src": "(place.thumbnailUrl ?? ",
               "alt": "place.placeName"
             },
@@ -2648,29 +2782,28 @@
           ],
           "forms": 0,
           "classNames": [
+            "!isFollowing,",
             "btn",
-            "btn-more-map",
-            "cafe",
-            "circular-progress-bar",
-            "city",
-            "culture",
+            "edit:",
             "eyebrow",
             "gradient-text",
             "insight-card",
             "insight-card-header",
             "insight-subtitle",
-            "korea-map-container",
+            "isFollowing",
             "liked-places-layout",
             "map-insight-card",
-            "map-insight-content",
-            "map-stats-list",
-            "map-stats-panel",
             "material-symbols-rounded",
             "minimal-stat-icon",
             "minimal-stat-item",
             "minimal-stat-label",
             "minimal-stat-value",
             "mypage-body-container",
+            "mypage-empty-desc",
+            "mypage-empty-icon",
+            "mypage-empty-state",
+            "mypage-empty-state--inline",
+            "mypage-empty-title",
             "mypage-glass-container",
             "mypage-header-search-row",
             "mypage-hero",
@@ -2679,17 +2812,18 @@
             "mypage-hero__avatar-ring",
             "mypage-hero__content",
             "mypage-hero__email",
+            "mypage-hero__intro",
             "mypage-hero__name",
             "mypage-hero__name-col",
             "mypage-hero__name-row",
-            "mypage-hero__tag",
-            "mypage-hero__tags",
             "mypage-insights-grid",
             "mypage-insights-section",
             "mypage-more-link",
             "mypage-page-heading",
             "mypage-place-card",
-            "mypage-places-grid",
+            "mypage-place-card--slider",
+            "mypage-places-slider",
+            "mypage-places-slider-wrapper",
             "mypage-profile-actions",
             "mypage-profile-btn",
             "mypage-profile-card",
@@ -2703,31 +2837,67 @@
             "mypage-shell",
             "mypage-stories-magazine",
             "mypage-story-magazine-item",
-            "nature",
+            "next",
             "place-desc-text",
+            "place-heart-btn",
             "place-img-wrap",
             "place-info-wrap",
             "place-region-category",
             "place-tag-pill",
             "place-tag-row",
             "place-title-h3",
-            "preference-chart-item",
-            "preference-charts-row",
+            "places-slider-btn",
             "preference-insight-card",
-            "preference-insight-content",
-            "preference-keyword-pill",
-            "preference-keywords-row",
-            "preference-label-badge",
+            "prev",
             "primary",
             "profile-card-details",
             "profile-card-left-group",
-            "progress-inner",
-            "rank-city",
-            "rank-count",
-            "rank-num",
             "section",
             "section-icon",
-            "section-icon--rose"
+            "section-icon--rose",
+            "section-icon--violet",
+            "share",
+            "share:",
+            "story-date",
+            "story-magazine-body",
+            "story-magazine-meta",
+            "story-magazine-thumb"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/pages/VerifyEmailPage.vue",
+          "relativePath": "src/pages/VerifyEmailPage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "이메일 인증"
+            }
+          ],
+          "images": [],
+          "forms": 1,
+          "classNames": [
+            "app-shell",
+            "auth-card",
+            "auth-field-wrap",
+            "auth-form",
+            "auth-form-head",
+            "auth-form-options",
+            "auth-main-action",
+            "auth-modern-card",
+            "auth-modern-form",
+            "auth-modern-page",
+            "auth-page",
+            "btn",
+            "field",
+            "material-symbols-rounded",
+            "muted",
+            "primary",
+            "small"
           ],
           "assetRefs": []
         }
@@ -2750,11 +2920,10 @@
           "relativePath": "src/api/auth.api.ts",
           "imports": [
             "./http",
-            "@/mocks/mockUser",
-            "@/types/api",
             "@/types/auth"
           ],
           "exports": [
+            "LoginResult",
             "authApi"
           ]
         },
@@ -2763,11 +2932,10 @@
           "relativePath": "src/api/community.api.ts",
           "imports": [
             "./http",
-            "@/mocks/mockCommunity",
-            "@/types/api",
             "@/types/community"
           ],
           "exports": [
+            "CommunityPostQuery",
             "communityApi"
           ]
         },
@@ -2836,12 +3004,22 @@
           ]
         },
         {
+          "path": "frontend/src/api/media.api.test.ts",
+          "relativePath": "src/api/media.api.test.ts",
+          "imports": [
+            "@/api/media.api",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/api/media.api.ts",
           "relativePath": "src/api/media.api.ts",
           "imports": [
             "./http",
             "@/mocks/mockRecords",
             "@/types/api",
+            "@/types/community",
             "@/types/media"
           ],
           "exports": [
@@ -2861,15 +3039,26 @@
           ]
         },
         {
+          "path": "frontend/src/api/place-preference.api.test.ts",
+          "relativePath": "src/api/place-preference.api.test.ts",
+          "imports": [
+            "@/api/place.api",
+            "@/api/swipe.api",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/api/place.api.ts",
           "relativePath": "src/api/place.api.ts",
           "imports": [
             "./http",
-            "@/mocks/mockPlaces",
             "@/types/api",
             "@/types/place"
           ],
           "exports": [
+            "PlaceSearchParams",
+            "mapPlace",
             "placeApi"
           ]
         },
@@ -2878,10 +3067,14 @@
           "relativePath": "src/api/swipe.api.ts",
           "imports": [
             "./http",
+            "./place.api",
             "@/types/api",
+            "@/types/place",
             "@/types/swipe"
           ],
           "exports": [
+            "RecommendationParams",
+            "SwipeFeedParams",
             "swipeApi"
           ]
         },
@@ -2905,6 +3098,17 @@
           ],
           "exports": [
             "tripApi"
+          ]
+        },
+        {
+          "path": "frontend/src/api/user.api.ts",
+          "relativePath": "src/api/user.api.ts",
+          "imports": [
+            "./http",
+            "@/types/auth"
+          ],
+          "exports": [
+            "userApi"
           ]
         },
         {
@@ -2971,6 +3175,16 @@
             "@vue/test-utils",
             "vitest",
             "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/place/PlaceDiscoveryPanel.test.ts",
+          "relativePath": "src/components/place/PlaceDiscoveryPanel.test.ts",
+          "imports": [
+            "./PlaceDiscoveryPanel.vue",
+            "@vue/test-utils",
+            "vitest"
           ],
           "exports": []
         },
@@ -3097,6 +3311,30 @@
           ]
         },
         {
+          "path": "frontend/src/composables/useSwipeFeed.test.ts",
+          "relativePath": "src/composables/useSwipeFeed.test.ts",
+          "imports": [
+            "./useSwipeFeed",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/composables/useSwipeFeed.ts",
+          "relativePath": "src/composables/useSwipeFeed.ts",
+          "imports": [
+            "@/api/swipe.api",
+            "@/types/place",
+            "@/types/swipe",
+            "vue"
+          ],
+          "exports": [
+            "SwipeFeedGateway",
+            "useSwipeFeed"
+          ]
+        },
+        {
           "path": "frontend/src/composables/useToast.ts",
           "relativePath": "src/composables/useToast.ts",
           "imports": [
@@ -3179,9 +3417,20 @@
           "imports": [
             "./RoutePage.vue",
             "@/components/map/MapboxItineraryMap.vue",
+            "@/components/place/PlaceDiscoveryPanel.vue",
             "@vue/test-utils",
             "vitest",
             "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/pages/SwipePage.test.ts",
+          "relativePath": "src/pages/SwipePage.test.ts",
+          "imports": [
+            "./SwipePage.vue",
+            "@vue/test-utils",
+            "vitest"
           ],
           "exports": []
         },
@@ -3265,10 +3514,20 @@
           "exports": []
         },
         {
+          "path": "frontend/src/router/swipe-route.test.ts",
+          "relativePath": "src/router/swipe-route.test.ts",
+          "imports": [
+            "./index",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/stores/auth.store.ts",
           "relativePath": "src/stores/auth.store.ts",
           "imports": [
             "@/api/auth.api",
+            "@/api/user.api",
             "@/types/auth",
             "pinia",
             "vue"
@@ -3345,9 +3604,12 @@
           "imports": [],
           "exports": [
             "ApiResponse",
+            "PageMeta",
+            "PagedItems",
             "PaginatedResponse",
             "PaginationParams",
-            "ProblemDetail"
+            "ProblemDetail",
+            "ProblemField"
           ]
         },
         {
@@ -3356,13 +3618,31 @@
           "imports": [],
           "exports": [
             "AuthProviderCode",
-            "AuthResponse",
+            "AuthTokenResponse",
+            "BackendUser",
+            "BackendUserProfile",
+            "BackendUserSettings",
             "LoginRequest",
+            "OAuthAuthorizationUrlResponse",
+            "OAuthProvider",
+            "OnboardRequest",
+            "PasswordResetRequest",
+            "PolicyDocument",
             "RegisterRequest",
+            "RegisterResponse",
+            "ResetPasswordRequest",
+            "SendEmailVerificationRequest",
             "SocialLoginRequest",
+            "UpdateMeRequest",
+            "UpdateUserSettingsRequest",
             "User",
+            "UserProfileVisibility",
+            "UserSettings",
             "UserStatus",
-            "getUserAvatar"
+            "UserSummary",
+            "VerifyEmailRequest",
+            "getUserAvatar",
+            "mapBackendUser"
           ]
         },
         {
@@ -3380,23 +3660,32 @@
         {
           "path": "frontend/src/types/community.ts",
           "relativePath": "src/types/community.ts",
-          "imports": [],
+          "imports": [
+            "./auth"
+          ],
           "exports": [
-            "Comment",
+            "CommunityComment",
+            "CommunityMediaFile",
+            "CommunityPostDetail",
+            "CommunityPostPage",
+            "CommunityPostReactionSummary",
+            "CommunityPostSnapshot",
+            "CommunityPostSummary",
+            "CommunitySnapshotDay",
+            "CommunitySnapshotItem",
             "ContentReport",
-            "Hashtag",
+            "CreateCommunityPostRequest",
+            "CreateContentReportRequest",
             "ModerationStatus",
+            "PageMeta",
+            "PagedCommunityComment",
             "Post",
             "PostComment",
             "PostCreateRequest",
-            "PostSnapshot",
-            "PostSnapshotDay",
-            "PostSnapshotItem",
-            "PostSnapshotRoute",
             "PostVisibility",
+            "ReportReason",
             "ReportReasonCode",
             "ReportStatus",
-            "RoutePost",
             "Story"
           ]
         },
@@ -3455,11 +3744,14 @@
           "imports": [],
           "exports": [
             "MediaFile",
+            "MediaPurpose",
             "MediaStatus",
-            "MediaUploadResponse",
+            "MediaUploadMetadata",
+            "MediaUploadUrl",
             "PhotoRecord",
             "TripRecordEntry",
-            "TripRecordMedia"
+            "TripRecordMedia",
+            "TripRecordPhoto"
           ]
         },
         {
@@ -3479,8 +3771,11 @@
             "PlaceProvider",
             "PlaceReaction",
             "PlaceReactionType",
+            "PlaceRecommendation",
+            "PlaceSourceStatus",
             "PlaceTravelStory",
-            "SavedPlace"
+            "SavedPlace",
+            "UserSummary"
           ]
         },
         {
@@ -3489,9 +3784,13 @@
           "imports": [],
           "exports": [
             "PreferenceSummary",
+            "RecommendationTab",
             "SwipeAction",
             "SwipeCandidate",
+            "SwipeFeed",
+            "SwipeFeedItem",
             "SwipeReaction",
+            "SwipeReactionResult",
             "SwipeResult"
           ]
         },
@@ -3532,6 +3831,16 @@
             "UserPreferenceAnalysis",
             "UserProfile",
             "UserStats"
+          ]
+        },
+        {
+          "path": "frontend/src/utils/community.ts",
+          "relativePath": "src/utils/community.ts",
+          "imports": [
+            "@/types/community"
+          ],
+          "exports": [
+            "communityPostToStory"
           ]
         },
         {
@@ -3995,12 +4304,12 @@
         }
       ],
       "summary": {
-        "routes": 17,
-        "pages": 17,
-        "components": 28,
-        "sourceFiles": 69,
+        "routes": 19,
+        "pages": 20,
+        "components": 29,
+        "sourceFiles": 78,
         "styleFiles": 4,
-        "typeScriptSignals": 113
+        "typeScriptSignals": 126
       }
     },
     {
