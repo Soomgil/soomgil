@@ -19,6 +19,8 @@ status: ready
 
 - 장소 검색과 장소 상세 조회를 실제 `/places` API에 연결했다.
 - 스와이프 feed를 조회하고 `NOPE`, `LIKE`, `SUPER_LIKE` 최종 반응을 저장한다.
+- 개인 취향 수집은 여행방과 무관한 전역 `/swipe` 기능이며, 여행방은 멤버들의 기존 취향을 합쳐 장소를 추천한다.
+- 기존 `/trips/{tripId}/swipe` 주소는 `/swipe`로 redirect하고 신규 링크에서 trip ID를 사용하지 않는다.
 - 반응 저장 실패 시 현재 카드를 유지하고 재시도할 수 있다.
 - 일정 추가 패널에서 기본 추천, 슈퍼라이크 추천, 직접 검색을 전환할 수 있다.
 - 추천 장소 상세 조회, 저장/저장 취소, 일정 추가를 기존 Route 화면 흐름에 연결했다.
@@ -26,8 +28,8 @@ status: ready
 - frontend `origin/feature/trip-ui`의 실제 일정, Mapbox, 지도 그리기, 실시간 preview 구현을 병합했다.
 - Route 충돌은 `trip-ui` 구현을 기준으로 해결하고 목 파리 검색 영역만 실제 장소 탐색 패널로 교체했다.
 - 스와이프 장소/친구 이미지가 없을 때 깨진 이미지 대신 안정적인 placeholder를 표시한다.
-- frontend 기능 commit은 `721e70d`, `6bb3d22`, `0bf4381`, `9d26af2`, `88b07fa`, trip-ui 병합 commit은 `d3cd567`이다.
-- frontend 전체 테스트 102개와 production build를 통과했고 데스크톱 스와이프와 Route 장소 추천 패널을 확인했다.
+- frontend 기능 commit은 `721e70d`, `6bb3d22`, `0bf4381`, `9d26af2`, `88b07fa`, `39b2ae7`, trip-ui 병합 commit은 `d3cd567`이다.
+- frontend 전체 테스트 103개와 production build를 통과했고 데스크톱 스와이프와 Route 장소 추천 패널을 확인했다.
 
 ## 에이전트 주의사항
 

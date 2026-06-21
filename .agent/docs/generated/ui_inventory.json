@@ -82,14 +82,14 @@
           "guestOnly": false
         },
         {
-          "path": "/trips/:tripId/swipe",
+          "path": "/swipe",
           "name": "Swipe",
           "page": "src/pages/SwipePage.vue",
           "requiresAuth": true,
           "guestOnly": false
         },
         {
-          "path": "/trips/:tripId/route",
+          "path": "/trips/:tripId/swipe",
           "name": "Route",
           "page": "src/pages/RoutePage.vue",
           "requiresAuth": true,
@@ -3372,6 +3372,15 @@
           "exports": []
         },
         {
+          "path": "frontend/src/router/swipe-route.test.ts",
+          "relativePath": "src/router/swipe-route.test.ts",
+          "imports": [
+            "./index",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/stores/auth.store.ts",
           "relativePath": "src/stores/auth.store.ts",
           "imports": [
@@ -4116,9 +4125,9 @@
         "routes": 17,
         "pages": 17,
         "components": 29,
-        "sourceFiles": 75,
+        "sourceFiles": 76,
         "styleFiles": 4,
-        "typeScriptSignals": 120
+        "typeScriptSignals": 121
       }
     },
     {

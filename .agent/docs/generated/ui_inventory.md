@@ -26,8 +26,8 @@
 | `/home` | Home | `src/pages/HomePage.vue` | 필요 | 아니오 |
 | `/my-trips` | MyTrips | `src/pages/MyTripsPage.vue` | 필요 | 아니오 |
 | `/trip-invites/:inviteCode` | TripInviteAccept | `src/pages/TripInviteAcceptPage.vue` | 필요 | 아니오 |
-| `/trips/:tripId/swipe` | Swipe | `src/pages/SwipePage.vue` | 필요 | 아니오 |
-| `/trips/:tripId/route` | Route | `src/pages/RoutePage.vue` | 필요 | 아니오 |
+| `/swipe` | Swipe | `src/pages/SwipePage.vue` | 필요 | 아니오 |
+| `/trips/:tripId/swipe` | Route | `src/pages/RoutePage.vue` | 필요 | 아니오 |
 | `/community` | Community | `src/pages/CommunityPage.vue` | 공개 | 아니오 |
 | `/community/feed` | Feed | `src/pages/FeedPage.vue` | 공개 | 아니오 |
 | `/community/stories` | Stories | `src/pages/StoriesPage.vue` | 공개 | 아니오 |
