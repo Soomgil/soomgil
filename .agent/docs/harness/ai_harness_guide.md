@@ -4,8 +4,8 @@
 
 ## 1. 현재 상태
 
-- `frontend/`: planned, 빈 submodule. 추후 Vue 앱 scaffold.
-- `backend/`: planned, 빈 submodule. 추후 Spring Boot 앱 scaffold.
+- `frontend/`: active Vue 3 제품 앱 submodule.
+- `backend/`: active Spring Boot 제품 앱 submodule.
 - `.agent/`: 상위 하네스와 문서.
 - `soomgil`: orchestration repo. frontend/backend submodule pointer와 `.agent/`를 관리합니다.
 - 루트 정적 HTML/CSS/JS는 활성 기준에서 제외합니다.
@@ -26,7 +26,7 @@
 - 루트에 정적 제품 파일이 없는지 확인합니다.
 - `.agent/docs/` 루트에 `index.md` 외 파일이 없는지 확인합니다.
 - `frontend/`가 active 상태이면 Vue 앱 구조와 라우트-Page 연결을 확인합니다.
-- `frontend/`가 planned 상태이면 빈 submodule 경계를 허용합니다.
+- workspace가 `planned` 상태이면 초기 빈 submodule 경계를 허용하지만, 현재 frontend/backend는 모두 `active`입니다.
 - 환경 파일은 `.env.example`만 저장소에 남기고 실제 값은 `.env.local`로 둡니다.
 - 기능 브랜치가 다른 브랜치의 AI ledger를 수정하지 않는지 확인합니다.
 - `frontend`가 active 상태이면 `frontend/dist`를 로컬로 서빙해 SPA 라우트 응답을 확인합니다.
@@ -39,8 +39,8 @@
 - 통합 인덱스: `.agent/docs/generated/branch_ledger.md`
 - 기능 브랜치는 새 ledger 파일만 추가하고, 통합 브랜치가 merge 후 인덱스를 재생성합니다.
 
-## 5. backend 활성화 시 확장
+## 5. 통합 검증 확장
 
-- backend build/test 명령을 `.agent/workspaces.json`에 추가합니다.
-- API contract 검사 또는 OpenAPI/schema 검사를 하네스에 추가합니다.
-- frontend API 클라이언트와 backend endpoint 매칭 검사를 추가합니다.
+- frontend unit/component/E2E test 명령을 workspace 검증에 추가합니다.
+- backend build/test 명령을 orchestration 하네스에 연결합니다.
+- frontend API client, backend endpoint와 OpenAPI/schema 매칭 검사를 추가합니다.

@@ -6,7 +6,7 @@
       "name": "frontend",
       "type": "frontend",
       "path": "frontend",
-      "status": "planned",
+      "status": "active",
       "repoRole": "submodule",
       "repoUrl": "https://github.com/Soomgil/soomgil-frontend.git",
       "framework": "Vue",
