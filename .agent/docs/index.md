@@ -10,7 +10,7 @@
 - `domain_development_policy.md`: 도메인 개발 전 사용자 흐름 설명과 test-first 강제 정책.
 - `process/javadoc_policy.md`: backend JavaDoc 한국어 작성 기준과 완료 조건.
 - `process/backend_team_tdd_checklist.md`: 백엔드 3인 담당 디렉토리, TDD 흐름, TODO, merge conflict 방지 기준. 전체 서비스 완료가 아니라 backend 완료 판단 문서입니다.
-- `process/frontend_team_tdd_checklist.md`: 백엔드 도메인 소유권을 기준으로 배분한 프론트 3인 화면/API/상태/TDD 체크리스트입니다.
+- `exec-plans/active/2026-06-22-frontend-api-integration-workboard.md`: 담당자 고정 없이 작업 ID, 상태와 브랜치/PR로 관리하는 프론트 mock 제거·API 연동 작업 보드입니다.
 - `architecture_guide.md`: frontend/backend 책임 경계.
 - `page_map.md`: Vue Router 기준 프론트 화면 맵.
 - `functional_spec.md`: 제품 기능 명세.

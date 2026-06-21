@@ -3101,10 +3101,21 @@
           ]
         },
         {
+          "path": "frontend/src/api/user.api.test.ts",
+          "relativePath": "src/api/user.api.test.ts",
+          "imports": [
+            "./http",
+            "./user.api",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/api/user.api.ts",
           "relativePath": "src/api/user.api.ts",
           "imports": [
             "./http",
+            "@/types/api",
             "@/types/auth"
           ],
           "exports": [
@@ -4307,9 +4318,9 @@
         "routes": 19,
         "pages": 20,
         "components": 29,
-        "sourceFiles": 78,
+        "sourceFiles": 79,
         "styleFiles": 4,
-        "typeScriptSignals": 126
+        "typeScriptSignals": 127
       }
     },
     {
