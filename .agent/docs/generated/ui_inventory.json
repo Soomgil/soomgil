@@ -667,7 +667,7 @@
             "===",
             "editable,",
             "erasing:",
-            "is-current",
+            "map-drawing-hit-target",
             "map-drawing-overlay",
             "map-drawing-stroke",
             "tool",
