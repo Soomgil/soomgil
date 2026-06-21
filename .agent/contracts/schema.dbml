@@ -1234,18 +1234,22 @@ Table preference.user_swipe_events {
 Table preference.user_preference_tag_weights {
   user_id uuid [not null]
   tag_id uuid [not null]
-  raw_score decimal(14,4) [not null, default: 0]
-  normalized_score decimal(8,6) [not null, default: 0, note: 'Capped score such as tanh(raw_score / scale).']
-  like_count int [not null, default: 0]
-  super_like_count int [not null, default: 0]
-  nope_count int [not null, default: 0]
+  positive_evidence decimal(16,8) [not null, default: 0, note: 'Weighted evidence from the user current LIKE/SUPER_LIKE place reactions. One place distributes total evidence 1 across its confirmed tags.']
+  negative_evidence decimal(16,8) [not null, default: 0, note: 'Weighted evidence from the user current NOPE place reactions.']
+  preference_score decimal(8,6) [not null, default: 0.5, note: 'Prior-adjusted user preference in the 0..1 range. 0.5 is neutral.']
+  like_count int [not null, default: 0, note: 'Current LIKE place count contributing to this tag.']
+  super_like_count int [not null, default: 0, note: 'Current SUPER_LIKE place count contributing to this tag.']
+  nope_count int [not null, default: 0, note: 'Current NOPE place count contributing to this tag.']
+  calculation_version varchar(80) [not null, default: 'preference-evidence-v1']
   updated_at timestamptz [not null, default: `now()`]
 
   Indexes {
     (user_id, tag_id) [pk]
     tag_id
-    normalized_score
+    preference_score
   }
+
+  Note: 'Materialized user-tag preference projection. Reaction changes reverse the previous place evidence and apply only the latest reaction; raw event history remains in user_swipe_events.'
 }
 
 Table preference.user_saved_places {

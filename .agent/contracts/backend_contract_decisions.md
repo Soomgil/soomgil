@@ -132,11 +132,11 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 최종 상태는 조회/집계용입니다.
 - 이벤트 로그는 분석, AI 채팅 컨텍스트, 되돌리기, 감사에 사용합니다.
 - 사용자 선호도 가중치는 이벤트 로그를 매번 재계산하지 않고 `user_preference_tag_weights` materialized projection으로 유지합니다.
-- `user_preference_tag_weights`는 raw 누적 점수와 capped normalized score를 함께 저장합니다.
-- 추천 리스트 계산은 raw score가 아니라 normalized score를 사용합니다.
-- normalized score는 `-1..1` 또는 이에 준하는 제한 범위로 계산해 특정 태그/활동량 많은 사용자의 과도한 지배를 막습니다.
-- normalized score 공식은 `tanh(raw_score / scale)`을 기본으로 합니다.
-- `scale`은 운영 튜닝 가능한 설정값으로 둡니다.
+- `user_preference_tag_weights`는 사용자별 태그의 가중 긍정 근거, 가중 부정 근거, `0..1` 범위의 보정된 선호도 점수를 저장합니다.
+- 한 장소가 사용자 취향에 주는 근거 합은 1이며, 확정 태그의 `confidence * weight` 비율에 따라 나눕니다.
+- projection에는 사용자-장소별 최종 반응만 반영합니다. 반응 변경 시 이전 태그 근거를 되돌리고 새 최종 반응의 근거를 적용합니다.
+- 추천 리스트는 태그별 `preference_score`와 장소 내 정규화된 태그 비율의 가중평균을 사용합니다.
+- 태그 전체 평균에 주는 사전 강도와 호불호에 따른 개인 반응 반영 속도는 계산 policy version으로 관리하며, 검증 전 상수를 DB 계약에 고정하지 않습니다.
 - 스와이프 저장 후 비동기 worker가 projection을 갱신합니다.
 - cold-start 통계는 `AI_ONLY_DEFAULT`, `SYNTHETIC_PERSONA`, `REAL_USER` source를 분리하고, 실제 사용자 통계가 안정화되면 합성 통계는 serving 경로에서 제거합니다.
 - cold-start 합성 스와이프 데이터는 50개 고정 페르소나를 기반으로 생성하고 실제 사용자 `user_swipe_events`와 분리해 보관합니다.

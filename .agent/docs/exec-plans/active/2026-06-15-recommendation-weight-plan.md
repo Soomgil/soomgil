@@ -148,7 +148,7 @@ distance / max(global_positive_rate, 1 - global_positive_rate)
 주의:
 
 - 이 값은 "좋아하는 정도"가 아니다.
-- 좋아함/싫어함 방향은 사용자별 `raw_score`가 표현한다.
+- 좋아함/싫어함 방향은 사용자별 `preference_score`가 표현한다.
 - rarity나 semantic depth로 대체하지 않는다.
 
 ## 2. cold-start 통계 run
@@ -278,45 +278,41 @@ tag_importance =
 0.7 <= tag_importance <= 1.0
 ```
 
-### 5.2 user_tag_delta
+### 5.2 사용자별 태그 근거
 
 ```text
-user_tag_delta =
-reaction_weight
-* place_tag.confidence
-* place_tag.weight
-* tag_importance
+place_tag_raw_evidence =
+place_tag.confidence * place_tag.weight
+
+place_tag_evidence =
+place_tag_raw_evidence
+/
+sum(place_tag_raw_evidence for the place)
 ```
 
 업데이트:
 
 ```text
-raw_score = raw_score + user_tag_delta
-positive_count += 1 if reaction in (LIKE, SUPER_LIKE)
-negative_count += 1 if reaction == NOPE
+positive_evidence += place_tag_evidence if final reaction in (LIKE, SUPER_LIKE)
+negative_evidence += place_tag_evidence if final reaction == NOPE
 last_reacted_at = now
 ```
 
-### 5.3 normalized_score
+반응이 바뀌면 이전 최종 반응의 근거를 먼저 되돌린 뒤 새 반응의 근거를 적용한다. 이벤트 로그는 모두 남기지만 projection에는 사용자-장소별 최종 반응 한 건만 반영한다.
 
-추천에는 raw score를 직접 쓰지 않는다.
-
-```text
-normalized_score =
-tanh(raw_score / scale)
-```
-
-초기 config:
+### 5.3 preference_score
 
 ```text
-scale = 8.0
+preference_score =
+prior-adjusted preference from
+positive_evidence and negative_evidence
 ```
 
 주의:
 
-- `scale`은 운영 튜닝값이다.
-- 변경 시 baseline/new metric을 기록한다.
-- API와 UI에는 raw score와 normalized score를 노출하지 않는다.
+- `preference_score`는 `0..1` 범위이며 `0.5`가 중립이다.
+- 사전 강도와 호불호 반영 방식은 계산 policy version으로 관리한다.
+- API와 UI에는 positive/negative evidence와 다른 사용자의 preference score를 노출하지 않는다.
 
 ## 6. 추천 점수 계산
 
@@ -354,10 +350,8 @@ region
 ```text
 member_place_score =
 sum(
-  user_preference_tag_weights.normalized_score
-  * place_tag.confidence
-  * place_tag.weight
-  * (0.7 + 0.3 * preference_discrimination)
+  user_preference_tag_weights.preference_score
+  * normalized_place_tag_evidence
 )
 ```
 
@@ -367,7 +361,7 @@ join 기준:
 user_preference_tag_weights.tag_id = place_tag.tag_id
 ```
 
-`preference_discrimination`은 serving `tag_statistics`를 사용한다. place tag에 snapshot만 있으면 snapshot을 fallback으로 사용한다.
+`normalized_place_tag_evidence`는 같은 장소의 확정 태그별 `confidence * weight`를 합이 1이 되도록 정규화한 값이다. `preference_discrimination`은 사용자 preference의 사전 강도 계산에 사용하며 장소 점수에 다시 더하지 않는다.
 
 ### 6.3 그룹 점수
 
@@ -564,7 +558,6 @@ backend/src/main/resources/mappers/preference/PreferenceQueryMapper.xml
 preference.statistics.alpha = 100
 preference.tag-selection.min-confidence = 0.55
 preference.tag-selection.max-confirmed-tags = 10
-preference.normalization.scale = 8.0
 preference.recommendation.matched-member-threshold = 0.15
 preference.synthetic-persona.required-count = 50
 preference.synthetic-persona.max-noise-rate = 0.05
@@ -579,8 +572,8 @@ preference.synthetic-persona.max-noise-rate = 0.05
 - `preference_discrimination` smoothing 계산
 - 표본 수가 작은 태그가 과대평가되지 않는지
 - `tag_importance = 0.7 + 0.3 * preference_discrimination`
-- reaction별 `user_tag_delta`
-- `normalized_score = tanh(raw_score / scale)`
+- 장소별 태그 근거 합이 1인지
+- positive/negative evidence 기반 `preference_score`
 - 추천 점수 합산
 - group score 합산
 - matched member threshold
@@ -600,13 +593,13 @@ preference.synthetic-persona.max-noise-rate = 0.05
 - `user_place_reactions` upsert
 - 확정 태그만 projection 반영
 - `SUPER_LIKE`, `LIKE`, `NOPE` delta 차이
-- raw score는 누적, normalized score는 제한
+- 반응 변경 시 이전 근거를 되돌리고 최종 반응만 projection에 반영
 
 ### 11.4 추천 query 테스트
 
 - viewport 밖 후보 제외
 - trip active member만 group score 반영
-- raw/normalized/tag weight 미노출
+- positive/negative evidence와 다른 사용자의 preference score 미노출
 - matched member avatar만 반환
 - SUPER_LIKE tab 정렬
 - follower liked avatar 표시

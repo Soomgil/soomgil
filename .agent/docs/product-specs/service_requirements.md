@@ -81,11 +81,10 @@
 - 선호도 계산은 원본 스와이프 이벤트 로그와 현재 선호도 projection을 함께 사용합니다.
 - cold-start 단계의 합성 스와이프 데이터는 50개 고정 페르소나 기반으로 생성하고, 실제 사용자 이벤트와 source/storage를 분리합니다.
 - `user_preference_tag_weights`는 현재 선호도 상태를 빠르게 조회하기 위한 materialized projection입니다.
-- 선호도 projection은 raw 누적 점수와 추천에 사용하는 capped normalized score를 함께 저장합니다.
-- 추천 계산에는 raw score가 아니라 사용자별 normalized score를 사용합니다.
-- normalized score는 특정 태그를 계속 좋아요하거나 활동량이 많은 사용자가 그룹 추천을 과도하게 지배하지 않도록 제한된 범위로 계산합니다.
-- normalized score 공식은 `tanh(raw_score / scale)`을 기본으로 합니다.
-- `scale`은 운영 튜닝 가능한 설정값으로 둡니다.
+- 선호도 projection은 최종 장소 반응에서 계산한 태그별 가중 긍정 근거, 가중 부정 근거, `0..1` 범위의 보정된 선호도 점수를 저장합니다.
+- 한 장소가 사용자 취향에 주는 태그 근거 합은 1이며, 확정 태그의 `confidence * weight` 비율에 따라 나눕니다.
+- 추천 계산에는 사용자별 `preference_score`와 장소 내 정규화된 태그 비율의 가중평균을 사용합니다.
+- 반응이 바뀌면 이전 태그 근거를 되돌리고 새 최종 반응만 projection에 적용합니다.
 - V1에서는 시간 감쇠 기반 선호도 재계산을 사용하지 않습니다.
 - 선호도 projection은 스와이프 반응 이벤트가 발생할 때 해당 장소의 태그만 반영해 갱신합니다.
 - 원본 이벤트 로그는 projection 복구, 공식 변경 시 재처리, 감사 용도로 남기며 일반 추천 요청에서 매번 재계산하지 않습니다.

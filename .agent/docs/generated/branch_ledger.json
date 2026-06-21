@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T13:49:48.788Z",
+  "generatedAt": "2026-06-21T13:59:46.658Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -11,6 +11,36 @@
       "status": "",
       "title": "Backend Spring Boot CQRS-lite scaffold",
       "file": ".agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md"
+    },
+    {
+      "id": "20260620T023313Z-feature__place-search-detail-tag-statistics-policy",
+      "branch": "feature__place-search-detail",
+      "branchKey": "feature__place-search-detail",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "태그 좋아요 통계 정책",
+      "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260620T023313Z-feature__place-search-detail-tag-statistics-policy.md"
+    },
+    {
+      "id": "20260621T065741Z-feature__place-search-detail-note",
+      "branch": "feature__place-search-detail",
+      "branchKey": "feature__place-search-detail",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "프론트 장소 취향 추천 연결",
+      "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T065741Z-feature__place-search-detail-note.md"
+    },
+    {
+      "id": "20260621T080741Z-feature__place-search-detail-kto-swipe-feed",
+      "branch": "feature__place-search-detail",
+      "branchKey": "feature__place-search-detail",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "KTO swipe feed runtime integration",
+      "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md"
     },
     {
       "id": "20260618T065800Z-feature__trip-basic-access-note",

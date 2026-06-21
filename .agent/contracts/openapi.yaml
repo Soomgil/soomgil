@@ -3253,12 +3253,29 @@ components:
             $ref: '#/components/schemas/PlaceSummary'
         page:
           $ref: '#/components/schemas/PageMeta'
+    SwipeFeedPlace:
+      allOf:
+        - $ref: '#/components/schemas/PlaceSummary'
+        - type: object
+          properties:
+            description:
+              type: string
+            photos:
+              type: array
+              items:
+                type: string
+                format: uri
+            tags:
+              type: array
+              description: 확정된 내부 선호 태그의 표시 이름.
+              items:
+                type: string
     SwipeFeedItem:
       type: object
       required: [place]
       properties:
         place:
-          $ref: '#/components/schemas/PlaceSummary'
+          $ref: '#/components/schemas/SwipeFeedPlace'
         myReaction:
           $ref: '#/components/schemas/SwipeReaction'
         likedByFollowees:
