@@ -525,31 +525,39 @@ backend/src/main/java/com/soomgil/preference/domain/policy/SyntheticPersonaSwipe
 ### 10.2 command/query
 
 ```text
-RecordSwipeReactionCommand
-RecordSwipeReactionHandler
+UpsertSwipeReactionCommand
+UpsertSwipeReactionCommandHandler
 RecalculateTagStatisticsCommand
 RecalculateTagStatisticsHandler
 GenerateSyntheticPersonaSwipesCommand
 GenerateSyntheticPersonaSwipesHandler
-FindSwipeFeedQuery
-FindRecommendationsQuery
-FindRecommendationCandidatesQuery
+SwipeFeedQuery
+ListPlaceRecommendationsQuery
+PlaceViewportCandidateQuery
 ```
 
 ### 10.3 persistence
 
 ```text
-PreferenceCommandMapper
-PreferenceQueryMapper
-PreferenceCommandRepository
-PreferenceQueryRepository
+PreferencePlaceTagEnrichmentMapper
+PreferenceSwipeReactionMapper
+PreferenceTagStatisticsMapper
+PreferenceSyntheticPersonaMapper
+PreferenceRecommendationMapper
+PreferenceSwipeFeedMapper
+PreferenceSavedPlaceMapper
 ```
 
 MyBatis XML:
 
 ```text
-backend/src/main/resources/mappers/preference/PreferenceCommandMapper.xml
-backend/src/main/resources/mappers/preference/PreferenceQueryMapper.xml
+backend/src/main/resources/mappers/preference/PreferencePlaceTagEnrichmentMapper.xml
+backend/src/main/resources/mappers/preference/PreferenceSwipeReactionMapper.xml
+backend/src/main/resources/mappers/preference/PreferenceTagStatisticsMapper.xml
+backend/src/main/resources/mappers/preference/PreferenceSyntheticPersonaMapper.xml
+backend/src/main/resources/mappers/preference/PreferenceRecommendationMapper.xml
+backend/src/main/resources/mappers/preference/PreferenceSwipeFeedMapper.xml
+backend/src/main/resources/mappers/preference/PreferenceSavedPlaceMapper.xml
 ```
 
 ### 10.4 config
@@ -557,12 +565,12 @@ backend/src/main/resources/mappers/preference/PreferenceQueryMapper.xml
 초기 설정값은 config로 분리한다.
 
 ```text
-preference.statistics.alpha = 100
-preference.tag-selection.min-confidence = 0.55
-preference.tag-selection.max-confirmed-tags = 10
-preference.recommendation.matched-member-threshold = 0.15
-preference.synthetic-persona.required-count = 50
-preference.synthetic-persona.max-noise-rate = 0.05
+soomgil.preference.statistics.alpha = 100
+soomgil.preference.tag-selection.minimum-confidence = 0.55
+soomgil.preference.tag-selection.maximum-confirmed-tags = 10
+soomgil.preference.recommendation.matched-member-threshold = 0.15
+soomgil.preference.synthetic-persona.required-count = 50
+soomgil.preference.synthetic-persona.maximum-noise-rate = 0.05
 ```
 
 ## 11. TDD 테스트 계획
