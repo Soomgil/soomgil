@@ -2,6 +2,8 @@
 
 이 문서는 추천 시스템과 가중치 계산 자동화 도구를 만들기 위한 실행 계획이다.
 
+상태: **구현 및 검증 완료 (2026-06-22)**
+
 다른 에이전트는 이 문서를 입력으로 받으면 구현 전에 반드시 사용자에게 사용자 흐름, 수용 기준, 테스트 계획을 설명하고 OK를 받은 뒤 테스트를 먼저 작성해야 한다.
 
 ## 목표
@@ -669,24 +671,40 @@ npm --prefix .agent run harness:check
 
 ## 진행 로그
 
-- [ ] 사용자 흐름 설명
-- [ ] 테스트 계획 설명
-- [ ] OK 확인
-- [ ] 테스트 작성
-- [ ] 실패 확인
-- [ ] 계산 policy 구현
-- [ ] command/query 구현
-- [ ] persistence 구현
-- [ ] API 연결
-- [ ] migration/seed 반영
-- [ ] 검증
-- [ ] 커밋
+- [x] 사용자 흐름 설명
+- [x] 테스트 계획 설명
+- [x] OK 확인
+- [x] 테스트 작성
+- [x] 실패 확인
+- [x] 계산 policy 구현
+- [x] command/query 구현
+- [x] persistence 구현
+- [x] API 연결
+- [x] migration/seed 반영
+- [x] 검증
+- [x] 커밋
+
+### 2026-06-22 완료 근거
+
+- `preference_discrimination`을 smoothing 긍정률과 전체 긍정률의 정규화 거리로 교정하고 `0..1` 경계를 테스트했다.
+- `tag_importance = 0.7 + 0.3 * preference_discrimination` 계산 정책과 테스트를 추가했다.
+- `SUPER_LIKE`가 `LIKE`의 2배 positive evidence를 반영하고 반응 변경 시 이전 2배 근거를 정확히 되돌리도록 통합 테스트했다.
+- `matched_member_threshold = 0.15`를 멤버 장소 점수에 직접 적용하도록 config와 scorer를 일치시켰다.
+- REAL_USER 통계는 append-only `user_swipe_events`, projection은 최종 `user_place_reactions`을 사용하도록 source 책임을 분리했다.
+- SUPER_LIKE 탭은 `super_like_count`, 슈퍼라이크 멤버의 태그 매칭 합, 최신 반응, 거리 순으로 정렬한다.
+- 합성 이벤트에 `source = SYNTHETIC_PERSONA`를 DB 제약으로 고정하는 Flyway V37을 추가했다.
+- 50개 페르소나, 결정적 재실행, hard preference 보호, noise 상한, source 승격 차단 테스트가 통과했다.
+- 런타임 추천 코드에 AI client, 수상작 사진, rarity, semantic/tree depth 의존성이 없음을 정적 검사했다.
+- 추천 API DTO에 raw/normalized score, evidence, tag weight, swipe log가 없음을 정적 검사했다.
+- `./gradlew test --rerun-tasks --no-daemon`, `npm --prefix .agent run harness:check`, 로컬 Flyway V37, 서울·대전 seed 재실행이 통과했다.
 
 ## 결정 기록
 
 - 2026-06-15: 추천 점수는 `confidence`, `weight`, `preference_discrimination` 중심으로 계산한다.
 - 2026-06-15: `rarity`, `semantic_specificity`, tree depth는 MVP 추천 점수 필수 입력에서 제외한다.
 - 2026-06-15: cold-start는 50개 고정 페르소나 합성 스와이프를 사용하되 실제 사용자 serving 통계와 섞지 않는다.
+- 2026-06-22: REAL_USER 통계 source는 append-only 스와이프 이벤트이며 사용자 projection만 장소별 최종 반응을 사용한다.
+- 2026-06-22: SUPER_LIKE positive evidence는 LIKE의 2배이고, 탭 동점 점수는 슈퍼라이크한 멤버만 합산한다.
 
 ## 후속 작업
 

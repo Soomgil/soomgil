@@ -1173,6 +1173,7 @@ Table preference.synthetic_swipe_events {
   persona_id uuid [not null]
   provider varchar(40) [not null]
   external_place_id varchar(120) [not null]
+  source varchar(30) [not null, default: 'SYNTHETIC_PERSONA', note: 'Always SYNTHETIC_PERSONA. Explicitly separates cold-start events from real user events.']
   reaction varchar(20) [not null, note: 'LIKE, NOPE, SUPER_LIKE']
   place_tag_enrichment_id uuid
   generator_version varchar(80) [not null]
@@ -1234,7 +1235,7 @@ Table preference.user_swipe_events {
 Table preference.user_preference_tag_weights {
   user_id uuid [not null]
   tag_id uuid [not null]
-  positive_evidence decimal(16,8) [not null, default: 0, note: 'Weighted evidence from the user current LIKE/SUPER_LIKE place reactions. One place distributes total evidence 1 across its confirmed tags.']
+  positive_evidence decimal(16,8) [not null, default: 0, note: 'Weighted evidence from current reactions. LIKE distributes total evidence 1 and SUPER_LIKE distributes total evidence 2 across confirmed tags.']
   negative_evidence decimal(16,8) [not null, default: 0, note: 'Weighted evidence from the user current NOPE place reactions.']
   preference_score decimal(8,6) [not null, default: 0.5, note: 'Prior-adjusted user preference in the 0..1 range. 0.5 is neutral.']
   like_count int [not null, default: 0, note: 'Current LIKE place count contributing to this tag.']
