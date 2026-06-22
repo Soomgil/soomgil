@@ -1530,7 +1530,7 @@
             {
               "level": 3,
               "id": "",
-              "text": "{{ nearestTrip.title }}"
+              "text": "{{ nearestTrip.trip.title }}"
             },
             {
               "level": 2,
@@ -1554,15 +1554,15 @@
               "alt": "slide.title"
             },
             {
-              "src": "place.thumbnailUrl ?? ",
+              "src": "place.thumbnailUrl",
               "alt": "place.placeName"
             },
             {
-              "src": "nearestTrip.coverImageUrl",
-              "alt": "nearestTrip.title"
+              "src": "nearestTrip.trip.displayDestination ? ",
+              "alt": "nearestTrip.trip.title"
             },
             {
-              "src": "story.image",
+              "src": "story.coverMedia.publicUrl",
               "alt": "story.title"
             }
           ],
@@ -3441,6 +3441,7 @@
           "relativePath": "src/pages/MyTripsPage.test.ts",
           "imports": [
             "./MyTripsPage.vue",
+            "@/types/trip",
             "@vue/test-utils",
             "vitest"
           ],
