@@ -31,3 +31,12 @@ status: draft
 - `frontend/src/pages/RoutePage.vue`
 - `frontend/src/components/map/MapboxItineraryMap.vue`
 - 관련 프론트엔드 테스트 코드(`MapboxItineraryMap.test.ts`)의 수정사항
+
+## 2026-06-22 작업표 정합성 갱신
+
+- 공통 workboard를 실제 브랜치 포함 관계와 커밋 기준으로 다시 대조했습니다.
+- `develop` 반영이 확인된 FEI-000/010만 `DONE`으로 유지했습니다.
+- 구현과 검증은 완료됐지만 기능 브랜치에만 존재하는 FEI-100/110/130/131/140은 `VERIFY`로 통일했습니다.
+- stash에만 보존된 FEI-120은 `IN_PROGRESS`로 기록했습니다.
+- FEI-121은 전체 사용자 기준 주간 인기 장소 TOP 3 결정 완료, backend API 구현 대기 `TODO`로 정정했습니다.
+- 누락됐던 FEI-132/133/141/142/143/171 작업을 전체 작업표에 복원했습니다.
