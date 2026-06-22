@@ -544,7 +544,7 @@
           ],
           "images": [
             {
-              "src": "photo.media.publicUrl ?? ",
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
               "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
@@ -2202,12 +2202,12 @@
           ],
           "images": [
             {
-              "src": "trip.coverImageUrl",
+              "src": "coverForTrip(trip.id) || ",
               "alt": "trip.title"
             },
             {
-              "src": "record.src",
-              "alt": "record.location"
+              "src": "photoSource(photo)",
+              "alt": "photoLabel(photo)"
             },
             {
               "src": "uploadPreview",
@@ -2245,6 +2245,9 @@
             "record-action-icon",
             "record-actions",
             "record-divider",
+            "record-load-more-error",
+            "record-load-more-sentinel",
+            "record-load-more-status",
             "record-masonry",
             "record-masonry-item",
             "record-masonry-overlay",
@@ -2257,9 +2260,9 @@
             "record-photo-modal",
             "record-photo-preview",
             "record-trip-card",
-            "record-trip-card-avatars",
             "record-trip-card-body",
             "record-trip-card-cover",
+            "record-trip-card-cover-placeholder",
             "record-trip-card-meta",
             "record-trip-slider",
             "record-trip-slider-btn",
@@ -2569,7 +2572,7 @@
           ],
           "images": [
             {
-              "src": "photo.media.publicUrl ?? ",
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
               "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
@@ -3017,9 +3020,7 @@
           "relativePath": "src/api/media.api.ts",
           "imports": [
             "./http",
-            "@/mocks/mockRecords",
             "@/types/api",
-            "@/types/community",
             "@/types/media"
           ],
           "exports": [
@@ -3311,6 +3312,29 @@
           ]
         },
         {
+          "path": "frontend/src/composables/useRecordPhotoUrlRefresh.test.ts",
+          "relativePath": "src/composables/useRecordPhotoUrlRefresh.test.ts",
+          "imports": [
+            "./useRecordPhotoUrlRefresh",
+            "@/types/media",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/composables/useRecordPhotoUrlRefresh.ts",
+          "relativePath": "src/composables/useRecordPhotoUrlRefresh.ts",
+          "imports": [
+            "@/api/media.api",
+            "@/types/media",
+            "vue"
+          ],
+          "exports": [
+            "useRecordPhotoUrlRefresh"
+          ]
+        },
+        {
           "path": "frontend/src/composables/useSwipe.ts",
           "relativePath": "src/composables/useSwipe.ts",
           "imports": [
@@ -3419,6 +3443,17 @@
             "./MyTripsPage.vue",
             "@vue/test-utils",
             "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/pages/RecordPage.test.ts",
+          "relativePath": "src/pages/RecordPage.test.ts",
+          "imports": [
+            "./RecordPage.vue",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
           ],
           "exports": []
         },
@@ -3754,6 +3789,7 @@
           "relativePath": "src/types/media.ts",
           "imports": [],
           "exports": [
+            "CreateTripRecordRequest",
             "MediaFile",
             "MediaPurpose",
             "MediaStatus",
@@ -3762,7 +3798,10 @@
             "PhotoRecord",
             "TripRecordEntry",
             "TripRecordMedia",
-            "TripRecordPhoto"
+            "TripRecordPhoto",
+            "TripRecordPhotoReadUrl",
+            "TripRecordPhotoSummary",
+            "TripRecordPhotoSummaryResponse"
           ]
         },
         {
@@ -4318,9 +4357,9 @@
         "routes": 19,
         "pages": 20,
         "components": 29,
-        "sourceFiles": 79,
+        "sourceFiles": 82,
         "styleFiles": 4,
-        "typeScriptSignals": 127
+        "typeScriptSignals": 130
       }
     },
     {
