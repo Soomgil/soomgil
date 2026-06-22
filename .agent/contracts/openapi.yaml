@@ -1721,13 +1721,6 @@ paths:
       operationId: listMyTripRecordPhotos
       description: 현재 사용자가 active member로 참여 중인 모든 여행방의 기록 사진을 모아 반환한다. 기록 CRUD는 trip scoped endpoint를 사용한다.
       parameters:
-        - name: tripId
-          in: query
-          required: false
-          description: 특정 여행방 사진만 필터링할 때 사용한다.
-          schema:
-            type: string
-            format: uuid
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/size'
         - $ref: '#/components/parameters/sort'
@@ -1738,6 +1731,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagedTripRecordPhoto'
+  /records/photos/{mediaFileId}/read-url:
+    get:
+      tags: [Records]
+      summary: 여행 기록 사진 읽기 URL 재발급
+      operationId: refreshTripRecordPhotoReadUrl
+      description: 현재 사용자가 접근 가능한 활성 여행 기록 사진의 읽기 URL을 반환한다. 비공개 사진은 30분 만료 signed URL을 새로 발급한다.
+      parameters:
+        - name: mediaFileId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripRecordPhotoReadUrl'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /records/photo-summaries:
+    post:
+      tags: [Records]
+      summary: 여러 여행방의 기록 사진 요약 조회
+      operationId: summarizeMyTripRecordPhotos
+      description: 요청한 여행방별 기록 사진 개수와 대표 사진을 한 번에 집계한다. 모든 여행방에 대한 접근 권한이 있어야 한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripRecordPhotoSummaryRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripRecordPhotoSummaryResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /trips/{tripId}/records/photos:
+    get:
+      tags: [Records]
+      summary: 여행방별 기록 사진 조회
+      operationId: listTripRecordPhotos
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/sort'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedTripRecordPhoto'
+        '403':
+          $ref: '#/components/responses/Forbidden'
   /trips/{tripId}/records:
     get:
       tags: [Records]
@@ -1771,6 +1828,7 @@ paths:
       operationId: createTripRecord
       parameters:
         - $ref: '#/components/parameters/tripId'
+        - $ref: '#/components/parameters/idempotencyKey'
       requestBody:
         required: true
         content:
@@ -4358,6 +4416,62 @@ components:
             $ref: '#/components/schemas/TripRecordPhoto'
         page:
           $ref: '#/components/schemas/PageMeta'
+    TripRecordPhotoSummaryRequest:
+      type: object
+      required: [tripIds]
+      properties:
+        tripIds:
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
+    TripRecordPhotoSummary:
+      type: object
+      required: [tripId, photoCount, coverMediaFileId, coverUrl, coverUrlExpiresAt]
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        photoCount:
+          type: integer
+          format: int64
+          minimum: 0
+        coverMediaFileId:
+          type: string
+          format: uuid
+          nullable: true
+        coverUrl:
+          type: string
+          format: uri
+          nullable: true
+        coverUrlExpiresAt:
+          type: string
+          format: date-time
+          nullable: true
+    TripRecordPhotoSummaryResponse:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripRecordPhotoSummary'
+    TripRecordPhotoReadUrl:
+      type: object
+      required: [mediaFileId, url, expiresAt]
+      properties:
+        mediaFileId:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
     CreateUploadUrlRequest:
       type: object
       required: [fileName, mimeType, byteSize]
@@ -4427,6 +4541,15 @@ components:
         publicUrl:
           type: string
           format: uri
+          description: 공개 가능한 media에만 존재하는 영구 URL.
+        servingUrl:
+          type: string
+          format: uri
+          description: 권한 확인 후 발급하는 비공개 media 표시 URL. TRIP_RECORD는 30분 동안 유효한 signed read URL을 반환한다.
+        servingUrlExpiresAt:
+          type: string
+          format: date-time
+          description: servingUrl 만료 시각. 영구 publicUrl만 제공하는 경우 null이다.
         mimeType:
           type: string
         byteSize:

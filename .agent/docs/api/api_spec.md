@@ -1306,7 +1306,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 설명: 현재 사용자가 참여 중인 모든 여행방의 기록 사진을 한 번에 모아 조회한다.
 - 인증/권한: 로그인 사용자. active member인 여행방 기록 사진만 반환한다.
 - Path parameters: 없음.
-- Query parameters: `tripId` optional, `page`, `size`, `sort`.
+- Query parameters: `page`, `size`, `sort`.
 - Request body schema: 없음.
 - Response body schema: `PagedTripRecordPhoto`.
 - 성공 응답 예시: `200 {"items":[{"tripId":"...","tripTitle":"부산 여행","recordId":"...","media":{"id":"...","mimeType":"image/jpeg"}}]}`
@@ -1314,6 +1314,48 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 관련 화면: `/record` 전체 사진 모아보기.
 - 근거: `record.trip_record_entries`, `record.trip_record_media`, `media.media_files`.
 - 확정: 기록 생성/수정/삭제는 trip scoped API를 사용하고, 이 endpoint는 전체 참여 여행방 사진 조회 전용이다.
+- 확정: 비공개 `TRIP_RECORD` media는 권한 확인 후 30분 만료 `servingUrl`을 반환하며 DB의 `publicUrl`은 null로 유지한다.
+
+#### GET `/records/photos/{mediaFileId}/read-url`
+
+- 설명: 화면에 표시 중인 여행 기록 사진 URL이 만료되거나 로드에 실패했을 때 해당 사진의 읽기 URL만 다시 조회한다.
+- 인증/권한: 로그인 사용자. 사진이 활성 기록에 연결되어 있고, 사용자가 해당 여행의 소유자 또는 active member여야 한다.
+- Path parameters: `mediaFileId`.
+- Query parameters / Request body: 없음.
+- Response body schema: `TripRecordPhotoReadUrl` (`mediaFileId`, `url`, `expiresAt`).
+- 실패 응답 예시: 접근할 수 없거나 존재하지 않는 사진은 정보 노출을 막기 위해 `404 ProblemDetails(code=RESOURCE_NOT_FOUND)`로 동일하게 반환한다.
+- 확정: client는 이미지 로드 실패 URL별로 한 번만 재발급을 요청하며, 새로 발급된 URL이 나중에 만료되면 다시 요청할 수 있다.
+
+#### POST `/records/photo-summaries`
+
+- 설명: 요청한 여러 여행방의 기록 사진 개수와 대표 사진을 한 번의 집계 요청으로 조회한다.
+- 인증/권한: 로그인 사용자. 요청한 모든 여행방의 소유자 또는 active member여야 한다.
+- Path parameters: 없음.
+- Query parameters: 없음.
+- Request body schema: `TripRecordPhotoSummaryRequest`. `tripIds`는 1개 이상 100개 이하이다.
+- Response body schema: `TripRecordPhotoSummaryResponse`.
+- 성공 응답 예시: `200 {"items":[{"tripId":"...","photoCount":12,"coverMediaFileId":"...","coverUrl":"https://storage.example.com/signed","coverUrlExpiresAt":"2026-06-22T04:30:00Z"},{"tripId":"...","photoCount":0,"coverMediaFileId":null,"coverUrl":null,"coverUrlExpiresAt":null}]}`
+- 실패 응답 예시: `403 ProblemDetails(code=FORBIDDEN)`.
+- 관련 화면: `/record` 여행 선택 카드의 사진 개수와 대표 사진.
+- 근거: 여행별 사진 목록을 반복 호출하는 N+1 요청을 제거하고, 요청 여행을 한 SQL query로 집계한다.
+- 확정: 접근할 수 없는 여행이 하나라도 포함되면 전체 요청을 거부한다. 100개를 초과하면 client가 여러 요청으로 나눈다.
+- 확정: 대표 사진 `coverUrl`도 공개 URL이 없으면 30분 만료 signed read URL로 반환한다.
+- 확정: 대표 사진의 ID, URL, 만료 시각은 동일한 사진 행에서 선택한다.
+
+#### GET `/trips/{tripId}/records/photos`
+
+- 설명: 선택한 여행방의 기록에 연결된 사진을 조회한다.
+- 인증/권한: active trip member.
+- Path parameters: `tripId`.
+- Query parameters: `page`, `size`, `sort`.
+- Request body schema: 없음.
+- Response body schema: `PagedTripRecordPhoto`.
+- 성공 응답 예시: `200 {"items":[{"tripId":"...","recordId":"...","media":{"id":"...","mimeType":"image/jpeg"}}]}`
+- 실패 응답 예시: `403 ProblemDetails(code=TRIP_MEMBER_REQUIRED)`.
+- 관련 화면: `/record` 여행별 사진 필터, 여행기 작성 사진 선택.
+- 근거: `record.trip_record_entries`, `record.trip_record_media`, `media.media_files`.
+- 확정: 전역 사진 모아보기와 여행별 사진 조회는 각각 전역 endpoint와 trip scoped endpoint를 사용한다.
+- 확정: `TripRecordPhoto.media.servingUrl`은 30분 동안 유효하며, client는 `servingUrl`을 `publicUrl`보다 우선 사용한다.
 
 #### GET `/trips/{tripId}/records`
 
@@ -1334,6 +1376,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 설명: 여행 기록 엔트리 생성.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`.
+- Request headers: 선택 `Idempotency-Key`(8~128자). 같은 사용자·여행·key와 같은 요청은 기존 기록을 반환하고, 다른 요청에 key를 재사용하면 `409 CONFLICT`를 반환한다.
 - Query parameters: 없음.
 - Request body schema: `CreateTripRecordRequest`.
 - Response body schema: `TripRecordEntry`.
@@ -1341,6 +1384,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 실패 응답 예시: `422 ProblemDetails(code=MEDIA_NOT_OWNED)`.
 - 관련 화면: `/record`.
 - 근거: `record.trip_record_entries`, `record.trip_record_media`.
+- 확정: client는 생성 응답을 확인하지 못한 네트워크 오류 또는 5xx에서 같은 `Idempotency-Key`로 한 번 재시도한다.
 - 확인 필요: 동영상 지원 mime/size 제한.
 
 #### PATCH `/trips/{tripId}/records/{recordId}`
@@ -1384,6 +1428,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 관련 화면: 프로필, 기록, 커뮤니티 작성.
 - 근거: `.agent/contracts/backend_contract_decisions.md`, `media.media_files`.
 - 확정: signed URL 직접 업로드를 기본으로 한다. multipart upload와 이미지 처리 pipeline은 MVP 이후 또는 별도 운영 요구가 생길 때 확장한다.
+- 확정: URL 발급 시 upload intent를 저장한다. 24시간 안에 `/media/files` 등록까지 완료되지 않은 object는 정리 작업이 물리 삭제한다.
 
 #### POST `/media/files`
 
@@ -1398,6 +1443,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 관련 화면: 프로필, 기록, 커뮤니티 작성.
 - 근거: `media.media_files`.
 - 확정: 백엔드 proxy upload는 MVP에서 병행하지 않는다.
+- 확정: object key는 로그인 사용자의 만료되지 않은 upload intent와 일치해야 하며, 등록 완료 시 intent를 `COMPLETED`로 전환한다.
 
 #### DELETE `/media/files/{mediaFileId}`
 
@@ -1411,6 +1457,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 실패 응답 예시: `403 ProblemDetails(code=MEDIA_OWNER_REQUIRED)`.
 - 관련 화면: 프로필, 기록, 커뮤니티 작성.
 - 근거: `media.media_files.status`, `purge_after_at`.
+- 확정: 삭제 후 7일 보존 기간이 지나면 정기 정리 작업이 object를 삭제하고 metadata를 `PURGED`로 전환한다. 등록은 완료됐지만 어떤 리소스에도 24시간 동안 연결되지 않은 media도 같은 작업에서 정리한다.
 - 확인 필요: 이미 게시글/기록에 연결된 media 삭제 제한.
 
 ### Community / Reports / Notifications / Admin

@@ -391,7 +391,7 @@
 - headings: h1 여행의 기록 을 한눈에 모아보세요, h3 전체 기록, h3 {{ trip.title }}, h3 사진 추가
 - forms: 1, images: 4
 - asset refs: 없음
-- classes: `avatar`, `btn`, `content-container`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `is-all`, `isUploadModalOpen`, `lead`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `next`, `overlay-schedule`, `overlay-uploader`, `prev`, `preview-remove-btn`, `primary`, `record-action-icon`, `record-actions`, `record-divider`, `record-masonry`, `record-masonry-item`, `record-masonry-overlay`, `record-page`, `record-page-head`
+- classes: `avatar`, `btn`, `content-container`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `is-all`, `isUploadModalOpen`, `lead`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `next`, `overlay-schedule`, `overlay-uploader`, `prev`, `preview-remove-btn`, `primary`, `record-action-icon`, `record-actions`, `record-divider`, `record-load-more-error`, `record-load-more-sentinel`, `record-load-more-status`, `record-masonry`, `record-masonry-item`
 
 #### frontend/src/pages/RegisterPage.vue
 
