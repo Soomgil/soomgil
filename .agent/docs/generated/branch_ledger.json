@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T13:59:46.658Z",
+  "generatedAt": "2026-06-22T12:22:04.530Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -11,6 +11,76 @@
       "status": "",
       "title": "Backend Spring Boot CQRS-lite scaffold",
       "file": ".agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md"
+    },
+    {
+      "id": "20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces",
+      "branch": "chore__fei-131-tracking",
+      "branchKey": "chore__fei-131-tracking",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-140: RoutePage API 연동 완료 (mockPlaces 제거)",
+      "file": ".agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md"
+    },
+    {
+      "id": "20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration",
+      "branch": "chore__record-api-integration-tracking",
+      "branchKey": "chore__record-api-integration-tracking",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-100-110 record API integration",
+      "file": ".agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md"
+    },
+    {
+      "id": "20260622T105334Z-feature__home-api-integration-fei-120-and-fei-121-homepage-api-integration",
+      "branch": "feature__home-api-integration",
+      "branchKey": "feature__home-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-120 and FEI-121: HomePage API Integration",
+      "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T105334Z-feature__home-api-integration-fei-120-and-fei-121-homepage-api-integration.md"
+    },
+    {
+      "id": "20260622T110714Z-feature__home-api-integration-fei-120-fei-121-homepage-api",
+      "branch": "feature__home-api-integration",
+      "branchKey": "feature__home-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-120, FEI-121 HomePage 백엔드 API 직접 구현 및 핫픽스 적용 완료",
+      "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T110714Z-feature__home-api-integration-fei-120-fei-121-homepage-api.md"
+    },
+    {
+      "id": "20260622T112206Z-feature__home-api-integration-fei-131-fei-132-mytripspage-settingspage",
+      "branch": "feature__home-api-integration",
+      "branchKey": "feature__home-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-131, FEI-132 MyTripsPage 및 SettingsPage 연동 검증 및 테스트 통과 처리 완료",
+      "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T112206Z-feature__home-api-integration-fei-131-fei-132-mytripspage-settingspage.md"
+    },
+    {
+      "id": "20260622T114913Z-feature__home-api-integration-fei-131-fei-132-fei-133-fei-140",
+      "branch": "feature__home-api-integration",
+      "branchKey": "feature__home-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-131, FEI-132, FEI-133, FEI-140 완료",
+      "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T114913Z-feature__home-api-integration-fei-131-fei-132-fei-133-fei-140.md"
+    },
+    {
+      "id": "20260622T115949Z-feature__home-api-integration-api-ui-ux",
+      "branch": "feature__home-api-integration",
+      "branchKey": "feature__home-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "API 통합 이후 UI 및 UX 개선사항 적용 완료",
+      "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T115949Z-feature__home-api-integration-api-ui-ux.md"
     },
     {
       "id": "20260620T023313Z-feature__place-search-detail-tag-statistics-policy",
@@ -41,6 +111,26 @@
       "status": "",
       "title": "KTO swipe feed runtime integration",
       "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md"
+    },
+    {
+      "id": "20260622T103004Z-feature__route-api-integration-fei-140-routepage-api-mockplaces",
+      "branch": "feature__route-api-integration",
+      "branchKey": "feature__route-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-140: RoutePage API 연동 완료 (mockPlaces 제거)",
+      "file": ".agent/branch-ledger/branches/feature__route-api-integration/20260622T103004Z-feature__route-api-integration-fei-140-routepage-api-mockplaces.md"
+    },
+    {
+      "id": "20260622T104801Z-feature__route-api-integration-fei-120-and-fei-121-homepage-api-integration",
+      "branch": "feature__route-api-integration",
+      "branchKey": "feature__route-api-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI-120 and FEI-121: HomePage API Integration",
+      "file": ".agent/branch-ledger/branches/feature__route-api-integration/20260622T104801Z-feature__route-api-integration-fei-120-and-fei-121-homepage-api-integration.md"
     },
     {
       "id": "20260618T065800Z-feature__trip-basic-access-note",
