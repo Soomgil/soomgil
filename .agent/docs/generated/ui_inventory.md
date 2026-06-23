@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 29 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 30 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -222,7 +222,7 @@
 - headings: h2 favorite 좋아요한 장소, h3 {{ place.placeName }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `mypage-header-search-row`, `mypage-place-card`, `mypage-places-grid`, `mypage-search-count`, `mypage-search-inline`, `mypage-section-header`, `mypage-section-title`, `place-desc-text`, `place-heart-btn`, `place-img-wrap`, `place-info-wrap`, `place-region-category`, `place-tag-pill`, `place-tag-row`, `place-title-h3`, `section-icon`, `section-icon--rose`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`
+- classes: `material-symbols-rounded`, `mypage-header-search-row`, `mypage-place-card`, `mypage-places-grid`, `mypage-search-count`, `mypage-search-inline`, `mypage-section-header`, `mypage-section-title`, `place-desc-text`, `place-heart-btn`, `place-image-placeholder`, `place-img-wrap`, `place-info-wrap`, `place-region-category`, `place-tag-pill`, `place-tag-row`, `place-title-h3`, `section-icon`, `section-icon--rose`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`
 
 #### frontend/src/components/mypage/MyStoriesModal.vue
 
@@ -233,6 +233,15 @@
 - asset refs: 없음
 - classes: `material-symbols-rounded`, `mypage-section-header`, `mypage-section-title`, `mypage-stories-magazine`, `mypage-story-magazine-item`, `section-icon`, `section-icon--violet`, `story-date`, `story-magazine-body`, `story-magazine-meta`, `story-magazine-thumb`, `story-magazine-title`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-stats-row`
 
+#### frontend/src/components/mypage/MyStoryDetailModal.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 {{ post.title }}, h3 댓글 {{ post.commentCount }}
+- forms: 0, images: 1
+- asset refs: 없음
+- classes: `btn`, `eyebrow`, `ghost`, `material-symbols-rounded`, `muted`, `my-story-body`, `my-story-comment`, `my-story-comments`, `my-story-detail`, `my-story-gallery`, `my-story-head`, `my-story-state`, `my-story-state--error`, `my-story-tags`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`
+
 #### frontend/src/components/place/PlaceDiscoveryPanel.vue
 
 - 종류: component
@@ -240,7 +249,7 @@
 - headings: 없음
 - forms: 1, images: 2
 - asset refs: 없음
-- classes: `discovery-actions`, `discovery-copy`, `discovery-members`, `discovery-meta`, `discovery-panel`, `discovery-reason`, `discovery-result`, `discovery-results`, `discovery-search`, `discovery-spinner`, `discovery-state`, `discovery-state--error`, `discovery-tabs`, `discovery-thumb`, `material-symbols-rounded`
+- classes: `discovery-actions`, `discovery-copy`, `discovery-members`, `discovery-meta`, `discovery-panel`, `discovery-reason`, `discovery-result`, `discovery-results`, `discovery-scheduled`, `discovery-search`, `discovery-spinner`, `discovery-state`, `discovery-state--error`, `discovery-tabs`, `discovery-thumb`, `material-symbols-rounded`
 
 #### frontend/src/components/swipe/PlaceSwipeCard.vue
 
@@ -318,10 +327,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 여행의 기록 을 나누고, 새로운 루트를 발견하세요, h3 {{ popularStories[popularIndex].title }}, h2 dynamic_feed 전체 여행기, h3 {{ story.title }}, h2 dynamic_feed 최신 여행 이야기, h3 {{ story.title }}
-- forms: 0, images: 4
+- headings: h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}, h2 dynamic_feed 최신 여행 이야기
+- forms: 0, images: 5
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `all-stories-section`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-header`, `community-page`, `community-story-actions`, `community-story-search`, `community-story-search-btn`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `lead`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `page`, `pagination-btn`, `pagination-container`, `popular-feature-story`, `popular-stories-section`, `popular-story-badges`, `popular-story-card-wrapper`
+- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-actions`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-ghost`, `community-pill-primary`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `filter-pill`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`
 
 #### frontend/src/pages/FeedPage.vue
 
@@ -338,7 +347,7 @@
 - script: setup / ts
 - headings: h2 어떤 여행을 찾고 계신가요?, h1 여행의 시작은 설렘에서부터, h3 {{ slide.title }}, h3 내 취향 수집, h3 지도에서 루트 만들기, h3 친구 초대하기
 - forms: 0, images: 6
-- asset refs: `/images/랜딩페이지/busan.png`, `/images/랜딩페이지/daejeon.png`, `/images/랜딩페이지/gyeongju.png`, `/images/랜딩페이지/jeju.png`, `/images/랜딩페이지/jeonju.png`
+- asset refs: `/images/랜딩페이지/busan.png`, `/images/랜딩페이지/jeju.png`
 - classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-dots`, `home-hero-slide`, `home-nearest-bg`, `home-nearest-card`
 
 #### frontend/src/pages/LandingPage.vue
@@ -366,7 +375,7 @@
 - headings: h1 나의 여행 프로필, h2 {{ displayName }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `avatar-link-badge`, `eyebrow`, `gradient-text`, `material-symbols-rounded`, `minimal-stat-icon`, `minimal-stat-item`, `minimal-stat-label`, `minimal-stat-value`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__avatar-container`, `mypage-hero__avatar-ring`, `mypage-hero__content`, `mypage-hero__email`, `mypage-hero__intro`, `mypage-hero__name`, `mypage-hero__name-col`, `mypage-hero__name-row`, `mypage-hero__tag`, `mypage-hero__tags`, `mypage-page-heading`, `mypage-profile-card`, `mypage-profile-minimal-stats`, `mypage-shell`, `profile-card-details`, `profile-card-left-group`, `section`, `verified-check-badge`
+- classes: `avatar-link-badge`, `eyebrow`, `gradient-text`, `material-symbols-rounded`, `minimal-stat-icon`, `minimal-stat-item`, `minimal-stat-label`, `minimal-stat-value`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__avatar-container`, `mypage-hero__avatar-ring`, `mypage-hero__content`, `mypage-hero__email`, `mypage-hero__intro`, `mypage-hero__name`, `mypage-hero__name-col`, `mypage-hero__name-row`, `mypage-hero__tag`, `mypage-hero__tags`, `mypage-page-heading`, `mypage-profile-card`, `mypage-profile-minimal-stats`, `mypage-shell`, `mypage-visibility-badge`, `profile-card-details`, `profile-card-left-group`, `section`, `verified-check-badge`
 
 #### frontend/src/pages/MyTripsPage.vue
 
@@ -444,10 +453,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 설정, h2 프로필, h2 로그인 기기, h2 보안 활동, h2 계정 삭제, h2 환경 설정
+- headings: h1 설정, h2 로그인 기기, h2 보안 활동, h2 계정 삭제, h2 환경 설정
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `accent-brand-violet`, `bg-brand-violet`, `bg-surface`, `bg-white`, `block`, `border`, `border-b`, `border-brand-rose/20`, `border-brand-rose/30`, `border-line`, `disabled:opacity-50`, `flex`, `font-black`, `font-bold`, `font-semibold`, `gap-4`, `h-16`, `hover:bg-brand-rose/5`, `items-center`, `justify-between`, `justify-center`, `last:border-0`, `max-w-2xl`, `mb-1`, `mb-2`, `mb-3`, `mb-4`, `mb-6`, `mb-8`, `mt-1`
+- classes: `accent-brand-violet`, `bg-brand-violet`, `bg-surface`, `bg-white`, `block`, `border`, `border-b`, `border-brand-rose/20`, `border-brand-rose/30`, `border-line`, `disabled:opacity-50`, `eyebrow`, `flex`, `font-bold`, `font-semibold`, `gap-4`, `hover:bg-brand-rose/5`, `items-center`, `justify-between`, `last:border-0`, `material-symbols-rounded`, `max-w-2xl`, `mb-1`, `mb-2`, `mb-4`, `mb-6`, `mt-1`, `mt-4`, `mx-auto`, `p-3`
 
 #### frontend/src/pages/StoriesPage.vue
 

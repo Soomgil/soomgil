@@ -711,7 +711,7 @@
           ],
           "images": [
             {
-              "src": "(place.thumbnailUrl ?? ",
+              "src": "place.thumbnailUrl",
               "alt": "place.placeName"
             }
           ],
@@ -727,6 +727,7 @@
             "mypage-section-title",
             "place-desc-text",
             "place-heart-btn",
+            "place-image-placeholder",
             "place-img-wrap",
             "place-info-wrap",
             "place-region-category",
@@ -789,6 +790,53 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/mypage/MyStoryDetailModal.vue",
+          "relativePath": "src/components/mypage/MyStoryDetailModal.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ post.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "댓글 {{ post.commentCount }}"
+            }
+          ],
+          "images": [
+            {
+              "src": "mediaUrl(media)",
+              "alt": "post.title"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "btn",
+            "eyebrow",
+            "ghost",
+            "material-symbols-rounded",
+            "muted",
+            "my-story-body",
+            "my-story-comment",
+            "my-story-comments",
+            "my-story-detail",
+            "my-story-gallery",
+            "my-story-head",
+            "my-story-state",
+            "my-story-state--error",
+            "my-story-tags",
+            "story-overlay",
+            "story-overlay-backdrop",
+            "story-overlay-close",
+            "story-overlay-panel"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.vue",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.vue",
           "kind": "component",
@@ -815,6 +863,7 @@
             "discovery-reason",
             "discovery-result",
             "discovery-results",
+            "discovery-scheduled",
             "discovery-search",
             "discovery-spinner",
             "discovery-state",
@@ -1270,17 +1319,22 @@
             {
               "level": 1,
               "id": "",
-              "text": "여행의 기록 을 나누고, 새로운 루트를 발견하세요"
+              "text": "여행의 기록 을 나누고, 새로운 루트 를 발견하세요"
             },
             {
               "level": 3,
               "id": "",
-              "text": "{{ popularStories[popularIndex].title }}"
+              "text": "{{ currentPopular.title }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "dynamic_feed 전체 여행기"
+              "text": "{{ currentPopular.title }}"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "최신 여행기"
             },
             {
               "level": 3,
@@ -1300,12 +1354,16 @@
           ],
           "images": [
             {
-              "src": "popularStories[popularIndex].image",
-              "alt": "popularStories[popularIndex].title"
+              "src": "currentPopular.image",
+              "alt": "currentPopular.title"
             },
             {
               "src": "story.image",
               "alt": "story.title"
+            },
+            {
+              "src": "story.authorProfileImageUrl",
+              "alt": "`${story.author} 프로필 사진`"
             },
             {
               "src": "story.authorProfileImageUrl",
@@ -1320,15 +1378,22 @@
           "classNames": [
             "===",
             "active:",
-            "all-stories-section",
             "btn",
             "carousel-btn",
             "community-content-container",
+            "community-hero-actions",
+            "community-hero-eyebrow",
+            "community-hero-gradient",
             "community-hero-header",
+            "community-hero-lead",
+            "community-hero-text",
+            "community-hero-title",
             "community-page",
-            "community-story-actions",
+            "community-pagination",
+            "community-pill",
+            "community-pill-ghost",
+            "community-pill-primary",
             "community-story-search",
-            "community-story-search-btn",
             "compact-title",
             "currentPage",
             "eyebrow",
@@ -1336,21 +1401,33 @@
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
+            "filter-pill",
+            "idx",
+            "latest-stories-eyebrow",
+            "latest-stories-header",
+            "latest-stories-icon",
+            "latest-stories-section",
+            "latest-stories-title",
+            "latest-stories-tools",
             "lead",
             "material-symbols-rounded",
             "muted",
             "next",
             "next-btn",
             "page",
-            "pagination-btn",
-            "pagination-container",
-            "popular-feature-story",
-            "popular-stories-section",
-            "popular-story-badges",
-            "popular-story-card-wrapper",
-            "popular-story-column",
-            "popular-story-label",
-            "post-type",
+            "pg-arrow",
+            "pg-btn",
+            "pg-num",
+            "polaroid-author",
+            "polaroid-caption",
+            "polaroid-card",
+            "polaroid-image",
+            "polaroid-stat",
+            "polaroid-stats",
+            "polaroid-tape",
+            "polaroid-title",
+            "polaroid-wrap",
+            "popularIndex",
             "prev",
             "prev-btn",
             "primary",
@@ -1359,18 +1436,12 @@
             "section",
             "section-title",
             "small",
-            "story",
             "story-author",
             "story-body",
-            "story-card-body",
-            "story-card-summary",
-            "story-card-thumb",
-            "story-carousel-controls",
+            "story-card-grid",
             "story-feed",
             "story-feed-window",
             "story-like-button",
-            "story-list-card",
-            "story-list-grid",
             "story-overlay",
             "story-overlay-backdrop",
             "story-overlay-close",
@@ -1378,11 +1449,13 @@
             "story-post",
             "story-post-head",
             "story-report-btn",
-            "story.likedByMe",
-            "tag",
-            "tag-row",
-            "{",
-            "}"
+            "story-tile",
+            "story-tile-author",
+            "story-tile-author-name",
+            "story-tile-avatar",
+            "story-tile-body",
+            "story-tile-footer",
+            "story-tile-image"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -1610,10 +1683,7 @@
           ],
           "assetRefs": [
             "/images/랜딩페이지/busan.png",
-            "/images/랜딩페이지/daejeon.png",
-            "/images/랜딩페이지/gyeongju.png",
-            "/images/랜딩페이지/jeju.png",
-            "/images/랜딩페이지/jeonju.png"
+            "/images/랜딩페이지/jeju.png"
           ]
         },
         {
@@ -1859,6 +1929,7 @@
             "mypage-profile-card",
             "mypage-profile-minimal-stats",
             "mypage-shell",
+            "mypage-visibility-badge",
             "profile-card-details",
             "profile-card-left-group",
             "section",
@@ -2116,8 +2187,8 @@
               "alt": "photoLabel(photo)"
             },
             {
-              "src": "uploadPreview",
-              "alt": "선택한 사진 미리보기"
+              "src": "preview",
+              "alt": "`선택한 사진 ${index + 1}`"
             },
             {
               "src": "viewerSrc",
@@ -2167,7 +2238,9 @@
             "record-photo-card",
             "record-photo-form",
             "record-photo-modal",
+            "record-photo-number",
             "record-photo-preview",
+            "record-photo-preview-grid",
             "record-trip-card",
             "record-trip-card-body",
             "record-trip-card-cover",
@@ -2436,11 +2509,6 @@
             {
               "level": 2,
               "id": "",
-              "text": "프로필"
-            },
-            {
-              "level": 2,
-              "id": "",
               "text": "로그인 기기"
             },
             {
@@ -2473,24 +2541,21 @@
             "border-brand-rose/30",
             "border-line",
             "disabled:opacity-50",
+            "eyebrow",
             "flex",
-            "font-black",
             "font-bold",
             "font-semibold",
             "gap-4",
-            "h-16",
             "hover:bg-brand-rose/5",
             "items-center",
             "justify-between",
-            "justify-center",
             "last:border-0",
+            "material-symbols-rounded",
             "max-w-2xl",
             "mb-1",
             "mb-2",
-            "mb-3",
             "mb-4",
             "mb-6",
-            "mb-8",
             "mt-1",
             "mt-4",
             "mx-auto",
@@ -2504,22 +2569,22 @@
             "py-4",
             "rounded-2xl",
             "rounded-3xl",
-            "rounded-full",
             "rounded-lg",
             "rounded-xl",
+            "settings-card",
+            "settings-card-title",
+            "settings-heading",
+            "settings-page",
             "space-y-2",
             "space-y-3",
             "space-y-4",
-            "text-2xl",
             "text-brand-rose",
             "text-ink",
             "text-muted",
             "text-sm",
             "text-white",
-            "text-xl",
             "text-xs",
             "transition-colors",
-            "w-16",
             "w-full"
           ],
           "assetRefs": []
@@ -4542,10 +4607,10 @@
       "summary": {
         "routes": 21,
         "pages": 22,
-        "components": 29,
+        "components": 30,
         "sourceFiles": 94,
         "styleFiles": 4,
-        "typeScriptSignals": 144
+        "typeScriptSignals": 145
       }
     },
     {
