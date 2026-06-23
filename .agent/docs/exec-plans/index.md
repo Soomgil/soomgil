@@ -69,3 +69,4 @@
 
 - `active/2026-06-15-recommendation-weight-plan.md`: 추천 시스템과 가중치 계산 자동화 계획.
 - `active/2026-06-22-frontend-api-integration-workboard.md`: Vue mock/stub 제거, backend API 연동과 병렬 진행 상태 보드.
+- `active/2026-06-23-product-fix-workboard.md`: 2026-06-23 접수 제품 수정 요청의 작업현황보드.

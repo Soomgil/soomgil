@@ -68,7 +68,6 @@ git commit -m "chore(submodules): update frontend pointer"
 | `chore/<slug>` | 설정, 문서, 하네스, 정리 작업. `develop`에서 분기합니다. |
 | `release/<version>` | 배포 준비. `develop`에서 분기하고 `main`, `develop`으로 merge합니다. |
 | `hotfix/<version>-<slug>` | production 긴급 수정. `main`에서 분기하고 `main`, `develop`으로 merge합니다. |
-| `codex/<type>/<slug>` | AI agent가 임시로 만드는 작업 브랜치. 명시 지시가 없으면 이 prefix를 사용합니다. |
 
 흐름:
 
@@ -164,5 +163,4 @@ PR 본문에는 최소한 다음을 포함합니다.
 - 기능 브랜치의 AI 문맥은 `.agent/branch-ledger/branches/<currentBranchKey>/`에만 기록합니다.
 - 기능 브랜치에서는 다른 브랜치 ledger를 읽거나 수정하지 않습니다.
 - `develop` 또는 `main` 통합 후 `npm --prefix .agent run branch:index`로 branch ledger 인덱스를 재생성합니다.
-- AI agent가 브랜치를 만들 때 별도 지시가 없으면 `codex/<type>/<slug>`를 사용합니다.
 - AI agent가 submodule 제품 코드를 수정해야 하면 해당 submodule repo 브랜치에서 커밋하고, orchestration repo에는 pointer 갱신과 하네스 문서 변경만 남깁니다.

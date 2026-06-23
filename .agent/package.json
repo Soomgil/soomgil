@@ -9,7 +9,8 @@
     "branch:index": "node tools/agent-ledger.mjs index",
     "harness:index": "node tools/build-ui-knowledge.mjs",
     "harness:smoke": "node tools/smoke-local.mjs",
-    "harness:check": "node tools/build-ui-knowledge.mjs --check && node tools/harness-check.mjs && npm run branch:check && node tools/smoke-local.mjs",
+    "harness:check": "node tools/build-ui-knowledge.mjs --check && node tools/harness-check.mjs && node tools/check-frontend-api-integrity.mjs && npm run branch:check && node tools/smoke-local.mjs",
+    "frontend:api-integrity": "node tools/check-frontend-api-integrity.mjs",
     "lint": "npm run harness:check"
   },
   "engines": {
