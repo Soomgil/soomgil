@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-06-23T07:21:47.094Z
+생성 시각: 2026-06-23T08:10:14.982Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -27,4 +27,5 @@
 - unknown | feature__trip-basic-access | scope 없음 | 김지훈 백엔드 완료 조건 보완 | .agent/branch-ledger/branches/feature__trip-basic-access/20260618T065800Z-feature__trip-basic-access-note.md
 - unknown | feature__trip-basic-access | scope 없음 | 프론트엔드 3인 역할 배분 | .agent/branch-ledger/branches/feature__trip-basic-access/20260619T131321Z-feature__trip-basic-access-note.md
 - unknown | feature__trip-basic-access | scope 없음 | 프론트 역할 최종 검토 보완 | .agent/branch-ledger/branches/feature__trip-basic-access/20260619T132309Z-feature__trip-basic-access-note.md
+- unknown | feature__ui-functional-audit | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/feature__ui-functional-audit/20260623T080800Z-feature__ui-functional-audit-note.md
 

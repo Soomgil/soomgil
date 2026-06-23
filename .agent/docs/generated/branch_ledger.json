@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T07:21:47.094Z",
+  "generatedAt": "2026-06-23T08:10:14.982Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -191,6 +191,16 @@
       "status": "",
       "title": "프론트 역할 최종 검토 보완",
       "file": ".agent/branch-ledger/branches/feature__trip-basic-access/20260619T132309Z-feature__trip-basic-access-note.md"
+    },
+    {
+      "id": "20260623T080800Z-feature__ui-functional-audit-note",
+      "branch": "feature__ui-functional-audit",
+      "branchKey": "feature__ui-functional-audit",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/feature__ui-functional-audit/20260623T080800Z-feature__ui-functional-audit-note.md"
     }
   ]
 }
