@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T06:56:50.424Z",
+  "generatedAt": "2026-06-23T07:21:47.094Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -121,6 +121,16 @@
       "status": "",
       "title": "KTO swipe feed runtime integration",
       "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md"
+    },
+    {
+      "id": "20260623T072024Z-feature__product-fix-workboard-non-trip-note",
+      "branch": "feature__product-fix-workboard-non-trip",
+      "branchKey": "feature__product-fix-workboard-non-trip",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/feature__product-fix-workboard-non-trip/20260623T072024Z-feature__product-fix-workboard-non-trip-note.md"
     },
     {
       "id": "20260623T065022Z-feature__product-ux-backend-integration-ux-api",

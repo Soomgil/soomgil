@@ -1238,6 +1238,7 @@
             "settings-overlay",
             "status",
             "status-fieldset",
+            "status-help",
             "status-segments",
             "{"
           ],
@@ -1392,7 +1393,6 @@
             "community-pagination",
             "community-pill",
             "community-pill-ghost",
-            "community-pill-primary",
             "community-story-search",
             "compact-title",
             "currentPage",
@@ -1455,7 +1455,8 @@
             "story-tile-avatar",
             "story-tile-body",
             "story-tile-footer",
-            "story-tile-image"
+            "story-tile-image",
+            "story-tile-image-wrap"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -1595,7 +1596,7 @@
               "alt": "member avatar"
             },
             {
-              "src": "story.coverMedia.publicUrl",
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
               "alt": "story.title"
             },
             {
@@ -1627,6 +1628,7 @@
             "home-community-card-img",
             "home-community-card-meta",
             "home-community-grid",
+            "home-community-placeholder",
             "home-hero",
             "home-hero-card-overlay",
             "home-hero-content",

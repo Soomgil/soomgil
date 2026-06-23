@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-06-23T06:56:50.424Z
+생성 시각: 2026-06-23T07:21:47.094Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -20,6 +20,7 @@
 - unknown | feature__place-search-detail | scope 없음 | 태그 좋아요 통계 정책 | .agent/branch-ledger/branches/feature__place-search-detail/20260620T023313Z-feature__place-search-detail-tag-statistics-policy.md
 - unknown | feature__place-search-detail | scope 없음 | 프론트 장소 취향 추천 연결 | .agent/branch-ledger/branches/feature__place-search-detail/20260621T065741Z-feature__place-search-detail-note.md
 - unknown | feature__place-search-detail | scope 없음 | KTO swipe feed runtime integration | .agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md
+- unknown | feature__product-fix-workboard-non-trip | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/feature__product-fix-workboard-non-trip/20260623T072024Z-feature__product-fix-workboard-non-trip-note.md
 - unknown | feature__product-ux-backend-integration | scope 없음 | 마이페이지 설정 기록 일정 UX 및 API 상태 동기화 | .agent/branch-ledger/branches/feature__product-ux-backend-integration/20260623T065022Z-feature__product-ux-backend-integration-ux-api.md
 - unknown | feature__route-api-integration | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/feature__route-api-integration/20260622T103004Z-feature__route-api-integration-fei-140-routepage-api-mockplaces.md
 - unknown | feature__route-api-integration | scope 없음 | FEI-120 and FEI-121: HomePage API Integration | .agent/branch-ledger/branches/feature__route-api-integration/20260622T104801Z-feature__route-api-integration-fei-120-and-fei-121-homepage-api-integration.md

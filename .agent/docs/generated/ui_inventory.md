@@ -312,7 +312,7 @@
 - headings: h2 여행 설정, h3 여행 삭제
 - forms: 1, images: 0
 - asset refs: 없음
-- classes: `===`, `active:`, `btn`, `danger-button`, `danger-zone`, `delete-confirmation`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `material-symbols-rounded`, `primary`, `settings-actions`, `settings-error`, `settings-form`, `settings-header`, `settings-modal`, `settings-overlay`, `status`, `status-fieldset`, `status-segments`, `{`
+- classes: `===`, `active:`, `btn`, `danger-button`, `danger-zone`, `delete-confirmation`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `material-symbols-rounded`, `primary`, `settings-actions`, `settings-error`, `settings-form`, `settings-header`, `settings-modal`, `settings-overlay`, `status`, `status-fieldset`, `status-help`, `status-segments`, `{`
 
 #### frontend/src/pages/AdminModerationPage.vue
 
@@ -330,7 +330,7 @@
 - headings: h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}, h2 dynamic_feed 최신 여행 이야기
 - forms: 0, images: 5
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-actions`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-ghost`, `community-pill-primary`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `filter-pill`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`
+- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-actions`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-ghost`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `filter-pill`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`
 
 #### frontend/src/pages/FeedPage.vue
 
@@ -348,7 +348,7 @@
 - headings: h2 어떤 여행을 찾고 계신가요?, h1 여행의 시작은 설렘에서부터, h3 {{ slide.title }}, h3 내 취향 수집, h3 지도에서 루트 만들기, h3 친구 초대하기
 - forms: 0, images: 6
 - asset refs: `/images/랜딩페이지/busan.png`, `/images/랜딩페이지/jeju.png`
-- classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-dots`, `home-hero-slide`, `home-nearest-bg`, `home-nearest-card`
+- classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-community-placeholder`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-dots`, `home-hero-slide`, `home-nearest-bg`
 
 #### frontend/src/pages/LandingPage.vue
 
