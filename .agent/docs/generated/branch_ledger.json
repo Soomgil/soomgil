@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T12:22:04.530Z",
+  "generatedAt": "2026-06-23T01:00:49.571Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -31,6 +31,16 @@
       "status": "",
       "title": "FEI-100-110 record API integration",
       "file": ".agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md"
+    },
+    {
+      "id": "20260623T003736Z-feature__frontend-api-integration-fei-141-180-fei-141-180-frontend-api-integration",
+      "branch": "feature__frontend-api-integration-fei-141-180",
+      "branchKey": "feature__frontend-api-integration-fei-141-180",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "FEI 141-180 frontend API integration",
+      "file": ".agent/branch-ledger/branches/feature__frontend-api-integration-fei-141-180/20260623T003736Z-feature__frontend-api-integration-fei-141-180-fei-141-180-frontend-api-integration.md"
     },
     {
       "id": "20260622T105334Z-feature__home-api-integration-fei-120-and-fei-121-homepage-api-integration",
