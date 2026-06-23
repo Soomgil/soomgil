@@ -19,6 +19,10 @@
 
 | 명령 | 역할 |
 | :--- | :--- |
+| `docker-compose up -d` | PostgreSQL, Redis, Mailpit, MinIO 로컬 인프라 실행 |
+| `docker-compose --profile full up --build -d` | 프론트엔드, 백엔드와 로컬 인프라 전체 실행 |
+| `docker-compose --profile full logs -f` | 전체 개발 스택 로그 확인 |
+| `docker-compose --profile full down` | 전체 개발 스택 종료 |
 | `npm --prefix frontend run dev` | 프론트엔드 개발 서버 실행 |
 | `npm --prefix frontend run build` | 프론트엔드 production 빌드 |
 | `./backend/gradlew -p backend bootRun` | 백엔드 개발 서버 실행 |
@@ -29,6 +33,11 @@
 | `npm --prefix .agent run branch:index` | develop/main에서 branch ledger 통합 인덱스 생성 |
 | `npm --prefix .agent run harness:index` | 상위 AI 하네스 인벤토리 재생성 |
 | `npm --prefix .agent run harness:check` | 워크스페이스 구조, branch ledger 경계, 프론트 빌드, 라우트 smoke 검사 |
+
+Docker Compose 전체 실행 후 프론트엔드는 `http://localhost:5173`, 백엔드는
+`http://localhost:8080`, Mailpit은 `http://localhost:8025`, MinIO 콘솔은
+`http://localhost:9001`에서 접근합니다. 이 환경에서 사용하는 비밀값은 root `.env` 또는
+`backend/.env`에 두고 Git에는 커밋하지 않습니다.
 
 ## Backend Contracts
 
