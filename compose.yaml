@@ -75,9 +75,8 @@ services:
     env_file:
       - path: ./.env
         required: false
-      - path: ./backend/.env
-        required: false
     environment:
+      SPRING_CONFIG_IMPORT: 'optional:file:/workspace/.env.compose[.properties]'
       SPRING_DOCKER_COMPOSE_ENABLED: 'false'
       SERVER_PORT: 8080
       DB_HOST: postgres
@@ -92,7 +91,7 @@ services:
       S3_ACCESS_KEY: ${S3_ACCESS_KEY:-soomgil}
       S3_SECRET_KEY: ${S3_SECRET_KEY:-change-me-change-me}
       S3_PUBLIC_BASE_URL: ${S3_PUBLIC_BASE_URL:-http://localhost:9000/soomgil-local}
-    command: ./gradlew bootRun --continuous --no-daemon
+    command: ./gradlew bootRun --no-daemon
     ports:
       - '${SERVER_PORT:-8080}:8080'
     volumes:
