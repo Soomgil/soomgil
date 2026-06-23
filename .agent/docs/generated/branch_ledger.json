@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T01:00:49.571Z",
+  "generatedAt": "2026-06-23T06:56:50.424Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -121,6 +121,16 @@
       "status": "",
       "title": "KTO swipe feed runtime integration",
       "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md"
+    },
+    {
+      "id": "20260623T065022Z-feature__product-ux-backend-integration-ux-api",
+      "branch": "feature__product-ux-backend-integration",
+      "branchKey": "feature__product-ux-backend-integration",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "마이페이지 설정 기록 일정 UX 및 API 상태 동기화",
+      "file": ".agent/branch-ledger/branches/feature__product-ux-backend-integration/20260623T065022Z-feature__product-ux-backend-integration-ux-api.md"
     },
     {
       "id": "20260622T103004Z-feature__route-api-integration-fei-140-routepage-api-mockplaces",
