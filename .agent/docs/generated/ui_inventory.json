@@ -127,13 +127,6 @@
         {
           "path": "/community/feed",
           "name": "Feed",
-          "page": "src/pages/FeedPage.vue",
-          "requiresAuth": false,
-          "guestOnly": false
-        },
-        {
-          "path": "/community/stories",
-          "name": "Stories",
           "page": "src/pages/StoriesPage.vue",
           "requiresAuth": false,
           "guestOnly": false
@@ -990,87 +983,63 @@
           ],
           "images": [
             {
-              "src": "@/assets/images/soomgil_logo_none_text.png",
-              "alt": "숨길"
+              "src": "logoUrl",
+              "alt": "숨길 로고"
             }
           ],
           "forms": 0,
           "classNames": [
-            "-bottom-3",
-            "-left-3",
-            "-space-x-2",
-            "-top-3",
-            "absolute",
-            "bg-bg",
-            "bg-brand-violet/10",
-            "bg-line",
-            "bg-surface-2",
-            "bg-transparent",
-            "block",
+            "-",
+            "1",
+            "===",
+            "active:",
+            "airport-code",
+            "avatar",
             "boarding-pass-card",
-            "border",
-            "border-2",
-            "border-dashed",
-            "border-l",
-            "border-line",
-            "border-line/50",
-            "border-surface",
-            "flex",
-            "flex-1",
-            "flex-col",
-            "font-black",
-            "font-bold",
-            "gap-1",
-            "gap-2",
-            "gap-4",
-            "gap-x-6",
-            "gap-y-2",
-            "grid",
-            "grid-cols-2",
-            "h-6",
-            "h-8",
-            "h-full",
-            "h-px",
-            "hover:gap-2",
-            "items-center",
-            "justify-between",
-            "justify-center",
-            "leading-tight",
+            "boarding-pass-card--placeholder",
+            "bottom",
+            "carousel-dot",
+            "carousel-dots-container",
+            "city-name",
+            "d-day-badge",
+            "dashed-line",
+            "departure",
+            "destination",
+            "detail-item",
+            "index",
+            "label",
+            "line",
+            "logo-image",
+            "logo-text",
             "material-symbols-rounded",
-            "mb-4",
-            "mb-6",
-            "mt-0.5",
-            "mt-1",
-            "mt-4",
-            "overflow-hidden",
-            "p-6",
-            "p-8",
-            "px-3",
-            "py-1",
-            "relative",
-            "rounded-[32px]",
-            "rounded-full",
-            "rounded-lg",
-            "shadow-[0_20px_60px_rgba(0,102,255,0.08)]",
-            "text-2xl",
-            "text-[10px]",
-            "text-base",
-            "text-brand-violet",
-            "text-center",
-            "text-ink",
-            "text-lg",
-            "text-muted",
-            "text-sm",
-            "text-xs",
+            "next-trip-dots",
+            "next-trip-members",
+            "plane-icon",
+            "position",
+            "punch-hole",
+            "route-path",
+            "route-point",
+            "stub-action-btn",
+            "stub-actions",
+            "stub-controls",
+            "stub-date-info",
+            "stub-detail-btn",
+            "stub-header",
+            "stub-title",
+            "stub-title-label",
+            "ticket-badge",
+            "ticket-details",
             "ticket-divider",
+            "ticket-header",
+            "ticket-logo",
             "ticket-main",
+            "ticket-members-wrapper",
+            "ticket-route",
             "ticket-stub",
-            "tracking-wider",
-            "transition-all",
-            "w-6",
-            "w-8",
-            "w-[1px]",
-            "w-[260px]"
+            "top",
+            "value",
+            "{",
+            "}"
           ],
           "assetRefs": [
             "@/assets/images/soomgil_logo_none_text.png"
@@ -1401,7 +1370,6 @@
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
-            "filter-pill",
             "idx",
             "latest-stories-eyebrow",
             "latest-stories-header",
@@ -1456,55 +1424,8 @@
             "story-tile-body",
             "story-tile-footer",
             "story-tile-image",
-            "story-tile-image-wrap"
-          ],
-          "assetRefs": [
-            "/images/랜딩페이지/korea_hero.png"
-          ]
-        },
-        {
-          "path": "frontend/src/pages/FeedPage.vue",
-          "relativePath": "src/pages/FeedPage.vue",
-          "kind": "page",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [
-            {
-              "level": 1,
-              "id": "",
-              "text": "여행자들의 피드 에서 실시간 영감을 얻어보세요"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "dynamic_feed 최신 여행 이야기"
-            }
-          ],
-          "images": [
-            {
-              "src": "story.image",
-              "alt": "story.title"
-            },
-            {
-              "src": "story.profileImageUrl",
-              "alt": "`${story.author} 프로필 사진`"
-            }
-          ],
-          "forms": 0,
-          "classNames": [
-            "community-hero-header",
-            "compact-title",
-            "eyebrow",
-            "fc-avatar",
-            "feed-layout",
-            "feed-page",
-            "lead",
-            "material-symbols-rounded",
-            "section",
-            "section-title",
-            "story-feed",
-            "story-feed-window",
-            "story-post"
+            "story-tile-image-wrap",
+            "story-tile-like"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -2611,7 +2532,7 @@
           ],
           "images": [
             {
-              "src": "story.coverMedia?.publicUrl ?? ",
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
               "alt": "story.title + "
             }
           ],
@@ -3255,6 +3176,7 @@
           "relativePath": "src/api/user.api.ts",
           "imports": [
             "./http",
+            "./place.api",
             "@/types/api",
             "@/types/auth",
             "@/types/place"
@@ -3645,7 +3567,6 @@
           "relativePath": "src/pages/community-api-integration.test.ts",
           "imports": [
             "./CommunityPage.vue",
-            "./FeedPage.vue",
             "./StoriesPage.vue",
             "./StoryWritePage.vue",
             "@vue/test-utils",
@@ -4607,12 +4528,12 @@
         }
       ],
       "summary": {
-        "routes": 21,
-        "pages": 22,
+        "routes": 20,
+        "pages": 21,
         "components": 30,
         "sourceFiles": 94,
         "styleFiles": 4,
-        "typeScriptSignals": 145
+        "typeScriptSignals": 144
       }
     },
     {
