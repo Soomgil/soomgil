@@ -36,8 +36,34 @@
 
 Docker Compose 전체 실행 후 프론트엔드는 `http://localhost:5173`, 백엔드는
 `http://localhost:8080`, Mailpit은 `http://localhost:8025`, MinIO 콘솔은
-`http://localhost:9001`에서 접근합니다. 이 환경에서 사용하는 비밀값은 root `.env` 또는
-`backend/.env`에 두고 Git에는 커밋하지 않습니다.
+`http://localhost:9001`에서 접근합니다.
+
+### Windows PowerShell
+
+```powershell
+Copy-Item .env.example .env
+docker compose --profile full up --build -d
+docker compose --profile full logs -f backend
+```
+
+### macOS / Linux
+
+```bash
+cp .env.example .env
+docker compose --profile full up --build -d
+docker compose --profile full logs -f backend
+```
+
+Docker Compose v1만 설치된 환경에서는 `docker compose` 대신 `docker-compose`를 사용합니다.
+
+## 환경변수 운영
+
+팀에서 공유해야 하는 환경변수 기준 파일은 루트 `.env` 하나입니다.
+루트 `.env.example`을 복사해 `.env`를 만들고, 실제 키는 팀의 비밀 공유 채널로 전달합니다.
+
+Docker Compose와 백엔드 컨테이너는 루트 `.env`만 사용합니다.
+프론트엔드를 단독 실행할 때만 `frontend/.env.local`처럼 Vite 로컬 env 파일을 사용할 수 있습니다.
+`.env`, `.env.*`, `frontend/.env.local` 같은 실제 값 파일은 모두 Git에 커밋하지 않습니다.
 
 ## Backend Contracts
 
