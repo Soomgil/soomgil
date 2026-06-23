@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 30 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 30 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -32,8 +32,7 @@
 | `/swipe` | Swipe | `src/pages/SwipePage.vue` | 필요 | 아니오 |
 | `/trips/:tripId/swipe` | Route | `src/pages/RoutePage.vue` | 필요 | 아니오 |
 | `/community` | Community | `src/pages/CommunityPage.vue` | 공개 | 아니오 |
-| `/community/feed` | Feed | `src/pages/FeedPage.vue` | 공개 | 아니오 |
-| `/community/stories` | Stories | `src/pages/StoriesPage.vue` | 공개 | 아니오 |
+| `/community/feed` | Feed | `src/pages/StoriesPage.vue` | 공개 | 아니오 |
 | `/community/story-write` | StoryWrite | `src/pages/StoryWritePage.vue` | 필요 | 아니오 |
 | `/record` | Record | `src/pages/RecordPage.vue` | 필요 | 아니오 |
 | `/mypage` | MyPage | `src/pages/MyPage.vue` | 필요 | 아니오 |
@@ -276,7 +275,7 @@
 - headings: h2 {{ trip.title }}
 - forms: 0, images: 1
 - asset refs: `@/assets/images/soomgil_logo_none_text.png`
-- classes: `-bottom-3`, `-left-3`, `-space-x-2`, `-top-3`, `absolute`, `bg-bg`, `bg-brand-violet/10`, `bg-line`, `bg-surface-2`, `bg-transparent`, `block`, `boarding-pass-card`, `border`, `border-2`, `border-dashed`, `border-l`, `border-line`, `border-line/50`, `border-surface`, `flex`, `flex-1`, `flex-col`, `font-black`, `font-bold`, `gap-1`, `gap-2`, `gap-4`, `gap-x-6`, `gap-y-2`, `grid`
+- classes: `-`, `1`, `===`, `active:`, `airport-code`, `avatar`, `boarding-pass-card`, `boarding-pass-card--placeholder`, `bottom`, `carousel-dot`, `carousel-dots-container`, `city-name`, `d-day-badge`, `dashed-line`, `departure`, `destination`, `detail-item`, `index`, `label`, `line`, `logo-image`, `logo-text`, `material-symbols-rounded`, `next-trip-dots`, `next-trip-members`, `plane-icon`, `position`, `punch-hole`, `route-path`, `route-point`
 
 #### frontend/src/components/trip/LegalRegionCombobox.vue
 
@@ -330,16 +329,7 @@
 - headings: h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}, h2 dynamic_feed 최신 여행 이야기
 - forms: 0, images: 5
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-actions`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-ghost`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `filter-pill`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`
-
-#### frontend/src/pages/FeedPage.vue
-
-- 종류: page
-- script: setup / ts
-- headings: h1 여행자들의 피드 에서 실시간 영감을 얻어보세요, h2 dynamic_feed 최신 여행 이야기
-- forms: 0, images: 2
-- asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `community-hero-header`, `compact-title`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-page`, `lead`, `material-symbols-rounded`, `section`, `section-title`, `story-feed`, `story-feed-window`, `story-post`
+- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-actions`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-ghost`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`
 
 #### frontend/src/pages/HomePage.vue
 
