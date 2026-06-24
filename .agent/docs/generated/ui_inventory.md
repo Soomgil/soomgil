@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 30 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 31 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -169,14 +169,23 @@
 - asset refs: 없음
 - classes: `aspect-[4/3]`, `bg-brand-violet`, `bg-surface`, `bg-surface-2`, `border`, `border-line`, `duration-500`, `flex`, `flex-col`, `font-bold`, `gap-2`, `group`, `group-hover:scale-105`, `h-6`, `h-full`, `hover:border-brand-violet/20`, `hover:shadow-[0_12px_32px_rgba(0,102,255,0.08)]`, `items-center`, `justify-center`, `mb-2`, `object-cover`, `overflow-hidden`, `p-4`, `relative`, `rounded-[24px]`, `rounded-full`, `text-[10px]`, `text-left`, `text-white`, `transition-all`
 
+#### frontend/src/components/community/StoryDetailOverlay.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 dynamic_feed 최신 여행 이야기, h3 {{ visibleStory.title }}
+- forms: 0, images: 2
+- asset refs: `/images/랜딩페이지/korea_hero.png`
+- classes: `active:`, `carousel-btn`, `compact-title`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `section-title`, `small`, `story-author`, `story-body`, `story-feed`, `story-feed-window`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`, `story-post-photo-img`, `story-report-btn`
+
 #### frontend/src/components/community/StoryWriteModal.vue
 
 - 종류: component
 - script: setup / ts
-- headings: h1 당신의 여행을 들려주세요, h3 작성 미리보기, h3 {{ previewTitle }}
-- forms: 1, images: 2
+- headings: h1 당신의 여행을 들려주세요
+- forms: 1, images: 0
 - asset refs: 없음
-- classes: `avatar`, `btn`, `carousel-btn`, `feed-photo-count`, `feed-photo-frame`, `feed-photo-nav`, `feed-photo-open`, `field`, `ghost`, `material-symbols-rounded`, `next`, `next-btn`, `prev`, `prev-btn`, `primary`, `story-author`, `story-body`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `tag`
+- classes: `btn`, `field`, `ghost`, `material-symbols-rounded`, `photo-strip`, `photo-strip__empty`, `photo-strip__nav`, `photo-strip__nav--prev`, `photo-strip__row`, `photo-strip__upload`, `photo-strip__viewport`, `primary`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `tag-chip`, `tag-chip-input`, `tag-chip-input__field`, `tag-chip-input__icon`, `tag-chip__remove`, `{`
 
 #### frontend/src/components/layout/AppHeader.vue
 
@@ -230,7 +239,7 @@
 - headings: h2 auto_stories 내 여행기, h3 {{ story.title }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `mypage-section-header`, `mypage-section-title`, `mypage-stories-magazine`, `mypage-story-magazine-item`, `section-icon`, `section-icon--violet`, `story-date`, `story-magazine-body`, `story-magazine-meta`, `story-magazine-thumb`, `story-magazine-title`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-stats-row`
+- classes: `material-symbols-rounded`, `mypage-empty-desc`, `mypage-empty-icon`, `mypage-empty-state`, `mypage-empty-state--inline`, `mypage-empty-title`, `mypage-header-search-row`, `mypage-search-count`, `mypage-search-inline`, `mypage-section-header`, `mypage-section-title`, `mypage-stories-magazine`, `mypage-story-magazine-item`, `section-icon`, `section-icon--violet`, `story-date`, `story-magazine-body`, `story-magazine-meta`, `story-magazine-thumb`, `story-magazine-title`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-stats-row`
 
 #### frontend/src/components/mypage/MyStoryDetailModal.vue
 
@@ -329,16 +338,16 @@
 - headings: h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}, h2 dynamic_feed 최신 여행 이야기
 - forms: 0, images: 5
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-actions`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-ghost`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`
+- classes: `===`, `active:`, `btn`, `carousel-btn`, `community-content-container`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-primary`, `community-story-search`, `compact-title`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`
 
 #### frontend/src/pages/HomePage.vue
 
 - 종류: page
 - script: setup / ts
 - headings: h2 어떤 여행을 찾고 계신가요?, h1 여행의 시작은 설렘에서부터, h3 {{ slide.title }}, h3 내 취향 수집, h3 지도에서 루트 만들기, h3 친구 초대하기
-- forms: 0, images: 6
-- asset refs: `/images/랜딩페이지/busan.png`, `/images/랜딩페이지/jeju.png`
-- classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-community-placeholder`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-dots`, `home-hero-slide`, `home-nearest-bg`
+- forms: 0, images: 5
+- asset refs: 없음
+- classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-community-placeholder`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-dots`, `home-hero-slide`, `home-nearest-card`
 
 #### frontend/src/pages/LandingPage.vue
 
@@ -365,7 +374,7 @@
 - headings: h1 나의 여행 프로필, h2 {{ displayName }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `avatar-link-badge`, `eyebrow`, `gradient-text`, `material-symbols-rounded`, `minimal-stat-icon`, `minimal-stat-item`, `minimal-stat-label`, `minimal-stat-value`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__avatar-container`, `mypage-hero__avatar-ring`, `mypage-hero__content`, `mypage-hero__email`, `mypage-hero__intro`, `mypage-hero__name`, `mypage-hero__name-col`, `mypage-hero__name-row`, `mypage-hero__tag`, `mypage-hero__tags`, `mypage-page-heading`, `mypage-profile-card`, `mypage-profile-minimal-stats`, `mypage-shell`, `mypage-visibility-badge`, `profile-card-details`, `profile-card-left-group`, `section`, `verified-check-badge`
+- classes: `eyebrow`, `gradient-text`, `material-symbols-rounded`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-page-heading`, `mypage-profile-card`, `mypage-shell`, `profile-avatar-col`, `profile-avatar-img`, `profile-avatar-wrap`, `profile-bio`, `profile-display-name`, `profile-handle`, `profile-header-card`, `profile-info-col`, `profile-stat-item`, `profile-stat-label`, `profile-stat-value`, `profile-stats-row`, `section`, `{`
 
 #### frontend/src/pages/MyTripsPage.vue
 
@@ -473,7 +482,7 @@
 - headings: h1 우리만의 여행 취향 을 모아보세요, h2 취향 수집 완료!, h2 {{ currentPlace.placeName }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `community-hero-header`, `eyebrow`, `lead`, `material-symbols-rounded`, `meta-row`, `muted`, `panel`, `primary`, `section`, `section-title`, `swipe-body`, `swipe-card`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-stage`, `swipe-workspace-card`, `swipe-xp-bar`, `swipe-xp-count`, `swipe-xp-fill`, `swipe-xp-track`, `tag`, `tag-row`, `{`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `community-hero-header`, `eyebrow`, `lead`, `material-symbols-rounded`, `meta-row`, `panel`, `primary`, `section`, `section-title`, `swipe-body`, `swipe-card`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-stage`, `swipe-workspace-card`, `swipe-xp-bar`, `swipe-xp-count`, `swipe-xp-fill`, `swipe-xp-track`, `tag`, `tag-row`, `{`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 
