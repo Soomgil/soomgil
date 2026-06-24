@@ -17,12 +17,25 @@
 
 ## 주요 명령
 
+가장 간단한 실행 방법:
+
+- macOS: `start-soomgil.command`를 더블클릭합니다.
+- Windows: `start-soomgil.bat`를 더블클릭합니다.
+- 메뉴에서 프론트엔드+백엔드, 백엔드만, 프론트엔드만, 데모 DB 초기화, 전체 종료를 선택합니다.
+
+Node.js 18 이상과 실행 중인 Docker Desktop이 필요합니다.
+
 | 명령 | 역할 |
 | :--- | :--- |
 | `docker-compose up -d` | PostgreSQL, Redis, Mailpit, MinIO 로컬 인프라 실행 |
 | `docker-compose --profile full up --build -d` | 프론트엔드, 백엔드와 로컬 인프라 전체 실행 |
 | `docker-compose --profile full logs -f` | 전체 개발 스택 로그 확인 |
 | `docker-compose --profile full down` | 전체 개발 스택 종료 |
+| `node start-soomgil.mjs both` | 프론트엔드와 백엔드 실행 |
+| `node start-soomgil.mjs backend` | 백엔드와 필수 인프라만 실행 |
+| `node start-soomgil.mjs frontend` | 프론트엔드만 실행 |
+| `node start-soomgil.mjs reset` | 기존 DB를 삭제하고 데모 dump 재적재 |
+| `node start-soomgil.mjs stop` | 전체 컨테이너 종료 |
 | `npm --prefix frontend run dev` | 프론트엔드 개발 서버 실행 |
 | `npm --prefix frontend run build` | 프론트엔드 production 빌드 |
 | `./backend/gradlew -p backend bootRun` | 백엔드 개발 서버 실행 |
@@ -55,6 +68,14 @@ docker compose --profile full logs -f backend
 ```
 
 Docker Compose v1만 설치된 환경에서는 `docker compose` 대신 `docker-compose`를 사용합니다.
+실행기는 설치된 버전을 자동으로 감지합니다.
+
+### 데모 DB 초기화
+
+`node init-demo-dump.mjs`는 백엔드를 잠시 중지하고 `DB_NAME` 데이터베이스를 완전히
+삭제·재생성합니다. 이후 Flyway를 다시 적용하고
+`backend/seeds/generated/soomgil_demo_dashboard_dump.sql` 하나만 적재한 뒤 검증합니다.
+기존 로컬 데이터는 복구되지 않으므로 데모 데이터를 처음부터 다시 만들 때만 실행합니다.
 
 ## 환경변수 운영
 

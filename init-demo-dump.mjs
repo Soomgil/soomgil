@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
@@ -10,10 +10,8 @@ const dbService = process.env.DB_SERVICE || 'postgres';
 const maxWaitSeconds = Number(process.env.SEED_WAIT_SECONDS || 180);
 
 const files = {
-  demoSeed: join(rootDir, 'backend', 'seeds', 'soomgil_demo_seoul_daejeon.sql'),
-  realisticPatch: join(rootDir, 'backend', 'seeds', 'soomgil_demo_realistic_patch.sql'),
+  demoDump: join(rootDir, 'backend', 'seeds', 'generated', 'soomgil_demo_dashboard_dump.sql'),
   verifier: join(rootDir, 'backend', 'seeds', 'verify_demo_data.sql'),
-  devSeeds: join(rootDir, 'backend', 'dev-seeds'),
 };
 
 const env = {
@@ -39,6 +37,8 @@ function main() {
   }
 
   const compose = resolveComposeCommand();
+  step('Starting PostgreSQL');
+  run(compose[0], [...compose.slice(1), '--profile', 'full', 'up', '-d', 'postgres']);
   const containerId = getPostgresContainerId(compose);
 
   step('Waiting for PostgreSQL to accept connections');
@@ -47,7 +47,12 @@ function main() {
     `PostgreSQL did not become ready within ${maxWaitSeconds} seconds.`,
   );
 
-  step('Waiting for backend Flyway migrations');
+  resetDatabase(compose, containerId);
+
+  step('Starting backend to apply Flyway migrations');
+  run(compose[0], [...compose.slice(1), '--profile', 'full', 'up', '--build', '-d', 'backend']);
+
+  step('Waiting for backend Flyway migrations on the empty database');
   waitUntil(
     () => queryScalar(containerId, "SELECT (to_regclass('auth.users') IS NOT NULL AND to_regclass('community.posts') IS NOT NULL AND to_regclass('tourism_source.attractions') IS NOT NULL)::int;") === '1',
     `Required schema tables were not found within ${maxWaitSeconds} seconds. Check that the backend service finished starting.`,
@@ -55,13 +60,11 @@ function main() {
 
   stageSqlFiles(containerId);
 
-  runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_demo_seoul_daejeon.sql`, 'Applying large Seoul/Daejeon demo data');
-  runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_demo_realistic_patch.sql`, 'Applying realistic demo patch');
+  runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_demo_dashboard_dump.sql`, 'Applying complete dashboard demo dump');
   runPsqlFile(containerId, `${tempRoot}/seeds/verify_demo_data.sql`, 'Verifying demo data invariants');
-  runPsqlFile(containerId, '00_run_all.sql', 'Applying domain development seeds', `${tempRoot}/dev-seeds`);
 
   console.log('');
-  console.log('Done. Demo dump and development seeds were initialized.');
+  console.log('Done. The previous database was removed and the demo dump was loaded from scratch.');
 }
 
 function printHelp() {
@@ -69,7 +72,10 @@ function printHelp() {
   node init-demo-dump.mjs
 
 Prerequisite:
-  docker-compose --profile full up --build -d
+  Docker Desktop must be running.
+
+WARNING:
+  This command deletes and recreates DB_NAME before loading the demo dump.
 
 Environment overrides:
   DB_SERVICE=postgres
@@ -78,10 +84,11 @@ Environment overrides:
   SEED_WAIT_SECONDS=180
 
 Runs in order:
-  1. backend/seeds/soomgil_demo_seoul_daejeon.sql
-  2. backend/seeds/soomgil_demo_realistic_patch.sql
-  3. backend/seeds/verify_demo_data.sql
-  4. backend/dev-seeds/00_run_all.sql`);
+  1. Stop the backend service
+  2. Drop and recreate DB_NAME
+  3. Start the backend and wait for Flyway
+  4. Apply backend/seeds/generated/soomgil_demo_dashboard_dump.sql
+  5. Apply backend/seeds/verify_demo_data.sql`);
 }
 
 function resolveComposeCommand() {
@@ -103,14 +110,21 @@ function getPostgresContainerId(compose) {
   return containerId;
 }
 
+function resetDatabase(compose, containerId) {
+  step(`Stopping backend before resetting database "${dbName}"`);
+  run(compose[0], [...compose.slice(1), '--profile', 'full', 'stop', 'backend'], { allowFailure: true });
+
+  step(`Dropping and recreating database "${dbName}"`);
+  run('docker', ['exec', containerId, 'dropdb', '-U', dbUser, '--if-exists', '--force', dbName]);
+  run('docker', ['exec', containerId, 'createdb', '-U', dbUser, '-O', dbUser, dbName]);
+}
+
 function stageSqlFiles(containerId) {
   step('Staging SQL files inside the PostgreSQL container');
-  run('docker', ['exec', containerId, 'sh', '-c', `rm -rf ${tempRoot} && mkdir -p ${tempRoot}/seeds ${tempRoot}/dev-seeds`]);
+  run('docker', ['exec', containerId, 'sh', '-c', `rm -rf ${tempRoot} && mkdir -p ${tempRoot}/seeds`]);
 
-  dockerCp(files.demoSeed, `${containerId}:${tempRoot}/seeds/soomgil_demo_seoul_daejeon.sql`);
-  dockerCp(files.realisticPatch, `${containerId}:${tempRoot}/seeds/soomgil_demo_realistic_patch.sql`);
+  dockerCp(files.demoDump, `${containerId}:${tempRoot}/seeds/soomgil_demo_dashboard_dump.sql`);
   dockerCp(files.verifier, `${containerId}:${tempRoot}/seeds/verify_demo_data.sql`);
-  dockerCp(resolve(files.devSeeds) + '/.', `${containerId}:${tempRoot}/dev-seeds`);
 }
 
 function dockerCp(source, destination) {
