@@ -11,6 +11,7 @@ const maxWaitSeconds = Number(process.env.SEED_WAIT_SECONDS || 180);
 
 const files = {
   demoDump: join(rootDir, 'backend', 'seeds', 'generated', 'soomgil_demo_dashboard_dump.sql'),
+  jejuTagDump: join(rootDir, 'backend', 'seeds', 'soomgil_jeju_place_tags.sql'),
   verifier: join(rootDir, 'backend', 'seeds', 'verify_demo_data.sql'),
 };
 
@@ -61,6 +62,7 @@ function main() {
   stageSqlFiles(containerId);
 
   runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_demo_dashboard_dump.sql`, 'Applying complete dashboard demo dump');
+  runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_jeju_place_tags.sql`, 'Applying Jeju AI place tag dump');
   runPsqlFile(containerId, `${tempRoot}/seeds/verify_demo_data.sql`, 'Verifying demo data invariants');
 
   console.log('');
@@ -88,7 +90,8 @@ Runs in order:
   2. Drop and recreate DB_NAME
   3. Start the backend and wait for Flyway
   4. Apply backend/seeds/generated/soomgil_demo_dashboard_dump.sql
-  5. Apply backend/seeds/verify_demo_data.sql`);
+  5. Apply backend/seeds/soomgil_jeju_place_tags.sql
+  6. Apply backend/seeds/verify_demo_data.sql`);
 }
 
 function resolveComposeCommand() {
@@ -124,6 +127,7 @@ function stageSqlFiles(containerId) {
   run('docker', ['exec', containerId, 'sh', '-c', `rm -rf ${tempRoot} && mkdir -p ${tempRoot}/seeds`]);
 
   dockerCp(files.demoDump, `${containerId}:${tempRoot}/seeds/soomgil_demo_dashboard_dump.sql`);
+  dockerCp(files.jejuTagDump, `${containerId}:${tempRoot}/seeds/soomgil_jeju_place_tags.sql`);
   dockerCp(files.verifier, `${containerId}:${tempRoot}/seeds/verify_demo_data.sql`);
 }
 
