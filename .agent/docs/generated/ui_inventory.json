@@ -838,22 +838,28 @@
           "headings": [],
           "images": [
             {
-              "src": "item.place.thumbnailUrl",
+              "src": "placeImage(item.place)",
               "alt": "item.place.placeName"
             },
             {
               "src": "member.profileImageUrl",
-              "alt": "member.displayName"
+              "alt": "멤버 프로필"
             }
           ],
           "forms": 1,
           "classNames": [
+            "action-btn",
+            "add-btn",
+            "bookmark-btn",
+            "btn-tooltip",
+            "btn-with-tooltip",
             "discovery-actions",
             "discovery-copy",
+            "discovery-match-row",
             "discovery-members",
             "discovery-meta",
+            "discovery-meta-left",
             "discovery-panel",
-            "discovery-reason",
             "discovery-result",
             "discovery-results",
             "discovery-scheduled",
@@ -863,9 +869,12 @@
             "discovery-state--error",
             "discovery-tabs",
             "discovery-thumb",
-            "material-symbols-rounded"
+            "material-symbols-rounded",
+            "{"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/대전오월드/대전오월드_1_공공3유형.jpg"
+          ]
         },
         {
           "path": "frontend/src/components/swipe/PlaceSwipeCard.vue",
@@ -1558,10 +1567,17 @@
             "home-hero-slide",
             "home-nearest-bg",
             "home-nearest-card",
+            "home-nearest-card--empty",
             "home-nearest-content",
             "home-nearest-dday",
+            "home-nearest-destination",
+            "home-nearest-empty",
+            "home-nearest-empty-icon",
+            "home-nearest-empty-sub",
+            "home-nearest-empty-title",
             "home-nearest-link",
             "home-nearest-members",
+            "home-nearest-meta",
             "home-search-capsule",
             "home-search-capsule-btn",
             "home-search-capsule-icon",
@@ -1599,10 +1615,7 @@
             "member-count",
             "primary",
             "section",
-            "section-link",
-            "service-home-page",
-            "{",
-            "}"
+            "section-link"
           ],
           "assetRefs": [
             "/images/랜딩페이지/busan.png",
@@ -2279,7 +2292,7 @@
           "images": [
             {
               "src": "m.profileImageUrl",
-              "alt": "m.displayName ?? "
+              "alt": "m.displayName || "
             }
           ],
           "forms": 0,
@@ -2287,10 +2300,13 @@
             "[",
             "avatar",
             "avatar-img",
+            "avatar-with-tooltip",
             "avatars",
             "avatars-group",
             "full-screen",
+            "icon-calendar",
             "material-symbols-rounded",
+            "period-text",
             "route-page-section",
             "section",
             "sidebar",
@@ -2300,13 +2316,16 @@
             "trip-card-dates",
             "trip-card-divider",
             "trip-card-footer",
+            "trip-card-period-row",
             "trip-card-title",
             "trip-info-badge-row",
             "trip-stat-item",
             "trip-stats-grid",
             "trip-status-badge"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/대전오월드/대전오월드_1_공공3유형.jpg"
+          ]
         },
         {
           "path": "frontend/src/pages/SearchResultsPage.vue",
@@ -2321,9 +2340,14 @@
               "text": "통합 검색"
             },
             {
+              "level": 3,
+              "id": "",
+              "text": "최근 검색어"
+            },
+            {
               "level": 2,
               "id": "",
-              "text": "luggage 여행 {{ result.trips.length }}"
+              "text": "luggage 여행 {{ visibleTrips.length }}"
             },
             {
               "level": 3,
@@ -2333,7 +2357,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "place 장소 {{ result.places.length }}"
+              "text": "place 장소 {{ visiblePlaces.length }}"
             },
             {
               "level": 3,
@@ -2343,7 +2367,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "auto_stories 여행기 {{ result.posts.length }}"
+              "text": "auto_stories 여행기 {{ visiblePosts.length }}"
             },
             {
               "level": 3,
@@ -2353,7 +2377,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "group 사용자 {{ result.users.length }}"
+              "text": "group 사용자 {{ visibleUsers.length }}"
             },
             {
               "level": 3,
@@ -2377,6 +2401,9 @@
           ],
           "forms": 1,
           "classNames": [
+            "===",
+            "active:",
+            "activeTab",
             "avatar",
             "btn",
             "eyebrow",
@@ -2399,6 +2426,7 @@
             "search-card-thumb--icon",
             "search-card-title",
             "search-clear-btn",
+            "search-empty-panel",
             "search-form",
             "search-grid",
             "search-head",
@@ -2409,11 +2437,22 @@
             "search-input-wrap",
             "search-more-btn",
             "search-page",
+            "search-recent",
+            "search-recent-clear",
+            "search-recent-head",
+            "search-recent-item",
+            "search-recent-list",
+            "search-recent-remove",
             "search-section",
             "search-section-count",
             "search-section-head",
             "search-section-icon",
-            "search-submit-btn"
+            "search-submit-btn",
+            "search-tab",
+            "search-tabs",
+            "tab.key",
+            "{",
+            "}"
           ],
           "assetRefs": []
         },
@@ -3095,7 +3134,10 @@
             "@/types/place"
           ],
           "exports": [
+            "PlaceAccessibilityBatchItem",
+            "PlaceAccessibilityDto",
             "PlaceSearchParams",
+            "mapAccessibility",
             "mapPlace",
             "placeApi"
           ]
@@ -3462,6 +3504,16 @@
           "exports": [
             "SwipeFeedGateway",
             "useSwipeFeed"
+          ]
+        },
+        {
+          "path": "frontend/src/composables/useTheme.ts",
+          "relativePath": "src/composables/useTheme.ts",
+          "imports": [
+            "vue"
+          ],
+          "exports": [
+            "useTheme"
           ]
         },
         {
@@ -3946,7 +3998,10 @@
           "relativePath": "src/types/place.ts",
           "imports": [],
           "exports": [
+            "AccessibilityFlag",
+            "ParkingType",
             "Place",
+            "PlaceAccessibility",
             "PlaceProvider",
             "PlaceReaction",
             "PlaceReactionType",
@@ -4531,9 +4586,9 @@
         "routes": 20,
         "pages": 21,
         "components": 30,
-        "sourceFiles": 94,
+        "sourceFiles": 95,
         "styleFiles": 4,
-        "typeScriptSignals": 144
+        "typeScriptSignals": 145
       }
     },
     {

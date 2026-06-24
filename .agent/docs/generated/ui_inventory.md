@@ -247,8 +247,8 @@
 - script: setup / ts
 - headings: 없음
 - forms: 1, images: 2
-- asset refs: 없음
-- classes: `discovery-actions`, `discovery-copy`, `discovery-members`, `discovery-meta`, `discovery-panel`, `discovery-reason`, `discovery-result`, `discovery-results`, `discovery-scheduled`, `discovery-search`, `discovery-spinner`, `discovery-state`, `discovery-state--error`, `discovery-tabs`, `discovery-thumb`, `material-symbols-rounded`
+- asset refs: `/images/대전오월드/대전오월드_1_공공3유형.jpg`
+- classes: `action-btn`, `add-btn`, `bookmark-btn`, `btn-tooltip`, `btn-with-tooltip`, `discovery-actions`, `discovery-copy`, `discovery-match-row`, `discovery-members`, `discovery-meta`, `discovery-meta-left`, `discovery-panel`, `discovery-result`, `discovery-results`, `discovery-scheduled`, `discovery-search`, `discovery-spinner`, `discovery-state`, `discovery-state--error`, `discovery-tabs`, `discovery-thumb`, `material-symbols-rounded`, `{`
 
 #### frontend/src/components/swipe/PlaceSwipeCard.vue
 
@@ -427,17 +427,17 @@
 - script: setup / ts
 - headings: h3 {{ trip.title }}
 - forms: 0, images: 1
-- asset refs: 없음
-- classes: `[`, `avatar`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `material-symbols-rounded`, `route-page-section`, `section`, `sidebar`, `sidebar-content`, `stat-label`, `stat-value`, `trip-card-dates`, `trip-card-divider`, `trip-card-footer`, `trip-card-title`, `trip-info-badge-row`, `trip-stat-item`, `trip-stats-grid`, `trip-status-badge`
+- asset refs: `/images/대전오월드/대전오월드_1_공공3유형.jpg`
+- classes: `[`, `avatar`, `avatar-img`, `avatar-with-tooltip`, `avatars`, `avatars-group`, `full-screen`, `icon-calendar`, `material-symbols-rounded`, `period-text`, `route-page-section`, `section`, `sidebar`, `sidebar-content`, `stat-label`, `stat-value`, `trip-card-dates`, `trip-card-divider`, `trip-card-footer`, `trip-card-period-row`, `trip-card-title`, `trip-info-badge-row`, `trip-stat-item`, `trip-stats-grid`, `trip-status-badge`
 
 #### frontend/src/pages/SearchResultsPage.vue
 
 - 종류: page
 - script: setup / ts
-- headings: h1 통합 검색, h2 luggage 여행 {{ result.trips.length }}, h3 {{ trip.title }}, h2 place 장소 {{ result.places.length }}, h3 {{ place.name }}, h2 auto_stories 여행기 {{ result.posts.length }}
+- headings: h1 통합 검색, h3 최근 검색어, h2 luggage 여행 {{ visibleTrips.length }}, h3 {{ trip.title }}, h2 place 장소 {{ visiblePlaces.length }}, h3 {{ place.name }}
 - forms: 1, images: 3
 - asset refs: 없음
-- classes: `avatar`, `btn`, `eyebrow`, `ghost`, `material-symbols-rounded`, `primary`, `search-body`, `search-card`, `search-card--place`, `search-card--post`, `search-card--trip`, `search-card--user`, `search-card-author`, `search-card-avatar-fallback`, `search-card-body`, `search-card-eyebrow`, `search-card-meta`, `search-card-thumb`, `search-card-thumb--avatar`, `search-card-thumb--icon`, `search-card-title`, `search-clear-btn`, `search-form`, `search-grid`, `search-head`, `search-head-lead`, `search-head-title`, `search-input`, `search-input-icon`, `search-input-wrap`
+- classes: `===`, `active:`, `activeTab`, `avatar`, `btn`, `eyebrow`, `ghost`, `material-symbols-rounded`, `primary`, `search-body`, `search-card`, `search-card--place`, `search-card--post`, `search-card--trip`, `search-card--user`, `search-card-author`, `search-card-avatar-fallback`, `search-card-body`, `search-card-eyebrow`, `search-card-meta`, `search-card-thumb`, `search-card-thumb--avatar`, `search-card-thumb--icon`, `search-card-title`, `search-clear-btn`, `search-empty-panel`, `search-form`, `search-grid`, `search-head`, `search-head-lead`
 
 #### frontend/src/pages/SettingsPage.vue
 
