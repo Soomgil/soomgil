@@ -1,0 +1,1609 @@
+Project soomgil_current {
+  database_type: 'PostgreSQL'
+  Note: '''
+  Generated from the current local PostgreSQL schema after Flyway migrations.
+  Source DB: soomgil in docker container soomgil-postgres-1
+  Generated at: 2026-06-25T04:25:37.386Z
+  Use this file for dbdiagram ERD import.
+  '''
+}
+
+Table ai.ai_chat_messages {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  requester_user_id uuid
+  role varchar(30) [not null]
+  content text [not null]
+  tool_call_id uuid
+  metadata jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    created_at [name: 'idx_ai_chat_messages_created_at']
+    requester_user_id [name: 'idx_ai_chat_messages_requester_user_id']
+    role [name: 'idx_ai_chat_messages_role']
+    (session_id, created_at, id) [name: 'idx_ai_chat_messages_session_created_id']
+    session_id [name: 'idx_ai_chat_messages_session_id']
+    tool_call_id [name: 'idx_ai_chat_messages_tool_call_id']
+  }
+}
+
+Table ai.ai_chat_sessions {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  status varchar(30) [not null, default: `'ACTIVE'::character varying`]
+  summary text
+  summary_updated_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  expires_at timestamptz
+  deleted_at timestamptz
+
+  Indexes {
+    status [name: 'idx_ai_chat_sessions_status']
+    trip_id [unique, name: 'uq_ai_chat_sessions_trip_id']
+  }
+}
+
+Table ai.ai_tool_calls {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  session_id uuid [not null]
+  trip_id uuid [not null]
+  request_message_id uuid
+  result_message_id uuid
+  requested_by_user_id uuid [not null]
+  websocket_session_id varchar(120)
+  tool_name varchar(120) [not null]
+  execution_policy varchar(40) [not null]
+  arguments jsonb [not null]
+  result jsonb
+  status varchar(40) [not null, default: `'REQUESTED'::character varying`]
+  version_before bigint
+  version_after bigint
+  undo_redo_available bool [not null, default: `false`]
+  undo_command jsonb
+  redo_command jsonb
+  error_code varchar(120)
+  error_message text
+  created_at timestamptz [not null, default: `now()`]
+  completed_at timestamptz
+
+  Indexes {
+    created_at [name: 'idx_ai_tool_calls_created_at']
+    requested_by_user_id [name: 'idx_ai_tool_calls_requested_by_user_id']
+    session_id [name: 'idx_ai_tool_calls_session_id']
+    status [name: 'idx_ai_tool_calls_status']
+    tool_name [name: 'idx_ai_tool_calls_tool_name']
+    trip_id [name: 'idx_ai_tool_calls_trip_id']
+  }
+}
+
+Table auth.auth_providers {
+  id smallint [pk, not null]
+  code varchar(40) [not null, unique]
+  display_name varchar(80) [not null]
+  auth_type varchar(30) [not null, default: `'OAUTH2'::character varying`]
+  issuer text
+  is_active bool [not null, default: `true`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+Table auth.policy_documents {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  policy_code varchar(80) [not null]
+  version varchar(40) [not null]
+  language_code varchar(12) [not null, default: `'ko'::character varying`]
+  title varchar(160) [not null]
+  content_url text
+  content_hash varchar(128)
+  is_required bool [not null, default: `true`]
+  published_at timestamptz [not null, default: `now()`]
+  retired_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    is_required [name: 'idx_auth_policy_documents_is_required']
+    language_code [name: 'idx_auth_policy_documents_language_code']
+    (policy_code, version, language_code) [unique, name: 'uq_auth_policy_documents_code_version_language']
+  }
+}
+
+Table auth.roles {
+  id smallint [pk, not null]
+  code varchar(40) [not null, unique]
+  display_name varchar(80) [not null]
+  description text
+  is_system bool [not null, default: `true`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+Table auth.user_auth_identities {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  provider_id smallint [not null]
+  provider_subject varchar(320) [not null]
+  provider_email varchar(320)
+  provider_display_name varchar(120)
+  linked_at timestamptz [not null, default: `now()`]
+  last_login_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  provider_email_verified bool [not null, default: `false`]
+  provider_profile jsonb
+
+  Indexes {
+    (provider_id, provider_email) [name: 'idx_auth_user_auth_identities_provider_email']
+    user_id [name: 'idx_auth_user_auth_identities_user_id']
+    (provider_id, provider_subject) [unique, name: 'uq_auth_user_auth_identities_provider_subject']
+  }
+}
+
+Table auth.user_email_addresses {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  email varchar(320) [not null]
+  normalized_email varchar(320) [not null]
+  is_primary bool [not null, default: `false`]
+  verified_at timestamptz
+  verification_last_sent_at timestamptz
+  removed_at timestamptz
+  removed_reason varchar(120)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    normalized_email [name: 'idx_auth_user_email_addresses_normalized_email']
+    removed_at [name: 'idx_auth_user_email_addresses_removed_at']
+    user_id [name: 'idx_auth_user_email_addresses_user_id']
+    verified_at [name: 'idx_auth_user_email_addresses_verified_at']
+    normalized_email [unique, name: 'uq_auth_user_email_addresses_active_normalized_email']
+    user_id [unique, name: 'uq_auth_user_email_addresses_one_active_primary']
+  }
+}
+
+Table auth.user_email_verification_tokens {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  user_email_address_id uuid [not null]
+  token_hash varchar(255) [not null, unique]
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  requested_by_ip_hash varchar(255)
+
+  Indexes {
+    expires_at [name: 'idx_auth_user_email_verification_tokens_expires_at']
+    user_email_address_id [name: 'idx_auth_user_email_verification_tokens_user_email_address_id']
+  }
+}
+
+Table auth.user_password_credentials {
+  user_id uuid [pk, not null]
+  password_hash varchar(255) [not null]
+  password_algorithm varchar(40) [not null, default: `'bcrypt'::character varying`]
+  password_hash_params jsonb
+  password_changed_at timestamptz [not null, default: `now()`]
+  failed_login_count int [not null, default: `0`]
+  locked_until timestamptz
+  last_failed_login_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    locked_until [name: 'idx_auth_user_password_credentials_locked_until']
+  }
+}
+
+Table auth.user_password_reset_tokens {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  token_hash varchar(255) [not null, unique]
+  expires_at timestamptz [not null]
+  used_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  requested_by_ip_hash varchar(255)
+
+  Indexes {
+    expires_at [name: 'idx_auth_user_password_reset_tokens_expires_at']
+    user_id [name: 'idx_auth_user_password_reset_tokens_user_id']
+  }
+}
+
+Table auth.user_policy_acceptances {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  policy_document_id uuid [not null]
+  acceptance_method varchar(40) [not null, default: `'EXPLICIT'::character varying`]
+  accepted_at timestamptz [not null, default: `now()`]
+  created_at timestamptz [not null, default: `now()`]
+  ip_address_hash varchar(255)
+  user_agent_hash varchar(255)
+
+  Indexes {
+    policy_document_id [name: 'idx_auth_user_policy_acceptances_policy_document_id']
+    user_id [name: 'idx_auth_user_policy_acceptances_user_id']
+  }
+}
+
+Table auth.user_profiles {
+  user_id uuid [pk, not null]
+  display_name varchar(80) [not null]
+  profile_image_url text
+  profile_media_file_id uuid
+  bio varchar(500)
+  profile_visibility varchar(20) [not null, default: `'PUBLIC'::character varying`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    display_name [name: 'idx_auth_user_profiles_display_name']
+    profile_visibility [name: 'idx_auth_user_profiles_profile_visibility']
+  }
+}
+
+Table auth.user_roles {
+  user_id uuid [not null]
+  role_id smallint [not null]
+  granted_by_user_id uuid
+  granted_at timestamptz [not null, default: `now()`]
+  revoked_at timestamptz
+  revoked_by_user_id uuid
+  revocation_reason varchar(120)
+
+  Indexes {
+    (user_id, role_id) [pk, name: 'user_roles_pkey']
+    granted_by_user_id [name: 'idx_auth_user_roles_granted_by_user_id']
+    revoked_at [name: 'idx_auth_user_roles_revoked_at']
+    revoked_by_user_id [name: 'idx_auth_user_roles_revoked_by_user_id']
+    role_id [name: 'idx_auth_user_roles_role_id']
+  }
+}
+
+Table auth.user_security_events {
+  id bigint [pk, not null]
+  user_id uuid
+  actor_user_id uuid
+  provider_id smallint
+  normalized_identifier varchar(320)
+  event_type varchar(80) [not null]
+  success bool [not null, default: `false`]
+  failure_reason varchar(120)
+  ip_address_hash varchar(255)
+  user_agent_hash varchar(255)
+  metadata jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    created_at [name: 'idx_auth_user_security_events_created_at']
+    event_type [name: 'idx_auth_user_security_events_event_type']
+    user_id [name: 'idx_auth_user_security_events_user_id']
+  }
+}
+
+Table auth.user_sessions {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  user_id uuid [not null]
+  refresh_token_hash varchar(255) [not null, unique]
+  refresh_token_family_id uuid [not null, default: `gen_random_uuid()`]
+  refresh_token_version int [not null, default: `1`]
+  device_name varchar(120)
+  device_os varchar(120)
+  ip_address_hash varchar(255)
+  user_agent_hash varchar(255)
+  last_used_at timestamptz
+  last_refreshed_at timestamptz
+  expires_at timestamptz [not null]
+  revoked_at timestamptz
+  revoked_by_user_id uuid
+  revocation_reason varchar(120)
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    expires_at [name: 'idx_auth_user_sessions_expires_at']
+    refresh_token_family_id [name: 'idx_auth_user_sessions_family_id']
+    revoked_at [name: 'idx_auth_user_sessions_revoked_at']
+    user_id [name: 'idx_auth_user_sessions_user_id']
+  }
+}
+
+Table auth.user_settings {
+  user_id uuid [pk, not null]
+  display_language varchar(12) [not null, default: `'ko'::character varying`]
+  timezone varchar(50) [not null, default: `'Asia/Seoul'::character varying`]
+  marketing_email_opt_in bool [not null, default: `false`]
+  marketing_email_opted_in_at timestamptz
+  marketing_email_opted_out_at timestamptz
+  trip_invite_email_opt_in bool [not null, default: `true`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+}
+
+Table auth.users {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  status varchar(30) [not null, default: `'ACTIVE'::character varying`]
+  status_reason varchar(255)
+  status_changed_at timestamptz [not null, default: `now()`]
+  last_login_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deletion_requested_at timestamptz
+  deletion_scheduled_at timestamptz
+  deleted_at timestamptz
+
+  Indexes {
+    created_at [name: 'idx_auth_users_created_at']
+    deleted_at [name: 'idx_auth_users_deleted_at']
+    deletion_scheduled_at [name: 'idx_auth_users_deletion_scheduled_at']
+    status [name: 'idx_auth_users_status']
+    status_changed_at [name: 'idx_auth_users_status_changed_at']
+  }
+}
+
+Table chat.trip_chat_messages {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  sender_user_id uuid [not null]
+  content text [not null]
+  deleted_by_user_id uuid
+  deleted_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    created_at [name: 'idx_chat_trip_chat_messages_created_at']
+    deleted_at [name: 'idx_chat_trip_chat_messages_deleted_at']
+    sender_user_id [name: 'idx_chat_trip_chat_messages_sender_user_id']
+    (trip_id, created_at, id) [name: 'idx_chat_trip_chat_messages_trip_created_id']
+    trip_id [name: 'idx_chat_trip_chat_messages_trip_id']
+  }
+}
+
+Table collab.collaboration_command_events {
+  id bigint [pk, not null]
+  trip_id uuid [not null]
+  actor_user_id uuid [not null]
+  websocket_session_id varchar(120)
+  source varchar(30) [not null]
+  command_type varchar(80) [not null]
+  aggregate_type varchar(80) [not null]
+  aggregate_id uuid
+  version_before bigint
+  version_after bigint
+  payload jsonb [not null]
+  inverse_payload jsonb
+  redo_payload jsonb
+  created_at timestamptz [not null]
+
+  Indexes {
+    actor_user_id [name: 'collaboration_command_events_actor_user_id_idx']
+    command_type [name: 'collaboration_command_events_command_type_idx']
+    created_at [name: 'collaboration_command_events_created_at_idx']
+    trip_id [name: 'collaboration_command_events_trip_id_idx']
+    websocket_session_id [name: 'collaboration_command_events_websocket_session_id_idx']
+  }
+}
+
+Table community.content_reports {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  reporter_user_id uuid [not null]
+  target_type varchar(20) [not null]
+  target_id uuid [not null]
+  reason_code varchar(40) [not null]
+  detail text
+  status varchar(20) [not null, default: `'OPEN'::character varying`]
+  resolution_note text
+  resolved_by uuid
+  resolved_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (status, created_at) [name: 'idx_content_reports_status']
+    (target_type, target_id) [name: 'idx_content_reports_target']
+    (reporter_user_id, target_type, target_id) [unique, name: 'uq_content_reports_reporter_target']
+  }
+}
+
+Table community.hashtags {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  name varchar(60) [not null]
+  normalized_name varchar(60) [not null]
+  usage_count int [not null, default: `0`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    name [name: 'idx_community_hashtags_name']
+    usage_count [name: 'idx_community_hashtags_usage_count']
+    normalized_name [unique, name: 'uq_community_hashtags_normalized_name']
+  }
+}
+
+Table community.moderation_actions {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  moderator_user_id uuid [not null]
+  target_type varchar(20) [not null]
+  target_id uuid [not null]
+  action varchar(20) [not null]
+  moderation_status varchar(20)
+  moderation_reason varchar(255)
+  report_id uuid
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    moderator_user_id [name: 'idx_moderation_actions_moderator']
+    report_id [name: 'idx_moderation_actions_report']
+    (target_type, target_id) [name: 'idx_moderation_actions_target']
+  }
+}
+
+Table community.post_comments {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  parent_comment_id uuid
+  author_user_id uuid [not null]
+  content text [not null]
+  depth int [not null, default: `0`]
+  moderation_status varchar(20) [not null, default: `'VISIBLE'::character varying`]
+  deleted_at timestamptz
+  deleted_reason varchar(120)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    author_user_id [name: 'idx_community_post_comments_author_user_id']
+    parent_comment_id [name: 'idx_community_post_comments_parent']
+    (post_id, created_at) [name: 'idx_community_post_comments_post_id']
+  }
+}
+
+Table community.post_hashtags {
+  post_id uuid [not null]
+  hashtag_id uuid [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (post_id, hashtag_id) [pk, name: 'post_hashtags_pkey']
+    hashtag_id [name: 'idx_community_post_hashtags_hashtag_id']
+  }
+}
+
+Table community.post_likes {
+  post_id uuid [not null]
+  user_id uuid [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (post_id, user_id) [pk, name: 'post_likes_pkey']
+    user_id [name: 'idx_community_post_likes_user_id']
+  }
+}
+
+Table community.post_media {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  media_file_id uuid [not null]
+  sort_order int [not null, default: `0`]
+  caption varchar(500)
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    media_file_id [name: 'idx_community_post_media_media_file_id']
+    (post_id, sort_order) [unique, name: 'uq_community_post_media_post_sort']
+  }
+}
+
+Table community.post_retrips {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  user_id uuid [not null]
+  new_trip_id uuid [not null]
+  snapshot_version int [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    created_at [name: 'idx_community_post_retrips_created_at']
+    post_id [name: 'idx_community_post_retrips_post_id']
+    user_id [name: 'idx_community_post_retrips_user_id']
+    new_trip_id [unique, name: 'uq_community_post_retrips_new_trip_id']
+  }
+}
+
+Table community.post_snapshot_days {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  group_type varchar(30) [not null]
+  day_number int
+  date date
+  title varchar(120)
+  sort_order int [not null, default: `0`]
+
+  Indexes {
+    post_id [name: 'idx_community_post_snapshot_days_post_id']
+    (post_id, sort_order) [name: 'idx_community_post_snapshot_days_post_sort']
+  }
+}
+
+Table community.post_snapshot_items {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  snapshot_day_id uuid [not null]
+  sort_order int [not null]
+  place_provider varchar(40)
+  external_place_id varchar(120)
+  source_status varchar(30) [not null, default: `'AVAILABLE'::character varying`]
+  place_name varchar(240) [not null]
+  address text
+  lat numeric(10,7)
+  lng numeric(10,7)
+  thumbnail_url text
+
+  Indexes {
+    (snapshot_day_id, sort_order) [name: 'idx_community_post_snapshot_items_day_sort']
+    post_id [name: 'idx_community_post_snapshot_items_post_id']
+    (place_provider, external_place_id) [name: 'idx_community_post_snapshot_items_provider_external']
+    snapshot_day_id [name: 'idx_community_post_snapshot_items_snapshot_day_id']
+  }
+}
+
+Table community.post_snapshot_routes {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  post_id uuid [not null]
+  origin_snapshot_item_id uuid [not null]
+  destination_snapshot_item_id uuid [not null]
+  mode varchar(20) [not null]
+  geometry_format varchar(30) [not null, default: `'GEOJSON'::character varying`]
+  geometry jsonb [not null]
+  distance_meters numeric(12,2)
+  duration_seconds numeric(12,2)
+
+  Indexes {
+    destination_snapshot_item_id [name: 'idx_community_post_snapshot_routes_destination_item_id']
+    (origin_snapshot_item_id, destination_snapshot_item_id) [name: 'idx_community_post_snapshot_routes_origin_dest']
+    origin_snapshot_item_id [name: 'idx_community_post_snapshot_routes_origin_item_id']
+    post_id [name: 'idx_community_post_snapshot_routes_post_id']
+  }
+}
+
+Table community.posts {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  source_trip_id uuid [not null]
+  source_trip_version bigint [not null]
+  published_by_user_id uuid [not null]
+  visibility varchar(20) [not null, default: `'PUBLIC'::character varying`]
+  title varchar(180) [not null]
+  summary varchar(1000)
+  cover_media_file_id uuid
+  snapshot_version int [not null, default: `1`]
+  share_token_hash text
+  share_token_created_at timestamptz
+  share_token_rotated_at timestamptz
+  moderation_status varchar(20) [not null, default: `'VISIBLE'::character varying`]
+  moderation_reason varchar(255)
+  published_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+  deleted_reason varchar(120)
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  snapshot jsonb [not null, default: `'{"days": [], "routes": [], "authorDisplay": null}'::jsonb`]
+
+  Indexes {
+    deleted_at [name: 'idx_community_posts_deleted_at']
+    moderation_status [name: 'idx_community_posts_moderation_status']
+    published_at [name: 'idx_community_posts_public_feed']
+    published_at [name: 'idx_community_posts_published_at']
+    published_by_user_id [name: 'idx_community_posts_published_by_user_id']
+    source_trip_id [name: 'idx_community_posts_source_trip_id']
+    visibility [name: 'idx_community_posts_visibility']
+  }
+}
+
+Table community.report_reasons {
+  code varchar(40) [pk, not null]
+  display_name varchar(100) [not null]
+  is_active bool [not null, default: `true`]
+  sort_order int [not null, default: `0`]
+}
+
+Table geo.legal_region_sync_logs {
+  id bigint [pk, not null]
+  source varchar(50) [not null]
+  source_file_name varchar(255)
+  total_count int [not null, default: `0`]
+  inserted_count int [not null, default: `0`]
+  updated_count int [not null, default: `0`]
+  deactivated_count int [not null, default: `0`]
+  started_at timestamptz [not null]
+  finished_at timestamptz
+  status varchar(20) [not null]
+  error_message text
+
+  Indexes {
+    source [name: 'legal_region_sync_logs_source_idx']
+    started_at [name: 'legal_region_sync_logs_started_at_idx']
+    status [name: 'legal_region_sync_logs_status_idx']
+  }
+}
+
+Table geo.legal_regions {
+  code varchar(10) [pk, not null]
+  name varchar(100) [not null]
+  full_name varchar(200) [not null]
+  level varchar(20) [not null]
+  parent_code varchar(10)
+  sido_code varchar(2) [not null]
+  sigungu_code varchar(5)
+  eupmyeondong_code varchar(8)
+  raw_status varchar(10) [not null]
+  is_active bool [not null, default: `true`]
+  synced_at timestamptz [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    is_active [name: 'legal_regions_is_active_idx']
+    (level, is_active) [name: 'legal_regions_level_is_active_idx']
+    parent_code [name: 'legal_regions_parent_code_idx']
+    sido_code [name: 'legal_regions_sido_code_idx']
+    sigungu_code [name: 'legal_regions_sigungu_code_idx']
+  }
+}
+
+Table itinerary.itinerary_days {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  group_type varchar(30) [not null, default: `'DAY'::character varying`]
+  day_number int
+  date date
+  title varchar(120)
+  sort_order int [not null, default: `0`]
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+
+  Indexes {
+    (trip_id, group_type, day_number) [unique, name: 'itinerary_days_trip_group_day_unique']
+    trip_id [name: 'itinerary_days_trip_id_idx']
+    (trip_id, sort_order) [name: 'itinerary_days_trip_sort_order_idx']
+  }
+}
+
+Table itinerary.itinerary_items {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  itinerary_day_id uuid [not null]
+  sort_order int [not null]
+  item_type varchar(30) [not null, default: `'PLACE'::character varying`]
+  place_provider varchar(40)
+  external_place_id varchar(120)
+  place_name varchar(240) [not null]
+  address text
+  lat numeric(10,7)
+  lng numeric(10,7)
+  thumbnail_url text
+  source_status varchar(30) [not null, default: `'AVAILABLE'::character varying`]
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+  deleted_at timestamptz
+
+  Indexes {
+    itinerary_day_id [name: 'itinerary_items_day_id_idx']
+    (itinerary_day_id, sort_order) [name: 'itinerary_items_day_sort_order_idx']
+    deleted_at [name: 'itinerary_items_deleted_at_idx']
+    (place_provider, external_place_id) [name: 'itinerary_items_place_ref_idx']
+    trip_id [name: 'itinerary_items_trip_id_idx']
+  }
+}
+
+Table itinerary.map_drawings {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  itinerary_day_id uuid
+  drawing_type varchar(30) [not null]
+  geometry_format varchar(30) [not null, default: `'GEOJSON'::character varying`]
+  geometry jsonb [not null]
+  style jsonb
+  label varchar(160)
+  sort_order int [not null, default: `0`]
+  version bigint [not null, default: `0`]
+  created_by_user_id uuid [not null]
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+  deleted_at timestamptz
+
+  Indexes {
+    created_by_user_id [name: 'map_drawings_created_by_user_id_idx']
+    deleted_at [name: 'map_drawings_deleted_at_idx']
+    drawing_type [name: 'map_drawings_drawing_type_idx']
+    itinerary_day_id [name: 'map_drawings_itinerary_day_id_idx']
+    trip_id [name: 'map_drawings_trip_id_idx']
+    (trip_id, sort_order) [name: 'map_drawings_trip_sort_order_idx']
+  }
+}
+
+Table itinerary.route_match_requests {
+  id bigint [pk, not null]
+  trip_id uuid [not null]
+  trip_route_id uuid
+  origin_itinerary_item_id uuid [not null]
+  destination_itinerary_item_id uuid [not null]
+  requested_by_user_id uuid [not null]
+  provider varchar(40) [not null, default: `'MAPBOX'::character varying`]
+  provider_profile varchar(80) [not null]
+  input_coordinates jsonb [not null]
+  radiuses jsonb
+  tidy bool [not null, default: `false`]
+  request_hash varchar(128)
+  status varchar(30) [not null, default: `'PENDING'::character varying`]
+  confidence double
+  distance_meters double
+  duration_seconds double
+  tracepoints jsonb
+  matchings_metadata jsonb
+  error_code varchar(80)
+  error_message text
+  created_at timestamptz [not null]
+  completed_at timestamptz
+
+  Indexes {
+    request_hash [name: 'route_match_requests_request_hash_idx']
+    requested_by_user_id [name: 'route_match_requests_requested_by_user_id_idx']
+    status [name: 'route_match_requests_status_idx']
+    trip_id [name: 'route_match_requests_trip_id_idx']
+    trip_route_id [name: 'route_match_requests_trip_route_id_idx']
+  }
+}
+
+Table itinerary.trip_routes {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  origin_itinerary_item_id uuid [not null]
+  destination_itinerary_item_id uuid [not null]
+  mode varchar(20) [not null]
+  provider varchar(40) [not null, default: `'MAPBOX'::character varying`]
+  provider_profile varchar(80) [not null]
+  geometry_format varchar(30) [not null, default: `'GEOJSON'::character varying`]
+  geometry jsonb [not null]
+  distance_meters numeric(12,2)
+  duration_seconds numeric(12,2)
+  confidence numeric(5,4)
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+  deleted_at timestamptz
+
+  Indexes {
+    deleted_at [name: 'trip_routes_deleted_at_idx']
+    destination_itinerary_item_id [name: 'trip_routes_destination_itinerary_item_id_idx']
+    (origin_itinerary_item_id, destination_itinerary_item_id) [name: 'trip_routes_origin_destination_idx']
+    origin_itinerary_item_id [name: 'trip_routes_origin_itinerary_item_id_idx']
+    trip_id [name: 'trip_routes_trip_id_idx']
+  }
+}
+
+Table media.media_files {
+  id uuid [pk, not null]
+  owner_user_id uuid
+  storage_provider varchar(40) [not null, default: `'S3_COMPATIBLE'::character varying`]
+  bucket varchar(120) [not null]
+  object_key text [not null]
+  public_url text
+  mime_type varchar(120)
+  byte_size bigint
+  width int
+  height int
+  linked_resource_type varchar(60)
+  linked_resource_id uuid
+  status varchar(30) [not null, default: `'ACTIVE'::character varying`]
+  created_at timestamptz [not null]
+  deleted_at timestamptz
+  purge_after_at timestamptz
+  purged_at timestamptz
+
+  Indexes {
+    (bucket, object_key) [unique, name: 'media_files_bucket_object_key_unique']
+    (linked_resource_type, linked_resource_id) [name: 'media_files_linked_resource_idx']
+    owner_user_id [name: 'media_files_owner_user_id_idx']
+    status [name: 'media_files_status_idx']
+  }
+}
+
+Table media.upload_intents {
+  id uuid [pk, not null]
+  owner_user_id uuid [not null]
+  object_key text [not null, unique]
+  status varchar(20) [not null]
+  media_file_id uuid
+  expires_at timestamptz [not null]
+  created_at timestamptz [not null]
+  completed_at timestamptz
+
+  Indexes {
+    (status, expires_at) [name: 'media_upload_intents_cleanup_idx']
+  }
+}
+
+Table notification.notifications {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  recipient_user_id uuid [not null]
+  actor_user_id uuid
+  trip_id uuid
+  type varchar(60) [not null]
+  title varchar(160) [not null]
+  body text
+  payload jsonb
+  read_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (recipient_user_id, created_at) [name: 'idx_notification_notifications_recipient_created']
+    (recipient_user_id, read_at) [name: 'idx_notification_notifications_recipient_read']
+    trip_id [name: 'idx_notification_notifications_trip_id']
+  }
+}
+
+Table ops.audit_logs {
+  id bigint [pk, not null]
+  actor_user_id uuid
+  action varchar(120) [not null]
+  target_type varchar(80)
+  target_id uuid
+  ip_address varchar(64)
+  user_agent text
+  metadata jsonb
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    action [name: 'idx_ops_audit_logs_action']
+    actor_user_id [name: 'idx_ops_audit_logs_actor_user_id']
+    created_at [name: 'idx_ops_audit_logs_created_at']
+    (target_type, target_id) [name: 'idx_ops_audit_logs_target_type_id']
+  }
+}
+
+Table planning.checklist_item_member_statuses {
+  checklist_item_id uuid [not null]
+  user_id uuid [not null]
+  is_completed bool [not null, default: `false`]
+  completed_at timestamptz
+  updated_by_user_id uuid
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (checklist_item_id, user_id) [pk, name: 'checklist_item_member_statuses_pkey']
+    is_completed [name: 'idx_planning_checklist_item_member_statuses_is_completed']
+    updated_at [name: 'idx_planning_checklist_item_member_statuses_updated_at']
+    user_id [name: 'idx_planning_checklist_item_member_statuses_user_id']
+  }
+}
+
+Table planning.checklist_items {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  checklist_id uuid [not null]
+  sort_order int [not null]
+  content text [not null]
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    checklist_id [name: 'idx_planning_checklist_items_checklist_id']
+    (checklist_id, sort_order) [name: 'idx_planning_checklist_items_checklist_sort']
+    deleted_at [name: 'idx_planning_checklist_items_deleted_at']
+  }
+}
+
+Table planning.checklists {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  scope_type varchar(20) [not null]
+  itinerary_day_id uuid
+  title varchar(120)
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    itinerary_day_id [name: 'idx_planning_checklists_itinerary_day_id']
+    trip_id [name: 'idx_planning_checklists_trip_id']
+    (trip_id, scope_type, itinerary_day_id) [unique, name: 'uq_planning_checklists_trip_scope_day']
+    (trip_id, scope_type) [unique, name: 'uq_planning_checklists_trip_scope_nullday']
+  }
+}
+
+Table planning.trip_notes {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  trip_id uuid [not null]
+  scope_type varchar(20) [not null]
+  itinerary_day_id uuid
+  content text [not null, default: `''::text`]
+  created_by_user_id uuid
+  updated_by_user_id uuid
+  deleted_by_user_id uuid
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    itinerary_day_id [name: 'idx_planning_trip_notes_itinerary_day_id']
+    trip_id [name: 'idx_planning_trip_notes_trip_id']
+    (trip_id, scope_type, itinerary_day_id) [unique, name: 'uq_planning_trip_notes_trip_scope_day']
+    (trip_id, scope_type) [unique, name: 'uq_planning_trip_notes_trip_scope_nullday']
+  }
+}
+
+Table preference.place_tag_enrichment_candidates {
+  id uuid [pk, not null]
+  enrichment_id uuid [not null]
+  candidate_code varchar(80) [not null]
+  matched_tag_id uuid
+  confidence numeric(5,4)
+  weight numeric(8,4)
+  selection_score numeric(8,6)
+  status varchar(40) [not null]
+  rationale text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    candidate_code [name: 'idx_place_tag_enrichment_candidates_code']
+    enrichment_id [name: 'idx_place_tag_enrichment_candidates_enrichment']
+    matched_tag_id [name: 'idx_place_tag_enrichment_candidates_matched_tag']
+    status [name: 'idx_place_tag_enrichment_candidates_status']
+  }
+}
+
+Table preference.place_tag_enrichment_tags {
+  enrichment_id uuid [not null]
+  tag_id uuid [not null]
+  confidence numeric(5,4) [not null]
+  weight numeric(8,4) [not null]
+  preference_discrimination_snapshot numeric(8,6)
+  selection_score numeric(8,6)
+  rank_order int [not null]
+  tag_statistic_run_id uuid
+  rationale text
+
+  Indexes {
+    (enrichment_id, tag_id) [pk, name: 'place_tag_enrichment_tags_pkey']
+    rank_order [name: 'idx_place_tag_enrichment_tags_rank']
+    tag_statistic_run_id [name: 'idx_place_tag_enrichment_tags_statistic_run']
+    tag_id [name: 'idx_place_tag_enrichment_tags_tag']
+  }
+}
+
+Table preference.place_tag_enrichments {
+  id uuid [pk, not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  source_modified_at timestamptz
+  source_hash varchar(128)
+  status varchar(30) [not null, default: `'PENDING'::character varying`]
+  model_provider varchar(80)
+  model_name varchar(120)
+  prompt_version varchar(80)
+  tag_dictionary_version varchar(80)
+  selection_policy_version varchar(80)
+  tag_statistic_run_id uuid
+  candidate_count int [not null, default: `0`]
+  selected_count int [not null, default: `0`]
+  error_message text
+  enriched_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    enriched_at [name: 'idx_place_tag_enrichments_enriched_at']
+    (provider, external_place_id) [name: 'idx_place_tag_enrichments_place']
+    source_hash [name: 'idx_place_tag_enrichments_source_hash']
+    tag_statistic_run_id [name: 'idx_place_tag_enrichments_statistic_run']
+    status [name: 'idx_place_tag_enrichments_status']
+  }
+}
+
+Table preference.preference_tags {
+  id uuid [pk, not null]
+  code varchar(80) [not null, unique]
+  display_name varchar(120) [not null]
+  group_code varchar(80) [not null]
+  tag_type varchar(20) [not null, default: `'TAG'::character varying`]
+  parent_tag_id uuid
+  description text
+  is_selectable bool [not null, default: `true`]
+  is_active bool [not null, default: `true`]
+  dictionary_version varchar(80) [not null, default: `'preference-tags-v1'::character varying`]
+  sort_order int
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    is_active [name: 'idx_preference_tags_active']
+    dictionary_version [name: 'idx_preference_tags_dictionary_version']
+    group_code [name: 'idx_preference_tags_group_code']
+    parent_tag_id [name: 'idx_preference_tags_parent']
+    is_selectable [name: 'idx_preference_tags_selectable']
+    tag_type [name: 'idx_preference_tags_tag_type']
+  }
+}
+
+Table preference.synthetic_persona_tag_preferences {
+  persona_id uuid [not null]
+  tag_id uuid [not null]
+  preference_type varchar(30) [not null]
+  preference_strength numeric(8,4) [not null]
+
+  Indexes {
+    (persona_id, tag_id) [pk, name: 'synthetic_persona_tag_preferences_pkey']
+    tag_id [name: 'idx_synthetic_persona_tag_preferences_tag']
+  }
+}
+
+Table preference.synthetic_personas {
+  id uuid [pk, not null]
+  persona_key varchar(80) [not null]
+  display_name varchar(120) [not null]
+  description text [not null]
+  generator_version varchar(80) [not null]
+  seed bigint [not null]
+  noise_rate numeric(5,4) [not null]
+  is_active bool [not null, default: `true`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (generator_version, persona_key) [unique, name: 'uq_synthetic_personas_version_key']
+    (generator_version, is_active) [name: 'idx_synthetic_personas_version_active']
+  }
+}
+
+Table preference.synthetic_swipe_events {
+  id bigint [pk, not null]
+  persona_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  reaction varchar(20) [not null]
+  place_tag_enrichment_id uuid
+  generator_version varchar(80) [not null]
+  seed bigint [not null]
+  persona_place_score numeric(10,6)
+  generated_at timestamptz [not null, default: `now()`]
+  source varchar(30) [not null, default: `'SYNTHETIC_PERSONA'::character varying`]
+
+  Indexes {
+    (persona_id, provider, external_place_id, generator_version, seed) [unique, name: 'uq_synthetic_swipe_events_generation']
+    persona_id [name: 'idx_synthetic_swipe_events_persona']
+    (provider, external_place_id) [name: 'idx_synthetic_swipe_events_place']
+    (generator_version, reaction) [name: 'idx_synthetic_swipe_events_version_reaction']
+  }
+}
+
+Table preference.tag_statistic_runs {
+  id uuid [pk, not null]
+  source varchar(30) [not null]
+  status varchar(30) [not null, default: `'PENDING'::character varying`]
+  alpha numeric(8,4) [not null, default: `100`]
+  global_positive_rate numeric(8,6)
+  total_reaction_count bigint [not null, default: `0`]
+  positive_reaction_count bigint [not null, default: `0`]
+  generator_version varchar(80)
+  error_message text
+  is_serving bool [not null, default: `false`]
+  started_at timestamptz
+  completed_at timestamptz
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    source [name: 'idx_tag_statistic_runs_source']
+    status [name: 'idx_tag_statistic_runs_status']
+    is_serving [unique, name: 'uq_tag_statistic_runs_one_serving']
+  }
+}
+
+Table preference.tag_statistics {
+  run_id uuid [not null]
+  tag_id uuid [not null]
+  preference_discrimination numeric(8,6) [not null]
+  smoothed_positive_rate numeric(8,6)
+  positive_count bigint [not null, default: `0`]
+  reaction_count bigint [not null, default: `0`]
+  calculated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (run_id, tag_id) [pk, name: 'tag_statistics_pkey']
+    preference_discrimination [name: 'idx_tag_statistics_discrimination']
+    tag_id [name: 'idx_tag_statistics_tag']
+  }
+}
+
+Table preference.user_place_reactions {
+  id uuid [pk, not null]
+  user_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  reaction varchar(20) [not null]
+  reaction_count int [not null, default: `1`]
+  first_reacted_at timestamptz [not null, default: `now()`]
+  last_reacted_at timestamptz [not null, default: `now()`]
+  source_modified_at timestamptz
+  place_tag_enrichment_id uuid
+
+  Indexes {
+    (user_id, provider, external_place_id) [unique, name: 'uq_user_place_reactions_place']
+    (provider, external_place_id) [name: 'idx_user_place_reactions_place']
+    reaction [name: 'idx_user_place_reactions_reaction']
+    user_id [name: 'idx_user_place_reactions_user']
+  }
+}
+
+Table preference.user_preference_tag_weights {
+  user_id uuid [not null]
+  tag_id uuid [not null]
+  positive_evidence numeric(16,8) [not null, default: `0`]
+  negative_evidence numeric(16,8) [not null, default: `0`]
+  preference_score numeric(8,6) [not null, default: `0.5`]
+  like_count int [not null, default: `0`]
+  super_like_count int [not null, default: `0`]
+  nope_count int [not null, default: `0`]
+  calculation_version varchar(80) [not null, default: `'preference-evidence-v1'::character varying`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (user_id, tag_id) [pk, name: 'user_preference_tag_weights_pkey']
+    preference_score [name: 'idx_user_preference_tag_weights_score']
+    tag_id [name: 'idx_user_preference_tag_weights_tag']
+  }
+}
+
+Table preference.user_saved_places {
+  id uuid [pk, not null]
+  user_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  created_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    (user_id, provider, external_place_id) [unique, name: 'uq_user_saved_places_place']
+    deleted_at [name: 'idx_user_saved_places_deleted_at']
+    (provider, external_place_id) [name: 'idx_user_saved_places_place']
+  }
+}
+
+Table preference.user_swipe_events {
+  id bigint [pk, not null]
+  user_id uuid [not null]
+  provider varchar(40) [not null]
+  external_place_id varchar(120) [not null]
+  reaction varchar(20) [not null]
+  previous_reaction varchar(20)
+  feed_context jsonb
+  source_modified_at timestamptz
+  place_tag_enrichment_id uuid
+  occurred_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    occurred_at [name: 'idx_user_swipe_events_occurred_at']
+    (provider, external_place_id) [name: 'idx_user_swipe_events_place']
+    reaction [name: 'idx_user_swipe_events_reaction']
+    user_id [name: 'idx_user_swipe_events_user']
+  }
+}
+
+Table record.trip_record_create_requests {
+  user_id uuid [not null]
+  trip_id uuid [not null]
+  idempotency_key varchar(128) [not null]
+  request_hash varchar(64) [not null]
+  record_id uuid [not null]
+  created_at timestamptz [not null]
+
+  Indexes {
+    (user_id, trip_id, idempotency_key) [pk, name: 'trip_record_create_requests_pkey']
+  }
+}
+
+Table record.trip_record_entries {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  itinerary_day_id uuid
+  itinerary_item_id uuid
+  uploaded_by_user_id uuid [not null]
+  title varchar(160)
+  caption text
+  location_name varchar(240)
+  lat numeric(10,7)
+  lng numeric(10,7)
+  taken_at timestamptz
+  visibility varchar(30) [not null, default: `'TRIP_MEMBERS'::character varying`]
+  status varchar(30) [not null, default: `'ACTIVE'::character varying`]
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+  deleted_at timestamptz
+
+  Indexes {
+    created_at [name: 'trip_record_entries_created_at_idx']
+    itinerary_day_id [name: 'trip_record_entries_itinerary_day_id_idx']
+    itinerary_item_id [name: 'trip_record_entries_itinerary_item_id_idx']
+    status [name: 'trip_record_entries_status_idx']
+    taken_at [name: 'trip_record_entries_taken_at_idx']
+    trip_id [name: 'trip_record_entries_trip_id_idx']
+    uploaded_by_user_id [name: 'trip_record_entries_uploaded_by_user_id_idx']
+  }
+}
+
+Table record.trip_record_media {
+  record_entry_id uuid [not null]
+  media_file_id uuid [not null]
+  sort_order int [not null, default: `0`]
+  caption text
+  created_at timestamptz [not null]
+
+  Indexes {
+    (record_entry_id, media_file_id) [pk, name: 'trip_record_media_pkey']
+    media_file_id [name: 'trip_record_media_media_file_id_idx']
+    (record_entry_id, sort_order) [name: 'trip_record_media_record_sort_order_idx']
+  }
+}
+
+Table social.user_follows {
+  follower_user_id uuid [not null]
+  following_user_id uuid [not null]
+  status varchar(20) [not null, default: `'ACTIVE'::character varying`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+
+  Indexes {
+    (follower_user_id, following_user_id) [pk, name: 'user_follows_pkey']
+    (following_user_id, status) [name: 'idx_social_user_follows_following_status']
+    following_user_id [name: 'idx_social_user_follows_following_user_id']
+    status [name: 'idx_social_user_follows_status']
+  }
+}
+
+Table tourism_source.attraction_images {
+  id uuid [pk, not null]
+  attraction_no int [not null]
+  source_provider varchar(80) [not null, default: `'KTO'::character varying`]
+  source_type varchar(40) [not null]
+  original_url text
+  storage_provider varchar(40)
+  bucket varchar(120)
+  object_key text
+  public_url text [not null]
+  display_order int [not null, default: `999`]
+  width int
+  height int
+  checksum_sha256 varchar(128)
+  is_active bool [not null, default: `true`]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (attraction_no, is_active, display_order, created_at) [name: 'idx_attraction_images_display']
+  }
+}
+
+Table tourism_source.attractions {
+  no int [pk, not null, increment]
+  content_id int [not null, unique]
+  title varchar(500) [not null]
+  content_type_id int
+  area_code int
+  si_gun_gu_code int
+  first_image1 text
+  first_image2 text
+  map_level int
+  latitude double
+  longitude double
+  tel varchar(80)
+  addr1 varchar(300)
+  addr2 varchar(300)
+  homepage text
+  overview text
+  source_hash varchar(128)
+  source_modified_at timestamptz
+  imported_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    content_type_id [name: 'idx_attractions_content_type']
+    (longitude, latitude) [name: 'idx_attractions_location']
+    (area_code, si_gun_gu_code) [name: 'idx_attractions_region']
+    title [name: 'idx_attractions_title']
+  }
+}
+
+Table tourism_source.contenttypes {
+  content_type_id int [pk, not null]
+  content_type_name varchar(100) [not null]
+}
+
+Table tourism_source.contest_award_photo_matches {
+  id uuid [pk, not null]
+  photo_id uuid [not null]
+  attraction_no int
+  sido_code int
+  gugun_code int
+  match_scope varchar(30) [not null]
+  match_status varchar(30) [not null]
+  match_method varchar(40) [not null]
+  confidence numeric(5,4)
+  is_selected bool [not null, default: `false`]
+  rationale text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (attraction_no, match_scope, match_status, is_selected) [name: 'idx_contest_award_photo_matches_attraction']
+    (sido_code, gugun_code, match_scope, match_status, is_selected) [name: 'idx_contest_award_photo_matches_region']
+  }
+}
+
+Table tourism_source.contest_award_photos {
+  id uuid [pk, not null]
+  contest_id uuid
+  award_year int [not null]
+  award_name varchar(160)
+  award_rank int [not null, default: `999`]
+  title varchar(240)
+  photographer_name varchar(120)
+  original_file_name varchar(500) [not null]
+  extracted_region_text varchar(240)
+  storage_provider varchar(40) [not null, default: `'S3'::character varying`]
+  bucket varchar(120)
+  object_key text [not null]
+  public_url text
+  mime_type varchar(120)
+  byte_size bigint
+  width int
+  height int
+  checksum_sha256 varchar(128)
+  upload_status varchar(30) [not null, default: `'DOWNLOADED'::character varying`]
+  rights_status varchar(30) [not null, default: `'PENDING_REVIEW'::character varying`]
+  license_note text
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    contest_id [name: 'idx_contest_award_photos_contest']
+    (upload_status, rights_status, award_year, award_rank) [name: 'idx_contest_award_photos_public_status']
+  }
+}
+
+Table tourism_source.guguns {
+  sido_code int [not null]
+  gugun_code int [not null]
+  gugun_name varchar(120) [not null]
+
+  Indexes {
+    (sido_code, gugun_code) [pk, name: 'guguns_pkey']
+    sido_code [name: 'idx_guguns_sido']
+  }
+}
+
+Table tourism_source.photo_contests {
+  id uuid [pk, not null]
+  provider varchar(80) [not null, default: `'KTO_CONTENTS_LAB'::character varying`]
+  contest_name varchar(200) [not null]
+  award_year int [not null]
+  contest_round varchar(80)
+  source_url text
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    award_year [name: 'idx_photo_contests_award_year']
+  }
+}
+
+Table tourism_source.region_aliases {
+  id uuid [pk, not null]
+  alias varchar(120) [not null]
+  normalized_alias varchar(120) [not null]
+  sido_code int
+  gugun_code int
+  alias_type varchar(40) [not null]
+  is_active bool [not null, default: `true`]
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    is_active [name: 'idx_region_aliases_active']
+    normalized_alias [name: 'idx_region_aliases_normalized_alias']
+    (sido_code, gugun_code) [name: 'idx_region_aliases_region']
+  }
+}
+
+Table tourism_source.sidos {
+  sido_code int [pk, not null]
+  sido_name varchar(120) [not null]
+}
+
+Table trip.trip_invites {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  created_by_user_id uuid [not null]
+  invitee_user_id uuid
+  invite_code varchar(32) [not null]
+  invite_token_hash text [not null, unique]
+  status varchar(30) [not null, default: `'PENDING'::character varying`]
+  expires_at timestamptz
+  accepted_by_user_id uuid
+  accepted_at timestamptz
+  revoked_at timestamptz
+  created_at timestamptz [not null]
+
+  Indexes {
+    invite_code [name: 'trip_invites_invite_code_idx']
+    invitee_user_id [name: 'trip_invites_invitee_user_id_idx']
+    status [name: 'trip_invites_status_idx']
+    trip_id [name: 'trip_invites_trip_id_idx']
+  }
+}
+
+Table trip.trip_members {
+  id uuid [pk, not null]
+  trip_id uuid [not null]
+  user_id uuid [not null]
+  role varchar(20) [not null, default: `'MEMBER'::character varying`]
+  status varchar(30) [not null, default: `'ACTIVE'::character varying`]
+  joined_at timestamptz [not null]
+  left_at timestamptz
+  removed_by_user_id uuid
+
+  Indexes {
+    (trip_id, user_id) [unique, name: 'trip_members_trip_user_unique']
+    status [name: 'trip_members_status_idx']
+    (trip_id, role) [name: 'trip_members_trip_id_role_idx']
+    user_id [name: 'trip_members_user_id_idx']
+  }
+}
+
+Table trip.trip_regions {
+  trip_id uuid [not null]
+  legal_region_code varchar(10) [not null]
+  sort_order int [not null, default: `0`]
+  created_at timestamptz [not null]
+
+  Indexes {
+    (trip_id, legal_region_code) [pk, name: 'trip_regions_pkey']
+    legal_region_code [name: 'trip_regions_legal_region_code_idx']
+  }
+}
+
+Table trip.trips {
+  id uuid [pk, not null]
+  owner_user_id uuid [not null]
+  title varchar(160) [not null]
+  display_destination varchar(160)
+  status varchar(30) [not null, default: `'ACTIVE'::character varying`]
+  itinerary_version bigint [not null, default: `0`]
+  retripped_from_post_id uuid
+  retripped_from_snapshot_version int
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+  deleted_at timestamptz
+
+  Indexes {
+    created_at [name: 'trip_trips_created_at_idx']
+    owner_user_id [name: 'trip_trips_owner_user_id_idx']
+    retripped_from_post_id [name: 'trip_trips_retripped_from_post_id_idx']
+    status [name: 'trip_trips_status_idx']
+  }
+}
+
+Ref: ai.ai_chat_messages.requester_user_id > auth.users.id [name: 'ai_chat_messages_requester_user_id_fkey']
+Ref: ai.ai_chat_messages.session_id > ai.ai_chat_sessions.id [name: 'ai_chat_messages_session_id_fkey', delete: cascade]
+Ref: ai.ai_chat_sessions.trip_id > trip.trips.id [name: 'ai_chat_sessions_trip_id_fkey', delete: cascade]
+Ref: ai.ai_tool_calls.request_message_id > ai.ai_chat_messages.id [name: 'ai_tool_calls_request_message_id_fkey']
+Ref: ai.ai_tool_calls.requested_by_user_id > auth.users.id [name: 'ai_tool_calls_requested_by_user_id_fkey']
+Ref: ai.ai_tool_calls.result_message_id > ai.ai_chat_messages.id [name: 'ai_tool_calls_result_message_id_fkey']
+Ref: ai.ai_tool_calls.session_id > ai.ai_chat_sessions.id [name: 'ai_tool_calls_session_id_fkey', delete: cascade]
+Ref: ai.ai_tool_calls.trip_id > trip.trips.id [name: 'ai_tool_calls_trip_id_fkey', delete: cascade]
+Ref: auth.user_auth_identities.provider_id > auth.auth_providers.id [name: 'user_oauth_identities_provider_id_fkey']
+Ref: auth.user_auth_identities.user_id > auth.users.id [name: 'user_oauth_identities_user_id_fkey']
+Ref: auth.user_email_addresses.user_id > auth.users.id [name: 'user_email_addresses_user_id_fkey']
+Ref: auth.user_email_verification_tokens.user_email_address_id > auth.user_email_addresses.id [name: 'email_verification_tokens_email_address_id_fkey']
+Ref: auth.user_password_credentials.user_id > auth.users.id [name: 'user_password_credentials_user_id_fkey']
+Ref: auth.user_password_reset_tokens.user_id > auth.users.id [name: 'password_reset_tokens_user_id_fkey']
+Ref: auth.user_policy_acceptances.policy_document_id > auth.policy_documents.id [name: 'user_policy_acceptances_policy_document_id_fkey']
+Ref: auth.user_policy_acceptances.user_id > auth.users.id [name: 'user_policy_acceptances_user_id_fkey']
+Ref: auth.user_profiles.user_id > auth.users.id [name: 'user_profiles_user_id_fkey']
+Ref: auth.user_roles.granted_by_user_id > auth.users.id [name: 'user_roles_granted_by_user_id_fkey']
+Ref: auth.user_roles.revoked_by_user_id > auth.users.id [name: 'user_roles_revoked_by_user_id_fkey']
+Ref: auth.user_roles.role_id > auth.roles.id [name: 'user_roles_role_id_fkey']
+Ref: auth.user_roles.user_id > auth.users.id [name: 'user_roles_user_id_fkey', delete: cascade]
+Ref: auth.user_security_events.provider_id > auth.auth_providers.id [name: 'user_security_events_provider_id_fkey']
+Ref: auth.user_security_events.user_id > auth.users.id [name: 'user_security_events_user_id_fkey']
+Ref: auth.user_sessions.user_id > auth.users.id [name: 'user_sessions_user_id_fkey']
+Ref: auth.user_settings.user_id > auth.users.id [name: 'user_settings_user_id_fkey']
+Ref: chat.trip_chat_messages.deleted_by_user_id > auth.users.id [name: 'trip_chat_messages_deleted_by_user_id_fkey']
+Ref: chat.trip_chat_messages.sender_user_id > auth.users.id [name: 'trip_chat_messages_sender_user_id_fkey', delete: cascade]
+Ref: chat.trip_chat_messages.trip_id > trip.trips.id [name: 'trip_chat_messages_trip_id_fkey', delete: cascade]
+Ref: collab.collaboration_command_events.trip_id > trip.trips.id [name: 'collaboration_command_events_trip_id_fk', delete: cascade]
+Ref: community.content_reports.reason_code > community.report_reasons.code [name: 'content_reports_reason_code_fkey']
+Ref: community.content_reports.reporter_user_id > auth.users.id [name: 'content_reports_reporter_user_id_fkey']
+Ref: community.content_reports.resolved_by > auth.users.id [name: 'content_reports_resolved_by_fkey']
+Ref: community.moderation_actions.moderator_user_id > auth.users.id [name: 'moderation_actions_moderator_user_id_fkey']
+Ref: community.moderation_actions.report_id > community.content_reports.id [name: 'moderation_actions_report_id_fkey', delete: set null]
+Ref: community.post_comments.author_user_id > auth.users.id [name: 'post_comments_author_user_id_fkey']
+Ref: community.post_comments.parent_comment_id > community.post_comments.id [name: 'post_comments_parent_comment_id_fkey', delete: cascade]
+Ref: community.post_comments.post_id > community.posts.id [name: 'post_comments_post_id_fkey', delete: cascade]
+Ref: community.post_hashtags.hashtag_id > community.hashtags.id [name: 'post_hashtags_hashtag_id_fkey', delete: cascade]
+Ref: community.post_hashtags.post_id > community.posts.id [name: 'post_hashtags_post_id_fkey', delete: cascade]
+Ref: community.post_likes.post_id > community.posts.id [name: 'post_likes_post_id_fkey', delete: cascade]
+Ref: community.post_likes.user_id > auth.users.id [name: 'post_likes_user_id_fkey']
+Ref: community.post_media.post_id > community.posts.id [name: 'post_media_post_id_fkey', delete: cascade]
+Ref: community.post_retrips.new_trip_id > trip.trips.id [name: 'post_retrips_new_trip_id_fkey', delete: cascade]
+Ref: community.post_retrips.post_id > community.posts.id [name: 'post_retrips_post_id_fkey', delete: cascade]
+Ref: community.post_retrips.user_id > auth.users.id [name: 'post_retrips_user_id_fkey', delete: cascade]
+Ref: community.post_snapshot_days.post_id > community.posts.id [name: 'post_snapshot_days_post_id_fkey', delete: cascade]
+Ref: community.post_snapshot_items.post_id > community.posts.id [name: 'post_snapshot_items_post_id_fkey', delete: cascade]
+Ref: community.post_snapshot_items.snapshot_day_id > community.post_snapshot_days.id [name: 'post_snapshot_items_snapshot_day_id_fkey', delete: cascade]
+Ref: community.post_snapshot_routes.destination_snapshot_item_id > community.post_snapshot_items.id [name: 'post_snapshot_routes_destination_snapshot_item_id_fkey', delete: cascade]
+Ref: community.post_snapshot_routes.origin_snapshot_item_id > community.post_snapshot_items.id [name: 'post_snapshot_routes_origin_snapshot_item_id_fkey', delete: cascade]
+Ref: community.post_snapshot_routes.post_id > community.posts.id [name: 'post_snapshot_routes_post_id_fkey', delete: cascade]
+Ref: community.posts.published_by_user_id > auth.users.id [name: 'posts_published_by_user_id_fkey']
+Ref: geo.legal_regions.parent_code > geo.legal_regions.code [name: 'legal_regions_parent_code_fk']
+Ref: itinerary.itinerary_days.trip_id > trip.trips.id [name: 'itinerary_days_trip_id_fk', delete: cascade]
+Ref: itinerary.itinerary_items.itinerary_day_id > itinerary.itinerary_days.id [name: 'itinerary_items_day_id_fk', delete: cascade]
+Ref: itinerary.itinerary_items.trip_id > trip.trips.id [name: 'itinerary_items_trip_id_fk', delete: cascade]
+Ref: itinerary.map_drawings.itinerary_day_id > itinerary.itinerary_days.id [name: 'map_drawings_day_id_fk', delete: set null]
+Ref: itinerary.map_drawings.trip_id > trip.trips.id [name: 'map_drawings_trip_id_fk', delete: cascade]
+Ref: itinerary.route_match_requests.destination_itinerary_item_id > itinerary.itinerary_items.id [name: 'route_match_requests_destination_item_id_fk', delete: cascade]
+Ref: itinerary.route_match_requests.origin_itinerary_item_id > itinerary.itinerary_items.id [name: 'route_match_requests_origin_item_id_fk', delete: cascade]
+Ref: itinerary.route_match_requests.trip_id > trip.trips.id [name: 'route_match_requests_trip_id_fk', delete: cascade]
+Ref: itinerary.route_match_requests.trip_route_id > itinerary.trip_routes.id [name: 'route_match_requests_trip_route_id_fk', delete: set null]
+Ref: itinerary.trip_routes.destination_itinerary_item_id > itinerary.itinerary_items.id [name: 'trip_routes_destination_item_id_fk', delete: cascade]
+Ref: itinerary.trip_routes.origin_itinerary_item_id > itinerary.itinerary_items.id [name: 'trip_routes_origin_item_id_fk', delete: cascade]
+Ref: itinerary.trip_routes.trip_id > trip.trips.id [name: 'trip_routes_trip_id_fk', delete: cascade]
+Ref: media.upload_intents.media_file_id > media.media_files.id [name: 'media_upload_intents_media_file_fk', delete: set null]
+Ref: notification.notifications.actor_user_id > auth.users.id [name: 'notifications_actor_user_id_fkey']
+Ref: notification.notifications.recipient_user_id > auth.users.id [name: 'notifications_recipient_user_id_fkey', delete: cascade]
+Ref: notification.notifications.trip_id > trip.trips.id [name: 'notifications_trip_id_fkey', delete: cascade]
+Ref: planning.checklist_item_member_statuses.checklist_item_id > planning.checklist_items.id [name: 'checklist_item_member_statuses_checklist_item_id_fkey', delete: cascade]
+Ref: planning.checklist_items.checklist_id > planning.checklists.id [name: 'checklist_items_checklist_id_fkey', delete: cascade]
+Ref: preference.place_tag_enrichment_candidates.enrichment_id > preference.place_tag_enrichments.id [name: 'fk_place_tag_enrichment_candidates_enrichment', delete: cascade]
+Ref: preference.place_tag_enrichment_candidates.matched_tag_id > preference.preference_tags.id [name: 'fk_place_tag_enrichment_candidates_tag']
+Ref: preference.place_tag_enrichment_tags.enrichment_id > preference.place_tag_enrichments.id [name: 'fk_place_tag_enrichment_tags_enrichment', delete: cascade]
+Ref: preference.place_tag_enrichment_tags.tag_statistic_run_id > preference.tag_statistic_runs.id [name: 'fk_place_tag_enrichment_tags_statistic_run']
+Ref: preference.place_tag_enrichment_tags.tag_id > preference.preference_tags.id [name: 'fk_place_tag_enrichment_tags_tag']
+Ref: preference.place_tag_enrichments.tag_statistic_run_id > preference.tag_statistic_runs.id [name: 'fk_place_tag_enrichments_statistic_run']
+Ref: preference.preference_tags.parent_tag_id > preference.preference_tags.id [name: 'fk_preference_tags_parent']
+Ref: preference.synthetic_persona_tag_preferences.persona_id > preference.synthetic_personas.id [name: 'fk_synthetic_persona_tag_preferences_persona', delete: cascade]
+Ref: preference.synthetic_persona_tag_preferences.tag_id > preference.preference_tags.id [name: 'fk_synthetic_persona_tag_preferences_tag']
+Ref: preference.synthetic_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id [name: 'fk_synthetic_swipe_events_enrichment']
+Ref: preference.synthetic_swipe_events.persona_id > preference.synthetic_personas.id [name: 'fk_synthetic_swipe_events_persona', delete: cascade]
+Ref: preference.tag_statistics.run_id > preference.tag_statistic_runs.id [name: 'fk_tag_statistics_run', delete: cascade]
+Ref: preference.tag_statistics.tag_id > preference.preference_tags.id [name: 'fk_tag_statistics_tag']
+Ref: preference.user_place_reactions.place_tag_enrichment_id > preference.place_tag_enrichments.id [name: 'fk_user_place_reactions_enrichment']
+Ref: preference.user_preference_tag_weights.tag_id > preference.preference_tags.id [name: 'fk_user_preference_tag_weights_tag']
+Ref: preference.user_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id [name: 'fk_user_swipe_events_enrichment']
+Ref: record.trip_record_create_requests.record_id > record.trip_record_entries.id [name: 'trip_record_create_requests_record_fk', delete: cascade]
+Ref: record.trip_record_entries.itinerary_day_id > itinerary.itinerary_days.id [name: 'trip_record_entries_day_id_fk', delete: set null]
+Ref: record.trip_record_entries.itinerary_item_id > itinerary.itinerary_items.id [name: 'trip_record_entries_item_id_fk', delete: set null]
+Ref: record.trip_record_entries.trip_id > trip.trips.id [name: 'trip_record_entries_trip_id_fk', delete: cascade]
+Ref: record.trip_record_media.media_file_id > media.media_files.id [name: 'trip_record_media_media_file_id_fk', delete: cascade]
+Ref: record.trip_record_media.record_entry_id > record.trip_record_entries.id [name: 'trip_record_media_record_entry_id_fk', delete: cascade]
+Ref: social.user_follows.follower_user_id > auth.users.id [name: 'user_follows_follower_user_id_fkey', delete: cascade]
+Ref: social.user_follows.following_user_id > auth.users.id [name: 'user_follows_following_user_id_fkey', delete: cascade]
+Ref: tourism_source.attraction_images.attraction_no > tourism_source.attractions.no [name: 'fk_attraction_images_attraction', delete: cascade]
+Ref: tourism_source.attractions.content_type_id > tourism_source.contenttypes.content_type_id [name: 'fk_attractions_content_type']
+Ref: tourism_source.contest_award_photo_matches.attraction_no > tourism_source.attractions.no [name: 'fk_contest_award_photo_matches_attraction', delete: cascade]
+Ref: tourism_source.contest_award_photo_matches.photo_id > tourism_source.contest_award_photos.id [name: 'fk_contest_award_photo_matches_photo', delete: cascade]
+Ref: tourism_source.contest_award_photos.contest_id > tourism_source.photo_contests.id [name: 'fk_contest_award_photos_contest', delete: set null]
+Ref: tourism_source.guguns.sido_code > tourism_source.sidos.sido_code [name: 'fk_guguns_sido', delete: cascade]
+Ref: tourism_source.region_aliases.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code) [name: 'fk_region_aliases_gugun', delete: cascade]
+Ref: tourism_source.region_aliases.sido_code > tourism_source.sidos.sido_code [name: 'fk_region_aliases_sido', delete: cascade]
+Ref: trip.trip_invites.trip_id > trip.trips.id [name: 'trip_invites_trip_id_fk', delete: cascade]
+Ref: trip.trip_members.trip_id > trip.trips.id [name: 'trip_members_trip_id_fk', delete: cascade]
+Ref: trip.trip_regions.trip_id > trip.trips.id [name: 'trip_regions_trip_id_fk', delete: cascade]
