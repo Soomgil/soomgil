@@ -1,0 +1,984 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1576" height="6756" viewBox="0 0 1576 6756">
+<rect width="100%" height="100%" fill="#f7f9fc"/>
+<text x="32" y="42" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" fill="#172033">Soomgil Backend Class Overview</text>
+<text x="32" y="68" font-family="Inter, Arial, sans-serif" font-size="14" fill="#68748a">Package grouped class diagram, class names only. DTO/Request/Response/Command/Query/Row omitted.</text>
+<g>
+<rect x="32" y="90" width="360" height="134" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="32" y="90" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="48" y="115" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">(root)</text>
+<text x="48" y="152" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">(root)</text>
+<rect x="48" y="164" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="178" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SoomgilBackendApplication</text>
+</g>
+<g>
+<rect x="416" y="90" width="360" height="1010" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="416" y="90" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="432" y="115" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">ai</text>
+<text x="432" y="152" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="432" y="164" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="178" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiController</text>
+<text x="432" y="204" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="432" y="216" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="230" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiAddPlaceTools</text>
+<rect x="432" y="240" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="254" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiAddRecommendedPlacesTools</text>
+<rect x="432" y="264" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="278" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiChatService</text>
+<rect x="432" y="288" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="302" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiChecklistTools</text>
+<rect x="432" y="312" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="326" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiDeleteItineraryItemTools</text>
+<rect x="432" y="336" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="350" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiExecutableTools</text>
+<rect x="432" y="360" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="374" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiFilterPlacesTools</text>
+<rect x="432" y="384" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="398" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiGenerateChecklistTools</text>
+<rect x="432" y="408" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="422" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiGuideModel</text>
+<rect x="432" y="432" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="446" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiGuideReply</text>
+<rect x="432" y="456" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="470" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiIntent</text>
+<rect x="432" y="480" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="494" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiIntentDecision</text>
+<rect x="432" y="504" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="518" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiItineraryReadTools</text>
+<rect x="432" y="528" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="542" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiItineraryToolService</text>
+<rect x="432" y="552" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="566" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiMoveItineraryItemTools</text>
+<rect x="432" y="576" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="590" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiNoteTools</text>
+<rect x="432" y="600" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="614" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiOptimizeRouteTools</text>
+<rect x="432" y="624" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="638" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiPlaceRecommendationTools</text>
+<rect x="432" y="648" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="662" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiPlaceSearchTools</text>
+<rect x="432" y="672" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="686" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiPlainTextFormatter</text>
+<rect x="432" y="696" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="710" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiSummarizeItineraryTools</text>
+<rect x="432" y="720" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="734" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiToolAuditService</text>
+<rect x="432" y="744" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="758" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiToolSupport</text>
+<rect x="432" y="768" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="782" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiTripContext</text>
+<rect x="432" y="792" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="806" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiTripContextService</text>
+<rect x="432" y="816" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="830" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiTripToolsFactory</text>
+<rect x="432" y="840" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="854" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LocalFallbackAiGuideModel</text>
+<text x="432" y="880" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.external</text>
+<rect x="432" y="892" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="906" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiModelConfiguration</text>
+<rect x="432" y="916" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="930" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GmsGeminiClientConfiguration</text>
+<rect x="432" y="940" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="954" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SpringAiGuideModel</text>
+<text x="432" y="980" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="432" y="992" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="1006" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AiChatMapper</text>
+</g>
+<g>
+<rect x="800" y="90" width="360" height="1414" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="800" y="90" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="816" y="115" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">auth</text>
+<text x="816" y="152" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="816" y="164" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="178" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AuthController</text>
+<text x="816" y="204" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.handler</text>
+<rect x="816" y="216" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="230" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">FindDisplayNameQueryHandler</text>
+<rect x="816" y="240" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="254" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">FindUserRolesQueryHandler</text>
+<rect x="816" y="264" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="278" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GetCurrentUserQueryHandler</text>
+<rect x="816" y="288" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="302" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListPoliciesQueryHandler</text>
+<rect x="816" y="312" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="326" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListSecurityEventsQueryHandler</text>
+<rect x="816" y="336" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="350" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListSessionsQueryHandler</text>
+<rect x="816" y="360" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="374" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LoginCommandHandler</text>
+<rect x="816" y="384" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="398" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LogoutCommandHandler</text>
+<rect x="816" y="408" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="422" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">OAuthLoginCommandHandler</text>
+<rect x="816" y="432" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="446" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">OnboardCommandHandler</text>
+<rect x="816" y="456" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="470" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RefreshCommandHandler</text>
+<rect x="816" y="480" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="494" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RegisterCommandHandler</text>
+<rect x="816" y="504" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="518" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RequestPasswordResetCommandHandler</text>
+<rect x="816" y="528" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="542" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ResetPasswordCommandHandler</text>
+<rect x="816" y="552" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="566" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RevokeSessionCommandHandler</text>
+<rect x="816" y="576" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="590" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SendEmailVerificationCommandHandler</text>
+<rect x="816" y="600" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="614" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">VerifyEmailCommandHandler</text>
+<text x="816" y="640" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="816" y="652" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="666" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AuthTokenService</text>
+<rect x="816" y="676" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="690" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">EmailVerificationService</text>
+<rect x="816" y="700" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="714" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MailService</text>
+<rect x="816" y="724" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="738" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">OAuthClient</text>
+<rect x="816" y="748" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="762" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">OAuthProperties</text>
+<rect x="816" y="772" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="786" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PasswordHasher</text>
+<rect x="816" y="796" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="810" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TokenGenerator</text>
+<text x="816" y="836" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="816" y="848" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="862" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AuthException</text>
+<rect x="816" y="872" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="886" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">AuthUser</text>
+<rect x="816" y="896" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="910" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">EmailAddress</text>
+<rect x="816" y="920" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="934" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">EmailVerificationToken</text>
+<rect x="816" y="944" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="958" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">OAuthIdentity</text>
+<rect x="816" y="968" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="982" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PasswordCredential</text>
+<rect x="816" y="992" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1006" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PasswordResetToken</text>
+<rect x="816" y="1016" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1030" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PolicyDocumentModel</text>
+<rect x="816" y="1040" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1054" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserSession</text>
+<rect x="816" y="1064" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1078" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserStatus</text>
+<text x="816" y="1104" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="816" y="1116" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1130" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">EmailAddressMapper</text>
+<rect x="816" y="1140" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1154" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">EmailVerificationTokenMapper</text>
+<rect x="816" y="1164" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1178" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">OAuthIdentityMapper</text>
+<rect x="816" y="1188" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1202" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PasswordCredentialMapper</text>
+<rect x="816" y="1212" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1226" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PasswordResetTokenMapper</text>
+<rect x="816" y="1236" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1250" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PolicyDocumentMapper</text>
+<rect x="816" y="1260" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1274" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SecurityEventMapper</text>
+<rect x="816" y="1284" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1298" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserMapper</text>
+<rect x="816" y="1308" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1322" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserPolicyAcceptanceMapper</text>
+<rect x="816" y="1332" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1346" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserProfileMapper</text>
+<rect x="816" y="1356" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1370" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserSessionMapper</text>
+<rect x="816" y="1380" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1394" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserSettingsMapper</text>
+</g>
+<g>
+<rect x="1184" y="90" width="360" height="270" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="1184" y="90" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="1200" y="115" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">chat</text>
+<text x="1200" y="152" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="1200" y="164" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="178" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripChatController</text>
+<text x="1200" y="204" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="1200" y="216" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="230" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripChatService</text>
+<text x="1200" y="256" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="1200" y="268" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="282" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripChatMessageMapper</text>
+</g>
+<g>
+<rect x="32" y="1528" width="360" height="690" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="32" y="1528" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="48" y="1553" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">collaboration</text>
+<text x="48" y="1590" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="48" y="1602" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1616" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationController</text>
+<text x="48" y="1642" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="48" y="1654" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1668" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationCommandEvent</text>
+<rect x="48" y="1678" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1692" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationCommandEventReadModel</text>
+<rect x="48" y="1702" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1716" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationCommandEventRepository</text>
+<rect x="48" y="1726" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1740" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationCompensationExecutor</text>
+<rect x="48" y="1750" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1764" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationEventBroadcaster</text>
+<rect x="48" y="1774" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1788" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationSessionIdProvider</text>
+<text x="48" y="1814" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="48" y="1826" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1840" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationCommandEventMapper</text>
+<text x="48" y="1866" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="48" y="1878" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1892" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisCollaborationCommandEventRepository</text>
+<text x="48" y="1918" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.web</text>
+<rect x="48" y="1930" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1944" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">HttpCollaborationSessionIdProvider</text>
+<text x="48" y="1970" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.websocket</text>
+<rect x="48" y="1982" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="1996" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationSessionHeaderInterceptor</text>
+<rect x="48" y="2006" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="2020" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CollaborationWebSocketSessionRegistry</text>
+<rect x="48" y="2030" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="2044" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripSubscriptionInterceptor</text>
+<rect x="48" y="2054" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="2068" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">WebSocketCollaborationEventBroadcaster</text>
+<rect x="48" y="2078" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="2092" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">WebSocketJwtAuthenticationInterceptor</text>
+</g>
+<g>
+<rect x="416" y="1528" width="360" height="134" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="416" y="1528" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="432" y="1553" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">common</text>
+<text x="432" y="1590" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="432" y="1602" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="1616" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ApiControllerSupport</text>
+</g>
+<g>
+<rect x="800" y="1528" width="360" height="1450" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="800" y="1528" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="816" y="1553" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">community</text>
+<text x="816" y="1590" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="816" y="1602" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1616" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityPostController</text>
+<rect x="816" y="1626" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1640" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityReportController</text>
+<rect x="816" y="1650" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1664" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ModerationController</text>
+<text x="816" y="1690" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="816" y="1702" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1716" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunitySearchService</text>
+<text x="816" y="1742" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.config</text>
+<rect x="816" y="1754" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1768" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityModuleConfig</text>
+<text x="816" y="1794" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.handler</text>
+<rect x="816" y="1806" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1820" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CreateCommunityCommentCommandHandler</text>
+<rect x="816" y="1830" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1844" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CreateCommunityPostCommandHandler</text>
+<rect x="816" y="1854" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1868" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CreateContentReportCommandHandler</text>
+<rect x="816" y="1878" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1892" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CreateModerationActionCommandHandler</text>
+<rect x="816" y="1902" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1916" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DeleteCommunityCommentCommandHandler</text>
+<rect x="816" y="1926" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1940" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DeleteCommunityPostCommandHandler</text>
+<rect x="816" y="1950" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1964" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GetCommunityPostQueryHandler</text>
+<rect x="816" y="1974" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="1988" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LikePostCommandHandler</text>
+<rect x="816" y="1998" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2012" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListCommentsQueryHandler</text>
+<rect x="816" y="2022" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2036" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListCommunityPostsQueryHandler</text>
+<rect x="816" y="2046" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2060" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListModerationActionsQueryHandler</text>
+<rect x="816" y="2070" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2084" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListReportReasonsQueryHandler</text>
+<rect x="816" y="2094" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2108" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListReportsQueryHandler</text>
+<rect x="816" y="2118" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2132" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ResolveReportCommandHandler</text>
+<rect x="816" y="2142" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2156" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RotatePostShareTokenCommandHandler</text>
+<rect x="816" y="2166" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2180" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UnlikePostCommandHandler</text>
+<rect x="816" y="2190" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2204" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpdateCommunityPostCommandHandler</text>
+<text x="816" y="2230" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="816" y="2242" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2256" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityPostAssembler</text>
+<rect x="816" y="2266" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2280" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityPostSnapshotCodec</text>
+<rect x="816" y="2290" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2304" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityReportAssembler</text>
+<rect x="816" y="2314" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2328" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ModerationAccessGuard</text>
+<rect x="816" y="2338" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2352" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ModerationTargetService</text>
+<rect x="816" y="2362" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2376" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RetripCommunityPostService</text>
+<rect x="816" y="2386" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2400" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ShareTokenService</text>
+<rect x="816" y="2410" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2424" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripItinerarySnapshotChecker</text>
+<rect x="816" y="2434" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2448" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripSnapshotChecker</text>
+<text x="816" y="2474" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="816" y="2486" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2500" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityException</text>
+<text x="816" y="2526" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.policy</text>
+<rect x="816" y="2538" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2552" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityPostPolicy</text>
+<text x="816" y="2578" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="816" y="2590" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2604" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityCommentMapper</text>
+<rect x="816" y="2614" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2628" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CommunityPostMapper</text>
+<rect x="816" y="2638" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2652" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ContentReportMapper</text>
+<rect x="816" y="2662" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2676" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">HashtagMapper</text>
+<rect x="816" y="2686" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2700" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ModerationActionMapper</text>
+<rect x="816" y="2710" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2724" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PostHashtagMapper</text>
+<rect x="816" y="2734" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2748" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PostLikeMapper</text>
+<rect x="816" y="2758" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2772" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PostMediaMapper</text>
+<rect x="816" y="2782" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2796" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PostRetripMapper</text>
+<rect x="816" y="2806" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="2820" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ReportReasonMapper</text>
+</g>
+<g>
+<rect x="1184" y="1528" width="360" height="598" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="1184" y="1528" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="1200" y="1553" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">geo</text>
+<text x="1200" y="1590" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="1200" y="1602" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1616" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GeoAdminController</text>
+<rect x="1200" y="1626" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1640" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GeoController</text>
+<text x="1200" y="1666" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="1200" y="1678" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1692" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionCommandRepository</text>
+<rect x="1200" y="1702" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1716" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionPage</text>
+<rect x="1200" y="1726" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1740" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionQueryRepository</text>
+<rect x="1200" y="1750" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1764" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionReadModel</text>
+<rect x="1200" y="1774" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1788" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionSyncLog</text>
+<rect x="1200" y="1798" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1812" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionUpsert</text>
+<text x="1200" y="1838" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="1200" y="1850" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1864" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionLevel</text>
+<text x="1200" y="1890" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="1200" y="1902" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1916" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionCommandMapper</text>
+<rect x="1200" y="1926" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1940" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LegalRegionQueryMapper</text>
+<text x="1200" y="1966" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="1200" y="1978" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="1992" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisLegalRegionCommandRepository</text>
+<rect x="1200" y="2002" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="2016" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisLegalRegionQueryRepository</text>
+</g>
+<g>
+<rect x="32" y="3002" width="360" height="1146" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="32" y="3002" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="48" y="3027" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">itinerary</text>
+<text x="48" y="3064" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="48" y="3076" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3090" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryController</text>
+<text x="48" y="3116" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="48" y="3128" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3142" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryCommandRepository</text>
+<rect x="48" y="3152" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3166" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryDayCreate</text>
+<rect x="48" y="3176" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3190" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryDayOrderUpdate</text>
+<rect x="48" y="3200" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3214" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryDayReadModel</text>
+<rect x="48" y="3224" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3238" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryDayUpdate</text>
+<rect x="48" y="3248" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3262" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryItemCreate</text>
+<rect x="48" y="3272" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3286" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryItemOrderUpdate</text>
+<rect x="48" y="3296" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3310" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryItemReadModel</text>
+<rect x="48" y="3320" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3334" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryItemUpdate</text>
+<rect x="48" y="3344" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3358" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryQueryRepository</text>
+<rect x="48" y="3368" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3382" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapDrawingCreate</text>
+<rect x="48" y="3392" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3406" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapDrawingReadModel</text>
+<rect x="48" y="3416" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3430" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapDrawingSnapshotUpdate</text>
+<rect x="48" y="3440" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3454" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapDrawingUpdate</text>
+<rect x="48" y="3464" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3478" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapMatchingClient</text>
+<rect x="48" y="3488" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3502" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapMatchingException</text>
+<rect x="48" y="3512" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3526" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteCoordinate</text>
+<rect x="48" y="3536" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3550" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteMatchRequestLog</text>
+<rect x="48" y="3560" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3574" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteSegmentCreate</text>
+<rect x="48" y="3584" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3598" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteSegmentReadModel</text>
+<rect x="48" y="3608" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3622" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteSegmentSnapshotUpdate</text>
+<rect x="48" y="3632" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3646" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteSegmentUpdate</text>
+<text x="48" y="3672" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="48" y="3684" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3698" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DrawingType</text>
+<rect x="48" y="3708" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3722" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GeometryFormat</text>
+<rect x="48" y="3732" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3746" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryDayGroupType</text>
+<rect x="48" y="3756" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3770" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryItemType</text>
+<rect x="48" y="3780" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3794" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RouteMode</text>
+<text x="48" y="3820" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.external</text>
+<rect x="48" y="3832" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3846" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapboxDirectionsClient</text>
+<rect x="48" y="3856" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3870" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MapboxProperties</text>
+<text x="48" y="3896" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="48" y="3908" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3922" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryCommandMapper</text>
+<rect x="48" y="3932" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3946" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryQueryMapper</text>
+<text x="48" y="3972" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="48" y="3984" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="3998" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisItineraryCommandRepository</text>
+<rect x="48" y="4008" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4022" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisItineraryQueryRepository</text>
+</g>
+<g>
+<rect x="416" y="3002" width="360" height="798" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="416" y="3002" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="432" y="3027" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">media</text>
+<text x="432" y="3064" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="432" y="3076" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3090" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaController</text>
+<text x="432" y="3116" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="432" y="3128" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3142" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaFileQueryService</text>
+<text x="432" y="3168" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="432" y="3180" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3194" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">LinkedMediaResourceAuthorizer</text>
+<rect x="432" y="3204" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3218" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaFileRepository</text>
+<text x="432" y="3244" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="432" y="3256" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3270" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaStorageCleanupService</text>
+<text x="432" y="3296" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="432" y="3308" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3322" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaFileMetadata</text>
+<rect x="432" y="3332" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3346" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaPurpose</text>
+<text x="432" y="3372" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.policy</text>
+<rect x="432" y="3384" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3398" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaObjectKeyPolicy</text>
+<rect x="432" y="3408" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3422" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaUploadPolicy</text>
+<text x="432" y="3448" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="432" y="3460" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3474" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaFileLookupMapper</text>
+<text x="432" y="3500" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="432" y="3512" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3526" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaFileMapper</text>
+<rect x="432" y="3536" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3550" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MediaUploadIntentMapper</text>
+<text x="432" y="3576" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="432" y="3588" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3602" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisMediaFileRepository</text>
+<rect x="432" y="3612" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="3626" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SqlLinkedMediaResourceAuthorizer</text>
+</g>
+<g>
+<rect x="800" y="3002" width="360" height="294" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="800" y="3002" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="816" y="3027" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">notification</text>
+<text x="816" y="3064" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="816" y="3076" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="3090" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">NotificationController</text>
+<text x="816" y="3116" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="816" y="3128" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="3142" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">NotificationService</text>
+<rect x="816" y="3152" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="3166" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInviteNotificationPublisherAdapter</text>
+<text x="816" y="3192" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="816" y="3204" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="3218" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">NotificationMapper</text>
+</g>
+<g>
+<rect x="1184" y="3002" width="360" height="810" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="1184" y="3002" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="1200" y="3027" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">place</text>
+<text x="1200" y="3064" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="1200" y="3076" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3090" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceAccessibilityController</text>
+<rect x="1200" y="3100" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3114" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceController</text>
+<text x="1200" y="3140" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="1200" y="3152" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3166" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceIntroRaw</text>
+<rect x="1200" y="3176" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3190" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismPlaceFeedClient</text>
+<text x="1200" y="3216" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="1200" y="3228" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3242" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoContentTypeResolver</text>
+<rect x="1200" y="3252" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3266" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceAccessibilityCacheBackend</text>
+<rect x="1200" y="3276" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3290" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceAccessibilityCacheService</text>
+<rect x="1200" y="3300" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3314" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceAccessibilityNormalizer</text>
+<text x="1200" y="3340" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.external</text>
+<rect x="1200" y="3352" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3366" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoAwardPhotoClient</text>
+<rect x="1200" y="3376" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3390" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoPlaceDescriptionCache</text>
+<rect x="1200" y="3400" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3414" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoPlacePhotoCache</text>
+<rect x="1200" y="3424" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3438" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoTourismPlaceClient</text>
+<rect x="1200" y="3448" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3462" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoTourismPlaceException</text>
+<rect x="1200" y="3472" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3486" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">KtoTourismPlaceProperties</text>
+<text x="1200" y="3512" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="1200" y="3524" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3538" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourcePlaceDetailMapper</text>
+<rect x="1200" y="3548" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3562" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourcePlaceImageMapper</text>
+<rect x="1200" y="3572" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3586" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourcePlaceSearchMapper</text>
+<text x="1200" y="3612" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="1200" y="3624" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3638" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourcePlaceDetailRepository</text>
+<rect x="1200" y="3648" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3662" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourcePlaceImageRepository</text>
+<rect x="1200" y="3672" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="3686" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourcePlaceSearchRepository</text>
+</g>
+<g>
+<rect x="32" y="4172" width="360" height="1278" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="32" y="4172" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="48" y="4197" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">planning</text>
+<text x="48" y="4234" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="48" y="4246" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4260" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningController</text>
+<text x="48" y="4286" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.config</text>
+<rect x="48" y="4298" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4312" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningModuleConfig</text>
+<text x="48" y="4338" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.event</text>
+<rect x="48" y="4350" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4364" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistDeletedEvent</text>
+<rect x="48" y="4374" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4388" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistItemCreatedEvent</text>
+<rect x="48" y="4398" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4412" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistItemDeletedEvent</text>
+<rect x="48" y="4422" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4436" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistItemsReorderedEvent</text>
+<rect x="48" y="4446" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4460" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistItemUpdatedEvent</text>
+<rect x="48" y="4470" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4484" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistMemberStatusUpdatedEvent</text>
+<rect x="48" y="4494" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4508" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistUpsertedEvent</text>
+<rect x="48" y="4518" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4532" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">NoteDeletedEvent</text>
+<rect x="48" y="4542" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4556" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">NoteUpsertedEvent</text>
+<rect x="48" y="4566" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4580" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningRealtimeEvent</text>
+<text x="48" y="4606" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.handler</text>
+<rect x="48" y="4618" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4632" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">CreateChecklistItemCommandHandler</text>
+<rect x="48" y="4642" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4656" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DeleteChecklistCommandHandler</text>
+<rect x="48" y="4666" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4680" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DeleteChecklistItemCommandHandler</text>
+<rect x="48" y="4690" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4704" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DeleteNoteCommandHandler</text>
+<rect x="48" y="4714" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4728" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GetNoteQueryHandler</text>
+<rect x="48" y="4738" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4752" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ListChecklistsQueryHandler</text>
+<rect x="48" y="4762" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4776" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ReorderChecklistItemsCommandHandler</text>
+<rect x="48" y="4786" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4800" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpdateChecklistItemCommandHandler</text>
+<rect x="48" y="4810" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4824" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpdateChecklistMemberStatusCommandHandler</text>
+<rect x="48" y="4834" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4848" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpsertChecklistCommandHandler</text>
+<rect x="48" y="4858" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4872" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpsertNoteCommandHandler</text>
+<text x="48" y="4898" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="48" y="4910" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4924" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningAssembler</text>
+<rect x="48" y="4934" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4948" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningEventBroadcaster</text>
+<rect x="48" y="4958" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4972" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripMemberAccessChecker</text>
+<rect x="48" y="4982" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="4996" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripMemberAccessCheckerAdapter</text>
+<text x="48" y="5022" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="48" y="5034" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5048" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningException</text>
+<text x="48" y="5074" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.policy</text>
+<rect x="48" y="5086" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5100" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlanningPolicy</text>
+<text x="48" y="5126" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="48" y="5138" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5152" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistItemMapper</text>
+<rect x="48" y="5162" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5176" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistMapper</text>
+<rect x="48" y="5186" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5200" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ChecklistMemberStatusMapper</text>
+<rect x="48" y="5210" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5224" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">NoteMapper</text>
+<text x="48" y="5250" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.websocket</text>
+<rect x="48" y="5262" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5276" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">WebSocketPlanningEventBroadcaster</text>
+</g>
+<g>
+<rect x="416" y="4172" width="360" height="1390" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="416" y="4172" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="432" y="4197" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">preference</text>
+<text x="432" y="4234" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="432" y="4246" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4260" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceController</text>
+<rect x="432" y="4270" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4284" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SwipeController</text>
+<text x="432" y="4310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="432" y="4322" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4336" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DefaultSwipeTagEnrichmentQueue</text>
+<rect x="432" y="4346" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4360" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagExtractor</text>
+<rect x="432" y="4370" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4384" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SwipeTagEnrichmentProcessor</text>
+<rect x="432" y="4394" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4408" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SwipeTagEnrichmentQueue</text>
+<rect x="432" y="4418" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4432" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SwipeTagPreparation</text>
+<rect x="432" y="4442" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4456" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SwipeTagPreparationService</text>
+<text x="432" y="4482" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.policy</text>
+<rect x="432" y="4494" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4508" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">DefaultSyntheticPersonaCatalog</text>
+<rect x="432" y="4518" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4532" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagEvidence</text>
+<rect x="432" y="4542" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4556" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagEvidenceCalculator</text>
+<rect x="432" y="4566" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4580" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagEvidenceInput</text>
+<rect x="432" y="4590" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4604" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagSelectionDecision</text>
+<rect x="432" y="4614" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4628" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagSelectionInput</text>
+<rect x="432" y="4638" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4652" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PlaceTagSelector</text>
+<rect x="432" y="4662" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4676" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceDiscriminationCalculator</text>
+<rect x="432" y="4686" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4700" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RealUserServingTransitionPolicy</text>
+<rect x="432" y="4710" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4724" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecommendationQualityEvaluator</text>
+<rect x="432" y="4734" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4748" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecommendationQualityMetrics</text>
+<rect x="432" y="4758" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4772" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecommendationScorer</text>
+<rect x="432" y="4782" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4796" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecommendationTagScoreInput</text>
+<rect x="432" y="4806" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4820" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecommendationUpliftCalculator</text>
+<rect x="432" y="4830" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4844" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaCatalogValidator</text>
+<rect x="432" y="4854" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4868" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaDefinition</text>
+<rect x="432" y="4878" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4892" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaNoiseInput</text>
+<rect x="432" y="4902" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4916" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaNoisePolicy</text>
+<rect x="432" y="4926" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4940" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaPlaceScore</text>
+<rect x="432" y="4950" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4964" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaPlaceScoreCalculator</text>
+<rect x="432" y="4974" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="4988" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaSwipeGenerator</text>
+<rect x="432" y="4998" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5012" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPersonaSwipeInput</text>
+<rect x="432" y="5022" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5036" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticPlaceTagInput</text>
+<rect x="432" y="5046" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5060" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SyntheticSwipeReaction</text>
+<rect x="432" y="5070" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5084" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TagPreferenceStatistics</text>
+<rect x="432" y="5094" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5108" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TagStatisticSource</text>
+<rect x="432" y="5118" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5132" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserPreferenceScoreCalculator</text>
+<rect x="432" y="5142" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5156" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserPreferenceWeightCalculator</text>
+<text x="432" y="5182" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.external</text>
+<rect x="432" y="5194" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5208" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GeminiImagePreprocessor</text>
+<rect x="432" y="5218" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5232" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SpringAiPlaceTagExtractor</text>
+<text x="432" y="5258" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="432" y="5270" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5284" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferencePlaceTagEnrichmentMapper</text>
+<rect x="432" y="5294" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5308" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceRecommendationMapper</text>
+<rect x="432" y="5318" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5332" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceSavedPlaceMapper</text>
+<rect x="432" y="5342" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5356" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceSwipeFeedMapper</text>
+<rect x="432" y="5366" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5380" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceSwipeReactionMapper</text>
+<rect x="432" y="5390" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5404" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceSyntheticPersonaMapper</text>
+<rect x="432" y="5414" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5428" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceTagStatisticsMapper</text>
+<rect x="432" y="5438" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5452" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">PreferenceUserPreferenceMapper</text>
+</g>
+<g>
+<rect x="800" y="4172" width="360" height="930" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="800" y="4172" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="816" y="4197" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">record</text>
+<text x="816" y="4234" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="816" y="4246" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4260" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GlobalTripRecordController</text>
+<rect x="816" y="4270" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4284" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordController</text>
+<text x="816" y="4310" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.handler</text>
+<rect x="816" y="4322" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4336" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordService</text>
+<text x="816" y="4362" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="816" y="4374" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4388" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryReferenceRepository</text>
+<rect x="816" y="4398" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4412" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecordMediaAccessRepository</text>
+<rect x="816" y="4422" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4436" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordCommandRepository</text>
+<rect x="816" y="4446" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4460" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordCreateRequestReadModel</text>
+<rect x="816" y="4470" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4484" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordDayReadModel</text>
+<rect x="816" y="4494" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4508" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordEntryCreate</text>
+<rect x="816" y="4518" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4532" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordEntryReadModel</text>
+<rect x="816" y="4542" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4556" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordEntryUpdate</text>
+<rect x="816" y="4566" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4580" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordMediaReadModel</text>
+<rect x="816" y="4590" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4604" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordPage</text>
+<rect x="816" y="4614" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4628" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordPhotoPage</text>
+<rect x="816" y="4638" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4652" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordPhotoReadModel</text>
+<rect x="816" y="4662" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4676" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordPhotoSummaryReadModel</text>
+<rect x="816" y="4686" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4700" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordPhotoUrlReadModel</text>
+<rect x="816" y="4710" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4724" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordQueryRepository</text>
+<text x="816" y="4750" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.integration</text>
+<rect x="816" y="4762" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4776" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ItineraryReferenceRepositoryAdapter</text>
+<text x="816" y="4802" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="816" y="4814" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4828" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RecordMediaAccessMapper</text>
+<rect x="816" y="4838" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4852" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordCommandMapper</text>
+<rect x="816" y="4862" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4876" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripRecordQueryMapper</text>
+<text x="816" y="4902" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="816" y="4914" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4928" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisRecordMediaAccessRepository</text>
+<rect x="816" y="4938" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4952" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisTripRecordCommandRepository</text>
+<rect x="816" y="4962" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="4976" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisTripRecordQueryRepository</text>
+</g>
+<g>
+<rect x="1184" y="4172" width="360" height="202" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="1184" y="4172" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="1200" y="4197" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">search</text>
+<text x="1200" y="4234" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="1200" y="4246" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="4260" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SearchController</text>
+<text x="1200" y="4286" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="1200" y="4298" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="4312" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UnifiedSearchQueryHandler</text>
+</g>
+<g>
+<rect x="32" y="5586" width="360" height="498" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="32" y="5586" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="48" y="5611" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">social</text>
+<text x="48" y="5648" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="48" y="5660" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5674" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SocialController</text>
+<text x="48" y="5700" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="48" y="5712" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5726" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SocialFollowService</text>
+<text x="48" y="5752" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="48" y="5764" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5778" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SocialFollowRepository</text>
+<text x="48" y="5804" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="48" y="5816" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5830" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserFollowMapper</text>
+<text x="48" y="5856" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="48" y="5868" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5882" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SocialFolloweePlaceReactionMapper</text>
+<rect x="48" y="5892" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5906" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SocialFollowMapper</text>
+<text x="48" y="5932" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="48" y="5944" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="58" y="5958" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisSocialFollowRepository</text>
+</g>
+<g>
+<rect x="416" y="5586" width="360" height="134" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="416" y="5586" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="432" y="5611" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">tourismsource</text>
+<text x="432" y="5648" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">matching.infrastructure</text>
+<rect x="432" y="5660" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="442" y="5674" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TourismSourceContestAwardPhotoMatchingMapper</text>
+</g>
+<g>
+<rect x="800" y="5586" width="360" height="1114" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="800" y="5586" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="816" y="5611" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">trip</text>
+<text x="816" y="5648" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="816" y="5660" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5674" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripController</text>
+<rect x="816" y="5684" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5698" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInviteController</text>
+<text x="816" y="5724" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="816" y="5736" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5750" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripSearchService</text>
+<text x="816" y="5776" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.port</text>
+<rect x="816" y="5788" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5802" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripAccessSnapshot</text>
+<rect x="816" y="5812" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5826" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripCommandRepository</text>
+<rect x="816" y="5836" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5850" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInviteAcceptReadModel</text>
+<rect x="816" y="5860" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5874" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInviteCodeGenerator</text>
+<rect x="816" y="5884" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5898" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInviteNotificationPublisher</text>
+<rect x="816" y="5908" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5922" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInviteReadModel</text>
+<rect x="816" y="5932" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5946" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripMemberReadModel</text>
+<rect x="816" y="5956" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5970" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripQueryRepository</text>
+<rect x="816" y="5980" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="5994" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripReadModel</text>
+<rect x="816" y="6004" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6018" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripSettingsUpdate</text>
+<rect x="816" y="6028" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6042" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripSummaryPage</text>
+<text x="816" y="6068" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="816" y="6080" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6094" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">InviteStatus</text>
+<rect x="816" y="6104" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6118" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">Trip</text>
+<rect x="816" y="6128" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6142" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripAccessRole</text>
+<rect x="816" y="6152" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6166" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripInvite</text>
+<rect x="816" y="6176" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6190" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripMember</text>
+<rect x="816" y="6200" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6214" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripMemberRole</text>
+<rect x="816" y="6224" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6238" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripMemberStatus</text>
+<rect x="816" y="6248" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6262" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripStatus</text>
+<rect x="816" y="6272" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6286" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripTitlePolicy</text>
+<text x="816" y="6312" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.policy</text>
+<rect x="816" y="6324" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6338" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripAccessPolicy</text>
+<text x="816" y="6364" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure</text>
+<rect x="816" y="6376" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6390" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">InviteCodeGenerator</text>
+<text x="816" y="6416" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.mapper</text>
+<rect x="816" y="6428" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6442" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripCommandMapper</text>
+<rect x="816" y="6452" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6466" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripQueryMapper</text>
+<text x="816" y="6492" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence.repository</text>
+<rect x="816" y="6504" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6518" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisTripCommandRepository</text>
+<rect x="816" y="6528" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="826" y="6542" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">MyBatisTripQueryRepository</text>
+</g>
+<g>
+<rect x="1184" y="5586" width="360" height="806" rx="12" fill="#ffffff" stroke="#cfd9ea"/>
+<rect x="1184" y="5586" width="360" height="38" rx="12" fill="#eaf2ff" stroke="#cfd9ea"/>
+<text x="1200" y="5611" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f4fb8">user</text>
+<text x="1200" y="5648" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">api</text>
+<rect x="1200" y="5660" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5674" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserController</text>
+<text x="1200" y="5700" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application</text>
+<rect x="1200" y="5712" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5726" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserSearchService</text>
+<text x="1200" y="5752" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.handler</text>
+<rect x="1200" y="5764" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5778" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GetMySettingsQueryHandler</text>
+<rect x="1200" y="5788" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5802" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">GetUserPublicProfileQueryHandler</text>
+<rect x="1200" y="5812" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5826" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">RequestAccountDeletionCommandHandler</text>
+<rect x="1200" y="5836" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5850" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">SearchUsersQueryHandler</text>
+<rect x="1200" y="5860" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5874" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpdateMeCommandHandler</text>
+<rect x="1200" y="5884" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5898" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UpdateMySettingsCommandHandler</text>
+<text x="1200" y="5924" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">application.service</text>
+<rect x="1200" y="5936" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5950" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">ActiveOwnerTripChecker</text>
+<rect x="1200" y="5960" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="5974" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">TripActiveOwnerTripChecker</text>
+<text x="1200" y="6000" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.model</text>
+<rect x="1200" y="6012" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6026" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserException</text>
+<text x="1200" y="6052" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">domain.policy</text>
+<rect x="1200" y="6064" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6078" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserProfilePolicy</text>
+<rect x="1200" y="6088" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6102" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserSettingsPolicy</text>
+<text x="1200" y="6128" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800" fill="#5c6c83">infrastructure.persistence</text>
+<rect x="1200" y="6140" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6154" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserAccountCommandMapper</text>
+<rect x="1200" y="6164" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6178" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserMeMapper</text>
+<rect x="1200" y="6188" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6202" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserMeSettingsMapper</text>
+<rect x="1200" y="6212" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6226" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserPublicProfileMapper</text>
+<rect x="1200" y="6236" width="328" height="20" rx="5" fill="#fbfdff" stroke="#e3e9f3"/>
+<text x="1210" y="6250" font-family="Inter, Arial, sans-serif" font-size="11" fill="#1f2937">UserSearchMapper</text>
+</g>
+</svg>
