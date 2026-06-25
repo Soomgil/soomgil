@@ -1,0 +1,661 @@
+@startuml
+title Soomgil Backend Class Overview
+left to right direction
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+hide members
+hide circle
+
+' Generated from backend/src/main/java/com/soomgil
+' Fields, methods, DTOs, request/response objects, SQL row models, commands, and queries are intentionally omitted.
+
+package "(root)" {
+  class "SoomgilBackendApplication" as root_SoomgilBackendApplication
+}
+
+package "ai" {
+  package "api" {
+    class "AiController" as ai_api_AiController
+  }
+  package "application" {
+    class "AiAddPlaceTools" as ai_application_AiAddPlaceTools
+    class "AiAddRecommendedPlacesTools" as ai_application_AiAddRecommendedPlacesTools
+    class "AiChatService" as ai_application_AiChatService
+    class "AiChecklistTools" as ai_application_AiChecklistTools
+    class "AiDeleteItineraryItemTools" as ai_application_AiDeleteItineraryItemTools
+    class "AiExecutableTools" as ai_application_AiExecutableTools
+    class "AiFilterPlacesTools" as ai_application_AiFilterPlacesTools
+    class "AiGenerateChecklistTools" as ai_application_AiGenerateChecklistTools
+    class "AiGuideModel" as ai_application_AiGuideModel
+    class "AiGuideReply" as ai_application_AiGuideReply
+    class "AiIntent" as ai_application_AiIntent
+    class "AiIntentDecision" as ai_application_AiIntentDecision
+    class "AiItineraryReadTools" as ai_application_AiItineraryReadTools
+    class "AiItineraryToolService" as ai_application_AiItineraryToolService
+    class "AiMoveItineraryItemTools" as ai_application_AiMoveItineraryItemTools
+    class "AiNoteTools" as ai_application_AiNoteTools
+    class "AiOptimizeRouteTools" as ai_application_AiOptimizeRouteTools
+    class "AiPlaceRecommendationTools" as ai_application_AiPlaceRecommendationTools
+    class "AiPlaceSearchTools" as ai_application_AiPlaceSearchTools
+    class "AiPlainTextFormatter" as ai_application_AiPlainTextFormatter
+    class "AiSummarizeItineraryTools" as ai_application_AiSummarizeItineraryTools
+    class "AiToolAuditService" as ai_application_AiToolAuditService
+    class "AiToolSupport" as ai_application_AiToolSupport
+    class "AiTripContext" as ai_application_AiTripContext
+    class "AiTripContextService" as ai_application_AiTripContextService
+    class "AiTripToolsFactory" as ai_application_AiTripToolsFactory
+    class "LocalFallbackAiGuideModel" as ai_application_LocalFallbackAiGuideModel
+  }
+  package "infrastructure.external" {
+    class "AiModelConfiguration" as ai_infrastructure_external_AiModelConfiguration
+    class "GmsGeminiClientConfiguration" as ai_infrastructure_external_GmsGeminiClientConfiguration
+    class "SpringAiGuideModel" as ai_infrastructure_external_SpringAiGuideModel
+  }
+  package "infrastructure.persistence" {
+    class "AiChatMapper" as ai_infrastructure_persistence_AiChatMapper
+  }
+}
+
+package "auth" {
+  package "api" {
+    class "AuthController" as auth_api_AuthController
+  }
+  package "application.handler" {
+    class "FindDisplayNameQueryHandler" as auth_application_handler_FindDisplayNameQueryHandler
+    class "FindUserRolesQueryHandler" as auth_application_handler_FindUserRolesQueryHandler
+    class "GetCurrentUserQueryHandler" as auth_application_handler_GetCurrentUserQueryHandler
+    class "ListPoliciesQueryHandler" as auth_application_handler_ListPoliciesQueryHandler
+    class "ListSecurityEventsQueryHandler" as auth_application_handler_ListSecurityEventsQueryHandler
+    class "ListSessionsQueryHandler" as auth_application_handler_ListSessionsQueryHandler
+    class "LoginCommandHandler" as auth_application_handler_LoginCommandHandler
+    class "LogoutCommandHandler" as auth_application_handler_LogoutCommandHandler
+    class "OAuthLoginCommandHandler" as auth_application_handler_OAuthLoginCommandHandler
+    class "OnboardCommandHandler" as auth_application_handler_OnboardCommandHandler
+    class "RefreshCommandHandler" as auth_application_handler_RefreshCommandHandler
+    class "RegisterCommandHandler" as auth_application_handler_RegisterCommandHandler
+    class "RequestPasswordResetCommandHandler" as auth_application_handler_RequestPasswordResetCommandHandler
+    class "ResetPasswordCommandHandler" as auth_application_handler_ResetPasswordCommandHandler
+    class "RevokeSessionCommandHandler" as auth_application_handler_RevokeSessionCommandHandler
+    class "SendEmailVerificationCommandHandler" as auth_application_handler_SendEmailVerificationCommandHandler
+    class "VerifyEmailCommandHandler" as auth_application_handler_VerifyEmailCommandHandler
+  }
+  package "application.service" {
+    class "AuthTokenService" as auth_application_service_AuthTokenService
+    class "EmailVerificationService" as auth_application_service_EmailVerificationService
+    class "MailService" as auth_application_service_MailService
+    class "OAuthClient" as auth_application_service_OAuthClient
+    class "OAuthProperties" as auth_application_service_OAuthProperties
+    class "PasswordHasher" as auth_application_service_PasswordHasher
+    class "TokenGenerator" as auth_application_service_TokenGenerator
+  }
+  package "domain.model" {
+    class "AuthException" as auth_domain_model_AuthException
+    class "AuthUser" as auth_domain_model_AuthUser
+    class "EmailAddress" as auth_domain_model_EmailAddress
+    class "EmailVerificationToken" as auth_domain_model_EmailVerificationToken
+    class "OAuthIdentity" as auth_domain_model_OAuthIdentity
+    class "PasswordCredential" as auth_domain_model_PasswordCredential
+    class "PasswordResetToken" as auth_domain_model_PasswordResetToken
+    class "PolicyDocumentModel" as auth_domain_model_PolicyDocumentModel
+    class "UserSession" as auth_domain_model_UserSession
+    class "UserStatus" as auth_domain_model_UserStatus
+  }
+  package "infrastructure.persistence" {
+    class "EmailAddressMapper" as auth_infrastructure_persistence_EmailAddressMapper
+    class "EmailVerificationTokenMapper" as auth_infrastructure_persistence_EmailVerificationTokenMapper
+    class "OAuthIdentityMapper" as auth_infrastructure_persistence_OAuthIdentityMapper
+    class "PasswordCredentialMapper" as auth_infrastructure_persistence_PasswordCredentialMapper
+    class "PasswordResetTokenMapper" as auth_infrastructure_persistence_PasswordResetTokenMapper
+    class "PolicyDocumentMapper" as auth_infrastructure_persistence_PolicyDocumentMapper
+    class "SecurityEventMapper" as auth_infrastructure_persistence_SecurityEventMapper
+    class "UserMapper" as auth_infrastructure_persistence_UserMapper
+    class "UserPolicyAcceptanceMapper" as auth_infrastructure_persistence_UserPolicyAcceptanceMapper
+    class "UserProfileMapper" as auth_infrastructure_persistence_UserProfileMapper
+    class "UserSessionMapper" as auth_infrastructure_persistence_UserSessionMapper
+    class "UserSettingsMapper" as auth_infrastructure_persistence_UserSettingsMapper
+  }
+}
+
+package "chat" {
+  package "api" {
+    class "TripChatController" as chat_api_TripChatController
+  }
+  package "application" {
+    class "TripChatService" as chat_application_TripChatService
+  }
+  package "infrastructure.persistence" {
+    class "TripChatMessageMapper" as chat_infrastructure_persistence_TripChatMessageMapper
+  }
+}
+
+package "collaboration" {
+  package "api" {
+    class "CollaborationController" as collaboration_api_CollaborationController
+  }
+  package "application.port" {
+    class "CollaborationCommandEvent" as collaboration_application_port_CollaborationCommandEvent
+    class "CollaborationCommandEventReadModel" as collaboration_application_port_CollaborationCommandEventReadModel
+    class "CollaborationCommandEventRepository" as collaboration_application_port_CollaborationCommandEventRepository
+    class "CollaborationCompensationExecutor" as collaboration_application_port_CollaborationCompensationExecutor
+    class "CollaborationEventBroadcaster" as collaboration_application_port_CollaborationEventBroadcaster
+    class "CollaborationSessionIdProvider" as collaboration_application_port_CollaborationSessionIdProvider
+  }
+  package "infrastructure.persistence.mapper" {
+    class "CollaborationCommandEventMapper" as collaboration_infrastructure_persistence_mapper_CollaborationCommandEventMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisCollaborationCommandEventRepository" as collaboration_infrastructure_persistence_repository_MyBatisCollaborationCommandEventRepository
+  }
+  package "infrastructure.web" {
+    class "HttpCollaborationSessionIdProvider" as collaboration_infrastructure_web_HttpCollaborationSessionIdProvider
+  }
+  package "infrastructure.websocket" {
+    class "CollaborationSessionHeaderInterceptor" as collaboration_infrastructure_websocket_CollaborationSessionHeaderInterceptor
+    class "CollaborationWebSocketSessionRegistry" as collaboration_infrastructure_websocket_CollaborationWebSocketSessionRegistry
+    class "TripSubscriptionInterceptor" as collaboration_infrastructure_websocket_TripSubscriptionInterceptor
+    class "WebSocketCollaborationEventBroadcaster" as collaboration_infrastructure_websocket_WebSocketCollaborationEventBroadcaster
+    class "WebSocketJwtAuthenticationInterceptor" as collaboration_infrastructure_websocket_WebSocketJwtAuthenticationInterceptor
+  }
+}
+
+package "common" {
+  package "api" {
+    class "ApiControllerSupport" as common_api_ApiControllerSupport
+  }
+}
+
+package "community" {
+  package "api" {
+    class "CommunityPostController" as community_api_CommunityPostController
+    class "CommunityReportController" as community_api_CommunityReportController
+    class "ModerationController" as community_api_ModerationController
+  }
+  package "application" {
+    class "CommunitySearchService" as community_application_CommunitySearchService
+  }
+  package "application.config" {
+    class "CommunityModuleConfig" as community_application_config_CommunityModuleConfig
+  }
+  package "application.handler" {
+    class "CreateCommunityCommentCommandHandler" as community_application_handler_CreateCommunityCommentCommandHandler
+    class "CreateCommunityPostCommandHandler" as community_application_handler_CreateCommunityPostCommandHandler
+    class "CreateContentReportCommandHandler" as community_application_handler_CreateContentReportCommandHandler
+    class "CreateModerationActionCommandHandler" as community_application_handler_CreateModerationActionCommandHandler
+    class "DeleteCommunityCommentCommandHandler" as community_application_handler_DeleteCommunityCommentCommandHandler
+    class "DeleteCommunityPostCommandHandler" as community_application_handler_DeleteCommunityPostCommandHandler
+    class "GetCommunityPostQueryHandler" as community_application_handler_GetCommunityPostQueryHandler
+    class "LikePostCommandHandler" as community_application_handler_LikePostCommandHandler
+    class "ListCommentsQueryHandler" as community_application_handler_ListCommentsQueryHandler
+    class "ListCommunityPostsQueryHandler" as community_application_handler_ListCommunityPostsQueryHandler
+    class "ListModerationActionsQueryHandler" as community_application_handler_ListModerationActionsQueryHandler
+    class "ListReportReasonsQueryHandler" as community_application_handler_ListReportReasonsQueryHandler
+    class "ListReportsQueryHandler" as community_application_handler_ListReportsQueryHandler
+    class "ResolveReportCommandHandler" as community_application_handler_ResolveReportCommandHandler
+    class "RotatePostShareTokenCommandHandler" as community_application_handler_RotatePostShareTokenCommandHandler
+    class "UnlikePostCommandHandler" as community_application_handler_UnlikePostCommandHandler
+    class "UpdateCommunityPostCommandHandler" as community_application_handler_UpdateCommunityPostCommandHandler
+  }
+  package "application.service" {
+    class "CommunityPostAssembler" as community_application_service_CommunityPostAssembler
+    class "CommunityPostSnapshotCodec" as community_application_service_CommunityPostSnapshotCodec
+    class "CommunityReportAssembler" as community_application_service_CommunityReportAssembler
+    class "ModerationAccessGuard" as community_application_service_ModerationAccessGuard
+    class "ModerationTargetService" as community_application_service_ModerationTargetService
+    class "RetripCommunityPostService" as community_application_service_RetripCommunityPostService
+    class "ShareTokenService" as community_application_service_ShareTokenService
+    class "TripItinerarySnapshotChecker" as community_application_service_TripItinerarySnapshotChecker
+    class "TripSnapshotChecker" as community_application_service_TripSnapshotChecker
+  }
+  package "domain.model" {
+    class "CommunityException" as community_domain_model_CommunityException
+  }
+  package "domain.policy" {
+    class "CommunityPostPolicy" as community_domain_policy_CommunityPostPolicy
+  }
+  package "infrastructure.persistence.mapper" {
+    class "CommunityCommentMapper" as community_infrastructure_persistence_mapper_CommunityCommentMapper
+    class "CommunityPostMapper" as community_infrastructure_persistence_mapper_CommunityPostMapper
+    class "ContentReportMapper" as community_infrastructure_persistence_mapper_ContentReportMapper
+    class "HashtagMapper" as community_infrastructure_persistence_mapper_HashtagMapper
+    class "ModerationActionMapper" as community_infrastructure_persistence_mapper_ModerationActionMapper
+    class "PostHashtagMapper" as community_infrastructure_persistence_mapper_PostHashtagMapper
+    class "PostLikeMapper" as community_infrastructure_persistence_mapper_PostLikeMapper
+    class "PostMediaMapper" as community_infrastructure_persistence_mapper_PostMediaMapper
+    class "PostRetripMapper" as community_infrastructure_persistence_mapper_PostRetripMapper
+    class "ReportReasonMapper" as community_infrastructure_persistence_mapper_ReportReasonMapper
+  }
+}
+
+package "geo" {
+  package "api" {
+    class "GeoAdminController" as geo_api_GeoAdminController
+    class "GeoController" as geo_api_GeoController
+  }
+  package "application.port" {
+    class "LegalRegionCommandRepository" as geo_application_port_LegalRegionCommandRepository
+    class "LegalRegionPage" as geo_application_port_LegalRegionPage
+    class "LegalRegionQueryRepository" as geo_application_port_LegalRegionQueryRepository
+    class "LegalRegionReadModel" as geo_application_port_LegalRegionReadModel
+    class "LegalRegionSyncLog" as geo_application_port_LegalRegionSyncLog
+    class "LegalRegionUpsert" as geo_application_port_LegalRegionUpsert
+  }
+  package "domain.model" {
+    class "LegalRegionLevel" as geo_domain_model_LegalRegionLevel
+  }
+  package "infrastructure.persistence.mapper" {
+    class "LegalRegionCommandMapper" as geo_infrastructure_persistence_mapper_LegalRegionCommandMapper
+    class "LegalRegionQueryMapper" as geo_infrastructure_persistence_mapper_LegalRegionQueryMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisLegalRegionCommandRepository" as geo_infrastructure_persistence_repository_MyBatisLegalRegionCommandRepository
+    class "MyBatisLegalRegionQueryRepository" as geo_infrastructure_persistence_repository_MyBatisLegalRegionQueryRepository
+  }
+}
+
+package "itinerary" {
+  package "api" {
+    class "ItineraryController" as itinerary_api_ItineraryController
+  }
+  package "application.port" {
+    class "ItineraryCommandRepository" as itinerary_application_port_ItineraryCommandRepository
+    class "ItineraryDayCreate" as itinerary_application_port_ItineraryDayCreate
+    class "ItineraryDayOrderUpdate" as itinerary_application_port_ItineraryDayOrderUpdate
+    class "ItineraryDayReadModel" as itinerary_application_port_ItineraryDayReadModel
+    class "ItineraryDayUpdate" as itinerary_application_port_ItineraryDayUpdate
+    class "ItineraryItemCreate" as itinerary_application_port_ItineraryItemCreate
+    class "ItineraryItemOrderUpdate" as itinerary_application_port_ItineraryItemOrderUpdate
+    class "ItineraryItemReadModel" as itinerary_application_port_ItineraryItemReadModel
+    class "ItineraryItemUpdate" as itinerary_application_port_ItineraryItemUpdate
+    class "ItineraryQueryRepository" as itinerary_application_port_ItineraryQueryRepository
+    class "MapDrawingCreate" as itinerary_application_port_MapDrawingCreate
+    class "MapDrawingReadModel" as itinerary_application_port_MapDrawingReadModel
+    class "MapDrawingSnapshotUpdate" as itinerary_application_port_MapDrawingSnapshotUpdate
+    class "MapDrawingUpdate" as itinerary_application_port_MapDrawingUpdate
+    class "MapMatchingClient" as itinerary_application_port_MapMatchingClient
+    class "MapMatchingException" as itinerary_application_port_MapMatchingException
+    class "RouteCoordinate" as itinerary_application_port_RouteCoordinate
+    class "RouteMatchRequestLog" as itinerary_application_port_RouteMatchRequestLog
+    class "RouteSegmentCreate" as itinerary_application_port_RouteSegmentCreate
+    class "RouteSegmentReadModel" as itinerary_application_port_RouteSegmentReadModel
+    class "RouteSegmentSnapshotUpdate" as itinerary_application_port_RouteSegmentSnapshotUpdate
+    class "RouteSegmentUpdate" as itinerary_application_port_RouteSegmentUpdate
+  }
+  package "domain.model" {
+    class "DrawingType" as itinerary_domain_model_DrawingType
+    class "GeometryFormat" as itinerary_domain_model_GeometryFormat
+    class "ItineraryDayGroupType" as itinerary_domain_model_ItineraryDayGroupType
+    class "ItineraryItemType" as itinerary_domain_model_ItineraryItemType
+    class "RouteMode" as itinerary_domain_model_RouteMode
+  }
+  package "infrastructure.external" {
+    class "MapboxDirectionsClient" as itinerary_infrastructure_external_MapboxDirectionsClient
+    class "MapboxProperties" as itinerary_infrastructure_external_MapboxProperties
+  }
+  package "infrastructure.persistence.mapper" {
+    class "ItineraryCommandMapper" as itinerary_infrastructure_persistence_mapper_ItineraryCommandMapper
+    class "ItineraryQueryMapper" as itinerary_infrastructure_persistence_mapper_ItineraryQueryMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisItineraryCommandRepository" as itinerary_infrastructure_persistence_repository_MyBatisItineraryCommandRepository
+    class "MyBatisItineraryQueryRepository" as itinerary_infrastructure_persistence_repository_MyBatisItineraryQueryRepository
+  }
+}
+
+package "media" {
+  package "api" {
+    class "MediaController" as media_api_MediaController
+  }
+  package "application" {
+    class "MediaFileQueryService" as media_application_MediaFileQueryService
+  }
+  package "application.port" {
+    class "LinkedMediaResourceAuthorizer" as media_application_port_LinkedMediaResourceAuthorizer
+    class "MediaFileRepository" as media_application_port_MediaFileRepository
+  }
+  package "application.service" {
+    class "MediaStorageCleanupService" as media_application_service_MediaStorageCleanupService
+  }
+  package "domain.model" {
+    class "MediaFileMetadata" as media_domain_model_MediaFileMetadata
+    class "MediaPurpose" as media_domain_model_MediaPurpose
+  }
+  package "domain.policy" {
+    class "MediaObjectKeyPolicy" as media_domain_policy_MediaObjectKeyPolicy
+    class "MediaUploadPolicy" as media_domain_policy_MediaUploadPolicy
+  }
+  package "infrastructure.persistence" {
+    class "MediaFileLookupMapper" as media_infrastructure_persistence_MediaFileLookupMapper
+  }
+  package "infrastructure.persistence.mapper" {
+    class "MediaFileMapper" as media_infrastructure_persistence_mapper_MediaFileMapper
+    class "MediaUploadIntentMapper" as media_infrastructure_persistence_mapper_MediaUploadIntentMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisMediaFileRepository" as media_infrastructure_persistence_repository_MyBatisMediaFileRepository
+    class "SqlLinkedMediaResourceAuthorizer" as media_infrastructure_persistence_repository_SqlLinkedMediaResourceAuthorizer
+  }
+}
+
+package "notification" {
+  package "api" {
+    class "NotificationController" as notification_api_NotificationController
+  }
+  package "application" {
+    class "NotificationService" as notification_application_NotificationService
+    class "TripInviteNotificationPublisherAdapter" as notification_application_TripInviteNotificationPublisherAdapter
+  }
+  package "infrastructure.persistence" {
+    class "NotificationMapper" as notification_infrastructure_persistence_NotificationMapper
+  }
+}
+
+package "place" {
+  package "api" {
+    class "PlaceAccessibilityController" as place_api_PlaceAccessibilityController
+    class "PlaceController" as place_api_PlaceController
+  }
+  package "application.port" {
+    class "PlaceIntroRaw" as place_application_port_PlaceIntroRaw
+    class "TourismPlaceFeedClient" as place_application_port_TourismPlaceFeedClient
+  }
+  package "application.service" {
+    class "KtoContentTypeResolver" as place_application_service_KtoContentTypeResolver
+    class "PlaceAccessibilityCacheBackend" as place_application_service_PlaceAccessibilityCacheBackend
+    class "PlaceAccessibilityCacheService" as place_application_service_PlaceAccessibilityCacheService
+    class "PlaceAccessibilityNormalizer" as place_application_service_PlaceAccessibilityNormalizer
+  }
+  package "infrastructure.external" {
+    class "KtoAwardPhotoClient" as place_infrastructure_external_KtoAwardPhotoClient
+    class "KtoPlaceDescriptionCache" as place_infrastructure_external_KtoPlaceDescriptionCache
+    class "KtoPlacePhotoCache" as place_infrastructure_external_KtoPlacePhotoCache
+    class "KtoTourismPlaceClient" as place_infrastructure_external_KtoTourismPlaceClient
+    class "KtoTourismPlaceException" as place_infrastructure_external_KtoTourismPlaceException
+    class "KtoTourismPlaceProperties" as place_infrastructure_external_KtoTourismPlaceProperties
+  }
+  package "infrastructure.persistence.mapper" {
+    class "TourismSourcePlaceDetailMapper" as place_infrastructure_persistence_mapper_TourismSourcePlaceDetailMapper
+    class "TourismSourcePlaceImageMapper" as place_infrastructure_persistence_mapper_TourismSourcePlaceImageMapper
+    class "TourismSourcePlaceSearchMapper" as place_infrastructure_persistence_mapper_TourismSourcePlaceSearchMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "TourismSourcePlaceDetailRepository" as place_infrastructure_persistence_repository_TourismSourcePlaceDetailRepository
+    class "TourismSourcePlaceImageRepository" as place_infrastructure_persistence_repository_TourismSourcePlaceImageRepository
+    class "TourismSourcePlaceSearchRepository" as place_infrastructure_persistence_repository_TourismSourcePlaceSearchRepository
+  }
+}
+
+package "planning" {
+  package "api" {
+    class "PlanningController" as planning_api_PlanningController
+  }
+  package "application.config" {
+    class "PlanningModuleConfig" as planning_application_config_PlanningModuleConfig
+  }
+  package "application.event" {
+    class "ChecklistDeletedEvent" as planning_application_event_ChecklistDeletedEvent
+    class "ChecklistItemCreatedEvent" as planning_application_event_ChecklistItemCreatedEvent
+    class "ChecklistItemDeletedEvent" as planning_application_event_ChecklistItemDeletedEvent
+    class "ChecklistItemsReorderedEvent" as planning_application_event_ChecklistItemsReorderedEvent
+    class "ChecklistItemUpdatedEvent" as planning_application_event_ChecklistItemUpdatedEvent
+    class "ChecklistMemberStatusUpdatedEvent" as planning_application_event_ChecklistMemberStatusUpdatedEvent
+    class "ChecklistUpsertedEvent" as planning_application_event_ChecklistUpsertedEvent
+    class "NoteDeletedEvent" as planning_application_event_NoteDeletedEvent
+    class "NoteUpsertedEvent" as planning_application_event_NoteUpsertedEvent
+    class "PlanningRealtimeEvent" as planning_application_event_PlanningRealtimeEvent
+  }
+  package "application.handler" {
+    class "CreateChecklistItemCommandHandler" as planning_application_handler_CreateChecklistItemCommandHandler
+    class "DeleteChecklistCommandHandler" as planning_application_handler_DeleteChecklistCommandHandler
+    class "DeleteChecklistItemCommandHandler" as planning_application_handler_DeleteChecklistItemCommandHandler
+    class "DeleteNoteCommandHandler" as planning_application_handler_DeleteNoteCommandHandler
+    class "GetNoteQueryHandler" as planning_application_handler_GetNoteQueryHandler
+    class "ListChecklistsQueryHandler" as planning_application_handler_ListChecklistsQueryHandler
+    class "ReorderChecklistItemsCommandHandler" as planning_application_handler_ReorderChecklistItemsCommandHandler
+    class "UpdateChecklistItemCommandHandler" as planning_application_handler_UpdateChecklistItemCommandHandler
+    class "UpdateChecklistMemberStatusCommandHandler" as planning_application_handler_UpdateChecklistMemberStatusCommandHandler
+    class "UpsertChecklistCommandHandler" as planning_application_handler_UpsertChecklistCommandHandler
+    class "UpsertNoteCommandHandler" as planning_application_handler_UpsertNoteCommandHandler
+  }
+  package "application.service" {
+    class "PlanningAssembler" as planning_application_service_PlanningAssembler
+    class "PlanningEventBroadcaster" as planning_application_service_PlanningEventBroadcaster
+    class "TripMemberAccessChecker" as planning_application_service_TripMemberAccessChecker
+    class "TripMemberAccessCheckerAdapter" as planning_application_service_TripMemberAccessCheckerAdapter
+  }
+  package "domain.model" {
+    class "PlanningException" as planning_domain_model_PlanningException
+  }
+  package "domain.policy" {
+    class "PlanningPolicy" as planning_domain_policy_PlanningPolicy
+  }
+  package "infrastructure.persistence.mapper" {
+    class "ChecklistItemMapper" as planning_infrastructure_persistence_mapper_ChecklistItemMapper
+    class "ChecklistMapper" as planning_infrastructure_persistence_mapper_ChecklistMapper
+    class "ChecklistMemberStatusMapper" as planning_infrastructure_persistence_mapper_ChecklistMemberStatusMapper
+    class "NoteMapper" as planning_infrastructure_persistence_mapper_NoteMapper
+  }
+  package "infrastructure.websocket" {
+    class "WebSocketPlanningEventBroadcaster" as planning_infrastructure_websocket_WebSocketPlanningEventBroadcaster
+  }
+}
+
+package "preference" {
+  package "api" {
+    class "PreferenceController" as preference_api_PreferenceController
+    class "SwipeController" as preference_api_SwipeController
+  }
+  package "application.service" {
+    class "DefaultSwipeTagEnrichmentQueue" as preference_application_service_DefaultSwipeTagEnrichmentQueue
+    class "PlaceTagExtractor" as preference_application_service_PlaceTagExtractor
+    class "SwipeTagEnrichmentProcessor" as preference_application_service_SwipeTagEnrichmentProcessor
+    class "SwipeTagEnrichmentQueue" as preference_application_service_SwipeTagEnrichmentQueue
+    class "SwipeTagPreparation" as preference_application_service_SwipeTagPreparation
+    class "SwipeTagPreparationService" as preference_application_service_SwipeTagPreparationService
+  }
+  package "domain.policy" {
+    class "DefaultSyntheticPersonaCatalog" as preference_domain_policy_DefaultSyntheticPersonaCatalog
+    class "PlaceTagEvidence" as preference_domain_policy_PlaceTagEvidence
+    class "PlaceTagEvidenceCalculator" as preference_domain_policy_PlaceTagEvidenceCalculator
+    class "PlaceTagEvidenceInput" as preference_domain_policy_PlaceTagEvidenceInput
+    class "PlaceTagSelectionDecision" as preference_domain_policy_PlaceTagSelectionDecision
+    class "PlaceTagSelectionInput" as preference_domain_policy_PlaceTagSelectionInput
+    class "PlaceTagSelector" as preference_domain_policy_PlaceTagSelector
+    class "PreferenceDiscriminationCalculator" as preference_domain_policy_PreferenceDiscriminationCalculator
+    class "RealUserServingTransitionPolicy" as preference_domain_policy_RealUserServingTransitionPolicy
+    class "RecommendationQualityEvaluator" as preference_domain_policy_RecommendationQualityEvaluator
+    class "RecommendationQualityMetrics" as preference_domain_policy_RecommendationQualityMetrics
+    class "RecommendationScorer" as preference_domain_policy_RecommendationScorer
+    class "RecommendationTagScoreInput" as preference_domain_policy_RecommendationTagScoreInput
+    class "RecommendationUpliftCalculator" as preference_domain_policy_RecommendationUpliftCalculator
+    class "SyntheticPersonaCatalogValidator" as preference_domain_policy_SyntheticPersonaCatalogValidator
+    class "SyntheticPersonaDefinition" as preference_domain_policy_SyntheticPersonaDefinition
+    class "SyntheticPersonaNoiseInput" as preference_domain_policy_SyntheticPersonaNoiseInput
+    class "SyntheticPersonaNoisePolicy" as preference_domain_policy_SyntheticPersonaNoisePolicy
+    class "SyntheticPersonaPlaceScore" as preference_domain_policy_SyntheticPersonaPlaceScore
+    class "SyntheticPersonaPlaceScoreCalculator" as preference_domain_policy_SyntheticPersonaPlaceScoreCalculator
+    class "SyntheticPersonaSwipeGenerator" as preference_domain_policy_SyntheticPersonaSwipeGenerator
+    class "SyntheticPersonaSwipeInput" as preference_domain_policy_SyntheticPersonaSwipeInput
+    class "SyntheticPlaceTagInput" as preference_domain_policy_SyntheticPlaceTagInput
+    class "SyntheticSwipeReaction" as preference_domain_policy_SyntheticSwipeReaction
+    class "TagPreferenceStatistics" as preference_domain_policy_TagPreferenceStatistics
+    class "TagStatisticSource" as preference_domain_policy_TagStatisticSource
+    class "UserPreferenceScoreCalculator" as preference_domain_policy_UserPreferenceScoreCalculator
+    class "UserPreferenceWeightCalculator" as preference_domain_policy_UserPreferenceWeightCalculator
+  }
+  package "infrastructure.external" {
+    class "GeminiImagePreprocessor" as preference_infrastructure_external_GeminiImagePreprocessor
+    class "SpringAiPlaceTagExtractor" as preference_infrastructure_external_SpringAiPlaceTagExtractor
+  }
+  package "infrastructure.persistence.mapper" {
+    class "PreferencePlaceTagEnrichmentMapper" as preference_infrastructure_persistence_mapper_PreferencePlaceTagEnrichmentMapper
+    class "PreferenceRecommendationMapper" as preference_infrastructure_persistence_mapper_PreferenceRecommendationMapper
+    class "PreferenceSavedPlaceMapper" as preference_infrastructure_persistence_mapper_PreferenceSavedPlaceMapper
+    class "PreferenceSwipeFeedMapper" as preference_infrastructure_persistence_mapper_PreferenceSwipeFeedMapper
+    class "PreferenceSwipeReactionMapper" as preference_infrastructure_persistence_mapper_PreferenceSwipeReactionMapper
+    class "PreferenceSyntheticPersonaMapper" as preference_infrastructure_persistence_mapper_PreferenceSyntheticPersonaMapper
+    class "PreferenceTagStatisticsMapper" as preference_infrastructure_persistence_mapper_PreferenceTagStatisticsMapper
+    class "PreferenceUserPreferenceMapper" as preference_infrastructure_persistence_mapper_PreferenceUserPreferenceMapper
+  }
+}
+
+package "record" {
+  package "api" {
+    class "GlobalTripRecordController" as record_api_GlobalTripRecordController
+    class "TripRecordController" as record_api_TripRecordController
+  }
+  package "application.handler" {
+    class "TripRecordService" as record_application_handler_TripRecordService
+  }
+  package "application.port" {
+    class "ItineraryReferenceRepository" as record_application_port_ItineraryReferenceRepository
+    class "RecordMediaAccessRepository" as record_application_port_RecordMediaAccessRepository
+    class "TripRecordCommandRepository" as record_application_port_TripRecordCommandRepository
+    class "TripRecordCreateRequestReadModel" as record_application_port_TripRecordCreateRequestReadModel
+    class "TripRecordDayReadModel" as record_application_port_TripRecordDayReadModel
+    class "TripRecordEntryCreate" as record_application_port_TripRecordEntryCreate
+    class "TripRecordEntryReadModel" as record_application_port_TripRecordEntryReadModel
+    class "TripRecordEntryUpdate" as record_application_port_TripRecordEntryUpdate
+    class "TripRecordMediaReadModel" as record_application_port_TripRecordMediaReadModel
+    class "TripRecordPage" as record_application_port_TripRecordPage
+    class "TripRecordPhotoPage" as record_application_port_TripRecordPhotoPage
+    class "TripRecordPhotoReadModel" as record_application_port_TripRecordPhotoReadModel
+    class "TripRecordPhotoSummaryReadModel" as record_application_port_TripRecordPhotoSummaryReadModel
+    class "TripRecordPhotoUrlReadModel" as record_application_port_TripRecordPhotoUrlReadModel
+    class "TripRecordQueryRepository" as record_application_port_TripRecordQueryRepository
+  }
+  package "infrastructure.integration" {
+    class "ItineraryReferenceRepositoryAdapter" as record_infrastructure_integration_ItineraryReferenceRepositoryAdapter
+  }
+  package "infrastructure.persistence.mapper" {
+    class "RecordMediaAccessMapper" as record_infrastructure_persistence_mapper_RecordMediaAccessMapper
+    class "TripRecordCommandMapper" as record_infrastructure_persistence_mapper_TripRecordCommandMapper
+    class "TripRecordQueryMapper" as record_infrastructure_persistence_mapper_TripRecordQueryMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisRecordMediaAccessRepository" as record_infrastructure_persistence_repository_MyBatisRecordMediaAccessRepository
+    class "MyBatisTripRecordCommandRepository" as record_infrastructure_persistence_repository_MyBatisTripRecordCommandRepository
+    class "MyBatisTripRecordQueryRepository" as record_infrastructure_persistence_repository_MyBatisTripRecordQueryRepository
+  }
+}
+
+package "search" {
+  package "api" {
+    class "SearchController" as search_api_SearchController
+  }
+  package "application" {
+    class "UnifiedSearchQueryHandler" as search_application_UnifiedSearchQueryHandler
+  }
+}
+
+package "social" {
+  package "api" {
+    class "SocialController" as social_api_SocialController
+  }
+  package "application" {
+    class "SocialFollowService" as social_application_SocialFollowService
+  }
+  package "application.port" {
+    class "SocialFollowRepository" as social_application_port_SocialFollowRepository
+  }
+  package "infrastructure.persistence" {
+    class "UserFollowMapper" as social_infrastructure_persistence_UserFollowMapper
+  }
+  package "infrastructure.persistence.mapper" {
+    class "SocialFolloweePlaceReactionMapper" as social_infrastructure_persistence_mapper_SocialFolloweePlaceReactionMapper
+    class "SocialFollowMapper" as social_infrastructure_persistence_mapper_SocialFollowMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisSocialFollowRepository" as social_infrastructure_persistence_repository_MyBatisSocialFollowRepository
+  }
+}
+
+package "tourismsource" {
+  package "matching.infrastructure" {
+    class "TourismSourceContestAwardPhotoMatchingMapper" as tourismsource_matching_infrastructure_TourismSourceContestAwardPhotoMatchingMapper
+  }
+}
+
+package "trip" {
+  package "api" {
+    class "TripController" as trip_api_TripController
+    class "TripInviteController" as trip_api_TripInviteController
+  }
+  package "application" {
+    class "TripSearchService" as trip_application_TripSearchService
+  }
+  package "application.port" {
+    class "TripAccessSnapshot" as trip_application_port_TripAccessSnapshot
+    class "TripCommandRepository" as trip_application_port_TripCommandRepository
+    class "TripInviteAcceptReadModel" as trip_application_port_TripInviteAcceptReadModel
+    class "TripInviteCodeGenerator" as trip_application_port_TripInviteCodeGenerator
+    class "TripInviteNotificationPublisher" as trip_application_port_TripInviteNotificationPublisher
+    class "TripInviteReadModel" as trip_application_port_TripInviteReadModel
+    class "TripMemberReadModel" as trip_application_port_TripMemberReadModel
+    class "TripQueryRepository" as trip_application_port_TripQueryRepository
+    class "TripReadModel" as trip_application_port_TripReadModel
+    class "TripSettingsUpdate" as trip_application_port_TripSettingsUpdate
+    class "TripSummaryPage" as trip_application_port_TripSummaryPage
+  }
+  package "domain.model" {
+    class "InviteStatus" as trip_domain_model_InviteStatus
+    class "Trip" as trip_domain_model_Trip
+    class "TripAccessRole" as trip_domain_model_TripAccessRole
+    class "TripInvite" as trip_domain_model_TripInvite
+    class "TripMember" as trip_domain_model_TripMember
+    class "TripMemberRole" as trip_domain_model_TripMemberRole
+    class "TripMemberStatus" as trip_domain_model_TripMemberStatus
+    class "TripStatus" as trip_domain_model_TripStatus
+    class "TripTitlePolicy" as trip_domain_model_TripTitlePolicy
+  }
+  package "domain.policy" {
+    class "TripAccessPolicy" as trip_domain_policy_TripAccessPolicy
+  }
+  package "infrastructure" {
+    class "InviteCodeGenerator" as trip_infrastructure_InviteCodeGenerator
+  }
+  package "infrastructure.persistence.mapper" {
+    class "TripCommandMapper" as trip_infrastructure_persistence_mapper_TripCommandMapper
+    class "TripQueryMapper" as trip_infrastructure_persistence_mapper_TripQueryMapper
+  }
+  package "infrastructure.persistence.repository" {
+    class "MyBatisTripCommandRepository" as trip_infrastructure_persistence_repository_MyBatisTripCommandRepository
+    class "MyBatisTripQueryRepository" as trip_infrastructure_persistence_repository_MyBatisTripQueryRepository
+  }
+}
+
+package "user" {
+  package "api" {
+    class "UserController" as user_api_UserController
+  }
+  package "application" {
+    class "UserSearchService" as user_application_UserSearchService
+  }
+  package "application.handler" {
+    class "GetMySettingsQueryHandler" as user_application_handler_GetMySettingsQueryHandler
+    class "GetUserPublicProfileQueryHandler" as user_application_handler_GetUserPublicProfileQueryHandler
+    class "RequestAccountDeletionCommandHandler" as user_application_handler_RequestAccountDeletionCommandHandler
+    class "SearchUsersQueryHandler" as user_application_handler_SearchUsersQueryHandler
+    class "UpdateMeCommandHandler" as user_application_handler_UpdateMeCommandHandler
+    class "UpdateMySettingsCommandHandler" as user_application_handler_UpdateMySettingsCommandHandler
+  }
+  package "application.service" {
+    class "ActiveOwnerTripChecker" as user_application_service_ActiveOwnerTripChecker
+    class "TripActiveOwnerTripChecker" as user_application_service_TripActiveOwnerTripChecker
+  }
+  package "domain.model" {
+    class "UserException" as user_domain_model_UserException
+  }
+  package "domain.policy" {
+    class "UserProfilePolicy" as user_domain_policy_UserProfilePolicy
+    class "UserSettingsPolicy" as user_domain_policy_UserSettingsPolicy
+  }
+  package "infrastructure.persistence" {
+    class "UserAccountCommandMapper" as user_infrastructure_persistence_UserAccountCommandMapper
+    class "UserMeMapper" as user_infrastructure_persistence_UserMeMapper
+    class "UserMeSettingsMapper" as user_infrastructure_persistence_UserMeSettingsMapper
+    class "UserPublicProfileMapper" as user_infrastructure_persistence_UserPublicProfileMapper
+    class "UserSearchMapper" as user_infrastructure_persistence_UserSearchMapper
+  }
+}
+
+@enduml
