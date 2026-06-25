@@ -1501,109 +1501,109 @@ Table trip.trips {
   }
 }
 
-Ref: ai.ai_chat_messages.requester_user_id > auth.users.id [name: 'ai_chat_messages_requester_user_id_fkey']
-Ref: ai.ai_chat_messages.session_id > ai.ai_chat_sessions.id [name: 'ai_chat_messages_session_id_fkey', delete: cascade]
-Ref: ai.ai_chat_sessions.trip_id > trip.trips.id [name: 'ai_chat_sessions_trip_id_fkey', delete: cascade]
-Ref: ai.ai_tool_calls.request_message_id > ai.ai_chat_messages.id [name: 'ai_tool_calls_request_message_id_fkey']
-Ref: ai.ai_tool_calls.requested_by_user_id > auth.users.id [name: 'ai_tool_calls_requested_by_user_id_fkey']
-Ref: ai.ai_tool_calls.result_message_id > ai.ai_chat_messages.id [name: 'ai_tool_calls_result_message_id_fkey']
-Ref: ai.ai_tool_calls.session_id > ai.ai_chat_sessions.id [name: 'ai_tool_calls_session_id_fkey', delete: cascade]
-Ref: ai.ai_tool_calls.trip_id > trip.trips.id [name: 'ai_tool_calls_trip_id_fkey', delete: cascade]
-Ref: auth.user_auth_identities.provider_id > auth.auth_providers.id [name: 'user_oauth_identities_provider_id_fkey']
-Ref: auth.user_auth_identities.user_id > auth.users.id [name: 'user_oauth_identities_user_id_fkey']
-Ref: auth.user_email_addresses.user_id > auth.users.id [name: 'user_email_addresses_user_id_fkey']
-Ref: auth.user_email_verification_tokens.user_email_address_id > auth.user_email_addresses.id [name: 'email_verification_tokens_email_address_id_fkey']
-Ref: auth.user_password_credentials.user_id > auth.users.id [name: 'user_password_credentials_user_id_fkey']
-Ref: auth.user_password_reset_tokens.user_id > auth.users.id [name: 'password_reset_tokens_user_id_fkey']
-Ref: auth.user_policy_acceptances.policy_document_id > auth.policy_documents.id [name: 'user_policy_acceptances_policy_document_id_fkey']
-Ref: auth.user_policy_acceptances.user_id > auth.users.id [name: 'user_policy_acceptances_user_id_fkey']
-Ref: auth.user_profiles.user_id > auth.users.id [name: 'user_profiles_user_id_fkey']
-Ref: auth.user_roles.granted_by_user_id > auth.users.id [name: 'user_roles_granted_by_user_id_fkey']
-Ref: auth.user_roles.revoked_by_user_id > auth.users.id [name: 'user_roles_revoked_by_user_id_fkey']
-Ref: auth.user_roles.role_id > auth.roles.id [name: 'user_roles_role_id_fkey']
-Ref: auth.user_roles.user_id > auth.users.id [name: 'user_roles_user_id_fkey', delete: cascade]
-Ref: auth.user_security_events.provider_id > auth.auth_providers.id [name: 'user_security_events_provider_id_fkey']
-Ref: auth.user_security_events.user_id > auth.users.id [name: 'user_security_events_user_id_fkey']
-Ref: auth.user_sessions.user_id > auth.users.id [name: 'user_sessions_user_id_fkey']
-Ref: auth.user_settings.user_id > auth.users.id [name: 'user_settings_user_id_fkey']
-Ref: chat.trip_chat_messages.deleted_by_user_id > auth.users.id [name: 'trip_chat_messages_deleted_by_user_id_fkey']
-Ref: chat.trip_chat_messages.sender_user_id > auth.users.id [name: 'trip_chat_messages_sender_user_id_fkey', delete: cascade]
-Ref: chat.trip_chat_messages.trip_id > trip.trips.id [name: 'trip_chat_messages_trip_id_fkey', delete: cascade]
-Ref: collab.collaboration_command_events.trip_id > trip.trips.id [name: 'collaboration_command_events_trip_id_fk', delete: cascade]
-Ref: community.content_reports.reason_code > community.report_reasons.code [name: 'content_reports_reason_code_fkey']
-Ref: community.content_reports.reporter_user_id > auth.users.id [name: 'content_reports_reporter_user_id_fkey']
-Ref: community.content_reports.resolved_by > auth.users.id [name: 'content_reports_resolved_by_fkey']
-Ref: community.moderation_actions.moderator_user_id > auth.users.id [name: 'moderation_actions_moderator_user_id_fkey']
-Ref: community.moderation_actions.report_id > community.content_reports.id [name: 'moderation_actions_report_id_fkey', delete: set null]
-Ref: community.post_comments.author_user_id > auth.users.id [name: 'post_comments_author_user_id_fkey']
-Ref: community.post_comments.parent_comment_id > community.post_comments.id [name: 'post_comments_parent_comment_id_fkey', delete: cascade]
-Ref: community.post_comments.post_id > community.posts.id [name: 'post_comments_post_id_fkey', delete: cascade]
-Ref: community.post_hashtags.hashtag_id > community.hashtags.id [name: 'post_hashtags_hashtag_id_fkey', delete: cascade]
-Ref: community.post_hashtags.post_id > community.posts.id [name: 'post_hashtags_post_id_fkey', delete: cascade]
-Ref: community.post_likes.post_id > community.posts.id [name: 'post_likes_post_id_fkey', delete: cascade]
-Ref: community.post_likes.user_id > auth.users.id [name: 'post_likes_user_id_fkey']
-Ref: community.post_media.post_id > community.posts.id [name: 'post_media_post_id_fkey', delete: cascade]
-Ref: community.post_retrips.new_trip_id > trip.trips.id [name: 'post_retrips_new_trip_id_fkey', delete: cascade]
-Ref: community.post_retrips.post_id > community.posts.id [name: 'post_retrips_post_id_fkey', delete: cascade]
-Ref: community.post_retrips.user_id > auth.users.id [name: 'post_retrips_user_id_fkey', delete: cascade]
-Ref: community.post_snapshot_days.post_id > community.posts.id [name: 'post_snapshot_days_post_id_fkey', delete: cascade]
-Ref: community.post_snapshot_items.post_id > community.posts.id [name: 'post_snapshot_items_post_id_fkey', delete: cascade]
-Ref: community.post_snapshot_items.snapshot_day_id > community.post_snapshot_days.id [name: 'post_snapshot_items_snapshot_day_id_fkey', delete: cascade]
-Ref: community.post_snapshot_routes.destination_snapshot_item_id > community.post_snapshot_items.id [name: 'post_snapshot_routes_destination_snapshot_item_id_fkey', delete: cascade]
-Ref: community.post_snapshot_routes.origin_snapshot_item_id > community.post_snapshot_items.id [name: 'post_snapshot_routes_origin_snapshot_item_id_fkey', delete: cascade]
-Ref: community.post_snapshot_routes.post_id > community.posts.id [name: 'post_snapshot_routes_post_id_fkey', delete: cascade]
-Ref: community.posts.published_by_user_id > auth.users.id [name: 'posts_published_by_user_id_fkey']
-Ref: geo.legal_regions.parent_code > geo.legal_regions.code [name: 'legal_regions_parent_code_fk']
-Ref: itinerary.itinerary_days.trip_id > trip.trips.id [name: 'itinerary_days_trip_id_fk', delete: cascade]
-Ref: itinerary.itinerary_items.itinerary_day_id > itinerary.itinerary_days.id [name: 'itinerary_items_day_id_fk', delete: cascade]
-Ref: itinerary.itinerary_items.trip_id > trip.trips.id [name: 'itinerary_items_trip_id_fk', delete: cascade]
-Ref: itinerary.map_drawings.itinerary_day_id > itinerary.itinerary_days.id [name: 'map_drawings_day_id_fk', delete: set null]
-Ref: itinerary.map_drawings.trip_id > trip.trips.id [name: 'map_drawings_trip_id_fk', delete: cascade]
-Ref: itinerary.route_match_requests.destination_itinerary_item_id > itinerary.itinerary_items.id [name: 'route_match_requests_destination_item_id_fk', delete: cascade]
-Ref: itinerary.route_match_requests.origin_itinerary_item_id > itinerary.itinerary_items.id [name: 'route_match_requests_origin_item_id_fk', delete: cascade]
-Ref: itinerary.route_match_requests.trip_id > trip.trips.id [name: 'route_match_requests_trip_id_fk', delete: cascade]
-Ref: itinerary.route_match_requests.trip_route_id > itinerary.trip_routes.id [name: 'route_match_requests_trip_route_id_fk', delete: set null]
-Ref: itinerary.trip_routes.destination_itinerary_item_id > itinerary.itinerary_items.id [name: 'trip_routes_destination_item_id_fk', delete: cascade]
-Ref: itinerary.trip_routes.origin_itinerary_item_id > itinerary.itinerary_items.id [name: 'trip_routes_origin_item_id_fk', delete: cascade]
-Ref: itinerary.trip_routes.trip_id > trip.trips.id [name: 'trip_routes_trip_id_fk', delete: cascade]
-Ref: media.upload_intents.media_file_id > media.media_files.id [name: 'media_upload_intents_media_file_fk', delete: set null]
-Ref: notification.notifications.actor_user_id > auth.users.id [name: 'notifications_actor_user_id_fkey']
-Ref: notification.notifications.recipient_user_id > auth.users.id [name: 'notifications_recipient_user_id_fkey', delete: cascade]
-Ref: notification.notifications.trip_id > trip.trips.id [name: 'notifications_trip_id_fkey', delete: cascade]
-Ref: planning.checklist_item_member_statuses.checklist_item_id > planning.checklist_items.id [name: 'checklist_item_member_statuses_checklist_item_id_fkey', delete: cascade]
-Ref: planning.checklist_items.checklist_id > planning.checklists.id [name: 'checklist_items_checklist_id_fkey', delete: cascade]
-Ref: preference.place_tag_enrichment_candidates.enrichment_id > preference.place_tag_enrichments.id [name: 'fk_place_tag_enrichment_candidates_enrichment', delete: cascade]
-Ref: preference.place_tag_enrichment_candidates.matched_tag_id > preference.preference_tags.id [name: 'fk_place_tag_enrichment_candidates_tag']
-Ref: preference.place_tag_enrichment_tags.enrichment_id > preference.place_tag_enrichments.id [name: 'fk_place_tag_enrichment_tags_enrichment', delete: cascade]
-Ref: preference.place_tag_enrichment_tags.tag_statistic_run_id > preference.tag_statistic_runs.id [name: 'fk_place_tag_enrichment_tags_statistic_run']
-Ref: preference.place_tag_enrichment_tags.tag_id > preference.preference_tags.id [name: 'fk_place_tag_enrichment_tags_tag']
-Ref: preference.place_tag_enrichments.tag_statistic_run_id > preference.tag_statistic_runs.id [name: 'fk_place_tag_enrichments_statistic_run']
-Ref: preference.preference_tags.parent_tag_id > preference.preference_tags.id [name: 'fk_preference_tags_parent']
-Ref: preference.synthetic_persona_tag_preferences.persona_id > preference.synthetic_personas.id [name: 'fk_synthetic_persona_tag_preferences_persona', delete: cascade]
-Ref: preference.synthetic_persona_tag_preferences.tag_id > preference.preference_tags.id [name: 'fk_synthetic_persona_tag_preferences_tag']
-Ref: preference.synthetic_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id [name: 'fk_synthetic_swipe_events_enrichment']
-Ref: preference.synthetic_swipe_events.persona_id > preference.synthetic_personas.id [name: 'fk_synthetic_swipe_events_persona', delete: cascade]
-Ref: preference.tag_statistics.run_id > preference.tag_statistic_runs.id [name: 'fk_tag_statistics_run', delete: cascade]
-Ref: preference.tag_statistics.tag_id > preference.preference_tags.id [name: 'fk_tag_statistics_tag']
-Ref: preference.user_place_reactions.place_tag_enrichment_id > preference.place_tag_enrichments.id [name: 'fk_user_place_reactions_enrichment']
-Ref: preference.user_preference_tag_weights.tag_id > preference.preference_tags.id [name: 'fk_user_preference_tag_weights_tag']
-Ref: preference.user_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id [name: 'fk_user_swipe_events_enrichment']
-Ref: record.trip_record_create_requests.record_id > record.trip_record_entries.id [name: 'trip_record_create_requests_record_fk', delete: cascade]
-Ref: record.trip_record_entries.itinerary_day_id > itinerary.itinerary_days.id [name: 'trip_record_entries_day_id_fk', delete: set null]
-Ref: record.trip_record_entries.itinerary_item_id > itinerary.itinerary_items.id [name: 'trip_record_entries_item_id_fk', delete: set null]
-Ref: record.trip_record_entries.trip_id > trip.trips.id [name: 'trip_record_entries_trip_id_fk', delete: cascade]
-Ref: record.trip_record_media.media_file_id > media.media_files.id [name: 'trip_record_media_media_file_id_fk', delete: cascade]
-Ref: record.trip_record_media.record_entry_id > record.trip_record_entries.id [name: 'trip_record_media_record_entry_id_fk', delete: cascade]
-Ref: social.user_follows.follower_user_id > auth.users.id [name: 'user_follows_follower_user_id_fkey', delete: cascade]
-Ref: social.user_follows.following_user_id > auth.users.id [name: 'user_follows_following_user_id_fkey', delete: cascade]
-Ref: tourism_source.attraction_images.attraction_no > tourism_source.attractions.no [name: 'fk_attraction_images_attraction', delete: cascade]
-Ref: tourism_source.attractions.content_type_id > tourism_source.contenttypes.content_type_id [name: 'fk_attractions_content_type']
-Ref: tourism_source.contest_award_photo_matches.attraction_no > tourism_source.attractions.no [name: 'fk_contest_award_photo_matches_attraction', delete: cascade]
-Ref: tourism_source.contest_award_photo_matches.photo_id > tourism_source.contest_award_photos.id [name: 'fk_contest_award_photo_matches_photo', delete: cascade]
-Ref: tourism_source.contest_award_photos.contest_id > tourism_source.photo_contests.id [name: 'fk_contest_award_photos_contest', delete: set null]
-Ref: tourism_source.guguns.sido_code > tourism_source.sidos.sido_code [name: 'fk_guguns_sido', delete: cascade]
-Ref: tourism_source.region_aliases.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code) [name: 'fk_region_aliases_gugun', delete: cascade]
-Ref: tourism_source.region_aliases.sido_code > tourism_source.sidos.sido_code [name: 'fk_region_aliases_sido', delete: cascade]
-Ref: trip.trip_invites.trip_id > trip.trips.id [name: 'trip_invites_trip_id_fk', delete: cascade]
-Ref: trip.trip_members.trip_id > trip.trips.id [name: 'trip_members_trip_id_fk', delete: cascade]
-Ref: trip.trip_regions.trip_id > trip.trips.id [name: 'trip_regions_trip_id_fk', delete: cascade]
+Ref: ai.ai_chat_messages.requester_user_id > auth.users.id
+Ref: ai.ai_chat_messages.session_id > ai.ai_chat_sessions.id [delete: cascade]
+Ref: ai.ai_chat_sessions.trip_id > trip.trips.id [delete: cascade]
+Ref: ai.ai_tool_calls.request_message_id > ai.ai_chat_messages.id
+Ref: ai.ai_tool_calls.requested_by_user_id > auth.users.id
+Ref: ai.ai_tool_calls.result_message_id > ai.ai_chat_messages.id
+Ref: ai.ai_tool_calls.session_id > ai.ai_chat_sessions.id [delete: cascade]
+Ref: ai.ai_tool_calls.trip_id > trip.trips.id [delete: cascade]
+Ref: auth.user_auth_identities.provider_id > auth.auth_providers.id
+Ref: auth.user_auth_identities.user_id > auth.users.id
+Ref: auth.user_email_addresses.user_id > auth.users.id
+Ref: auth.user_email_verification_tokens.user_email_address_id > auth.user_email_addresses.id
+Ref: auth.user_password_credentials.user_id > auth.users.id
+Ref: auth.user_password_reset_tokens.user_id > auth.users.id
+Ref: auth.user_policy_acceptances.policy_document_id > auth.policy_documents.id
+Ref: auth.user_policy_acceptances.user_id > auth.users.id
+Ref: auth.user_profiles.user_id > auth.users.id
+Ref: auth.user_roles.granted_by_user_id > auth.users.id
+Ref: auth.user_roles.revoked_by_user_id > auth.users.id
+Ref: auth.user_roles.role_id > auth.roles.id
+Ref: auth.user_roles.user_id > auth.users.id [delete: cascade]
+Ref: auth.user_security_events.provider_id > auth.auth_providers.id
+Ref: auth.user_security_events.user_id > auth.users.id
+Ref: auth.user_sessions.user_id > auth.users.id
+Ref: auth.user_settings.user_id > auth.users.id
+Ref: chat.trip_chat_messages.deleted_by_user_id > auth.users.id
+Ref: chat.trip_chat_messages.sender_user_id > auth.users.id [delete: cascade]
+Ref: chat.trip_chat_messages.trip_id > trip.trips.id [delete: cascade]
+Ref: collab.collaboration_command_events.trip_id > trip.trips.id [delete: cascade]
+Ref: community.content_reports.reason_code > community.report_reasons.code
+Ref: community.content_reports.reporter_user_id > auth.users.id
+Ref: community.content_reports.resolved_by > auth.users.id
+Ref: community.moderation_actions.moderator_user_id > auth.users.id
+Ref: community.moderation_actions.report_id > community.content_reports.id [delete: set null]
+Ref: community.post_comments.author_user_id > auth.users.id
+Ref: community.post_comments.parent_comment_id > community.post_comments.id [delete: cascade]
+Ref: community.post_comments.post_id > community.posts.id [delete: cascade]
+Ref: community.post_hashtags.hashtag_id > community.hashtags.id [delete: cascade]
+Ref: community.post_hashtags.post_id > community.posts.id [delete: cascade]
+Ref: community.post_likes.post_id > community.posts.id [delete: cascade]
+Ref: community.post_likes.user_id > auth.users.id
+Ref: community.post_media.post_id > community.posts.id [delete: cascade]
+Ref: community.post_retrips.new_trip_id > trip.trips.id [delete: cascade]
+Ref: community.post_retrips.post_id > community.posts.id [delete: cascade]
+Ref: community.post_retrips.user_id > auth.users.id [delete: cascade]
+Ref: community.post_snapshot_days.post_id > community.posts.id [delete: cascade]
+Ref: community.post_snapshot_items.post_id > community.posts.id [delete: cascade]
+Ref: community.post_snapshot_items.snapshot_day_id > community.post_snapshot_days.id [delete: cascade]
+Ref: community.post_snapshot_routes.destination_snapshot_item_id > community.post_snapshot_items.id [delete: cascade]
+Ref: community.post_snapshot_routes.origin_snapshot_item_id > community.post_snapshot_items.id [delete: cascade]
+Ref: community.post_snapshot_routes.post_id > community.posts.id [delete: cascade]
+Ref: community.posts.published_by_user_id > auth.users.id
+Ref: geo.legal_regions.parent_code > geo.legal_regions.code
+Ref: itinerary.itinerary_days.trip_id > trip.trips.id [delete: cascade]
+Ref: itinerary.itinerary_items.itinerary_day_id > itinerary.itinerary_days.id [delete: cascade]
+Ref: itinerary.itinerary_items.trip_id > trip.trips.id [delete: cascade]
+Ref: itinerary.map_drawings.itinerary_day_id > itinerary.itinerary_days.id [delete: set null]
+Ref: itinerary.map_drawings.trip_id > trip.trips.id [delete: cascade]
+Ref: itinerary.route_match_requests.destination_itinerary_item_id > itinerary.itinerary_items.id [delete: cascade]
+Ref: itinerary.route_match_requests.origin_itinerary_item_id > itinerary.itinerary_items.id [delete: cascade]
+Ref: itinerary.route_match_requests.trip_id > trip.trips.id [delete: cascade]
+Ref: itinerary.route_match_requests.trip_route_id > itinerary.trip_routes.id [delete: set null]
+Ref: itinerary.trip_routes.destination_itinerary_item_id > itinerary.itinerary_items.id [delete: cascade]
+Ref: itinerary.trip_routes.origin_itinerary_item_id > itinerary.itinerary_items.id [delete: cascade]
+Ref: itinerary.trip_routes.trip_id > trip.trips.id [delete: cascade]
+Ref: media.upload_intents.media_file_id > media.media_files.id [delete: set null]
+Ref: notification.notifications.actor_user_id > auth.users.id
+Ref: notification.notifications.recipient_user_id > auth.users.id [delete: cascade]
+Ref: notification.notifications.trip_id > trip.trips.id [delete: cascade]
+Ref: planning.checklist_item_member_statuses.checklist_item_id > planning.checklist_items.id [delete: cascade]
+Ref: planning.checklist_items.checklist_id > planning.checklists.id [delete: cascade]
+Ref: preference.place_tag_enrichment_candidates.enrichment_id > preference.place_tag_enrichments.id [delete: cascade]
+Ref: preference.place_tag_enrichment_candidates.matched_tag_id > preference.preference_tags.id
+Ref: preference.place_tag_enrichment_tags.enrichment_id > preference.place_tag_enrichments.id [delete: cascade]
+Ref: preference.place_tag_enrichment_tags.tag_statistic_run_id > preference.tag_statistic_runs.id
+Ref: preference.place_tag_enrichment_tags.tag_id > preference.preference_tags.id
+Ref: preference.place_tag_enrichments.tag_statistic_run_id > preference.tag_statistic_runs.id
+Ref: preference.preference_tags.parent_tag_id > preference.preference_tags.id
+Ref: preference.synthetic_persona_tag_preferences.persona_id > preference.synthetic_personas.id [delete: cascade]
+Ref: preference.synthetic_persona_tag_preferences.tag_id > preference.preference_tags.id
+Ref: preference.synthetic_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id
+Ref: preference.synthetic_swipe_events.persona_id > preference.synthetic_personas.id [delete: cascade]
+Ref: preference.tag_statistics.run_id > preference.tag_statistic_runs.id [delete: cascade]
+Ref: preference.tag_statistics.tag_id > preference.preference_tags.id
+Ref: preference.user_place_reactions.place_tag_enrichment_id > preference.place_tag_enrichments.id
+Ref: preference.user_preference_tag_weights.tag_id > preference.preference_tags.id
+Ref: preference.user_swipe_events.place_tag_enrichment_id > preference.place_tag_enrichments.id
+Ref: record.trip_record_create_requests.record_id > record.trip_record_entries.id [delete: cascade]
+Ref: record.trip_record_entries.itinerary_day_id > itinerary.itinerary_days.id [delete: set null]
+Ref: record.trip_record_entries.itinerary_item_id > itinerary.itinerary_items.id [delete: set null]
+Ref: record.trip_record_entries.trip_id > trip.trips.id [delete: cascade]
+Ref: record.trip_record_media.media_file_id > media.media_files.id [delete: cascade]
+Ref: record.trip_record_media.record_entry_id > record.trip_record_entries.id [delete: cascade]
+Ref: social.user_follows.follower_user_id > auth.users.id [delete: cascade]
+Ref: social.user_follows.following_user_id > auth.users.id [delete: cascade]
+Ref: tourism_source.attraction_images.attraction_no > tourism_source.attractions.no [delete: cascade]
+Ref: tourism_source.attractions.content_type_id > tourism_source.contenttypes.content_type_id
+Ref: tourism_source.contest_award_photo_matches.attraction_no > tourism_source.attractions.no [delete: cascade]
+Ref: tourism_source.contest_award_photo_matches.photo_id > tourism_source.contest_award_photos.id [delete: cascade]
+Ref: tourism_source.contest_award_photos.contest_id > tourism_source.photo_contests.id [delete: set null]
+Ref: tourism_source.guguns.sido_code > tourism_source.sidos.sido_code [delete: cascade]
+Ref: tourism_source.region_aliases.(sido_code, gugun_code) > tourism_source.guguns.(sido_code, gugun_code) [delete: cascade]
+Ref: tourism_source.region_aliases.sido_code > tourism_source.sidos.sido_code [delete: cascade]
+Ref: trip.trip_invites.trip_id > trip.trips.id [delete: cascade]
+Ref: trip.trip_members.trip_id > trip.trips.id [delete: cascade]
+Ref: trip.trip_regions.trip_id > trip.trips.id [delete: cascade]
