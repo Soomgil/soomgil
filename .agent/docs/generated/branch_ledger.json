@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-23T08:10:14.982Z",
+  "generatedAt": "2026-08-23T10:12:40.488Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -21,6 +21,16 @@
       "status": "",
       "title": "FEI-140: RoutePage API 연동 완료 (mockPlaces 제거)",
       "file": ".agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md"
+    },
+    {
+      "id": "20260823T100816Z-chore__product-policy-realignment-note",
+      "branch": "chore__product-policy-realignment",
+      "branchKey": "chore__product-policy-realignment",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md"
     },
     {
       "id": "20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration",

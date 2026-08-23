@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-06-23T08:10:14.982Z
+생성 시각: 2026-08-23T10:12:40.488Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -10,6 +10,7 @@
 
 - unknown | chore__api-contract-spec | scope 없음 | Backend Spring Boot CQRS-lite scaffold | .agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md
 - unknown | chore__fei-131-tracking | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md
+- unknown | chore__product-policy-realignment | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md
 - unknown | chore__record-api-integration-tracking | scope 없음 | FEI-100-110 record API integration | .agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md
 - unknown | feature__frontend-api-integration-fei-141-180 | scope 없음 | FEI 141-180 frontend API integration | .agent/branch-ledger/branches/feature__frontend-api-integration-fei-141-180/20260623T003736Z-feature__frontend-api-integration-fei-141-180-fei-141-180-frontend-api-integration.md
 - unknown | feature__home-api-integration | scope 없음 | FEI-120 and FEI-121: HomePage API Integration | .agent/branch-ledger/branches/feature__home-api-integration/20260622T105334Z-feature__home-api-integration-fei-120-and-fei-121-homepage-api-integration.md
