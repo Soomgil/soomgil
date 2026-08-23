@@ -5,6 +5,7 @@ info:
   description: >
     숨길(Soomgil) V1 백엔드 REST API 협의 초안입니다.
     근거 문서: .agent/docs/product-specs/service_requirements.md,
+    .agent/docs/product-specs/product_experience_policy.md,
     .agent/contracts/backend_contract_decisions.md, .agent/contracts/schema.dbml.
     미확정 사항은 TODO 또는 확인 필요로 표시했습니다.
 servers:
@@ -22,6 +23,9 @@ tags:
   - name: Trips
   - name: Places
   - name: Swipe
+    description: Migration-only legacy swipe endpoints.
+  - name: Preference
+  - name: TripVote
   - name: Itinerary
   - name: Planning
   - name: Chat
@@ -32,6 +36,84 @@ tags:
   - name: Notifications
   - name: Admin
 paths:
+  /onboarding/preference-survey:
+    get:
+      tags: [Preference]
+      summary: 회원가입 관광지 10개 조회
+      operationId: getOnboardingPreferenceSurvey
+      responses:
+        '200':
+          description: Active survey with exactly 10 ordered places
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /onboarding/preference-survey/responses:
+    put:
+      tags: [Preference]
+      summary: 회원가입 관광지 10개 평가 완료
+      operationId: completeOnboardingPreferenceSurvey
+      description: 모든 10개 장소의 LIKE 또는 NOPE 응답을 원자적으로 저장한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Onboarding completed
+  /home/place-background:
+    get:
+      tags: [Preference]
+      summary: 홈 관광지 배경 조회
+      operationId: getHomePlaceBackground
+      responses:
+        '200':
+          description: Place background card
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /places/{provider}/{externalPlaceId}/preference-reaction:
+    parameters:
+      - $ref: '#/components/parameters/provider'
+      - $ref: '#/components/parameters/externalPlaceId'
+    put:
+      tags: [Preference]
+      summary: 장소 선호 반응 저장
+      operationId: upsertPreferenceReaction
+      description: ONBOARDING, HOME_BACKGROUND, TRIP_VOTE source multiplier는 모두 1.0이다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [source, reaction]
+              properties:
+                source:
+                  type: string
+                  enum: [ONBOARDING, HOME_BACKGROUND, TRIP_VOTE]
+                reaction:
+                  type: string
+                  enum: [LIKE, NOPE, SUPER_LIKE]
+                sourceResourceId:
+                  type: string
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags: [Preference]
+      summary: 장소 선호 반응 취소
+      operationId: removePreferenceReaction
+      description: 제거 이벤트를 남기고 현재 반응 상태를 해제한다.
+      responses:
+        '204':
+          description: Removed
   /auth/register:
     post:
       tags: [Auth]
@@ -630,6 +712,117 @@ paths:
                 $ref: '#/components/schemas/SimplifiedCoordinates'
         '422':
           $ref: '#/components/responses/ValidationError'
+  /trips/{tripId}/vote:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+    get:
+      tags: [TripVote]
+      summary: 여행방 투표 조회
+      operationId: getTripVote
+      responses:
+        '200':
+          description: Vote settings, candidates, stickers, and member states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    patch:
+      tags: [TripVote]
+      summary: 투표 설정 변경
+      operationId: updateTripVoteSettings
+      description: OWNER만 스티커 수, 선정 수, 마감 시각을 변경한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Updated
+  /trips/{tripId}/vote/candidates:
+    post:
+      tags: [TripVote]
+      summary: 투표 후보 추가
+      operationId: addTripVoteCandidate
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [provider, externalPlaceId]
+              additionalProperties: true
+      responses:
+        '201':
+          description: Created
+  /trips/{tripId}/vote/candidates/{candidateId}/stickers:
+    post:
+      tags: [TripVote]
+      summary: 후보에 스티커 추가
+      operationId: addTripVoteSticker
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - name: candidateId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '201':
+          description: Created
+  /trips/{tripId}/vote/candidates/{candidateId}:
+    delete:
+      tags: [TripVote]
+      summary: 투표 후보 삭제
+      operationId: deleteTripVoteCandidate
+      description: 후보의 활성 스티커를 제거하고 사용자별 잔여 수량을 복원한다.
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - name: candidateId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: Deleted
+  /trips/{tripId}/vote/stickers/{stickerId}:
+    delete:
+      tags: [TripVote]
+      summary: 내 투표 스티커 제거
+      operationId: removeTripVoteSticker
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - name: stickerId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: Removed
+  /trips/{tripId}/vote/me/complete:
+    put:
+      tags: [TripVote]
+      summary: 개인 투표 완료
+      operationId: completeMyTripVote
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+      responses:
+        '200':
+          description: VOTED
+  /trips/{tripId}/vote/close:
+    post:
+      tags: [TripVote]
+      summary: 여행방 투표 수동 종료
+      operationId: closeTripVote
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+      responses:
+        '200':
+          description: Closed and selected places added to UNSCHEDULED
   /trips:
     get:
       tags: [Trips]
@@ -900,6 +1093,7 @@ paths:
     put:
       tags: [Swipe]
       summary: 최종 스와이프 반응 upsert
+      deprecated: true
       operationId: upsertSwipeReaction
       parameters:
         - $ref: '#/components/parameters/provider'
@@ -1719,6 +1913,7 @@ paths:
       tags: [Records]
       summary: 내가 참여한 모든 여행방의 기록 사진 모아보기
       operationId: listMyTripRecordPhotos
+      deprecated: true
       description: 현재 사용자가 active member로 참여 중인 모든 여행방의 기록 사진을 모아 반환한다. 기록 CRUD는 trip scoped endpoint를 사용한다.
       parameters:
         - $ref: '#/components/parameters/page'
@@ -1758,6 +1953,7 @@ paths:
       tags: [Records]
       summary: 여러 여행방의 기록 사진 요약 조회
       operationId: summarizeMyTripRecordPhotos
+      deprecated: true
       description: 요청한 여행방별 기록 사진 개수와 대표 사진을 한 번에 집계한다. 모든 여행방에 대한 접근 권한이 있어야 한다.
       requestBody:
         required: true
@@ -1925,11 +2121,106 @@ paths:
       responses:
         '204':
           description: No Content
+  /community/threads:
+    get:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 목록
+      operationId: listCommunityThreads
+      responses:
+        '200':
+          description: Thread page
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    post:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 생성
+      operationId: createCommunityThread
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content]
+              additionalProperties: true
+      responses:
+        '201':
+          description: Created
+  /community/threads/{threadId}:
+    parameters:
+      - name: threadId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 상세
+      operationId: getCommunityThread
+      responses:
+        '200':
+          description: Thread with replies
+    delete:
+      tags: [Community]
+      summary: 내 커뮤니티 쓰레드 삭제
+      operationId: deleteCommunityThread
+      responses:
+        '204':
+          description: Deleted
+  /community/threads/{threadId}/replies:
+    post:
+      tags: [Community]
+      summary: 쓰레드 답글 작성
+      operationId: createCommunityThreadReply
+      parameters:
+        - name: threadId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content]
+              additionalProperties: true
+      responses:
+        '201':
+          description: Created
+  /community/threads/{threadId}/like:
+    put:
+      tags: [Community]
+      summary: 쓰레드 좋아요
+      operationId: likeCommunityThread
+      parameters:
+        - name: threadId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: Liked
+    delete:
+      tags: [Community]
+      summary: 쓰레드 좋아요 취소
+      operationId: unlikeCommunityThread
+      parameters:
+        - name: threadId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: Unliked
   /community/posts:
     get:
       tags: [Community]
       summary: 커뮤니티 게시글 목록
       operationId: listCommunityPosts
+      deprecated: true
       security:
         - {}
         - bearerAuth: []
@@ -1957,6 +2248,7 @@ paths:
       tags: [Community]
       summary: 여행방 snapshot 게시글 발행
       operationId: createCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/idempotencyKey'
       requestBody:
@@ -1979,6 +2271,7 @@ paths:
       tags: [Community]
       summary: 커뮤니티 게시글 상세
       operationId: getCommunityPost
+      deprecated: true
       security:
         - {}
         - bearerAuth: []
@@ -2004,6 +2297,7 @@ paths:
       tags: [Community]
       summary: 커뮤니티 게시글 수정
       operationId: updateCommunityPost
+      deprecated: true
       description: snapshot 재발행 허용 여부 확인 필요.
       parameters:
         - $ref: '#/components/parameters/postId'
@@ -2024,6 +2318,7 @@ paths:
       tags: [Community]
       summary: 커뮤니티 게시글 삭제
       operationId: deleteCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
@@ -2034,6 +2329,7 @@ paths:
       tags: [Community]
       summary: UNLISTED 공유 토큰 재발급
       operationId: rotateCommunityPostShareToken
+      deprecated: true
       description: 게시글 작성자만 호출할 수 있다. 새 raw shareToken은 이 응답에서만 반환하며, 서버는 hash만 저장한다.
       parameters:
         - $ref: '#/components/parameters/postId'
@@ -2050,6 +2346,7 @@ paths:
       tags: [Community]
       summary: 게시글 좋아요
       operationId: likeCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
@@ -2063,6 +2360,7 @@ paths:
       tags: [Community]
       summary: 게시글 좋아요 취소
       operationId: unlikeCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
@@ -2077,6 +2375,7 @@ paths:
       tags: [Community]
       summary: 게시글 snapshot을 새 여행방으로 리트립
       operationId: retripCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
         - $ref: '#/components/parameters/idempotencyKey'
@@ -2098,6 +2397,7 @@ paths:
       tags: [Community]
       summary: 게시글 댓글 목록
       operationId: listCommunityComments
+      deprecated: true
       security:
         - {}
         - bearerAuth: []
@@ -2117,6 +2417,7 @@ paths:
       tags: [Community]
       summary: 게시글 댓글 또는 1단계 대댓글 작성
       operationId: createCommunityComment
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       requestBody:
@@ -2673,7 +2974,7 @@ components:
       enum: [GEOJSON]
     DrawingType:
       type: string
-      enum: [FREEHAND, LINE, POLYGON, MARKER, TEXT]
+      enum: [FREEHAND, LINE, POLYGON, MARKER, TEXT, STICKER, IMAGE]
     PlanningScopeType:
       type: string
       enum: [TRIP, DAY]
@@ -3606,6 +3907,17 @@ components:
           description: TODO style whitelist 확인 필요.
         label:
           type: string
+        mediaFileId:
+          type: string
+          format: uuid
+          description: IMAGE일 때 MAP_OVERLAY media file.
+        stickerCode:
+          type: string
+          description: STICKER일 때 기본 스티커 코드.
+        transform:
+          type: object
+          additionalProperties: true
+          description: 위치, 크기, 회전.
         sortOrder:
           type: integer
         version:
@@ -3831,6 +4143,14 @@ components:
               additionalProperties: true
             label:
               type: string
+            mediaFileId:
+              type: string
+              format: uuid
+            stickerCode:
+              type: string
+            transform:
+              type: object
+              additionalProperties: true
             sortOrder:
               type: integer
     UpdateMapDrawingRequest:
@@ -4485,8 +4805,8 @@ components:
           format: int64
         purpose:
           type: string
-          enum: [PROFILE_IMAGE, TRIP_RECORD, COMMUNITY_POST]
-          description: purpose별 mime allowlist와 size limit을 적용한다.
+          enum: [PROFILE_IMAGE, TRIP_RECORD, COMMUNITY_THREAD, MAP_OVERLAY, COMMUNITY_POST]
+          description: MAP_OVERLAY는 JPG/PNG/WebP와 10MB 제한을 적용한다. COMMUNITY_POST는 migration-only legacy 값이다.
     UploadUrlResponse:
       type: object
       required: [uploadUrl, objectKey, expiresAt]
