@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T10:12:40.488Z",
+  "generatedAt": "2026-08-23T17:16:00.589Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -24,11 +24,11 @@
     },
     {
       "id": "20260823T100816Z-chore__product-policy-realignment-note",
-      "branch": "chore__product-policy-realignment",
+      "branch": "chore/product-policy-realignment",
       "branchKey": "chore__product-policy-realignment",
-      "createdAt": "",
-      "scope": "",
-      "status": "",
+      "createdAt": "2026-08-23T10:08:16.689Z",
+      "scope": "shared",
+      "status": "active",
       "title": "작업 기록",
       "file": ".agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md"
     },
@@ -101,6 +101,16 @@
       "status": "",
       "title": "API 통합 이후 UI 및 UX 개선사항 적용 완료",
       "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T115949Z-feature__home-api-integration-api-ui-ux.md"
+    },
+    {
+      "id": "20260823T170038Z-feature__map-collaboration-objects-note",
+      "branch": "feature__map-collaboration-objects",
+      "branchKey": "feature__map-collaboration-objects",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 협업 오브젝트 구현",
+      "file": ".agent/branch-ledger/branches/feature__map-collaboration-objects/20260823T170038Z-feature__map-collaboration-objects-note.md"
     },
     {
       "id": "20260620T023313Z-feature__place-search-detail-tag-statistics-policy",
