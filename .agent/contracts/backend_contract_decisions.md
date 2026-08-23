@@ -1,6 +1,6 @@
 # 백엔드 계약 결정 기록
 
-이 문서는 숨길 백엔드 DBML/OpenAPI를 만들기 전에 확정한 설계 결정을 저장합니다.
+이 문서는 숨길 백엔드 DBML/OpenAPI를 만들기 전에 확정한 설계 결정을 저장합니다. 제품 경험 전환은 `.agent/docs/product-specs/product_experience_policy.md`를 함께 따릅니다.
 DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 
 ## 산출물 위치
@@ -31,6 +31,8 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 비밀번호는 강한 password policy와 로그인 실패 rate limit을 적용합니다.
 - OAuth authorization URL 생성, state 검증, authorization code 교환은 백엔드가 담당합니다.
 - 동일 이메일의 LOCAL 계정과 소셜 계정은 자동 병합하지 않고, 명시적 계정 연결 flow를 통해서만 연결합니다.
+- 신규 사용자는 운영자가 버전으로 관리하는 동일한 관광지 10개에 모두 반응해야 onboarding을 완료합니다.
+- onboarding 완료 전에는 회원가입 선호도 화면 외의 인증 필요 제품 화면에 진입할 수 없습니다.
 - 계정 삭제는 즉시 hard delete가 아니라 `PENDING_DELETION` 예약 상태를 거친 뒤 익명화/삭제합니다.
 - 계정 삭제 요청자가 `owner_user_id`인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 삭제 예약을 차단하고, 사용자가 해당 여행방을 삭제 또는 보존 정책에 맞게 정리하도록 요구합니다.
 - 공개 커뮤니티 게시글 snapshot은 게시 시점 표시 데이터로 유지할 수 있으며, 삭제된 사용자 표시는 익명화합니다.
@@ -70,6 +72,14 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - `trip.trip_regions`는 UUID region id가 아니라 `legal_region_code`로 `geo.legal_regions.code`를 참조합니다.
 - 법정동 원천 동기화 이력은 `geo.legal_region_sync_logs`에 저장합니다.
 - 대표 목적지는 지역과 별도로 `trips.display_destination` 문자열로 저장합니다.
+- 멤버 투표 상태는 `INVITED`, `JOINED`, `VOTED`로 관리합니다. 초대 수락으로 `JOINED`, 개인 투표 완료로 `VOTED`가 됩니다.
+- 첫 참여자는 `VOTED` 전 지도에 진입할 수 없고 이미 완료한 멤버는 재진입 시 바로 지도에 들어갑니다.
+- 방장은 사용자별 스티커 수와 선정 관광지 수를 설정하며 기본값은 각각 5개입니다.
+- 한 사용자는 총 지급량 안에서 같은 후보에 여러 스티커를 붙일 수 있고 1개 이상 사용하면 완료할 수 있습니다.
+- 개인 투표는 방 투표 종료 전까지 수정할 수 있고 모든 active MEMBER는 후보를 추가하거나 삭제할 수 있습니다.
+- 투표는 전원 완료, OWNER 수동 종료, 마감 시각 도달 중 가장 먼저 충족한 조건으로 종료합니다.
+- 득표순으로 OWNER 설정 개수만큼 선정하되 마지막 순위 동점 후보는 모두 선정합니다.
+- 선정 장소는 `UNSCHEDULED` 일정 그룹에 추가하고 이미 같은 여행 일정에 존재하면 중복 추가하지 않습니다.
 
 ## 장소와 관광공사 데이터
 
@@ -101,13 +111,14 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 해당 관광지/지역에 연결 가능한 수상작 사진이 없으면 일반 관광지 이미지와 보유 이미지로만 구성합니다.
 - 수상작 사진은 태그 추출과 추천 display 후보에 활용할 수 있지만, 사용자 기록/커뮤니티 업로드 미디어와 소유권/삭제 정책을 섞지 않습니다.
 
-## 스와이프와 저장
+## 선호도 수집과 저장
 
-- 스와이프는 특정 여행방/목적지에 종속된 기능이 아니라, 사용자가 평소에 랜덤에 가까운 장소를 넘기며 개인 선호도를 쌓는 전역 feed를 기본으로 합니다.
-- 전역 스와이프 feed는 랜덤성을 유지하면서도 지역, 카테고리, 인기/비인기, 실내/야외 다양성을 보장해야 합니다.
+- 독립 스와이프 탭은 제거하고 회원가입 평가, 홈 관광지 배경, 여행방 투표를 선호도 수집 경로로 사용합니다.
+- 홈 관광지 feed는 랜덤성을 유지하면서도 지역, 카테고리, 인기/비인기, 실내/야외 다양성을 보장해야 합니다.
 - 이미 반응한 장소도 일정 기간이 지나거나 관광공사 원본/AI 태그가 변경되면 다시 노출할 수 있습니다.
-- 재노출 후 다시 반응하면 `user_place_reactions` 최종 상태는 갱신하고 `user_swipe_events`는 누적합니다.
-- 여행방 생성 후에는 멤버들의 누적 스와이프 반응을 여행 계획과 장소 후보 정렬에 활용합니다.
+- 재노출 후 다시 반응하면 `user_place_reactions` 최종 상태는 갱신하고 원본 preference event log는 누적합니다.
+- 좋아요 취소는 제거 이벤트를 기록한 뒤 현재 반응 상태를 해제합니다.
+- 여행방 생성 후에는 멤버들의 누적 선호 반응을 여행 계획과 장소 후보 정렬에 활용합니다.
 - 여행방 추천 장소 리스트는 경로 설계 화면의 좌측 일정/경로 추가 패널에 표시합니다.
 - 추천 리스트의 주요 목적은 장소를 바로 일정에 추가하는 것입니다.
 - 장소별로 어떤 멤버 선호도에 맞는지 프로필 아바타 목록을 카드 우측 하단에 가볍게 표시하는 UI를 전제로 합니다.
@@ -128,7 +139,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 장소 태그 추천 계산은 `confidence`, `weight`, `preference_discrimination`을 중심으로 하며 `rarity`나 tree depth 기반 specificity는 MVP 추천 점수 필수 입력으로 사용하지 않습니다.
 - 추천 장소 API는 `matched_members` 또는 이에 준하는 필드로 매칭 멤버의 id, name, avatar/profile image를 반환해야 합니다.
 - 추천 장소 API는 필수 viewport bounds, 선택적 center 또는 route anchor, tab mode, pagination을 받을 수 있어야 합니다.
-- 스와이프 반응은 최종 상태 테이블과 이벤트 로그 테이블을 분리합니다.
+- 선호 반응은 최종 상태 테이블과 이벤트 로그 테이블을 분리합니다.
 - 최종 상태는 조회/집계용입니다.
 - 이벤트 로그는 분석, AI 채팅 컨텍스트, 되돌리기, 감사에 사용합니다.
 - 사용자 선호도 가중치는 이벤트 로그를 매번 재계산하지 않고 `user_preference_tag_weights` materialized projection으로 유지합니다.
@@ -137,20 +148,20 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - projection에는 사용자-장소별 최종 반응만 반영합니다. 반응 변경 시 이전 태그 근거를 되돌리고 새 최종 반응의 근거를 적용합니다.
 - 추천 리스트는 태그별 `preference_score`와 장소 내 정규화된 태그 비율의 가중평균을 사용합니다.
 - 태그 전체 평균에 주는 사전 강도와 호불호에 따른 개인 반응 반영 속도는 계산 policy version으로 관리하며, 검증 전 상수를 DB 계약에 고정하지 않습니다.
-- 스와이프 저장 후 비동기 worker가 projection을 갱신합니다.
+- 선호 이벤트 저장 후 비동기 worker가 projection을 갱신합니다.
 - cold-start 통계는 `AI_ONLY_DEFAULT`, `SYNTHETIC_PERSONA`, `REAL_USER` source를 분리하고, 실제 사용자 통계가 안정화되면 합성 통계는 serving 경로에서 제거합니다.
-- cold-start 합성 스와이프 데이터는 50개 고정 페르소나를 기반으로 생성하고 실제 사용자 `user_swipe_events`와 분리해 보관합니다.
+- cold-start 합성 스와이프 데이터는 50개 고정 페르소나를 기반으로 생성하고 실제 사용자 preference event와 분리해 보관합니다.
 - V1에서는 시간 감쇠 기반 선호도 재계산과 daily summary를 사용하지 않습니다.
-- projection 갱신은 스와이프 이벤트가 발생할 때 해당 장소의 태그만 반영하는 incremental update를 기본으로 합니다.
+- projection 갱신은 preference event가 발생할 때 해당 장소의 태그만 반영하는 incremental update를 기본으로 합니다.
 - 원본 이벤트 로그는 projection 복구, 가중치 공식 변경 시 재처리, 감사 용도로 남기며 일반 추천 요청에서 매번 재계산하지 않습니다.
 - 별도 선호도 snapshot 테이블은 두지 않고, 현재 선호도는 `user_preference_tag_weights` projection과 원본 이벤트 로그로 관리합니다.
-- V1 선호도 추론 입력은 스와이프 반응 `LIKE`, `NOPE`, `SUPER_LIKE`로 한정합니다.
+- V1 선호도 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`이며 source multiplier는 모두 `1.0`입니다.
+- source에 따른 가중치 차이는 두지 않으며 반응 강도와 활성 투표 스티커 수는 별도로 반영합니다.
 - `SUPER_LIKE`는 다른 사용자에게 추천한다는 의미가 아니라, 본인 선호도를 강하게 어필하는 반응입니다.
 - `SUPER_LIKE`는 `LIKE`보다 높은 선호도 가중치이며, 언젠가 꼭 가고 싶은 장소에 가까운 의미입니다.
 - 장소 상세 조회, 일정 추가/삭제, 저장, 커뮤니티 반응은 선호도 점수에 반영하지 않습니다.
-- MVP 스와이프 반응과 선호도 projection은 사용자 개인 전역 기준으로만 관리합니다.
-- 여행방별 선호도, trip-scoped reaction, `contextTripId` 기록은 MVP에서 제공하지 않습니다.
-- `user_swipe_events.feed_context`는 향후 feed 실험/노출 메타데이터 확장을 위한 예약 필드이며, MVP에서는 여행방 context를 저장하지 않습니다.
+- 선호도 projection은 사용자 개인 전역 기준으로 관리하되 원본 이벤트는 source와 source resource id를 기록합니다.
+- 여행방 투표 이벤트도 개인 전역 projection에 동일 source multiplier로 반영합니다.
 - 커뮤니티 저장/북마크는 MVP에서 별도 반응으로 두지 않고, 커뮤니티 게시글 좋아요와 리트립을 지원합니다.
 - 장소 저장은 사용자가 해당 장소를 `SUPER_LIKE`한 경우에만 허용합니다.
 
@@ -217,8 +228,26 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - route matching 결과에는 provider, provider request id 또는 hash, confidence, distance, duration, geometry, tracepoints, matchings metadata를 저장할 수 있어야 합니다.
 - Mapbox 일반 좌표 요청은 2~100개 좌표 제한이 있으므로 stroke simplification/downsampling 정책이 필요합니다.
 - Mapbox 결과는 Mapbox 지도 위에 표시하는 것을 전제로 합니다.
+- 지도 오브젝트는 자유 드로잉, 기본 스티커, 사용자 업로드 이미지를 공통 collaboration object로 관리합니다.
+- 사용자 이미지 purpose는 `MAP_OVERLAY`이며 JPG, PNG, WebP만 허용하고 파일당 최대 10MB입니다.
+- 지도 오브젝트는 조작 종료 시 REST로 저장하고 조작 중 좌표는 WebSocket preview로만 중계합니다.
+- 같은 오브젝트는 먼저 편집을 시작한 WebSocket 세션에 lease 기반 임시 잠금을 부여합니다.
+- 재접속 시 로컬 미저장 상태를 버리고 서버 최신 snapshot으로 동기화합니다.
+- 같은 여행방 접속자의 커서는 presence topic으로 중계하고 영구 저장하지 않습니다.
 
-## 커뮤니티
+## 커뮤니티 쓰레드
+
+- 기존 여행기 게시물/스토리 발행 형식을 제거하고 `community.threads`와 `community.thread_replies` 기반 대화형 구조로 전환합니다.
+- 쓰레드는 작성자, 본문, 공개 범위, 생성/수정/삭제 시각을 저장하고 답글은 시간순으로 조회합니다.
+- 쓰레드와 답글 작성자는 자신의 콘텐츠를 soft delete할 수 있고 삭제 응답은 tombstone을 유지합니다.
+- 쓰레드 좋아요는 로그인 사용자 기준 토글형 1회 반응이며 `thread_id + user_id` unique 제약을 둡니다.
+- 쓰레드 좋아요는 선호도 점수에 반영하지 않습니다.
+- 신고와 모더레이션 대상은 쓰레드와 답글입니다.
+- 기존 `community.posts` 공개 API와 신규 발행은 종료하고 기존 데이터 보존/이관은 별도 migration으로 처리합니다.
+
+### 폐기된 게시물 계약
+
+아래 게시물 snapshot/retrip 규칙은 신규 제품 계약에 사용하지 않으며 기존 데이터 migration 판단을 위해서만 남깁니다.
 
 - MVP에는 완성된 여행방을 공개 게시글로 공유하는 기능을 포함합니다.
 - 여행방 소유자와 active MEMBER 모두 커뮤니티 게시글을 발행할 수 있습니다.
@@ -278,7 +307,8 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 업로드는 백엔드 proxy upload가 아니라 signed URL 직접 업로드를 기본으로 합니다.
 - `POST /media/upload-urls`는 purpose, mime type, byte size를 검증한 뒤 제한 시간 있는 signed URL과 object key를 발급합니다.
 - `POST /media/files`는 업로드 완료 후 metadata 확정 단계이며, object 존재 여부, byte size, mime sniffing 결과, linked resource 권한을 검증해야 합니다.
-- mime allowlist와 size limit은 purpose별로 분리합니다. MVP purpose는 `PROFILE_IMAGE`, `TRIP_RECORD`, `COMMUNITY_POST`입니다.
+- mime allowlist와 size limit은 purpose별로 분리합니다. 신규 purpose는 `PROFILE_IMAGE`, `TRIP_RECORD`, `COMMUNITY_THREAD`, `MAP_OVERLAY`이며 `COMMUNITY_POST`는 migration-only입니다.
+- `MAP_OVERLAY`는 JPG, PNG, WebP, 파일당 최대 10MB로 제한하고 MIME sniffing, 메타데이터 제거, 리사이징을 적용합니다.
 - public URL은 공개 가능한 용도에만 저장/반환하고, 비공개 기록 미디어는 필요 시 signed read URL 또는 프록시 조회로 확장합니다.
 - 프로필 이미지, 여행 기록 사진, 커뮤니티 게시글 사진은 모두 `media.media_files`를 실제 파일 메타데이터의 기준으로 사용합니다.
 - 각 기능의 소유권/권한/정렬은 `record.trip_record_media`, `community.post_media` 같은 도메인별 연결 테이블에서 관리합니다.
@@ -286,15 +316,14 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 
 ## 여행 기록
 
-- `/record` 화면의 여행 기록 기능은 trip에 묶어 관리합니다.
+- 전역 `/record` 탭과 화면은 제거하고 여행 기록 기능이 유지되는 경우 trip 내부에서만 접근합니다.
 - 여행 기록 엔트리는 `record.trip_record_entries`에 저장합니다.
 - 기록 엔트리는 `trip_id`, `uploaded_by_user_id`, 선택적 `itinerary_day_id`, 선택적 `itinerary_item_id`를 가집니다.
 - 기록 사진/영상은 `record.trip_record_media`로 `media.media_files`와 연결합니다.
 - 기록에는 누가 올렸는지, 언제 찍었는지, 위치/장소 메모, caption을 저장할 수 있어야 합니다.
-- MVP 기록 공개 범위는 여행방 멤버 기준이며, 공개 커뮤니티 노출은 `community.posts` 발행 흐름을 사용합니다.
+- MVP 기록 공개 범위는 여행방 멤버 기준이며 커뮤니티 쓰레드에 자동 공개하지 않습니다.
 - 기록 CRUD는 MVP에서 trip scoped API로 유지합니다.
-- 전역 `/record` 화면은 여행방별 선택 조회와 내가 참여한 모든 여행방의 사진 모아보기를 함께 제공합니다.
-- 기록 CRUD는 trip scoped API로 유지하고, 전체 사진 모아보기는 `GET /records/photos`로 제공합니다.
+- 기록 CRUD는 trip scoped API로만 유지하며 전역 `GET /records/photos`는 신규 제품 화면에서 사용하지 않습니다.
 
 ## AI
 
@@ -421,6 +450,6 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - rate limit은 endpoint 그룹별 quota key를 사용합니다. 인증은 IP+email, 일반 API는 user, 협업 write는 user+trip, 외부 provider 호출은 user/provider 또는 trip/provider 기준으로 제한합니다.
 - rate limit 초과는 `429`, `Retry-After`, `ProblemDetails(code=RATE_LIMITED)`를 반환합니다.
 - preference enrichment는 tag dictionary, prompt, model version을 관리하고, 새 version 배포 시 stale marking 후 background re-enrichment를 수행합니다.
-- 사용자 preference tag weight는 `user_swipe_events`에서 재생성 가능한 projection으로 유지합니다.
+- 사용자 preference tag weight는 `user_preference_events`에서 재생성 가능한 projection으로 유지합니다.
 - 초반에는 `.agent/contracts/openapi.yaml`을 contract source로 두고, backend 구현/생성 OpenAPI와의 diff 검증을 CI 후보로 둡니다.
 - 프론트 타입 생성은 tagged release 또는 PR 단위로 고정된 OpenAPI 파일에서 수행합니다.

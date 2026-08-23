@@ -1,16 +1,17 @@
 ﻿# 숨길 백엔드 API 명세 초안
 
-작성일: 2026-06-09  
+최종 정책 갱신일: 2026-08-23
 상태: OpenAPI 3.1 협의 초안
 
 ## 작성 범위와 근거
 
-이 문서는 프론트엔드 구현 상태가 아니라 현재 레포에 있는 기획/계약 문서를 기준으로 작성했다. `frontend/`와 `backend/`는 현재 제품 코드가 사실상 비어 있는 submodule 포인터 상태이므로, 프론트엔드 라우트 문서는 화면 연결을 위한 보조 자료로만 사용했다.
+이 문서는 현재 레포의 기획/계약 문서를 기준으로 작성하며 프론트엔드 라우트 문서는 구현 현황을 대조하는 보조 자료로 사용합니다.
 
 확정 근거:
 
 - `README.md`: 서비스 한 줄 설명, orchestration repo 구조, backend contract 위치.
-- `.agent/docs/product-specs/service_requirements.md`: V1 서비스 요구사항, 스와이프/추천/일정/지도/커뮤니티/AI/기록/알림/협업 규칙.
+- `.agent/docs/product-specs/service_requirements.md`: V1 서비스 요구사항, 선호도/추천/투표/일정/지도/커뮤니티/AI/기록/알림/협업 규칙.
+- `.agent/docs/product-specs/product_experience_policy.md`: 회원가입·홈·여행방 투표·지도 협업·커뮤니티 전환의 최신 제품 결정.
 - `.agent/contracts/backend_contract_decisions.md`: 백엔드 계약 결정, REST/Problem Details/권한/데이터 정책.
 - `.agent/contracts/schema.dbml`: PostgreSQL 기준 V1 데이터 모델.
 - `.agent/docs/product-specs/functional_spec.md`: 사용자 유형, 화면 범위, 백엔드 필요 기능.
@@ -18,8 +19,7 @@
 
 브랜치 ledger:
 
-- `npm --prefix .agent run branch:status` 기준 현재 ledger key는 `detached-unknown`이다.
-- `.agent/branch-ledger/branches/detached-unknown/`가 없으므로 브랜치별 ledger는 참고하지 않았다.
+- 현재 변경 문맥은 `.agent/branch-ledger/branches/chore__product-policy-realignment/`에 기록합니다.
 
 표기 규칙:
 
@@ -52,30 +52,31 @@
 | Auth | User, UserEmailAddress, UserProfile, UserSettings, AuthProvider, Session, PolicyDocument, SecurityEvent, Role | 이메일/비밀번호와 Kakao/Google 소셜 로그인, 약관 동의, 세션/보안 이벤트, 운영 RBAC |
 | Social | Follow | 앱 내부 directed follow edge |
 | Geo | LegalRegion | 법정동코드 10자리 기반 지역 |
-| Trip | Trip, TripRegion, TripMember, TripInvite | 여행방, 다중 지역, 멤버십, 초대 |
-| Place/Preference | PlaceRef, SwipeReaction, SwipeEvent, PreferenceTag, SavedPlace | 관광공사 장소 참조, 스와이프 기반 선호도 projection |
-| Itinerary | ItineraryDay, ItineraryItem, RouteSegment, MapDrawing | 일차/일차 미정, 장소 아이템, Mapbox snapped route, 저장된 도형 |
+| Trip | Trip, TripRegion, TripMember, TripInvite, VoteCandidate, VoteSticker | 여행방, 초대, 첫 참여 투표 |
+| Place/Preference | PlaceRef, PreferenceReaction, PreferenceEvent, OnboardingSurvey, PreferenceTag | 회원가입·홈·투표 기반 선호도 projection |
+| Itinerary | ItineraryDay, ItineraryItem, RouteSegment, MapObject | 일차/일차 미정, 경로, 그림·스티커·이미지 |
 | Collaboration | CollaborationCommand, UndoRedoSession | REST 저장 + STOMP broadcast + 버전 충돌 처리 |
 | Planning | Note, Checklist, ChecklistItem, MemberChecklistStatus | 여행방/일차 scope 단일 메모와 체크리스트 |
 | Chat | TripChatMessage | 여행방 전체 텍스트 채팅 |
 | AI | AiChatSession, AiChatMessage, AiToolCall | trip당 공유 AI 세션과 제한된 tool calling |
 | Record | TripRecordEntry, TripRecordMedia | 여행방 멤버용 사적 여행 기록 |
-| Community | Post, SnapshotDay/Item/Route, Comment, Like, Retrip, Report | 여행방 snapshot 공개 공유, 댓글, 좋아요, 리트립, 신고 |
+| Community | Thread, ThreadReply, ThreadLike, Report | 쓰레드, 답글, 좋아요, 신고 |
 | Media | MediaFile, UploadUrl | S3 호환 object storage 파일 metadata |
 | Notification | Notification | MVP 직접 초대 인앱 알림 |
 
 ### 주요 유스케이스
 
-- 사용자는 전역 스와이프 feed에서 `LIKE`, `NOPE`, `SUPER_LIKE`로 취향 데이터를 쌓는다.
+- 사용자는 회원가입 관광지 10개, 홈 관광지 배경, 여행방 투표에서 취향 데이터를 쌓으며 세 수집 경로 가중치는 동일하다.
 - 사용자는 `SUPER_LIKE`한 장소만 저장할 수 있다.
-- 여행방 멤버는 누적 스와이프 선호도를 바탕으로 viewport 안 추천 장소를 받고, 추천 카드를 일정에 바로 추가한다.
+- 첫 참여자는 스티커 투표를 완료해야 지도에 진입하고 선정 장소는 `UNSCHEDULED` 일정에 추가된다.
+- 여행방 멤버는 누적 선호도를 바탕으로 viewport 안 추천 장소를 받고, 추천 카드를 일정에 바로 추가한다.
 - 여행방 멤버는 일정, route segment, 지도 도형, 메모, 체크리스트를 협업 편집한다.
 - 지도 선 그리기는 Mapbox Map Matching으로 `DRIVING`/`WALKING` snapped route를 생성한다.
 - 협업 write는 `baseVersion` 충돌 검사를 통과해야 하며 성공 시 `itineraryVersion`이 증가하고 WebSocket/STOMP로 broadcast된다.
 - 같은 WebSocket 세션 안에서 본인이 수행한 최근 협업 command는 undo/redo 가능하다.
 - 여행방에는 공유 AI agent session이 하나 있고, AI는 일정 편집/미정 장소 배치/장소 탐색/메모/체크리스트 도구만 실행한다.
-- 완성된 여행방은 게시 시점 snapshot으로 커뮤니티에 발행되고, 리트립하면 snapshot 전체가 새 여행방으로 복제된다.
-- 여행 기록은 여행방 멤버에게만 보이는 사적 기록이며, 공개 공유는 커뮤니티 게시글 발행을 통해 수행한다.
+- 커뮤니티는 기존 게시물/스토리 대신 쓰레드와 시간순 답글을 사용한다.
+- 전역 기록 탭은 제거하고 유지되는 여행 기록은 여행방 안에서만 접근한다.
 
 ### 상태값과 비즈니스 규칙
 
@@ -86,6 +87,9 @@
 | TripMemberRole | `MEMBER` | MVP `trip_members.role`에는 MEMBER만 저장. OWNER 표시는 `ownerUserId`에서 파생 |
 | TripMemberStatus | `ACTIVE`, `LEFT`, `REMOVED` | 제거/탈퇴 이력 보존 |
 | InviteStatus | `PENDING`, `ACCEPTED`, `REVOKED`, `EXPIRED` | 초대 링크/코드 지원 |
+| TripVoteStatus | `OPEN`, `CLOSED` | 전원 완료, OWNER 종료, 마감 중 첫 조건으로 종료 |
+| TripMemberVoteState | `JOINED`, `VOTED` | INVITED는 pending invite로 표현, VOTED 전 지도 진입 차단 |
+| PreferenceSource | `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE` | source multiplier는 모두 `1.0` |
 | ItineraryDayGroupType | `DAY`, `UNSCHEDULED` | trip당 `UNSCHEDULED` 최대 1개 |
 | ItineraryItemType | `PLACE`, `CUSTOM_PLACE` | 외부 장소는 `provider + externalPlaceId`, 커스텀 장소는 item 안에 저장 |
 | PlaceSourceStatus | `AVAILABLE`, `DELETED`, `UNKNOWN` | 외부 원본 불가 시 snapshot/item에서 상태 표시 |
@@ -204,17 +208,20 @@ RFC7807 Problem Details를 사용한다.
 
 ### 실시간 협업 방식
 
-REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool write 결과 반영에 부족하므로 STOMP over WebSocket을 병행한다.
+영구 변경은 REST로 저장하고 지도 preview, 투표 상태, 접속자 커서, 일정 동시 편집, 채팅, AI tool 결과는 STOMP over WebSocket으로 전파한다.
 
 제안 endpoint/channel:
 
 - Handshake: `GET /ws`
 - Subscribe: `/topic/trips/{tripId}/itinerary`
 - Subscribe: `/topic/trips/{tripId}/map-drawings`
+- Subscribe: `/topic/trips/{tripId}/vote`
+- Subscribe: `/topic/trips/{tripId}/presence`
 - Subscribe: `/topic/trips/{tripId}/route-matching`
 - Subscribe: `/topic/trips/{tripId}/chat`
 - Subscribe: `/topic/trips/{tripId}/ai`
 - Send preview: `/app/trips/{tripId}/map-drawing-preview`
+- Send cursor: `/app/trips/{tripId}/cursor`
 
 확인 필요:
 
@@ -731,7 +738,26 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 근거: `trip.trip_members.status`.
 - 확인 필요: MEMBER 자진 탈퇴 허용 여부, 소유자 계정 삭제 시 여행방 삭제/보존 정책.
 
-### Places / Swipe / Preference
+### Onboarding / Home Preference
+
+- `GET /onboarding/preference-survey`: active 버전의 동일한 관광지 10개 조회.
+- `PUT /onboarding/preference-survey/responses`: 10개 전체 `LIKE`/`NOPE` 응답을 원자적으로 제출하고 onboarding을 완료.
+- `GET /home/place-background`: 다음 관광지 배경과 현재 사용자 반응 조회.
+- `PUT /places/{provider}/{externalPlaceId}/preference-reaction`: source와 반응을 저장.
+- `DELETE /places/{provider}/{externalPlaceId}/preference-reaction`: 제거 이벤트를 남기고 현재 상태 해제.
+
+### Trip Vote
+
+- `GET /trips/{tripId}/vote`: 설정, 후보, 내 스티커, 참여자 완료 상태 조회.
+- `PATCH /trips/{tripId}/vote/settings`: OWNER가 스티커 수, 선정 수, 마감 시각 변경.
+- `POST /trips/{tripId}/vote/candidates`: active MEMBER가 후보 추가.
+- `DELETE /trips/{tripId}/vote/candidates/{candidateId}`: active MEMBER가 후보와 활성 스티커 제거.
+- `POST /trips/{tripId}/vote/candidates/{candidateId}/stickers`: 총 지급량 안에서 스티커 추가.
+- `DELETE /trips/{tripId}/vote/stickers/{stickerId}`: 종료 전 본인 스티커 제거.
+- `PUT /trips/{tripId}/vote/me/complete`: 1개 이상 사용한 개인 투표 완료 또는 재제출.
+- `POST /trips/{tripId}/vote/close`: OWNER 수동 종료. 자동 종료와 동일한 선정/`UNSCHEDULED` 추가 pipeline 사용.
+
+### Places / Preference
 
 #### GET `/places/search`
 
@@ -776,6 +802,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 확정: 화면 route의 `tripId`를 API에 전달하지 않고, MVP 선호도는 사용자 개인 전역 기준으로만 저장/계산한다.
 
 #### PUT `/places/{provider}/{externalPlaceId}/swipe-reaction`
+
+이 endpoint는 migration 호환용 deprecated 계약입니다. 신규 화면은 `/preference-reaction`을 사용합니다.
 
 - 설명: 현재 사용자의 최종 스와이프 반응을 upsert하고 이벤트 로그를 누적한다.
 - 인증/권한: 로그인 사용자.
@@ -1303,6 +1331,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 
 #### GET `/records/photos`
 
+Deprecated: 전역 기록 탭 제거로 신규 화면에서 사용하지 않습니다. 여행방 내부 기록 endpoint를 사용합니다.
+
 - 설명: 현재 사용자가 참여 중인 모든 여행방의 기록 사진을 한 번에 모아 조회한다.
 - 인증/권한: 로그인 사용자. active member인 여행방 기록 사진만 반환한다.
 - Path parameters: 없음.
@@ -1327,6 +1357,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 확정: client는 이미지 로드 실패 URL별로 한 번만 재발급을 요청하며, 새로 발급된 URL이 나중에 만료되면 다시 요청할 수 있다.
 
 #### POST `/records/photo-summaries`
+
+Deprecated: 전역 기록 탭 제거로 신규 화면에서 사용하지 않습니다.
 
 - 설명: 요청한 여러 여행방의 기록 사진 개수와 대표 사진을 한 번의 집계 요청으로 조회한다.
 - 인증/권한: 로그인 사용자. 요청한 모든 여행방의 소유자 또는 active member여야 한다.
@@ -1461,6 +1493,16 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 확인 필요: 이미 게시글/기록에 연결된 media 삭제 제한.
 
 ### Community / Reports / Notifications / Admin
+
+신규 커뮤니티 계약:
+
+- `GET /community/threads`, `POST /community/threads`
+- `GET /community/threads/{threadId}`, `PATCH /community/threads/{threadId}`, `DELETE /community/threads/{threadId}`
+- `GET /community/threads/{threadId}/replies`, `POST /community/threads/{threadId}/replies`
+- `DELETE /community/thread-replies/{replyId}`
+- `PUT /community/threads/{threadId}/like`, `DELETE /community/threads/{threadId}/like`
+
+아래 `/community/posts*`와 retrip endpoint는 기존 데이터 migration 호환용 deprecated 계약이며 신규 화면에서 사용하지 않습니다.
 
 #### GET `/community/posts`
 

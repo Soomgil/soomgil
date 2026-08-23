@@ -157,7 +157,7 @@ street_alley: 거리/골목
 | `preference.synthetic_personas` | 50개 고정 페르소나 정의를 저장한다. |
 | `preference.synthetic_persona_tag_preferences` | 각 페르소나가 어떤 태그를 hard/soft like/dislike하는지 저장한다. |
 | `preference.synthetic_swipe_events` | 페르소나 기반 cold-start 합성 스와이프 이벤트를 실제 사용자 이벤트와 분리해 저장한다. |
-| `preference.user_swipe_events` | 모든 스와이프 이벤트 원본 로그. 통계 재계산의 기준이다. |
+| `preference.user_preference_events` | 회원가입·홈·여행방 투표의 원본 선호 이벤트 로그. 통계 재계산의 기준이다. |
 | `preference.user_place_reactions` | 사용자-장소 최종 반응 상태. 빠른 조회와 중복 반응 처리에 사용한다. |
 | `preference.user_preference_tag_weights` | 사용자별 현재 태그 선호도 projection. 추천 API는 이 projection을 읽는다. |
 
@@ -275,7 +275,9 @@ cold-start 3단계 이후에는 실제 사용자 이벤트에서 계산한 값�
 
 ## 사용자 선호도 누적
 
-사용자가 스와이프하면 해당 장소의 확정 태그만 사용자 선호도에 반영한다.
+사용자가 회원가입 평가, 홈 배경 반응, 여행방 투표에서 선호 신호를 남기면 해당 장소의 확정 태그만 사용자 선호도에 반영한다.
+
+수집 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`이며 source multiplier는 모두 `1.0`이다. 수집 경로만으로 근거를 증폭하거나 감쇠하지 않는다. `SUPER_LIKE`, `LIKE`, `NOPE`의 반응 강도 차이와 같은 장소에 붙인 여러 투표 스티커 수는 source multiplier와 별도로 반영한다.
 
 장소의 확정 태그 원점수:
 
@@ -292,7 +294,7 @@ place_tag_raw_evidence
 sum(place_tag_raw_evidence for the place)
 ```
 
-현재 최종 반응이 `LIKE` 또는 `SUPER_LIKE`면 `positive_evidence`에, `NOPE`면 `negative_evidence`에 태그별 근거를 반영한다. 같은 장소의 반응이 바뀌면 이전 근거를 먼저 되돌리고 새 근거를 적용한다.
+현재 최종 반응이 `LIKE` 또는 `SUPER_LIKE`면 `positive_evidence`에, `NOPE`면 `negative_evidence`에 태그별 근거를 반영한다. 같은 source resource의 반응이 바뀌거나 취소되면 이전 근거를 먼저 되돌리고 새 근거만 적용한다. 여행방 투표 스티커는 활성 스티커 하나를 동일 가중치의 긍정 근거 하나로 취급한다.
 
 ```text
 preference_score =
@@ -434,6 +436,8 @@ uplift_percent =
 - 같은 seed에서 합성 스와이프가 재현되는 테스트
 - `SYNTHETIC_PERSONA` 통계와 `REAL_USER` 통계가 serving 경로에서 섞이지 않는 테스트
 - baseline 대비 uplift 계산 테스트
+- 세 수집 경로의 source multiplier가 모두 `1.0`인 테스트
+- 좋아요 취소와 투표 스티커 제거 시 projection에서 이전 근거가 되돌려지는 테스트
 
 ## 금지사항
 
@@ -441,4 +445,5 @@ uplift_percent =
 - `rarity` 하나로 태그 중요도를 결정하지 않는다.
 - 페르소나 정의를 무시한 무작위 스와이프 데이터를 만들지 않는다.
 - 합성 데이터와 실제 사용자 데이터를 source 구분 없이 섞지 않는다.
+- 회원가입, 홈, 여행방 투표라는 수집 경로만으로 서로 다른 가중치를 부여하지 않는다.
 - 검증되지 않은 정확도 상승률을 문서나 발표에 쓰지 않는다.

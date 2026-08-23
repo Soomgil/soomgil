@@ -2,6 +2,8 @@
 
 현재 활성 화면은 `frontend/src/router/index.ts`의 Vue Router 라우트가 기준입니다.
 
+> 제품 전환 목표: 독립 `/record`, `/trips/:tripId/swipe`, story/feed 형식은 제거하고 `/home` 관광지 배경 선호 수집, `/trips/:tripId/vote`, 커뮤니티 thread 형식으로 교체합니다. 아래 표는 코드 변경 전 현재 구현 인벤토리이며 목표 정책은 `../product-specs/product_experience_policy.md`를 따릅니다.
+
 | 경로 | 이름 | Page | 인증 |
 | :--- | :--- | :--- | :--- |
 | `/` | Landing | `frontend/src/pages/LandingPage.vue` | 공개 |
