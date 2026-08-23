@@ -231,7 +231,10 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 지도 오브젝트는 자유 드로잉, 기본 스티커, 사용자 업로드 이미지를 공통 collaboration object로 관리합니다.
 - 사용자 이미지 purpose는 `MAP_OVERLAY`이며 JPG, PNG, WebP만 허용하고 파일당 최대 10MB입니다.
 - 지도 오브젝트는 조작 종료 시 REST로 저장하고 조작 중 좌표는 WebSocket preview로만 중계합니다.
-- 같은 오브젝트는 먼저 편집을 시작한 WebSocket 세션에 lease 기반 임시 잠금을 부여합니다.
+- 같은 오브젝트는 먼저 편집을 시작한 WebSocket 세션에 lease 기반 임시 잠금을 부여하며, 잠금 이벤트의 서버 발급 `clientId`로 같은 사용자의 복수 세션도 구분합니다.
+- lease는 15초이며 편집 중 5초마다 갱신합니다. update/delete REST는 사용자 소유 WebSocket session header와 활성 lease를 모두 검사합니다.
+- 지도 오브젝트 transform은 `centerLng`, `centerLat`, `widthMeters`, `heightMeters`, `rotationDeg`로 저장하고 화면 픽셀 크기는 영구 저장하지 않습니다.
+- 기본 스티커 code는 `HEART`, `STAR`, `CHECK`, `CAMERA`, `FOOD`, `CAFE`, `SHOPPING`, `HOTEL`, `NATURE`, `BEACH`, `MUSEUM`, `TRANSPORT` 12개로 고정합니다.
 - 재접속 시 로컬 미저장 상태를 버리고 서버 최신 snapshot으로 동기화합니다.
 - 같은 여행방 접속자의 커서는 presence topic으로 중계하고 영구 저장하지 않습니다.
 

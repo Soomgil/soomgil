@@ -221,11 +221,14 @@ RFC7807 Problem Details를 사용한다.
 - Subscribe: `/topic/trips/{tripId}/chat`
 - Subscribe: `/topic/trips/{tripId}/ai`
 - Send preview: `/app/trips/{tripId}/map-drawing-preview`
+- Send object lease: `/app/trips/{tripId}/map-object-lock` (`ACQUIRE`, `RENEW`, `RELEASE`)
 - Send cursor: `/app/trips/{tripId}/cursor`
 
-확인 필요:
+확정:
 
-- STOMP destination naming, auth handshake 방식, preview stroke payload 크기 제한.
+- 오브젝트 lease는 15초이며 편집 중 5초마다 갱신한다. 상태는 `/topic/trips/{tripId}/map-drawings`로 전파하고, 잠금 소유권은 서버가 부여한 `clientId`(WebSocket session ID)로 구분한다.
+- cursor는 인증된 session의 lng/lat만 50ms 간격으로 중계하고 클라이언트는 10초 후 만료시킨다.
+- preview stroke는 클라이언트와 서버 모두 최대 32개 좌표로 제한한다.
 
 ## 3. Endpoint 목록
 
@@ -1031,38 +1034,38 @@ RFC7807 Problem Details를 사용한다.
 
 #### POST `/trips/{tripId}/map-drawings`
 
-- 설명: 명시적으로 저장한 지도 도형/그림 생성.
+- 설명: 명시적으로 저장한 지도 도형, 12종 기본 스티커, 사용자 이미지를 생성한다.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`.
 - Query parameters: 없음.
 - Request body schema: `CreateMapDrawingRequest` with `baseVersion`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `201 {"itineraryVersion":23,"drawing":{"drawingType":"POLYGON"}}`
-- 실패 응답 예시: `422 ProblemDetails(code=INVALID_GEOJSON)`.
+- 실패 응답 예시: `422 ProblemDetails(code=VALIDATION_FAILED)`, `403 ProblemDetails(code=MEDIA_LINK_FORBIDDEN)`.
 - 관련 화면: 지도 드로잉.
 - 근거: `itinerary.map_drawings`.
-- 확인 필요: style JSON whitelist.
+- 확정: STICKER/IMAGE geometry는 Point이며 transform 중심과 일치한다. transform 크기는 화면 픽셀이 아닌 meter다.
 
 #### PATCH `/trips/{tripId}/map-drawings/{drawingId}`
 
-- 설명: 저장된 지도 도형 수정.
+- 설명: 저장된 지도 도형/오브젝트의 위치, meter 크기, 회전을 수정한다.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`, `drawingId`.
-- Query parameters: 없음.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 대상 drawing lease가 필수다.
 - Request body schema: `UpdateMapDrawingRequest` with `baseVersion`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `200 {"itineraryVersion":24,"drawing":{"id":"...","version":2}}`
 - 실패 응답 예시: `409 ProblemDetails(code=DRAWING_VERSION_CONFLICT)`.
 - 관련 화면: 지도 드로잉.
 - 근거: `itinerary.map_drawings.version`.
-- 확인 필요: drawing 자체 version과 trip itineraryVersion 동시 사용 방식.
+- 확정: trip `baseVersion`과 drawing `drawingVersion`을 함께 검사한다.
 
 #### DELETE `/trips/{tripId}/map-drawings/{drawingId}`
 
 - 설명: 저장된 지도 도형 soft delete.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`, `drawingId`.
-- Query parameters: 없음.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 대상 drawing lease가 필수다.
 - Request body schema: `VersionedCommandRequest`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `200 {"itineraryVersion":25}`
