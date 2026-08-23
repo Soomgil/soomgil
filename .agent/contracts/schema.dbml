@@ -884,7 +884,7 @@ Table itinerary.map_drawings {
   label varchar(160)
   media_file_id uuid [note: 'Required for IMAGE. MAP_OVERLAY media only.']
   sticker_code varchar(80) [note: 'Required for a built-in STICKER.']
-  transform jsonb [note: 'Position, scale, and rotation for image/sticker objects.']
+  transform jsonb [note: 'Required for STICKER/IMAGE. centerLng/centerLat, widthMeters/heightMeters, rotationDeg. Size is map-world meters, not screen pixels.']
   sort_order int [not null, default: 0]
   version bigint [not null, default: 0]
   created_by_user_id uuid [not null]
@@ -899,6 +899,7 @@ Table itinerary.map_drawings {
     itinerary_day_id
     created_by_user_id
     drawing_type
+    media_file_id
     (trip_id, sort_order)
     deleted_at
   }

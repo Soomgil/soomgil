@@ -627,8 +627,8 @@
           ],
           "images": [
             {
-              "src": "",
-              "alt": ""
+              "src": "photos[photoIndex]",
+              "alt": "title"
             }
           ],
           "forms": 0,
@@ -759,6 +759,30 @@
             "map-drawing-overlay",
             "map-drawing-stroke",
             "tool",
+            "{"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/map/MapObjectOverlay.vue",
+          "relativePath": "src/components/map/MapObjectOverlay.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "map-object",
+            "map-object-handle",
+            "map-object-hitbox",
+            "map-object-image",
+            "map-object-lock-mask",
+            "map-object-overlay",
+            "map-object-placeholder",
+            "map-object-rotation-handle",
+            "map-object-rotation-line",
+            "map-object-selection",
             "{"
           ],
           "assetRefs": []
@@ -2299,7 +2323,7 @@
             },
             {
               "src": "uploaderProfileImage(photo)!",
-              "alt": ""
+              "alt": "`${uploaderName(photo)} 프로필`"
             },
             {
               "src": "photo.previewUrl",
@@ -3529,6 +3553,18 @@
           "exports": []
         },
         {
+          "path": "frontend/src/components/map/MapObjectOverlay.test.ts",
+          "relativePath": "src/components/map/MapObjectOverlay.test.ts",
+          "imports": [
+            "./MapObjectOverlay.vue",
+            "@/types/itinerary",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/map/MapboxItineraryMap.test.ts",
           "relativePath": "src/components/map/MapboxItineraryMap.test.ts",
           "imports": [
@@ -3540,6 +3576,52 @@
             "vue"
           ],
           "exports": []
+        },
+        {
+          "path": "frontend/src/components/map/mapObjectGeometry.test.ts",
+          "relativePath": "src/components/map/mapObjectGeometry.test.ts",
+          "imports": [
+            "./mapObjectGeometry",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/map/mapObjectGeometry.ts",
+          "relativePath": "src/components/map/mapObjectGeometry.ts",
+          "imports": [
+            "@/types/geo",
+            "@/types/itinerary"
+          ],
+          "exports": [
+            "ProjectedMapObject",
+            "ScreenPoint",
+            "defaultMapObjectTransform",
+            "distanceMeters",
+            "projectMapObject"
+          ]
+        },
+        {
+          "path": "frontend/src/components/map/mapStickerCatalog.test.ts",
+          "relativePath": "src/components/map/mapStickerCatalog.test.ts",
+          "imports": [
+            "./mapStickerCatalog",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/map/mapStickerCatalog.ts",
+          "relativePath": "src/components/map/mapStickerCatalog.ts",
+          "imports": [
+            "@/assets/stickers/map-stickers.svg?url",
+            "@/types/itinerary"
+          ],
+          "exports": [
+            "MAP_STICKERS",
+            "MapStickerDefinition",
+            "stickerHref"
+          ]
         },
         {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.test.ts",
@@ -3797,6 +3879,7 @@
             "./RoutePage.vue",
             "@/components/map/MapboxItineraryMap.vue",
             "@/components/place/PlaceDiscoveryPanel.vue",
+            "@/realtime/collaborationSession",
             "@vue/test-utils",
             "vitest",
             "vue"
@@ -4245,6 +4328,8 @@
             "MapDrawing",
             "MapMatchRouteInput",
             "MapMatchRouteRequest",
+            "MapObjectTransform",
+            "MapStickerCode",
             "PlaceRef",
             "ReorderItineraryInput",
             "ReorderItineraryRequest",
@@ -4254,7 +4339,9 @@
             "UpdateItineraryDayInput",
             "UpdateItineraryDayRequest",
             "UpdateItineraryItemInput",
-            "UpdateItineraryItemRequest"
+            "UpdateItineraryItemRequest",
+            "UpdateMapDrawingInput",
+            "UpdateMapDrawingRequest"
           ]
         },
         {
@@ -4933,10 +5020,10 @@
       "summary": {
         "routes": 20,
         "pages": 21,
-        "components": 33,
-        "sourceFiles": 105,
+        "components": 34,
+        "sourceFiles": 110,
         "styleFiles": 4,
-        "typeScriptSignals": 158
+        "typeScriptSignals": 164
       }
     },
     {

@@ -34,6 +34,9 @@
 | `frontend/` | Vue 기반 웹 앱 서브모듈 |
 | `backend/` | Spring Boot API 서버 서브모듈 |
 | `.agent/` | AI 작업 문서, 계약, 하네스 |
+| `.agent/workspaces.json` | 서브모듈·실행 명령 workspace 인벤토리 |
+| `.agent/contracts/backend_contract_decisions.md` | 백엔드 계약 결정 기록 |
+| `.agent/branch-ledger/` | 기능 브랜치별 AI 작업 문맥 |
 | `compose.yaml` | 로컬 통합 실행 환경 |
 
 ## 빠른 실행

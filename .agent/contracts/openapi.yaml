@@ -1484,7 +1484,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/drawingId'
-        - $ref: '#/components/parameters/websocketSessionId'
+        - name: X-Soomgil-WebSocket-Session-Id
+          in: header
+          required: true
+          description: 현재 사용자가 소유하고 대상 drawing의 15초 lease를 획득한 WebSocket session ID.
+          schema:
+            type: string
+            maxLength: 120
       requestBody:
         required: true
         content:
@@ -1505,7 +1511,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/drawingId'
-        - $ref: '#/components/parameters/websocketSessionId'
+        - name: X-Soomgil-WebSocket-Session-Id
+          in: header
+          required: true
+          description: 현재 사용자가 소유하고 대상 drawing의 15초 lease를 획득한 WebSocket session ID.
+          schema:
+            type: string
+            maxLength: 120
       requestBody:
         required: true
         content:
@@ -3913,16 +3925,44 @@ components:
           description: IMAGE일 때 MAP_OVERLAY media file.
         stickerCode:
           type: string
+          enum: [HEART, STAR, CHECK, CAMERA, FOOD, CAFE, SHOPPING, HOTEL, NATURE, BEACH, MUSEUM, TRANSPORT]
           description: STICKER일 때 기본 스티커 코드.
         transform:
-          type: object
-          additionalProperties: true
-          description: 위치, 크기, 회전.
+          $ref: '#/components/schemas/MapObjectTransform'
         sortOrder:
           type: integer
         version:
           type: integer
           format: int64
+    MapObjectTransform:
+      type: object
+      required: [centerLng, centerLat, widthMeters, heightMeters, rotationDeg]
+      additionalProperties: false
+      description: 지도 좌표 중심과 meter 단위 크기. 줌에 따라 지도와 함께 투영한다.
+      properties:
+        centerLng:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+        centerLat:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+        widthMeters:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+          maximum: 1000000
+        heightMeters:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+          maximum: 1000000
+        rotationDeg:
+          type: number
+          format: double
     VersionedCommandRequest:
       type: object
       required: [baseVersion]
@@ -4148,9 +4188,9 @@ components:
               format: uuid
             stickerCode:
               type: string
+              enum: [HEART, STAR, CHECK, CAMERA, FOOD, CAFE, SHOPPING, HOTEL, NATURE, BEACH, MUSEUM, TRANSPORT]
             transform:
-              type: object
-              additionalProperties: true
+              $ref: '#/components/schemas/MapObjectTransform'
             sortOrder:
               type: integer
     UpdateMapDrawingRequest:
@@ -4165,6 +4205,8 @@ components:
               additionalProperties: true
             label:
               type: string
+            transform:
+              $ref: '#/components/schemas/MapObjectTransform'
             sortOrder:
               type: integer
             drawingVersion:

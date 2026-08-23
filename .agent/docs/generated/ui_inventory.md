@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 33 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 34 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -222,6 +222,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `===`, `editable,`, `erasing:`, `map-drawing-hit-target`, `map-drawing-overlay`, `map-drawing-stroke`, `tool`, `{`
+
+#### frontend/src/components/map/MapObjectOverlay.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `map-object`, `map-object-handle`, `map-object-hitbox`, `map-object-image`, `map-object-lock-mask`, `map-object-overlay`, `map-object-placeholder`, `map-object-rotation-handle`, `map-object-rotation-line`, `map-object-selection`, `{`
 
 #### frontend/src/components/map/MapboxItineraryMap.vue
 
