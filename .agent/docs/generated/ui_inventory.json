@@ -3218,6 +3218,28 @@
           ]
         },
         {
+          "path": "frontend/src/api/collaboration.api.test.ts",
+          "relativePath": "src/api/collaboration.api.test.ts",
+          "imports": [
+            "./collaboration.api",
+            "./http",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/api/collaboration.api.ts",
+          "relativePath": "src/api/collaboration.api.ts",
+          "imports": [
+            "./http"
+          ],
+          "exports": [
+            "CollaborationActionRequest",
+            "CollaborationActionResponse",
+            "collaborationApi"
+          ]
+        },
+        {
           "path": "frontend/src/api/community.api.ts",
           "relativePath": "src/api/community.api.ts",
           "imports": [
@@ -3480,12 +3502,26 @@
           "exports": []
         },
         {
+          "path": "frontend/src/auth/accessToken.test.ts",
+          "relativePath": "src/auth/accessToken.test.ts",
+          "imports": [
+            "./accessToken",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/auth/accessToken.ts",
           "relativePath": "src/auth/accessToken.ts",
-          "imports": [],
+          "imports": [
+            "axios"
+          ],
           "exports": [
+            "clearStoredAuthTokens",
+            "ensureStoredAccessToken",
             "getStoredAccessToken",
-            "isUsableAccessToken"
+            "isUsableAccessToken",
+            "refreshStoredAccessToken"
           ]
         },
         {
@@ -4240,6 +4276,7 @@
             "./geo"
           ],
           "exports": [
+            "CollaborationCommandEvent",
             "DrawingPreviewEvent",
             "DrawingPreviewMessage",
             "DrawingPreviewPhase",
@@ -5021,9 +5058,9 @@
         "routes": 20,
         "pages": 21,
         "components": 34,
-        "sourceFiles": 110,
+        "sourceFiles": 113,
         "styleFiles": 4,
-        "typeScriptSignals": 164
+        "typeScriptSignals": 167
       }
     },
     {
