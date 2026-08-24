@@ -230,7 +230,7 @@ RFC7807 Problem Details를 사용한다.
 - 오브젝트 lease는 15초이며 편집 중 5초마다 갱신한다. 상태는 `/topic/trips/{tripId}/map-drawings`로 전파하고, 잠금 소유권은 서버가 부여한 `clientId`(WebSocket session ID)로 구분한다.
 - 오브젝트 transform preview는 활성 lease 소유 세션만 발행할 수 있고 `/topic/trips/{tripId}/map-drawings`로 중계한다. 다른 참여자는 preview를 즉시 표시하되 `END`/`CANCEL`에서 제거하고, 영구 상태는 조작 종료 후 REST 응답으로 확정한다.
 - cursor는 인증된 session의 lng/lat만 50ms 간격으로 중계하고 클라이언트는 10초 후 만료시킨다.
-- preview stroke는 클라이언트와 서버 모두 최대 32개 좌표로 제한한다.
+- preview stroke는 클라이언트와 서버 모두 최대 100개 좌표로 제한한다. 제한을 넘는 입력은 균일 간격 추출이 아니라 시작·끝과 큰 굴곡을 우선 보존해 단순화하며, `END`는 영구 저장 좌표와 같은 좌표 집합을 즉시 중계한다.
 
 ## 3. Endpoint 목록
 

@@ -717,9 +717,9 @@
           ],
           "forms": 0,
           "classNames": [
+            "[",
             "brand",
-            "nav",
-            "topbar"
+            "nav"
           ],
           "assetRefs": [
             "@/assets/images/soomgil_logo_none_text.png"
@@ -2521,8 +2521,9 @@
             "period-text",
             "route-page-section",
             "section",
-            "sidebar",
             "sidebar-content",
+            "sidebar-sheet-handle",
+            "sidebar-toggle",
             "stat-label",
             "stat-value",
             "trip-card-dates",
@@ -4038,6 +4039,7 @@
             "@/components/map/MapDrawingOverlay.vue",
             "@/types/collaboration",
             "@/types/geo",
+            "@/utils/pathSimplification",
             "vue"
           ],
           "exports": [
@@ -4559,6 +4561,24 @@
           ]
         },
         {
+          "path": "frontend/src/utils/pathSimplification.test.ts",
+          "relativePath": "src/utils/pathSimplification.test.ts",
+          "imports": [
+            "./pathSimplification",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/pathSimplification.ts",
+          "relativePath": "src/utils/pathSimplification.ts",
+          "imports": [],
+          "exports": [
+            "CartesianPoint",
+            "simplifyPathToLimit"
+          ]
+        },
+        {
           "path": "frontend/src/utils/record-photo-metadata.test.ts",
           "relativePath": "src/utils/record-photo-metadata.test.ts",
           "imports": [
@@ -5058,9 +5078,9 @@
         "routes": 20,
         "pages": 21,
         "components": 34,
-        "sourceFiles": 113,
+        "sourceFiles": 115,
         "styleFiles": 4,
-        "typeScriptSignals": 167
+        "typeScriptSignals": 169
       }
     },
     {
