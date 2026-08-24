@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-08-24T02:17:53.201Z
+생성 시각: 2026-08-24T12:13:20.241Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -9,6 +9,7 @@
 ## 기록
 
 - unknown | bugfix__map-collaboration-reliability | scope 없음 | 지도 협업 신뢰성 보강 | .agent/branch-ledger/branches/bugfix__map-collaboration-reliability/20260823T230734Z-bugfix__map-collaboration-reliability-note.md
+- unknown | bugfix__route-tool-popover-position | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/bugfix__route-tool-popover-position/20260824T102149Z-bugfix__route-tool-popover-position-note.md
 - unknown | chore__api-contract-spec | scope 없음 | Backend Spring Boot CQRS-lite scaffold | .agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md
 - unknown | chore__fei-131-tracking | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md
 - 2026-08-23T10:08:16.689Z | chore/product-policy-realignment | shared | 작업 기록 | .agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md
