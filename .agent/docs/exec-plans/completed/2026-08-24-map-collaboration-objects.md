@@ -86,3 +86,9 @@
 ## 후속 작업
 
 - 다중 backend 인스턴스 배포 전 lease/presence 저장소를 Redis로 교체하고 외부 STOMP broker를 도입한다.
+
+## 후속 안정화
+
+- 2026-08-24: 로컬 저장소를 MinIO로 고정하고 서버 내부 endpoint와 브라우저 presign endpoint를 분리했다.
+- 2026-08-24: 저장 지도 오브젝트 삭제는 lease 획득과 서버 삭제가 성공한 뒤 화면에서 제거하며, 동일 계정의 다른 창과 다른 사용자의 잠금 충돌을 구분해 안내한다.
+- 2026-08-24: 지도 오브젝트 command event에 WebSocket session ID를 명시적으로 저장하고 프론트 toolbar를 서버 undo/redo stack에 연결했다.

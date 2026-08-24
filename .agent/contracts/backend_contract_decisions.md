@@ -313,6 +313,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - mime allowlist와 size limit은 purpose별로 분리합니다. 신규 purpose는 `PROFILE_IMAGE`, `TRIP_RECORD`, `COMMUNITY_THREAD`, `MAP_OVERLAY`이며 `COMMUNITY_POST`는 migration-only입니다.
 - `MAP_OVERLAY`는 JPG, PNG, WebP, 파일당 최대 10MB로 제한하고 MIME sniffing, 메타데이터 제거, 리사이징을 적용합니다.
 - public URL은 공개 가능한 용도에만 저장/반환하고, 비공개 기록 미디어는 필요 시 signed read URL 또는 프록시 조회로 확장합니다.
+- 로컬 `compose.yaml`은 파일 저장소를 MinIO로 고정합니다. 백엔드 object I/O용 내부 endpoint와 브라우저 signed URL용 presign endpoint를 분리하며, AWS 값은 `compose.aws.yaml`/`.env.aws`에서만 주입합니다.
 - 프로필 이미지, 여행 기록 사진, 커뮤니티 게시글 사진은 모두 `media.media_files`를 실제 파일 메타데이터의 기준으로 사용합니다.
 - 각 기능의 소유권/권한/정렬은 `record.trip_record_media`, `community.post_media` 같은 도메인별 연결 테이블에서 관리합니다.
 - soft delete 후 retention 기간이 지나면 object도 purge합니다.

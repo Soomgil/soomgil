@@ -222,11 +222,13 @@ RFC7807 Problem Details를 사용한다.
 - Subscribe: `/topic/trips/{tripId}/ai`
 - Send preview: `/app/trips/{tripId}/map-drawing-preview`
 - Send object lease: `/app/trips/{tripId}/map-object-lock` (`ACQUIRE`, `RENEW`, `RELEASE`)
+- Send object transform preview: `/app/trips/{tripId}/map-object-transform-preview` (`UPDATE`, `END`, `CANCEL`)
 - Send cursor: `/app/trips/{tripId}/cursor`
 
 확정:
 
 - 오브젝트 lease는 15초이며 편집 중 5초마다 갱신한다. 상태는 `/topic/trips/{tripId}/map-drawings`로 전파하고, 잠금 소유권은 서버가 부여한 `clientId`(WebSocket session ID)로 구분한다.
+- 오브젝트 transform preview는 활성 lease 소유 세션만 발행할 수 있고 `/topic/trips/{tripId}/map-drawings`로 중계한다. 다른 참여자는 preview를 즉시 표시하되 `END`/`CANCEL`에서 제거하고, 영구 상태는 조작 종료 후 REST 응답으로 확정한다.
 - cursor는 인증된 session의 lng/lat만 50ms 간격으로 중계하고 클라이언트는 10초 후 만료시킨다.
 - preview stroke는 클라이언트와 서버 모두 최대 32개 좌표로 제한한다.
 
@@ -1037,7 +1039,7 @@ RFC7807 Problem Details를 사용한다.
 - 설명: 명시적으로 저장한 지도 도형, 12종 기본 스티커, 사용자 이미지를 생성한다.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`.
-- Query parameters: 없음.
+- Query parameters: 없음. 생성 command의 undo/redo 귀속을 위해 `X-Soomgil-WebSocket-Session-Id` header가 필수다.
 - Request body schema: `CreateMapDrawingRequest` with `baseVersion`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `201 {"itineraryVersion":23,"drawing":{"drawingType":"POLYGON"}}`
@@ -1086,7 +1088,8 @@ RFC7807 Problem Details를 사용한다.
 - 실패 응답 예시: `409 ProblemDetails(code=UNDO_CONFLICT)`.
 - 관련 화면: route/planning 공통 undo.
 - 근거: `.agent/docs/product-specs/service_requirements.md`.
-- 확인 필요: session id 헤더 필수화.
+- 확정: `X-Soomgil-WebSocket-Session-Id` header가 필수이며 프론트 toolbar는 서버 stack을 호출한 뒤 최신 itinerary snapshot을 다시 조회한다.
+- WebSocket 연결 성공 시 서버는 최종 STOMP `CONNECTED` frame의 `X-Soomgil-WebSocket-Session-Id` header로 현재 session ID를 반환한다.
 
 #### POST `/trips/{tripId}/collaboration/redo`
 
@@ -1100,7 +1103,7 @@ RFC7807 Problem Details를 사용한다.
 - 실패 응답 예시: `409 ProblemDetails(code=REDO_CONFLICT)`.
 - 관련 화면: route/planning 공통 redo.
 - 근거: `.agent/docs/product-specs/service_requirements.md`.
-- 확인 필요: redo stack 초기화 이벤트 payload.
+- 확정: `X-Soomgil-WebSocket-Session-Id` header가 필수이며 응답의 `undoAvailable`, `redoAvailable`로 toolbar 상태를 갱신한다.
 
 ### Notes / Checklists
 

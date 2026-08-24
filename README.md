@@ -57,6 +57,10 @@ docker compose --profile full up --build -d
 | Mailpit | http://localhost:8025 |
 | MinIO Console | http://localhost:9001 |
 
+로컬 `compose.yaml`은 `.env`에 AWS S3 값이 있더라도 파일 저장소를 MinIO로 고정합니다.
+브라우저 직접 업로드 URL은 `http://localhost:9000`으로 서명되고, 백엔드는 Docker 내부 주소로 MinIO에 접근합니다.
+AWS 배포 설정은 `compose.aws.yaml`과 `.env.aws`에서만 관리합니다.
+
 중지:
 
 ```bash
