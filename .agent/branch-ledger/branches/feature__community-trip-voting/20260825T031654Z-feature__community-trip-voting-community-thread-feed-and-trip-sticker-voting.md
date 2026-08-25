@@ -64,14 +64,37 @@ status: draft
 
 ## 검증 결과
 
-- backend 단위/슬라이스 테스트: 847개 중 47개 실패, **실패는 전부 Docker 필요 통합 테스트**이고 Docker 외 실패 0.
+Docker를 올린 뒤 실제 PostgreSQL 16과 실행 중인 백엔드로 검증을 마쳤습니다.
+
+- migration: V45, V46이 실제 DB에 정상 적용됨 (`Successfully applied 2 migrations, now at version v46`).
+  V44는 그 전에 이미 적용되어 있었음.
+- backend 전체 테스트: 849개 중 7개 실패. 7개 모두 clean `develop`에서 동일하게 실패하는 기존 환경 문제이고
+  (KTO API key 미설정 5개, minio compose 1개, Jeju seed 1개) 그 외 실패는 0.
+  clean develop worktree에서 같은 5개 클래스를 돌려 동일한 7개 실패를 확인했습니다.
 - frontend: `npm run test:run` 365개 전부 통과, `npm run build` 성공.
-- Testcontainers 통합 테스트와 HTTP E2E는 작업 중 Docker Desktop이 내려가 **실행하지 못했습니다.**
+- harness: `harness:index`, `harness:check` 전 항목 통과.
+- HTTP E2E: 커뮤니티 쓰레드 + 투표 + 일정 반영 **81개 검증 전부 통과**.
+  - 쓰레드: 공개 조회, 401/400/422 검증, 좋아요 멱등, 1단계 답글, 2단계 거절, 작성자 권한,
+    THREAD/THREAD_REPLY 신고, tombstone, 삭제 후 피드 제외
+  - 투표: 방장 권한, 참여자 확정, 후보 snapshot, 진행 중 집계 미노출, 몰아붙이기, 지급량 초과 거절,
+    이동/회수, 제출, 이중 제출 409, 제출 후 수정 409, 미확인 조기 종료 422, 조기 종료, 재종료 멱등
+  - 일정: 선정 관광지가 일차 미정에 추가되고 재종료해도 중복되지 않음
+- 취향 격리 확인: 투표한 사용자들의 `user_place_reactions`, `user_swipe_events`,
+  `user_saved_places` row가 **0건**. `user_place_vote_evidences`에만 TRIP_VOTE 근거가 기록되고
+  projection의 `vote_evidence`에 정상 가산됨.
+
+### E2E로 잡은 버그
+
+`OpenVoteSessionHandler`가 후보 생성 query에 `destinationKeyword`를 넘기지 않아 대체 검색어 fallback이
+죽은 코드였습니다. 지역 코드가 KTO area code로 매핑되지 않으면 후보가 0개가 되어 투표를 시작할 수 없었습니다.
+`FindTripDetailHandler`로 대표 목적지를 읽어 전달하도록 고치고 테스트 2개를 추가했습니다. (commit a7d134c)
 
 ## develop 통합 시 반영할 내용
 
-- Docker를 올린 뒤 `./gradlew test` 전체와 HTTP E2E를 반드시 재검증해야 합니다.
-  특히 V44~V46 migration 적용과 신규 mapper SQL은 아직 실제 DB에서 실행된 적이 없습니다.
+- KTO live API의 지역 매핑이 현재 제주(area code 39)만 지원합니다.
+  `KtoTourismPlaceClient.liveAreaCode`가 `legalRegionCode.startsWith("39")`만 매핑하는데
+  제주 법정동코드는 `50`으로 시작하므로, 실제로는 대표 목적지 키워드 fallback으로 후보가 만들어집니다.
+  다른 지역을 지원하려면 이 매핑을 확장해야 합니다.
 - 마이페이지가 아직 `community.posts` API를 사용합니다. 완전 제거하려면 마이페이지 전환이 선행돼야 합니다.
 - 투표 상태 실시간 반영은 현재 5초 polling입니다. STOMP topic 화이트리스트
   (`collaboration/infrastructure/websocket/TripSubscriptionInterceptor`)에 `voting`을 추가하는 것은 후속 과제입니다.
