@@ -164,6 +164,7 @@ flowchart TD
 | `social` | `backend/src/main/java/com/soomgil/social/` | 민경철 | 팔로우 관계, 팔로우 기반 반응 조회 |
 | `trip` | `backend/src/main/java/com/soomgil/trip/` | 김지훈 | 여행방, 멤버, 초대, 권한 |
 | `user` | `backend/src/main/java/com/soomgil/user/` | 윤정 | user profile, summary, avatar, settings |
+| `voting` | `backend/src/main/java/com/soomgil/voting/` | 커뮤니티·여행 방·투표 담당 | 투표 세션, 후보 snapshot, 참여 상태, 스티커, 종료와 결과 확정 |
 | `tourism_source` | `.agent/contracts/schema.dbml`, `backend/src/main/resources/tourism-source/` | 민경철 | 관광공사 원천, 수상작 사진, source import/matching |
 | `ops` | `.agent/contracts/schema.dbml`의 `ops.*` | 윤정 | 운영/audit log 정책. 각 모듈은 자기 이벤트를 남긴다. |
 
@@ -347,6 +348,68 @@ backend/src/main/resources/preference/
 - whitelist 밖 태그는 확정 태그로 저장하지 않는다.
 - 수상작 사진 존재 여부를 추천 점수에 직접 더하지 않는다.
 - `UNMATCHED`, `CANDIDATE`, `AMBIGUOUS` 수상작 사진은 public serving 후보에서 제외한다.
+
+## 커뮤니티 쓰레드와 여행 방 투표
+
+### 커뮤니티 쓰레드
+
+모듈: `community`
+디렉토리: `backend/src/main/java/com/soomgil/community/`
+관련 문서: `.agent/contracts/backend_contract_decisions.md`의 `## 커뮤니티 쓰레드`
+
+- [x] 사용자 흐름과 수용 기준 설명
+- [x] 정상/실패/권한/경계 테스트 작성과 실패 확인
+- [x] V44 migration, domain policy, mapper, handler, controller 구현
+- [x] 신고와 모더레이션을 `THREAD`, `THREAD_REPLY`로 확장
+- [x] 새 public 계약 타입 한국어 JavaDoc
+- [x] 관련 테스트 통과
+
+완료 근거:
+
+- 테스트 명령: `./gradlew test --tests 'com.soomgil.community.*'`
+- 남은 위험: 기존 `community.posts` API가 마이페이지에서 아직 사용 중이라 즉시 제거할 수 없다.
+
+### 여행 방 투표
+
+모듈: `voting`
+디렉토리: `backend/src/main/java/com/soomgil/voting/`
+관련 문서: `.agent/contracts/backend_contract_decisions.md`의 `## 여행 방 투표`
+의존 interface:
+
+- `trip`: `TripAccessGuard`, `ListTripMembersHandler`, `ListTripRegionCodesHandler`
+- `preference`: `ListTripVoteCandidatesQueryHandler`, `ApplyTripVotePreferenceCommandHandler`
+- `itinerary`: `AddPlacesToUnscheduledHandler`
+- `place`: `PlaceRegionCandidateQueryHandler`
+
+- [x] 사용자 흐름과 수용 기준 설명
+- [x] 정상/실패/권한/경계/동시성 테스트 작성과 실패 확인
+- [x] V45, V46 migration과 domain policy 구현
+- [x] 세션 시작, 스티커 저장, 제출, 자동 종료, 조기 종료, 결과 확정 구현
+- [x] 새 public 계약 타입 한국어 JavaDoc
+- [x] 관련 테스트 통과
+- [ ] Docker가 실행되는 환경에서 Testcontainers 통합 테스트와 HTTP E2E 검증
+
+완료 근거:
+
+- 테스트 명령: `./gradlew test --tests 'com.soomgil.voting.*'`
+- 남은 위험: Testcontainers 통합 테스트와 HTTP E2E는 Docker가 내려가 있어 아직 실행하지 못했다.
+
+### 투표 모듈 의존 규칙
+
+- 투표는 trip, itinerary, preference, place의 DB나 mapper를 직접 접근하지 않는다.
+- 일정 반영은 itinerary가 연 `AddPlacesToUnscheduledHandler` command만 호출한다.
+- 취향 반영은 preference가 연 `ApplyTripVotePreferenceCommandHandler` command만 호출한다.
+- 후보 생성은 preference가 연 `ListTripVoteCandidatesQueryHandler` query만 호출한다.
+- 다른 참여자의 raw 취향 점수, 세부 태그, matched member는 투표 API 응답에 넣지 않는다.
+- 종료 전이와 결과 반영은 조건부 UPDATE의 영향 row 수로만 판정한다. 반환값을 무시하면 동시 종료와 중복 반영을 막을 수 없다.
+
+### 예약된 Flyway migration 번호
+
+| 번호 | 내용 |
+| :--- | :--- |
+| `V44` | community thread 계열 테이블과 기존 post 계열 deprecated 표시 |
+| `V45` | voting 스키마 |
+| `V46` | preference TRIP_VOTE 근거 테이블과 projection 감사 컬럼 |
 
 ## 후순위 시작 조건
 

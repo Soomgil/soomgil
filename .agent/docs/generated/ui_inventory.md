@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 34 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 33 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -31,10 +31,10 @@
 | `/trip-invites/:inviteCode` | TripInviteAccept | `src/pages/TripInviteAcceptPage.vue` | 필요 | 아니오 |
 | `/swipe` | Swipe | `src/pages/SwipePage.vue` | 필요 | 아니오 |
 | `/trips/:tripId/swipe` | Route | `src/pages/RoutePage.vue` | 필요 | 아니오 |
-| `/community` | Community | `src/pages/CommunityPage.vue` | 공개 | 아니오 |
-| `/community/feed` | Feed | `src/pages/StoriesPage.vue` | 공개 | 아니오 |
-| `/community/story-write` | StoryWrite | `src/pages/StoryWritePage.vue` | 필요 | 아니오 |
-| `/record` | Record | `src/pages/RecordPage.vue` | 필요 | 아니오 |
+| `/trips/:tripId/vote` | TripVote | `src/pages/TripVotePage.vue` | 필요 | 아니오 |
+| `/community` | Community | `src/pages/CommunityFeedPage.vue` | 공개 | 아니오 |
+| `/community/threads/:threadId` | CommunityThread | `src/pages/CommunityThreadDetailPage.vue` | 공개 | 아니오 |
+| `/community/feed` | Feed | `src/pages/RecordPage.vue` | 필요 | 아니오 |
 | `/mypage` | MyPage | `src/pages/MyPage.vue` | 필요 | 아니오 |
 | `/mypage/:userId` | UserProfile | `src/pages/UserProfilePage.vue` | 공개 | 아니오 |
 | `/settings` | Settings | `src/pages/SettingsPage.vue` | 필요 | 아니오 |
@@ -160,15 +160,6 @@
 - asset refs: 없음
 - classes: `animate-spin`, `border-3`, `border-line`, `border-t-brand-violet`, `flex`, `h-8`, `items-center`, `justify-center`, `py-20`, `rounded-full`, `w-8`
 
-#### frontend/src/components/community/StoryCard.vue
-
-- 종류: component
-- script: setup / ts
-- headings: 없음
-- forms: 0, images: 2
-- asset refs: 없음
-- classes: `aspect-[4/3]`, `bg-brand-violet`, `bg-surface`, `bg-surface-2`, `border`, `border-line`, `duration-500`, `flex`, `flex-col`, `font-bold`, `gap-2`, `group`, `group-hover:scale-105`, `h-6`, `h-full`, `hover:border-brand-violet/20`, `hover:shadow-[0_12px_32px_rgba(0,102,255,0.08)]`, `items-center`, `justify-center`, `mb-2`, `object-cover`, `overflow-hidden`, `p-4`, `relative`, `rounded-[24px]`, `rounded-full`, `text-[10px]`, `text-left`, `text-white`, `transition-all`
-
 #### frontend/src/components/community/StoryDetailOverlay.vue
 
 - 종류: component
@@ -178,23 +169,23 @@
 - asset refs: `/images/랜딩페이지/korea_hero.png`
 - classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`, `story-post-photo-img`, `story-report-btn`, `tag`
 
-#### frontend/src/components/community/StoryPostPreview.vue
+#### frontend/src/components/community/ThreadCard.vue
 
 - 종류: component
 - script: setup / ts
-- headings: h3 {{ title }}
+- headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `carousel-btn`, `fc-avatar`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-comment-count`, `story-like-button`, `story-post-head`, `story-post-head-row`, `story-post-photo-frame`, `story-post-photo-img`, `story-post-photo-placeholder`, `story-post-preview`, `story-report-btn`, `tag`, `tag-row`
+- classes: `liked:`, `material-symbols-rounded`, `thread-card`, `thread-card-action`, `thread-card-actions`, `thread-card-author`, `thread-card-content`, `thread-card-date`, `thread-card-footer`, `thread-card-header`, `thread-card-images`, `thread-card-meta`, `thread-card-stat`, `thread-card-tombstone`, `thread.likedByMe`, `{`, `}`
 
-#### frontend/src/components/community/StoryWriteModal.vue
+#### frontend/src/components/community/ThreadComposer.vue
 
 - 종류: component
 - script: setup / ts
-- headings: h1 당신의 여행을 들려주세요
+- headings: 없음
 - forms: 1, images: 0
 - asset refs: 없음
-- classes: `btn`, `field`, `ghost`, `material-symbols-rounded`, `photo-strip`, `photo-strip__empty`, `photo-strip__nav`, `photo-strip__nav--prev`, `photo-strip__row`, `photo-strip__upload`, `photo-strip__viewport`, `primary`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `tag-chip`, `tag-chip-input`, `tag-chip-input__field`, `tag-chip-input__icon`, `tag-chip__remove`, `{`
+- classes: `>`, `maxLength`, `over:`, `thread-composer`, `thread-composer-buttons`, `thread-composer-cancel`, `thread-composer-counter`, `thread-composer-footer`, `thread-composer-input`, `thread-composer-submit`, `trimmed.length`, `{`, `}`
 
 #### frontend/src/components/layout/AppHeader.vue
 
@@ -358,14 +349,23 @@
 - asset refs: 없음
 - classes: `bg-brand-violet`, `bg-red-50`, `bg-surface`, `block`, `border`, `border-line`, `flex`, `flex-wrap`, `font-black`, `font-bold`, `gap-2`, `gap-3`, `gap-4`, `grid`, `items-center`, `justify-between`, `max-w-5xl`, `mb-12`, `mb-4`, `mb-6`, `mb-8`, `mt-1`, `mx-auto`, `my-3`, `p-4`, `p-5`, `px-3`, `px-4`, `px-6`, `py-12`
 
-#### frontend/src/pages/CommunityPage.vue
+#### frontend/src/pages/CommunityFeedPage.vue
 
 - 종류: page
 - script: setup / ts
-- headings: h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
-- forms: 0, images: 5
-- asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
+- headings: h1 커뮤니티
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `community-feed`, `community-feed-header`, `community-feed-list`, `community-feed-more`, `community-feed-subtitle`, `community-feed-title`
+
+#### frontend/src/pages/CommunityThreadDetailPage.vue
+
+- 종류: page
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `thread-detail`, `thread-detail-children`, `thread-detail-replies`, `thread-detail-reply`, `thread-detail-reply-actions`, `thread-detail-reply-author`, `thread-detail-reply-body`, `thread-detail-reply-content`, `thread-detail-reply-target`, `thread-detail-reply-tombstone`
 
 #### frontend/src/pages/HomePage.vue
 
@@ -484,24 +484,6 @@
 - asset refs: 없음
 - classes: `accent-brand-violet`, `bg-brand-violet`, `bg-surface`, `bg-white`, `block`, `border`, `border-b`, `border-brand-rose/20`, `border-brand-rose/30`, `border-line`, `disabled:opacity-50`, `flex`, `font-bold`, `font-semibold`, `gap-4`, `hover:bg-brand-rose/5`, `items-center`, `justify-between`, `last:border-0`, `material-symbols-rounded`, `max-w-2xl`, `mb-1`, `mb-2`, `mb-4`, `mb-6`, `mt-1`, `mt-4`, `mx-auto`, `p-3`, `p-6`
 
-#### frontend/src/pages/StoriesPage.vue
-
-- 종류: page
-- script: setup / ts
-- headings: h1 우리들의 여행 이야기 를 둘러보세요, h3 {{ story.title }}
-- forms: 0, images: 1
-- asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `btn`, `detail-topline`, `ghost`, `material-symbols-rounded`, `muted`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `post-type`, `primary`, `section`, `story`, `story-list-card`, `story-list-grid`
-
-#### frontend/src/pages/StoryWritePage.vue
-
-- 종류: page
-- script: setup / ts
-- headings: h1 당신의 여행 을 들려주세요, h3 작성 미리보기
-- forms: 1, images: 2
-- asset refs: 없음
-- classes: `btn`, `content-container`, `detail-topline`, `editor-toolbar`, `field`, `form-group`, `form-group-icon-wrap`, `ghost`, `material-symbols-rounded`, `muted`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `primary`, `section`, `small`, `text-area`, `upload-grid`, `write-form`, `write-layout`, `write-main`, `write-page`, `write-page-hero`, `write-preview-feed-frame`, `write-preview-sidebar`
-
 #### frontend/src/pages/SwipePage.vue
 
 - 종류: page
@@ -519,6 +501,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
+
+#### frontend/src/pages/TripVotePage.vue
+
+- 종류: page
+- script: setup / ts
+- headings: h1 어디를 갈까요?
+- forms: 0, images: 1
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `trip-vote`, `trip-vote-actions`, `trip-vote-candidate`, `trip-vote-candidate-address`, `trip-vote-candidate-body`, `trip-vote-candidate-controls`, `trip-vote-candidate-count`, `trip-vote-candidate-image`, `trip-vote-candidate-name`, `trip-vote-candidates`, `trip-vote-header`, `trip-vote-progress`, `trip-vote-reset`, `trip-vote-step`, `trip-vote-submit`, `trip-vote-subtitle`, `trip-vote-title`, `trip-vote-tray`, `trip-vote-tray-count`, `trip-vote-tray-label`, `trip-vote-tray-total`, `trip-vote-waiting`, `trip-vote-waiting-text`, `trip-vote-waiting-title`
 
 #### frontend/src/pages/UserProfilePage.vue
 
