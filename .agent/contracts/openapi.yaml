@@ -1531,6 +1531,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ItineraryMutationResponse'
+  /trips/{tripId}/map-drawings/batch-delete:
+    post:
+      tags: [Itinerary]
+      summary: 지우개 경로의 지도 오브젝트 일괄 삭제
+      operationId: deleteMapDrawings
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - $ref: '#/components/parameters/websocketSessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteMapDrawingsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItineraryMutationResponse'
   /trips/{tripId}/collaboration/undo:
     post:
       tags: [Itinerary]
@@ -3970,6 +3991,20 @@ components:
         baseVersion:
           type: integer
           format: int64
+    DeleteMapDrawingsRequest:
+      allOf:
+        - $ref: '#/components/schemas/VersionedCommandRequest'
+        - type: object
+          required: [drawingIds]
+          properties:
+            drawingIds:
+              type: array
+              minItems: 1
+              maxItems: 100
+              uniqueItems: true
+              items:
+                type: string
+                format: uuid
     CreateItineraryDayRequest:
       allOf:
         - $ref: '#/components/schemas/VersionedCommandRequest'
