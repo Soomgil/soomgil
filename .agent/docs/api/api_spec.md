@@ -1076,6 +1076,20 @@ RFC7807 Problem Details를 사용한다.
 - 근거: `itinerary.map_drawings.deleted_at`.
 - 확인 필요: AI tool registry에서 drawing 삭제 제외 유지.
 
+#### POST `/trips/{tripId}/map-drawings/batch-delete`
+
+- 설명: 한 번의 지우개 드래그 경로에 닿은 지도 도형·스티커·이미지를 일괄 soft delete한다.
+- 인증/권한: active trip member.
+- Path parameters: `tripId`.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 모든 대상 drawing lease가 필수다.
+- Request body schema: `DeleteMapDrawingsRequest` with `baseVersion`, `drawingIds`(1~100개).
+- Response body schema: `ItineraryMutationResponse`.
+- 성공 응답 예시: `200 {"itineraryVersion":26}`
+- 실패 응답 예시: `404 ProblemDetails(code=MAP_DRAWING_NOT_FOUND)`, `409 ProblemDetails(code=ITINERARY_VERSION_CONFLICT)`.
+- 관련 화면: 지도 지우개 드래그.
+- 근거: `itinerary.map_drawings.deleted_at`, `collab.collaboration_command_events`.
+- 확정: 전체 삭제는 itinerary version을 한 번만 증가시키고 단일 `DELETE_MAP_DRAWINGS` command event로 기록한다. undo/redo는 해당 목록 전체를 원자적으로 복원/재삭제한다.
+
 #### POST `/trips/{tripId}/collaboration/undo`
 
 - 설명: 현재 WebSocket 세션에서 본인이 실행한 마지막 undo 가능 command를 되돌린다.

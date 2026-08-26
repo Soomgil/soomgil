@@ -221,7 +221,7 @@
 - headings: 없음
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `===`, `editable,`, `erasing:`, `map-drawing-hit-target`, `map-drawing-overlay`, `map-drawing-stroke`, `tool`, `{`
+- classes: `===`, `editable,`, `erasing:`, `map-drawing-overlay`, `map-drawing-stroke`, `tool`, `{`
 
 #### frontend/src/components/map/MapObjectOverlay.vue
 
