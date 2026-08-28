@@ -567,7 +567,7 @@
           "images": [
             {
               "src": "url",
-              "alt": ""
+              "alt": "`첨부 이미지 ${imageIndex + 1}`"
             }
           ],
           "forms": 0,
@@ -1486,7 +1486,7 @@
             },
             {
               "src": "imageUrl(candidate)!",
-              "alt": ""
+              "alt": "candidate.name ?? "
             }
           ],
           "forms": 0,
@@ -1536,7 +1536,7 @@
           "images": [
             {
               "src": "row.thumbnailUrl",
-              "alt": ""
+              "alt": "row.name ?? "
             }
           ],
           "forms": 0,
@@ -1601,7 +1601,7 @@
           "images": [
             {
               "src": "row.candidate.thumbnailUrl",
-              "alt": ""
+              "alt": "row.candidate.name ?? "
             }
           ],
           "forms": 0,
