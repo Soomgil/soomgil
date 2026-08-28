@@ -99,3 +99,20 @@ Docker를 올린 뒤 실제 PostgreSQL 16과 실행 중인 백엔드로 검증�
 - 투표 상태 실시간 반영은 현재 5초 polling입니다. STOMP topic 화이트리스트
   (`collaboration/infrastructure/websocket/TripSubscriptionInterceptor`)에 `voting`을 추가하는 것은 후속 과제입니다.
 - `voting` 모듈 담당자를 backend TDD checklist에 정식으로 배정해야 합니다.
+
+## 2026-08-28 UI 재설계 (frontend 27efccc)
+
+design.md 실토큰(`--violet`/`--blue` 그라디언트, `page-hero`, `--soft-shadow`) 기준으로
+커뮤니티 피드·쓰레드 상세·투표 화면을 재구성하고, 미구현 화면 4종을 채웠습니다.
+
+- 방장 투표 시작 패널 `OwnerVoteSetupPanel` (스티커/선정 개수 스텝퍼, 후보 부족·중복 시작 오류 안내)
+- 쓰레드 이미지 첨부 (`ThreadComposer`: COMMUNITY_POST 서명 업로드, 미리보기/제거, 업로드 중 제출 잠금)
+- 쓰레드/답글 인라인 수정 (PATCH 연동)
+- 신고 사유 선택 모달 `ThreadReportModal` (서버 사유 목록 + fallback)
+- 투표 결과 패널 `VoteResultPanel` (일차 미정 추가/중복 스킵 배지), 완료 세션 결과·재시작 흐름
+- 가드 변경: `/trips/:id/vote` 직접 진입은 페이지 자체 상태(setup/idle/observer/completed)로 처리,
+  `Route` 진입 시에만 nextScreen 게이트 유지 — RoutePage.vue 등 병렬 작업 파일은 미접촉
+- 새로고침 시 `auth.fetchUser()` 복원 패턴을 피드/상세/투표 페이지에 적용
+
+검증: frontend 테스트 377개 전부 통과, build 성공, harness index/check 통과,
+로컬 브라우저에서 방장 시작→스티커 배분→제출→대기, 피드 인라인 수정, 신고 모달 실동작 확인.

@@ -564,31 +564,19 @@
           "scriptLang": "ts",
           "scriptSetup": true,
           "headings": [],
-          "images": [
-            {
-              "src": "url",
-              "alt": "`첨부 이미지 ${index + 1}`"
-            }
-          ],
+          "images": [],
           "forms": 0,
           "classNames": [
-            "liked:",
             "material-symbols-rounded",
             "thread-card",
-            "thread-card-action",
-            "thread-card-actions",
-            "thread-card-author",
-            "thread-card-content",
-            "thread-card-date",
-            "thread-card-footer",
-            "thread-card-header",
-            "thread-card-images",
-            "thread-card-meta",
-            "thread-card-stat",
-            "thread-card-tombstone",
-            "thread.likedByMe",
-            "{",
-            "}"
+            "thread-card__action",
+            "thread-card__action--danger",
+            "thread-card__actions",
+            "thread-card__author",
+            "thread-card__date",
+            "thread-card__header",
+            "thread-card__meta",
+            "{"
           ],
           "assetRefs": []
         },
@@ -599,22 +587,111 @@
           "scriptLang": "ts",
           "scriptSetup": true,
           "headings": [],
-          "images": [],
+          "images": [
+            {
+              "src": "item.previewUrl",
+              "alt": "첨부 이미지 미리보기"
+            }
+          ],
           "forms": 1,
           "classNames": [
             ">",
+            "hidden",
+            "item.uploading",
+            "material-symbols-rounded",
             "maxLength",
             "over:",
             "thread-composer",
-            "thread-composer-buttons",
-            "thread-composer-cancel",
-            "thread-composer-counter",
-            "thread-composer-footer",
-            "thread-composer-input",
-            "thread-composer-submit",
+            "thread-composer__attach",
+            "thread-composer__body",
+            "thread-composer__counter",
+            "thread-composer__footer",
+            "thread-composer__input",
+            "thread-composer__main",
+            "thread-composer__preview",
+            "thread-composer__preview-remove",
+            "thread-composer__preview-spinner",
+            "thread-composer__previews",
+            "thread-composer__reply-target",
+            "thread-composer__submit",
             "trimmed.length",
+            "uploading:",
             "{",
             "}"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/community/ThreadReportModal.vue",
+          "relativePath": "src/components/community/ThreadReportModal.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ targetLabel }} 신고"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "===",
+            "?",
+            "accent-brand-violet",
+            "bg-brand-rose",
+            "bg-surface",
+            "border",
+            "border-line",
+            "cursor-pointer",
+            "disabled:opacity-50",
+            "disabled:pointer-events-none",
+            "flex",
+            "flex-col",
+            "focus:outline-none",
+            "focus:ring-2",
+            "focus:ring-brand-violet/30",
+            "font-bold",
+            "font-extrabold",
+            "font-semibold",
+            "gap-2",
+            "gap-3",
+            "hover:-translate-y-0.5",
+            "hover:bg-surface-2",
+            "items-center",
+            "justify-end",
+            "material-symbols-rounded",
+            "mb-1",
+            "mb-4",
+            "mb-5",
+            "mt-5",
+            "p-6",
+            "placeholder:text-muted",
+            "px-4",
+            "px-5",
+            "px-6",
+            "py-2.5",
+            "py-3",
+            "py-6",
+            "reason.code",
+            "resize-none",
+            "rounded-2xl",
+            "rounded-full",
+            "selected",
+            "shadow-[0_10px_26px_rgba(255,92,141,0.35)]",
+            "sm:p-7",
+            "text-[22px]",
+            "text-brand-rose",
+            "text-center",
+            "text-ink",
+            "text-lg",
+            "text-muted",
+            "text-sm",
+            "text-white",
+            "transition-all",
+            "transition-colors",
+            "w-full"
           ],
           "assetRefs": []
         },
@@ -1343,6 +1420,64 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/voting/OwnerVoteSetupPanel.vue",
+          "relativePath": "src/components/voting/OwnerVoteSetupPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "스티커 투표 로 갈 곳을 함께 정해요"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "vote-setup",
+            "vote-setup__cta",
+            "vote-setup__error",
+            "vote-setup__lead",
+            "vote-setup__note",
+            "vote-setup__panel",
+            "vote-setup__row",
+            "vote-setup__row-copy",
+            "vote-setup__stepper",
+            "vote-setup__title"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteResultPanel.vue",
+          "relativePath": "src/components/voting/VoteResultPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "투표가 끝났어요!"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "vote-result",
+            "vote-result__header",
+            "vote-result__lead",
+            "vote-result__title"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/pages/AdminModerationPage.vue",
           "relativePath": "src/pages/AdminModerationPage.vue",
           "kind": "page",
@@ -1418,18 +1553,25 @@
             {
               "level": 1,
               "id": "",
-              "text": "커뮤니티"
+              "text": "여행자들의 이야기 를 나눠보세요"
             }
           ],
           "images": [],
           "forms": 0,
           "classNames": [
             "community-feed",
-            "community-feed-header",
-            "community-feed-list",
-            "community-feed-more",
-            "community-feed-subtitle",
-            "community-feed-title"
+            "community-feed__column",
+            "community-feed__list",
+            "community-feed__more",
+            "material-symbols-rounded",
+            "page-hero",
+            "page-hero__copy",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "page-hero__lead",
+            "page-hero__title",
+            "page-with-hero",
+            "section"
           ],
           "assetRefs": []
         },
@@ -1443,16 +1585,27 @@
           "images": [],
           "forms": 0,
           "classNames": [
+            "material-symbols-rounded",
+            "page-with-hero",
+            "save",
+            "section",
             "thread-detail",
-            "thread-detail-children",
-            "thread-detail-replies",
-            "thread-detail-reply",
-            "thread-detail-reply-actions",
-            "thread-detail-reply-author",
-            "thread-detail-reply-body",
-            "thread-detail-reply-content",
-            "thread-detail-reply-target",
-            "thread-detail-reply-tombstone"
+            "thread-detail__back",
+            "thread-detail__column",
+            "thread-detail__replies",
+            "thread-detail__reply",
+            "thread-detail__reply-actions",
+            "thread-detail__reply-author",
+            "thread-detail__reply-body",
+            "thread-detail__reply-content",
+            "thread-detail__reply-date",
+            "thread-detail__reply-edit",
+            "thread-detail__reply-edit-actions",
+            "thread-detail__reply-edit-input",
+            "thread-detail__reply-group",
+            "thread-detail__reply-head",
+            "thread-detail__reply-tombstone",
+            "{"
           ],
           "assetRefs": []
         },
@@ -2693,44 +2846,26 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 1,
+              "level": 2,
               "id": "",
-              "text": "어디를 갈까요?"
+              "text": "진행 중인 투표가 없어요"
             }
           ],
-          "images": [
-            {
-              "src": "candidate.thumbnailUrl",
-              "alt": "candidate.name ?? "
-            }
-          ],
+          "images": [],
           "forms": 0,
           "classNames": [
             "material-symbols-rounded",
+            "page-with-hero",
+            "section",
             "trip-vote",
-            "trip-vote-actions",
-            "trip-vote-candidate",
-            "trip-vote-candidate-address",
-            "trip-vote-candidate-body",
-            "trip-vote-candidate-controls",
-            "trip-vote-candidate-count",
-            "trip-vote-candidate-image",
-            "trip-vote-candidate-name",
-            "trip-vote-candidates",
-            "trip-vote-header",
-            "trip-vote-progress",
-            "trip-vote-reset",
-            "trip-vote-step",
-            "trip-vote-submit",
-            "trip-vote-subtitle",
-            "trip-vote-title",
-            "trip-vote-tray",
-            "trip-vote-tray-count",
-            "trip-vote-tray-label",
-            "trip-vote-tray-total",
-            "trip-vote-waiting",
-            "trip-vote-waiting-text",
-            "trip-vote-waiting-title"
+            "trip-vote__back",
+            "trip-vote__column",
+            "trip-vote__cta",
+            "trip-vote__ghost",
+            "trip-vote__idle",
+            "trip-vote__idle-icon",
+            "trip-vote__panel",
+            "trip-vote__result-actions"
           ],
           "assetRefs": []
         },
@@ -4960,10 +5095,10 @@
       "summary": {
         "routes": 20,
         "pages": 21,
-        "components": 33,
+        "components": 36,
         "sourceFiles": 125,
         "styleFiles": 4,
-        "typeScriptSignals": 178
+        "typeScriptSignals": 181
       }
     },
     {
