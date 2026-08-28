@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 36 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 39 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -174,9 +174,9 @@
 - 종류: component
 - script: setup / ts
 - headings: 없음
-- forms: 0, images: 0
+- forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `thread-card`, `thread-card__action`, `thread-card__action--danger`, `thread-card__actions`, `thread-card__author`, `thread-card__date`, `thread-card__header`, `thread-card__meta`, `{`
+- classes: `4)}``, ``thread-row__media--${Math.min(images.length,`, `danger`, `material-symbols-rounded`, `thread-row`, `thread-row__author`, `thread-row__avatar`, `thread-row__body`, `thread-row__content`, `thread-row__edit`, `thread-row__edit-actions`, `thread-row__edit-cancel`, `thread-row__edit-counter`, `thread-row__edit-input`, `thread-row__edit-save`, `thread-row__head`, `thread-row__image`, `thread-row__media`, `thread-row__menu`, `thread-row__menu-backdrop`, `thread-row__menu-btn`, `thread-row__menu-wrap`, `thread-row__spacer`, `thread-row__time`, `thread-row__tombstone`, `{`
 
 #### frontend/src/components/community/ThreadComposer.vue
 
@@ -185,7 +185,7 @@
 - headings: 없음
 - forms: 1, images: 1
 - asset refs: 없음
-- classes: `>`, `hidden`, `item.uploading`, `material-symbols-rounded`, `maxLength`, `over:`, `thread-composer`, `thread-composer__attach`, `thread-composer__body`, `thread-composer__counter`, `thread-composer__footer`, `thread-composer__input`, `thread-composer__main`, `thread-composer__preview`, `thread-composer__preview-remove`, `thread-composer__preview-spinner`, `thread-composer__previews`, `thread-composer__reply-target`, `thread-composer__submit`, `trimmed.length`, `uploading:`, `{`, `}`
+- classes: `material-symbols-rounded`, `thread-composer`, `thread-composer__attach`, `thread-composer__attach-count`, `thread-composer__avatar`, `thread-composer__bar`, `thread-composer__counter`, `thread-composer__input`, `thread-composer__main`, `thread-composer__preview`, `thread-composer__preview-loading`, `thread-composer__preview-remove`, `thread-composer__previews`, `thread-composer__reply-target`, `thread-composer__row`, `thread-composer__spacer`, `thread-composer__submit`
 
 #### frontend/src/components/community/ThreadReportModal.vue
 
@@ -358,6 +358,24 @@
 - asset refs: 없음
 - classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-setup`, `vote-setup__cta`, `vote-setup__error`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row-copy`, `vote-setup__stepper`, `vote-setup__title`
 
+#### frontend/src/components/voting/VoteCandidateDeck.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h3 {{ current.name ?? '이름 미상' }}
+- forms: 0, images: 2
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `vote-deck`, `vote-deck__address`, `vote-deck__badge`, `vote-deck__caption`, `vote-deck__category`, `vote-deck__controls`, `vote-deck__count`, `vote-deck__count-unit`, `vote-deck__count-value`, `vote-deck__counter`, `vote-deck__name`, `vote-deck__nav`, `vote-deck__nav--next`, `vote-deck__nav--prev`, `vote-deck__photo`, `vote-deck__photo--empty`, `vote-deck__scrim`, `vote-deck__slide`, `vote-deck__stage`, `vote-deck__step`, `vote-deck__step--add`, `vote-deck__thumb`, `vote-deck__thumb-badge`, `vote-deck__thumbs`, `{`
+
+#### frontend/src/components/voting/VoteResultMapOverlay.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 투표가 끝났어요!
+- forms: 0, images: 1
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `vote-map-overlay`, `vote-map-overlay__backdrop`, `vote-map-overlay__card`, `vote-map-overlay__count`, `vote-map-overlay__cta`, `vote-map-overlay__icon`, `vote-map-overlay__item`, `vote-map-overlay__lead`, `vote-map-overlay__list`, `vote-map-overlay__name`, `vote-map-overlay__rank`, `vote-map-overlay__thumb`, `vote-map-overlay__thumb--empty`, `vote-map-overlay__title`
+
 #### frontend/src/components/voting/VoteResultPanel.vue
 
 - 종류: component
@@ -366,6 +384,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-result`, `vote-result__header`, `vote-result__lead`, `vote-result__title`
+
+#### frontend/src/components/voting/VoteStickerCart.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 shopping_bag 스티커 보드
+- forms: 0, images: 1
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `vote-cart`, `vote-cart__close`, `vote-cart__dot`, `vote-cart__dots`, `vote-cart__empty`, `vote-cart__header`, `vote-cart__hint`, `vote-cart__item`, `vote-cart__list`, `vote-cart__name`, `vote-cart__remaining`, `vote-cart__reset`, `vote-cart__stepper`, `vote-cart__submit`, `vote-cart__thumb`, `vote-cart__thumb--empty`, `vote-cart__title`, `{`
 
 #### frontend/src/pages/AdminModerationPage.vue
 
@@ -383,7 +410,7 @@
 - headings: h1 여행자들의 이야기 를 나눠보세요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `community-feed`, `community-feed__column`, `community-feed__list`, `community-feed__more`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`
+- classes: `community-feed`, `community-feed__column`, `community-feed__divider`, `community-feed__surface`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`
 
 #### frontend/src/pages/CommunityThreadDetailPage.vue
 
@@ -392,7 +419,7 @@
 - headings: 없음
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-with-hero`, `save`, `section`, `thread-detail`, `thread-detail__back`, `thread-detail__column`, `thread-detail__replies`, `thread-detail__reply`, `thread-detail__reply-actions`, `thread-detail__reply-author`, `thread-detail__reply-body`, `thread-detail__reply-content`, `thread-detail__reply-date`, `thread-detail__reply-edit`, `thread-detail__reply-edit-actions`, `thread-detail__reply-edit-input`, `thread-detail__reply-group`, `thread-detail__reply-head`, `thread-detail__reply-tombstone`, `{`
+- classes: `material-symbols-rounded`, `page-with-hero`, `save`, `section`, `thread-detail`, `thread-detail__back`, `thread-detail__column`, `thread-detail__divider`, `thread-detail__group`, `thread-detail__replies`, `thread-detail__reply`, `thread-detail__reply-actions`, `thread-detail__reply-author`, `thread-detail__reply-avatar`, `thread-detail__reply-body`, `thread-detail__reply-content`, `thread-detail__reply-date`, `thread-detail__reply-edit`, `thread-detail__reply-edit-actions`, `thread-detail__reply-edit-input`, `thread-detail__reply-head`, `thread-detail__reply-tombstone`, `thread-detail__surface`, `{`
 
 #### frontend/src/pages/HomePage.vue
 
@@ -533,10 +560,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 진행 중인 투표가 없어요
+- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h1 어디로 갈까요?, h2 제출을 마쳤어요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__column`, `trip-vote__cta`, `trip-vote__ghost`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__panel`, `trip-vote__result-actions`
+- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__cta`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`
 
 #### frontend/src/pages/UserProfilePage.vue
 
