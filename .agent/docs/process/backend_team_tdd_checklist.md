@@ -387,12 +387,12 @@ backend/src/main/resources/preference/
 - [x] 세션 시작, 스티커 저장, 제출, 자동 종료, 조기 종료, 결과 확정 구현
 - [x] 새 public 계약 타입 한국어 JavaDoc
 - [x] 관련 테스트 통과
-- [ ] Docker가 실행되는 환경에서 Testcontainers 통합 테스트와 HTTP E2E 검증
+- [x] Docker가 실행되는 환경에서 Testcontainers 통합 테스트와 HTTP E2E 검증
 
 완료 근거:
 
 - 테스트 명령: `./gradlew test --tests 'com.soomgil.voting.*'`
-- 남은 위험: Testcontainers 통합 테스트와 HTTP E2E는 Docker가 내려가 있어 아직 실행하지 못했다.
+- E2E 근거: Docker 기동 후 전체 테스트 849개 중 기존 환경 이슈 7개 외 전부 통과, HTTP E2E 81개 검증 통과. 상세는 branch ledger의 '검증 결과' 절 참조.
 
 ### 투표 모듈 의존 규칙
 
