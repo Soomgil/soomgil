@@ -68,9 +68,10 @@
 - 스티커: `frontend/src/components/map/mapStickerCatalog.ts` — 12종 SVG 심볼. 현재는 지도 낙서용.
 - 프론트 스와이프 큐: `swipe.store.ts` QUEUE_CAPACITY=10 — **삭제 금지** (RoutePage PlaceDiscoveryPanel, MyPage가 사용).
 
-## 1차 구현 완료분 (미커밋 — develop 워킹트리)
+## 1차 구현 완료분 (커밋됨 — 세 repo 모두 `feature/award-photo-hero` 브랜치, origin 푸시 완료)
 
-수상작 홈 히어로. 동작 화면까지 검증 완료.
+수상작 홈 히어로. 동작 화면까지 검증 완료. develop 미머지 상태 — PR은 아직 안 만듦.
+후속 작업(B0~)은 이 브랜치에서 이어가거나, develop 머지 후 `feature/guided-trip-flow`로 분기.
 
 backend 신규: `place/api/AwardPhotoController.java`, `place/api/dto/AwardPhoto.java`,
 `place/application/port/AwardPhotoCatalogClient.java`, `AwardPhotoCatalogItem.java`,

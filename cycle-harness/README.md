@@ -48,5 +48,5 @@ B6 탭 정리 (독립, 아무 때나)
 
 ## 브랜치
 
-`develop`에서 분기: `feature/guided-trip-flow` (frontend / backend / soomgil 동일 슬러그).
-**주의: 1차 수상작 히어로 구현이 아직 develop 워킹트리에 미커밋 상태다. CONTEXT.md 참조.**
+1차 히어로 구현 + 이 폴더는 세 repo 모두 `feature/award-photo-hero` 브랜치로 푸시돼 있다 (develop 미머지).
+후속 작업은 이 브랜치에서 이어가거나, PR 머지 후 `feature/guided-trip-flow`로 새로 분기한다.
