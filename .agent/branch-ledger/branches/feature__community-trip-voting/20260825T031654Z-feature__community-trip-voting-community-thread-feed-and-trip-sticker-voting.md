@@ -138,3 +138,13 @@ design.md 실토큰(`--violet`/`--blue` 그라디언트, `page-hero`, `--soft-sh
 검증: frontend 테스트 380개 전부 통과(덱/카트 2개 + polling 회귀 1개 추가), build 성공,
 harness index/check 통과, 헤드리스 크롬으로 11개 화면 실동작 캡쳐(폴링 1사이클 경과 후에도
 장바구니 3건 유지 확인 로그 포함).
+
+## 2026-08-31 미디어 정리 버그 픽스 (backend fbf67f8)
+
+데모에서 쓰레드 첨부 사진이 약 1시간 뒤 사라지는 현상 발견. 원인은 media 모듈의
+고아 업로드 정리 쿼리 2곳(`claimUnlinkedForPurge`, `findExpiredCompletedUnlinked`)의
+보호 목록(record.trip_record_media / community.post_media / posts.cover / user_profiles)에
+신규 `community.thread_media`가 빠져 있어, 업로드 인텐트가 만료되면 쓰레드에 연결된
+이미지도 PURGED 처리된 것. 두 쿼리에 `NOT EXISTS(community.thread_media)` 보호를 추가했다.
+TDD: 재현 통합 테스트 `keepsThreadAttachedMediaOutOfOrphanCleanup`를 먼저 작성해 실패를
+확인한 뒤 수정, media·community 스위트 통과.
