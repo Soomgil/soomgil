@@ -479,10 +479,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 서비스 환경 을 관리하세요, h2 로그인 기기, h2 보안 활동, h2 계정 삭제, h2 환경 설정
-- forms: 0, images: 0
+- headings: h1 서비스 환경 을 관리하세요, h2 {{ currentUser?.displayName || '여행자' }}, h2 환경 설정, h2 알림 설정, h2 계정 관리, h2 계정 삭제
+- forms: 0, images: 1
 - asset refs: 없음
-- classes: `accent-brand-violet`, `bg-brand-violet`, `bg-surface`, `bg-white`, `block`, `border`, `border-b`, `border-brand-rose/20`, `border-brand-rose/30`, `border-line`, `disabled:opacity-50`, `flex`, `font-bold`, `font-semibold`, `gap-4`, `hover:bg-brand-rose/5`, `items-center`, `justify-between`, `last:border-0`, `material-symbols-rounded`, `max-w-2xl`, `mb-1`, `mb-2`, `mb-4`, `mb-6`, `mt-1`, `mt-4`, `mx-auto`, `p-3`, `p-6`
+- classes: `===`, `animate-spin`, `arrow-icon`, `avatar-change-btn`, `avatar-upload-overlay`, `btn`, `danger-action-btn`, `error-status`, `field`, `ghost`, `lg:px-8`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--emerald`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `profileVisibility`
 
 #### frontend/src/pages/StoriesPage.vue
 
@@ -533,10 +533,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 이메일 인증
+- headings: h2 이메일 인증이 완료됐어요, h2 {{ submitting ? '이메일 인증 중…' : '인증 메일을 확인해주세요' }}
 - forms: 1, images: 0
 - asset refs: 없음
-- classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `primary`, `small`
+- classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `primary`, `small`, `verification-success-icon`, `verification-token-fallback`
 
 ### Styles
 

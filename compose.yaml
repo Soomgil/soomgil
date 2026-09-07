@@ -33,7 +33,7 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 'true'
       MP_SMTP_AUTH_ALLOW_INSECURE: 'true'
     ports:
-      - '${MAIL_PORT:-1025}:1025'
+      - '${MAILPIT_SMTP_PORT:-1025}:1025'
       - '${MAIL_WEB_PORT:-8025}:8025'
 
   minio:
@@ -84,8 +84,10 @@ services:
       DB_PORT: 5432
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      MAIL_HOST: mailpit
-      MAIL_PORT: 1025
+      # Defaults to Mailpit. Set MAIL_HOST/MAIL_PORT and the SMTP options in .env
+      # to send real mail through an external provider such as Gmail.
+      MAIL_HOST: ${MAIL_HOST:-mailpit}
+      MAIL_PORT: ${MAIL_PORT:-1025}
       # Local Compose always uses its MinIO service. AWS values belong in compose.aws.yaml/.env.aws.
       S3_ENDPOINT: http://minio:9000
       S3_PRESIGN_ENDPOINT: http://localhost:${S3_PORT:-9000}
@@ -107,8 +109,6 @@ services:
         condition: service_healthy
       minio-init:
         condition: service_completed_successfully
-      mailpit:
-        condition: service_started
 
   frontend:
     profiles: [full]

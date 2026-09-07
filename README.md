@@ -61,6 +61,26 @@ docker compose --profile full up --build -d
 브라우저 직접 업로드 URL은 `http://localhost:9000`으로 서명되고, 백엔드는 Docker 내부 주소로 MinIO에 접근합니다.
 AWS 배포 설정은 `compose.aws.yaml`과 `.env.aws`에서만 관리합니다.
 
+### Gmail로 실제 인증 메일 보내기
+
+Google 계정에서 2단계 인증과 앱 비밀번호를 설정한 뒤 루트 `.env`의 메일 항목을 다음처럼 지정합니다.
+
+```properties
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-account@gmail.com
+MAIL_PASSWORD=your-google-app-password
+MAIL_SMTP_AUTH=true
+MAIL_SMTP_STARTTLS=true
+MAIL_SMTP_STARTTLS_REQUIRED=true
+MAIL_SMTP_SSL=false
+MAIL_SMTP_SSL_TRUST=smtp.gmail.com
+MAIL_SMTP_CHECK_SERVER_IDENTITY=true
+```
+
+`MAIL_PASSWORD`에는 Google 계정 비밀번호가 아닌 앱 비밀번호를 사용합니다. `MAIL_FROM`을 생략하면
+`MAIL_USERNAME` 주소가 발신자로 사용됩니다. 실제 비밀번호가 든 `.env`는 커밋하지 않습니다.
+
 중지:
 
 ```bash
