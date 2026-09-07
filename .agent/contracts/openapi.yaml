@@ -398,18 +398,17 @@ paths:
           $ref: '#/components/responses/ValidationError'
     delete:
       tags: [Me]
-      summary: 계정 삭제 예약
+      summary: 계정 즉시 탈퇴
       operationId: requestAccountDeletion
       description: >
-        auth.users.status=PENDING_DELETION과 deletion_requested_at/deletion_scheduled_at에 대응한다.
-        즉시 hard delete하지 않는다. 요청자가 owner_user_id인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 409를 반환하고 삭제 예약을 차단한다.
+        auth.users.status를 즉시 DELETED로 전환하고 세션·인증 수단을 폐기하며 개인정보를 익명화한다.
+        소유한 여행방은 가장 먼저 참여한 활성 구성원에게 이전하고, 다른 활성 구성원이 없으면 함께 삭제한다.
+        이후 사용자의 모든 활성 여행방 멤버십을 LEFT로 전환한다.
       responses:
-        '202':
-          description: Accepted
+        '204':
+          description: No Content
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '409':
-          $ref: '#/components/responses/Conflict'
   /me/settings:
     get:
       tags: [Me]
@@ -439,51 +438,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserSettings'
-  /me/sessions:
-    get:
-      tags: [Me]
-      summary: 내 로그인 세션 목록
-      operationId: listMySessions
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedUserSession'
-  /me/sessions/{sessionId}:
-    delete:
-      tags: [Me]
-      summary: 특정 로그인 세션 revoke
-      operationId: revokeMySession
-      parameters:
-        - name: sessionId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: No Content
-  /me/security-events:
-    get:
-      tags: [Me]
-      summary: 내 보안 이벤트 조회
-      operationId: listMySecurityEvents
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedSecurityEvent'
   /users:
     get:
       tags: [Users]
@@ -3349,73 +3303,6 @@ components:
         publishedAt:
           type: string
           format: date-time
-    UserSession:
-      type: object
-      required: [id, refreshTokenFamilyId, refreshTokenVersion, expiresAt, createdAt]
-      properties:
-        id:
-          type: string
-          format: uuid
-        refreshTokenFamilyId:
-          type: string
-          format: uuid
-        refreshTokenVersion:
-          type: integer
-        deviceName:
-          type: string
-        deviceOs:
-          type: string
-        lastUsedAt:
-          type: string
-          format: date-time
-        lastRefreshedAt:
-          type: string
-          format: date-time
-        expiresAt:
-          type: string
-          format: date-time
-        revokedAt:
-          type: string
-          format: date-time
-        revocationReason:
-          type: string
-    PagedUserSession:
-      type: object
-      required: [items, page]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserSession'
-        page:
-          $ref: '#/components/schemas/PageMeta'
-    SecurityEvent:
-      type: object
-      required: [id, eventType, success, createdAt]
-      properties:
-        id:
-          type: integer
-          format: int64
-        eventType:
-          type: string
-          enum: [LOGIN_SUCCESS, LOGIN_FAILURE, PASSWORD_RESET_REQUESTED, PASSWORD_CHANGED, SESSION_REVOKED]
-        success:
-          type: boolean
-        failureReason:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-    PagedSecurityEvent:
-      type: object
-      required: [items, page]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SecurityEvent'
-        page:
-          $ref: '#/components/schemas/PageMeta'
     Follow:
       type: object
       required: [followerUserId, followingUserId, status, createdAt]
