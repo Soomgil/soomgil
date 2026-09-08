@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T08:59:38.389Z",
+  "generatedAt": "2026-09-08T01:16:53.214Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -21,6 +21,16 @@
       "status": "",
       "title": "작업 기록",
       "file": ".agent/branch-ledger/branches/bugfix__route-tool-popover-position/20260824T102149Z-bugfix__route-tool-popover-position-note.md"
+    },
+    {
+      "id": "20260907T112700Z-bugfix__settings-preferences-note",
+      "branch": "bugfix__settings-preferences",
+      "branchKey": "bugfix__settings-preferences",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "환경 설정 기능 정리 및 동작 보강",
+      "file": ".agent/branch-ledger/branches/bugfix__settings-preferences/20260907T112700Z-bugfix__settings-preferences-note.md"
     },
     {
       "id": "20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold",
