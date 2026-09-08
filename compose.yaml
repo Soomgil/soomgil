@@ -118,6 +118,9 @@ services:
     environment:
       VITE_API_PROXY_TARGET: http://backend:8080
       VITE_WS_PROXY_TARGET: http://backend:8080
+      # Windows bind mount의 파일 변경도 Vite가 감지하도록 주기적으로 확인한다.
+      CHOKIDAR_USEPOLLING: 'true'
+      CHOKIDAR_INTERVAL: '300'
       VITE_API_BASE_URL: ${VITE_API_BASE_URL:-/api/v1}
       VITE_MAPBOX_ACCESS_TOKEN: ${MAPBOX_ACCESS_TOKEN:-}
     command: npm run dev -- --host 0.0.0.0
