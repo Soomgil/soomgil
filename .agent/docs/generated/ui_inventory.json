@@ -1501,6 +1501,11 @@
             {
               "level": 1,
               "id": "",
+              "text": "Share your travel stories , discover new routes"
+            },
+            {
+              "level": 1,
+              "id": "",
               "text": "여행의 기록 을 나누고, 새로운 루트 를 발견하세요"
             },
             {
@@ -1967,12 +1972,12 @@
             {
               "level": 1,
               "id": "",
-              "text": "함께 만들던 여행을 바로 이어가세요"
+              "text": "{{ t('login.hero') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "로그인"
+              "text": "{{ t('auth.login') }}"
             }
           ],
           "images": [],
@@ -2207,7 +2212,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "페이지를 찾을 수 없습니다"
+              "text": "{{ tr('페이지를 찾을 수 없습니다', 'Page not found') }}"
             }
           ],
           "images": [],
@@ -2253,12 +2258,12 @@
             {
               "level": 2,
               "id": "",
-              "text": "로그인 처리 중..."
+              "text": "{{ tr('로그인 처리 중...', 'Processing login...') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "로그인 실패"
+              "text": "{{ tr('로그인 실패', 'Login failed') }}"
             }
           ],
           "images": [],
@@ -2290,6 +2295,11 @@
           "scriptLang": "ts",
           "scriptSetup": true,
           "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "See your travel memories at a glance"
+            },
             {
               "level": 1,
               "id": "",
@@ -2425,12 +2435,12 @@
             {
               "level": 1,
               "id": "",
-              "text": "친구들과 여행 취향부터 맞춰보세요"
+              "text": "{{ t('register.hero') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "{{ isOAuthOnboarding ? '가입 완료' : '회원가입' }}"
+              "text": "{{ isOAuthOnboarding ? '가입 완료' : t('auth.register') }}"
             }
           ],
           "images": [],
@@ -2464,7 +2474,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "비밀번호 재설정"
+              "text": "{{ tr('비밀번호 재설정', 'Reset password') }}"
             }
           ],
           "images": [],
@@ -2682,11 +2692,6 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 1,
-              "id": "",
-              "text": "서비스 환경 을 관리하세요"
-            },
-            {
               "level": 2,
               "id": "",
               "text": "{{ currentUser?.displayName || '여행자' }}"
@@ -2694,89 +2699,67 @@
             {
               "level": 2,
               "id": "",
-              "text": "환경 설정"
+              "text": "{{ t('settings.environment') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "알림 설정"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "계정 관리"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "계정 삭제"
+              "text": "{{ t('settings.account') }}"
             }
           ],
           "images": [
             {
-              "src": "avatarPreviewUrl || currentUser?.profileImageUrl || ",
+              "src": "currentUser.profileImageUrl",
               "alt": "currentUser?.displayName || "
             }
           ],
           "forms": 0,
           "classNames": [
-            "===",
             "animate-spin",
-            "arrow-icon",
-            "avatar-change-btn",
-            "avatar-upload-overlay",
+            "avatar-fallback",
             "btn",
+            "bullet-icon",
             "danger-action-btn",
+            "danger-bullet-item",
+            "email-icon",
             "error-status",
             "field",
-            "ghost",
             "lg:px-8",
+            "loading-spinner-wrap",
+            "loading-text",
             "material-symbols-rounded",
             "max-w-6xl",
             "mx-auto",
-            "page-hero",
-            "page-hero__actions",
-            "page-hero__copy",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
-            "page-hero__lead",
-            "page-hero__title",
             "page-with-hero",
             "panel-head-icon",
-            "panel-head-icon--emerald",
             "panel-head-icon--orange",
             "panel-head-icon--violet",
             "panel-head-title-group",
             "primary",
             "profile-settings-page",
-            "profileVisibility",
             "px-4",
             "py-8",
             "select-chevron",
             "settings-actions-buttons",
             "settings-actions-status",
-            "settings-danger-card",
-            "settings-danger-card__footer",
-            "settings-danger-card__head",
-            "settings-danger-card__title-wrap",
-            "settings-danger-desc",
-            "settings-danger-title",
-            "settings-divider",
-            "settings-field",
-            "settings-field-grid",
-            "settings-field__label",
-            "settings-form",
-            "settings-heading",
-            "settings-hero-link",
+            "settings-cards-group",
+            "settings-danger-action",
+            "settings-danger-bullet-list",
+            "settings-danger-row",
+            "settings-item-card",
+            "settings-item-card--toggle",
+            "settings-item__control",
+            "settings-item__desc",
+            "settings-item__icon-wrap",
+            "settings-item__info",
+            "settings-item__title",
+            "settings-items-list",
             "settings-layout",
             "settings-loading-card",
             "settings-page",
             "settings-panel",
             "settings-panel--danger",
             "settings-panel--unified",
-            "settings-panel__badge",
-            "settings-panel__badge--info",
-            "settings-panel__badge--warning",
             "settings-panel__head",
             "settings-save-btn",
             "settings-save-status",
@@ -2785,21 +2768,24 @@
             "settings-select",
             "settings-select-wrap",
             "settings-summary",
-            "settings-summary__actions",
             "settings-summary__avatar",
+            "settings-summary__avatar-outer",
             "settings-summary__avatar-wrap",
-            "settings-summary__badge",
             "settings-summary__bio",
+            "settings-summary__bio-section",
             "settings-summary__cover",
-            "settings-summary__email",
-            "settings-summary__link-btn",
+            "settings-summary__email-pill",
+            "settings-summary__email-section",
             "settings-summary__name",
             "settings-summary__profile",
-            "settings-toggle",
-            "settings-toggle-list",
-            "settings-toggle__info",
-            "settings-visibility-header",
-            "settings-visibility-hint"
+            "sm:px-6",
+            "summary-cover-art",
+            "switch-control",
+            "switch-track",
+            "text-brand-rose",
+            "visibility-segment-btn",
+            "visibility-segmented-control",
+            "{"
           ],
           "assetRefs": []
         },
@@ -2987,7 +2973,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "초대 수락 완료"
+              "text": "{{ tr('초대 수락 완료', 'Invitation accepted') }}"
             }
           ],
           "images": [],
@@ -3169,12 +3155,12 @@
             {
               "level": 2,
               "id": "",
-              "text": "이메일 인증이 완료됐어요"
+              "text": "{{ tr('이메일 인증이 완료됐어요', 'Email verified') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "{{ submitting ? '이메일 인증 중…' : '인증 메일을 확인해주세요' }}"
+              "text": "{{ submitting ? tr('이메일 인증 중…', 'Verifying email…') : tr('인증 메일을 확인해주세요', 'Check your verification email') }}"
             }
           ],
           "images": [],
@@ -3696,6 +3682,26 @@
           ]
         },
         {
+          "path": "frontend/src/components/map/strokePaths.test.ts",
+          "relativePath": "src/components/map/strokePaths.test.ts",
+          "imports": [
+            "./strokePaths",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/map/strokePaths.ts",
+          "relativePath": "src/components/map/strokePaths.ts",
+          "imports": [
+            "@/utils/pathSimplification"
+          ],
+          "exports": [
+            "createStrokePathBuilder",
+            "strokePaths"
+          ]
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.test.ts",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.test.ts",
           "imports": [
@@ -3754,6 +3760,7 @@
           "imports": [
             "@/stores/auth.store",
             "@/types/auth",
+            "vue",
             "vue-router"
           ],
           "exports": [
@@ -3899,6 +3906,50 @@
           ],
           "exports": [
             "useToast"
+          ]
+        },
+        {
+          "path": "frontend/src/i18n/index.ts",
+          "relativePath": "src/i18n/index.ts",
+          "imports": [
+            "vue"
+          ],
+          "exports": [
+            "AppLocale",
+            "setLocale",
+            "useLocale"
+          ]
+        },
+        {
+          "path": "frontend/src/i18n/ui-localizer.test.ts",
+          "relativePath": "src/i18n/ui-localizer.test.ts",
+          "imports": [
+            "./ui-localizer",
+            "@/i18n",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/i18n/ui-localizer.ts",
+          "relativePath": "src/i18n/ui-localizer.ts",
+          "imports": [
+            "./ui-translations.en",
+            "@/i18n",
+            "vue"
+          ],
+          "exports": [
+            "useUiLocalizer"
+          ]
+        },
+        {
+          "path": "frontend/src/i18n/ui-translations.en.ts",
+          "relativePath": "src/i18n/ui-translations.en.ts",
+          "imports": [],
+          "exports": [
+            "uiTranslationsEn"
           ]
         },
         {
@@ -4139,11 +4190,23 @@
           "exports": []
         },
         {
+          "path": "frontend/src/stores/auth.store.test.ts",
+          "relativePath": "src/stores/auth.store.test.ts",
+          "imports": [
+            "./auth.store",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/stores/auth.store.ts",
           "relativePath": "src/stores/auth.store.ts",
           "imports": [
             "@/api/auth.api",
             "@/api/user.api",
+            "@/auth/accessToken",
+            "@/i18n",
             "@/realtime/collaborationSession",
             "@/types/auth",
             "pinia",
@@ -4608,7 +4671,8 @@
           "imports": [],
           "exports": [
             "CartesianPoint",
-            "simplifyPathToLimit"
+            "simplifyPathToLimit",
+            "simplifyWithTolerance"
           ]
         },
         {
@@ -5111,9 +5175,9 @@
         "routes": 20,
         "pages": 21,
         "components": 34,
-        "sourceFiles": 115,
+        "sourceFiles": 122,
         "styleFiles": 4,
-        "typeScriptSignals": 169
+        "typeScriptSignals": 176
       }
     },
     {

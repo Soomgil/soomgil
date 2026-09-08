@@ -362,7 +362,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
+- headings: h1 Share your travel stories , discover new routes, h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}
 - forms: 0, images: 5
 - asset refs: `/images/랜딩페이지/korea_hero.png`
 - classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
@@ -389,7 +389,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 함께 만들던 여행을 바로 이어가세요, h2 로그인
+- headings: h1 {{ t('login.hero') }}, h2 {{ t('auth.login') }}
 - forms: 1, images: 0
 - asset refs: `/images/랜딩페이지/korea_hero.png`
 - classes: `app-shell`, `auth-card`, `auth-check`, `auth-feedback-slot`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `auth-success-message`, `auth-switch`, `auth-visual-content`, `auth-visual-image`, `auth-visual-panel`, `btn`, `divider`, `eyebrow`, `field`, `material-symbols-rounded`, `muted`, `primary`, `small`
@@ -416,7 +416,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 페이지를 찾을 수 없습니다
+- headings: h1 {{ tr('페이지를 찾을 수 없습니다', 'Page not found') }}
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `bg-brand-violet`, `bg-clip-text`, `bg-gradient-to-br`, `flex`, `font-black`, `font-bold`, `from-brand-violet`, `hover:bg-brand-violet/90`, `items-center`, `justify-center`, `mb-8`, `min-h-screen`, `mt-2`, `mt-4`, `px-6`, `px-8`, `py-3`, `rounded-full`, `text-2xl`, `text-8xl`, `text-center`, `text-ink`, `text-muted`, `text-transparent`, `text-white`, `to-brand-blue`, `transition-colors`
@@ -425,7 +425,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 로그인 처리 중..., h2 로그인 실패
+- headings: h2 {{ tr('로그인 처리 중...', 'Processing login...') }}, h2 {{ tr('로그인 실패', 'Login failed') }}
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `oauth-error-icon`, `oauth-spinner`, `primary`, `small`
@@ -434,7 +434,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 여행의 기록 을 한눈에 모아보세요, h3 전체 기록, h3 {{ trip.title }}, h3 사진 추가
+- headings: h1 See your travel memories at a glance, h1 여행의 기록 을 한눈에 모아보세요, h3 전체 기록, h3 {{ trip.title }}, h3 사진 추가
 - forms: 1, images: 5
 - asset refs: 없음
 - classes: `avatar`, `btn`, `content-container`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `is-all`, `isUploadModalOpen`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `next`, `overlay-day`, `overlay-schedule`, `overlay-uploader`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `prev`, `preview-remove-btn`, `primary`
@@ -443,7 +443,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 친구들과 여행 취향부터 맞춰보세요, h2 {{ isOAuthOnboarding ? '가입 완료' : '회원가입' }}
+- headings: h1 {{ t('register.hero') }}, h2 {{ isOAuthOnboarding ? '가입 완료' : t('auth.register') }}
 - forms: 1, images: 0
 - asset refs: `/images/랜딩페이지/jeonju.png`
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-form-head`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-visual-content`, `auth-visual-image`, `auth-visual-panel`, `divider`, `eyebrow`
@@ -452,7 +452,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 비밀번호 재설정
+- headings: h2 {{ tr('비밀번호 재설정', 'Reset password') }}
 - forms: 1, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `field`, `material-symbols-rounded`, `muted`, `primary`, `small`
@@ -479,10 +479,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 서비스 환경 을 관리하세요, h2 {{ currentUser?.displayName || '여행자' }}, h2 환경 설정, h2 알림 설정, h2 계정 관리, h2 계정 삭제
+- headings: h2 {{ currentUser?.displayName || '여행자' }}, h2 {{ t('settings.environment') }}, h2 {{ t('settings.account') }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `===`, `animate-spin`, `arrow-icon`, `avatar-change-btn`, `avatar-upload-overlay`, `btn`, `danger-action-btn`, `error-status`, `field`, `ghost`, `lg:px-8`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--emerald`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `profileVisibility`
+- classes: `animate-spin`, `avatar-fallback`, `btn`, `bullet-icon`, `danger-action-btn`, `danger-bullet-item`, `email-icon`, `error-status`, `field`, `lg:px-8`, `loading-spinner-wrap`, `loading-text`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `px-4`, `py-8`, `select-chevron`, `settings-actions-buttons`, `settings-actions-status`, `settings-cards-group`, `settings-danger-action`, `settings-danger-bullet-list`
 
 #### frontend/src/pages/StoriesPage.vue
 
@@ -515,7 +515,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 초대 수락 완료
+- headings: h1 {{ tr('초대 수락 완료', 'Invitation accepted') }}
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
@@ -533,7 +533,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 이메일 인증이 완료됐어요, h2 {{ submitting ? '이메일 인증 중…' : '인증 메일을 확인해주세요' }}
+- headings: h2 {{ tr('이메일 인증이 완료됐어요', 'Email verified') }}, h2 {{ submitting ? tr('이메일 인증 중…', 'Verifying email…') : tr('인증 메일을 확인해주세요', 'Check your verification email') }}
 - forms: 1, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `primary`, `small`, `verification-success-icon`, `verification-token-fallback`
