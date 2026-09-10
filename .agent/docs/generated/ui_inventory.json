@@ -131,20 +131,27 @@
         {
           "path": "/community",
           "name": "Community",
-          "page": "src/pages/CommunityFeedPage.vue",
-          "requiresAuth": false,
-          "guestOnly": false
-        },
-        {
-          "path": "/community/threads/:threadId",
-          "name": "CommunityThread",
-          "page": "src/pages/CommunityThreadDetailPage.vue",
+          "page": "src/pages/CommunityPage.vue",
           "requiresAuth": false,
           "guestOnly": false
         },
         {
           "path": "/community/feed",
           "name": "Feed",
+          "page": "src/pages/StoriesPage.vue",
+          "requiresAuth": false,
+          "guestOnly": false
+        },
+        {
+          "path": "/community/story-write",
+          "name": "StoryWrite",
+          "page": "src/pages/StoryWritePage.vue",
+          "requiresAuth": true,
+          "guestOnly": false
+        },
+        {
+          "path": "/record",
+          "name": "Record",
           "page": "src/pages/RecordPage.vue",
           "requiresAuth": true,
           "guestOnly": false
@@ -494,6 +501,61 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/community/StoryCard.vue",
+          "relativePath": "src/components/community/StoryCard.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [
+            {
+              "src": "story.image",
+              "alt": "story.title"
+            },
+            {
+              "src": "story.authorProfileImageUrl",
+              "alt": "`${story.author} 프로필 사진`"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "aspect-[4/3]",
+            "bg-brand-violet",
+            "bg-surface",
+            "bg-surface-2",
+            "border",
+            "border-line",
+            "duration-500",
+            "flex",
+            "flex-col",
+            "font-bold",
+            "gap-2",
+            "group",
+            "group-hover:scale-105",
+            "h-6",
+            "h-full",
+            "hover:border-brand-violet/20",
+            "hover:shadow-[0_12px_32px_rgba(0,102,255,0.08)]",
+            "items-center",
+            "justify-center",
+            "mb-2",
+            "object-cover",
+            "overflow-hidden",
+            "p-4",
+            "relative",
+            "rounded-[24px]",
+            "rounded-full",
+            "text-[10px]",
+            "text-left",
+            "text-white",
+            "transition-all",
+            "transition-transform",
+            "w-6",
+            "w-full"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/community/StoryDetailOverlay.vue",
           "relativePath": "src/components/community/StoryDetailOverlay.vue",
           "kind": "component",
@@ -558,166 +620,92 @@
           ]
         },
         {
-          "path": "frontend/src/components/community/ThreadCard.vue",
-          "relativePath": "src/components/community/ThreadCard.vue",
-          "kind": "component",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [],
-          "images": [
-            {
-              "src": "url",
-              "alt": "`첨부 이미지 ${imageIndex + 1}`"
-            }
-          ],
-          "forms": 0,
-          "classNames": [
-            "4)}`",
-            "`thread-card__media--${Math.min(images.length,",
-            "danger",
-            "material-symbols-rounded",
-            "thread-card",
-            "thread-card__author",
-            "thread-card__avatar",
-            "thread-card__body",
-            "thread-card__content",
-            "thread-card__edit",
-            "thread-card__edit-actions",
-            "thread-card__edit-cancel",
-            "thread-card__edit-counter",
-            "thread-card__edit-input",
-            "thread-card__edit-save",
-            "thread-card__head",
-            "thread-card__image",
-            "thread-card__main",
-            "thread-card__media",
-            "thread-card__menu",
-            "thread-card__menu-backdrop",
-            "thread-card__menu-btn",
-            "thread-card__menu-wrap",
-            "thread-card__spacer",
-            "thread-card__time",
-            "thread-card__tombstone",
-            "{"
-          ],
-          "assetRefs": []
-        },
-        {
-          "path": "frontend/src/components/community/ThreadComposer.vue",
-          "relativePath": "src/components/community/ThreadComposer.vue",
-          "kind": "component",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [],
-          "images": [
-            {
-              "src": "attachment.previewUrl",
-              "alt": "첨부 이미지 미리보기"
-            }
-          ],
-          "forms": 1,
-          "classNames": [
-            "material-symbols-rounded",
-            "thread-composer",
-            "thread-composer__attach",
-            "thread-composer__attach-count",
-            "thread-composer__avatar",
-            "thread-composer__bar",
-            "thread-composer__counter",
-            "thread-composer__drop-hint",
-            "thread-composer__input",
-            "thread-composer__main",
-            "thread-composer__preview",
-            "thread-composer__preview-loading",
-            "thread-composer__preview-remove",
-            "thread-composer__previews",
-            "thread-composer__reply-target",
-            "thread-composer__row",
-            "thread-composer__spacer",
-            "thread-composer__submit",
-            "{"
-          ],
-          "assetRefs": []
-        },
-        {
-          "path": "frontend/src/components/community/ThreadReportModal.vue",
-          "relativePath": "src/components/community/ThreadReportModal.vue",
+          "path": "frontend/src/components/community/StoryPostPreview.vue",
+          "relativePath": "src/components/community/StoryPostPreview.vue",
           "kind": "component",
           "scriptLang": "ts",
           "scriptSetup": true,
           "headings": [
             {
-              "level": 2,
+              "level": 3,
               "id": "",
-              "text": "{{ targetLabel }} 신고"
+              "text": "{{ title }}"
+            }
+          ],
+          "images": [
+            {
+              "src": "photos[photoIndex]",
+              "alt": "title"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "carousel-btn",
+            "fc-avatar",
+            "feed-photo-count",
+            "feed-photo-nav",
+            "material-symbols-rounded",
+            "muted",
+            "next",
+            "next-btn",
+            "prev",
+            "prev-btn",
+            "small",
+            "story-action-bar",
+            "story-author",
+            "story-body",
+            "story-comment-count",
+            "story-like-button",
+            "story-post-head",
+            "story-post-head-row",
+            "story-post-photo-frame",
+            "story-post-photo-img",
+            "story-post-photo-placeholder",
+            "story-post-preview",
+            "story-report-btn",
+            "tag",
+            "tag-row"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/community/StoryWriteModal.vue",
+          "relativePath": "src/components/community/StoryWriteModal.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "당신의 여행을 들려주세요"
             }
           ],
           "images": [],
-          "forms": 0,
+          "forms": 1,
           "classNames": [
-            "===",
-            "?",
-            "bg-brand-rose",
-            "bg-brand-rose/10",
-            "bg-surface-2",
-            "border",
-            "border-line",
-            "cursor-pointer",
-            "disabled:bg-surface-2",
-            "disabled:pointer-events-none",
-            "disabled:shadow-none",
-            "disabled:text-muted",
-            "flex",
-            "flex-col",
-            "focus:bg-surface",
-            "focus:border-brand-violet",
-            "focus:outline-none",
-            "font-bold",
-            "font-extrabold",
-            "gap-2",
-            "gap-2.5",
-            "gap-3",
-            "h-8",
-            "hover:-translate-y-0.5",
-            "hover:bg-surface-2",
-            "items-center",
-            "justify-center",
-            "justify-end",
+            "btn",
+            "field",
+            "ghost",
             "material-symbols-rounded",
-            "mb-1",
-            "mb-4",
-            "mb-5",
-            "mt-5",
-            "p-6",
-            "pl-[42px]",
-            "placeholder:text-muted",
-            "px-4",
-            "px-5",
-            "px-6",
-            "py-2.5",
-            "py-3",
-            "py-6",
-            "reason.code",
-            "resize-none",
-            "rounded-2xl",
-            "rounded-full",
-            "selected",
-            "shadow-[0_10px_26px_rgba(255,92,141,0.35)]",
-            "sm:p-7",
-            "sr-only",
-            "text-[18px]",
-            "text-[20px]",
-            "text-brand-rose",
-            "text-center",
-            "text-ink",
-            "text-lg",
-            "text-muted",
-            "text-sm",
-            "text-white",
-            "transition-all",
-            "transition-colors",
-            "w-8",
-            "w-full"
+            "photo-strip",
+            "photo-strip__empty",
+            "photo-strip__nav",
+            "photo-strip__nav--prev",
+            "photo-strip__row",
+            "photo-strip__upload",
+            "photo-strip__viewport",
+            "primary",
+            "story-overlay",
+            "story-overlay-backdrop",
+            "story-overlay-close",
+            "story-overlay-panel",
+            "tag-chip",
+            "tag-chip-input",
+            "tag-chip-input__field",
+            "tag-chip-input__icon",
+            "tag-chip__remove",
+            "{"
           ],
           "assetRefs": []
         },
@@ -1711,8 +1699,8 @@
           "assetRefs": []
         },
         {
-          "path": "frontend/src/pages/CommunityFeedPage.vue",
-          "relativePath": "src/pages/CommunityFeedPage.vue",
+          "path": "frontend/src/pages/CommunityPage.vue",
+          "relativePath": "src/pages/CommunityPage.vue",
           "kind": "page",
           "scriptLang": "ts",
           "scriptSetup": true,
@@ -1720,76 +1708,147 @@
             {
               "level": 1,
               "id": "",
-              "text": "여행자들의 이야기 를 나눠보세요"
-            }
-          ],
-          "images": [],
-          "forms": 0,
-          "classNames": [
-            "community-feed",
-            "community-feed__column",
-            "community-feed__composer-card",
-            "community-feed__list",
-            "community-feed__more",
-            "material-symbols-rounded",
-            "page-hero",
-            "page-hero__copy",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
-            "page-hero__lead",
-            "page-hero__title",
-            "page-with-hero",
-            "section"
-          ],
-          "assetRefs": []
-        },
-        {
-          "path": "frontend/src/pages/CommunityThreadDetailPage.vue",
-          "relativePath": "src/pages/CommunityThreadDetailPage.vue",
-          "kind": "page",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [
+              "text": "Share your travel stories , discover new routes"
+            },
+            {
+              "level": 1,
+              "id": "",
+              "text": "여행의 기록 을 나누고, 새로운 루트 를 발견하세요"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ currentPopular.title }}"
+            },
             {
               "level": 2,
               "id": "",
-              "text": "답글"
+              "text": "{{ currentPopular.title }}"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "최신 여행기"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ story.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ visibleStory.title }}"
             }
           ],
-          "images": [],
+          "images": [
+            {
+              "src": "currentPopular.image",
+              "alt": "currentPopular.title"
+            },
+            {
+              "src": "story.image",
+              "alt": "story.title"
+            },
+            {
+              "src": "story.authorProfileImageUrl",
+              "alt": "`${story.author} 프로필 사진`"
+            },
+            {
+              "src": "visibleStory.authorProfileImageUrl",
+              "alt": "`${visibleStory.author} 프로필 사진`"
+            },
+            {
+              "src": "currentStoryPhoto(visibleStory)",
+              "alt": "visibleStory.title"
+            }
+          ],
           "forms": 0,
           "classNames": [
+            "===",
+            "active:",
+            "carousel-btn",
+            "community-content-container",
+            "community-hero-eyebrow",
+            "community-hero-gradient",
+            "community-hero-header",
+            "community-hero-lead",
+            "community-hero-text",
+            "community-hero-title",
+            "community-page",
+            "community-pagination",
+            "community-pill",
+            "community-pill-primary",
+            "community-story-search",
+            "currentPage",
+            "eyebrow",
+            "fc-avatar",
+            "feed-layout",
+            "feed-photo-count",
+            "feed-photo-nav",
+            "idx",
+            "latest-stories-eyebrow",
+            "latest-stories-header",
+            "latest-stories-icon",
+            "latest-stories-section",
+            "latest-stories-title",
+            "latest-stories-tools",
+            "lead",
             "material-symbols-rounded",
+            "muted",
+            "next",
+            "next-btn",
+            "page",
             "page-with-hero",
-            "save",
+            "pg-arrow",
+            "pg-btn",
+            "pg-num",
+            "polaroid-author",
+            "polaroid-caption",
+            "polaroid-card",
+            "polaroid-image",
+            "polaroid-stat",
+            "polaroid-stats",
+            "polaroid-tape",
+            "polaroid-title",
+            "polaroid-wrap",
+            "popularIndex",
+            "prev",
+            "prev-btn",
+            "search-box",
+            "search-box__button",
             "section",
-            "thread-detail",
-            "thread-detail__back",
-            "thread-detail__column",
-            "thread-detail__composer-card",
-            "thread-detail__group",
-            "thread-detail__replies",
-            "thread-detail__replies-card",
-            "thread-detail__replies-count",
-            "thread-detail__replies-empty",
-            "thread-detail__replies-head",
-            "thread-detail__replies-icon",
-            "thread-detail__replies-title",
-            "thread-detail__reply",
-            "thread-detail__reply-actions",
-            "thread-detail__reply-author",
-            "thread-detail__reply-avatar",
-            "thread-detail__reply-body",
-            "thread-detail__reply-content",
-            "thread-detail__reply-date",
-            "thread-detail__reply-edit",
-            "thread-detail__reply-edit-actions",
-            "thread-detail__reply-edit-input",
-            "thread-detail__reply-head",
-            "thread-detail__reply-tombstone",
-            "{"
+            "small",
+            "story-action-bar",
+            "story-author",
+            "story-body",
+            "story-card-grid",
+            "story-detail-panel",
+            "story-feed",
+            "story-feed-window",
+            "story-like-button",
+            "story-overlay",
+            "story-overlay-backdrop",
+            "story-overlay-close",
+            "story-overlay-panel",
+            "story-post",
+            "story-post-head",
+            "story-post-photo-frame",
+            "story-post-photo-img",
+            "story-report-btn",
+            "story-tile",
+            "story-tile-author",
+            "story-tile-author-name",
+            "story-tile-avatar",
+            "story-tile-body",
+            "story-tile-footer",
+            "story-tile-image",
+            "story-tile-image-wrap",
+            "story-tile-like"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/랜딩페이지/korea_hero.png"
+          ]
         },
         {
           "path": "frontend/src/pages/HomePage.vue",
@@ -2938,6 +2997,117 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/pages/StoriesPage.vue",
+          "relativePath": "src/pages/StoriesPage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "우리들의 여행 이야기 를 둘러보세요"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ story.title }}"
+            }
+          ],
+          "images": [
+            {
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
+              "alt": "story.title + "
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "btn",
+            "detail-topline",
+            "ghost",
+            "material-symbols-rounded",
+            "muted",
+            "page-hero",
+            "page-hero__copy",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "page-hero__lead",
+            "page-hero__title",
+            "page-with-hero",
+            "post-type",
+            "primary",
+            "section",
+            "story",
+            "story-list-card",
+            "story-list-grid"
+          ],
+          "assetRefs": [
+            "/images/랜딩페이지/korea_hero.png"
+          ]
+        },
+        {
+          "path": "frontend/src/pages/StoryWritePage.vue",
+          "relativePath": "src/pages/StoryWritePage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "당신의 여행 을 들려주세요"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "작성 미리보기"
+            }
+          ],
+          "images": [
+            {
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
+              "alt": "`여행 기록 사진 ${idx + 1}`"
+            },
+            {
+              "src": "media.servingUrl ?? media.publicUrl ?? ",
+              "alt": "`로컬 사진 ${idx + 1}`"
+            }
+          ],
+          "forms": 1,
+          "classNames": [
+            "btn",
+            "content-container",
+            "detail-topline",
+            "editor-toolbar",
+            "field",
+            "form-group",
+            "form-group-icon-wrap",
+            "ghost",
+            "material-symbols-rounded",
+            "muted",
+            "page-hero",
+            "page-hero__copy",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "page-hero__lead",
+            "page-hero__title",
+            "page-with-hero",
+            "primary",
+            "section",
+            "small",
+            "text-area",
+            "upload-grid",
+            "write-form",
+            "write-layout",
+            "write-main",
+            "write-page",
+            "write-page-hero",
+            "write-preview-feed-frame",
+            "write-preview-sidebar"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/pages/SwipePage.vue",
           "relativePath": "src/pages/SwipePage.vue",
           "kind": "page",
@@ -3367,27 +3537,6 @@
             "CollaborationActionRequest",
             "CollaborationActionResponse",
             "collaborationApi"
-          ]
-        },
-        {
-          "path": "frontend/src/api/community-thread.api.test.ts",
-          "relativePath": "src/api/community-thread.api.test.ts",
-          "imports": [
-            "./community-thread.api",
-            "vitest"
-          ],
-          "exports": []
-        },
-        {
-          "path": "frontend/src/api/community-thread.api.ts",
-          "relativePath": "src/api/community-thread.api.ts",
-          "imports": [
-            "./http",
-            "@/types/community",
-            "@/types/community-thread"
-          ],
-          "exports": [
-            "communityThreadApi"
           ]
         },
         {
@@ -4102,28 +4251,6 @@
           ]
         },
         {
-          "path": "frontend/src/pages/CommunityFeedPage.test.ts",
-          "relativePath": "src/pages/CommunityFeedPage.test.ts",
-          "imports": [
-            "./CommunityFeedPage.vue",
-            "@/types/community-thread",
-            "@vue/test-utils",
-            "vitest"
-          ],
-          "exports": []
-        },
-        {
-          "path": "frontend/src/pages/CommunityThreadDetailPage.test.ts",
-          "relativePath": "src/pages/CommunityThreadDetailPage.test.ts",
-          "imports": [
-            "./CommunityThreadDetailPage.vue",
-            "@/types/community-thread",
-            "@vue/test-utils",
-            "vitest"
-          ],
-          "exports": []
-        },
-        {
           "path": "frontend/src/pages/MyPage.test.ts",
           "relativePath": "src/pages/MyPage.test.ts",
           "imports": [
@@ -4241,6 +4368,18 @@
             "./OAuthCallbackPage.vue",
             "./ResetPasswordPage.vue",
             "./VerifyEmailPage.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/pages/community-api-integration.test.ts",
+          "relativePath": "src/pages/community-api-integration.test.ts",
+          "imports": [
+            "./CommunityPage.vue",
+            "./StoriesPage.vue",
+            "./StoryWritePage.vue",
             "@vue/test-utils",
             "vitest"
           ],
@@ -4604,25 +4743,6 @@
             "DrawingPreviewPhase",
             "TripPresenceEvent",
             "TripRealtimeEvent"
-          ]
-        },
-        {
-          "path": "frontend/src/types/community-thread.ts",
-          "relativePath": "src/types/community-thread.ts",
-          "imports": [
-            "./auth",
-            "./community"
-          ],
-          "exports": [
-            "CommunityThread",
-            "CommunityThreadQuery",
-            "CommunityThreadReactionSummary",
-            "CommunityThreadReply",
-            "CreateCommunityThreadReplyRequest",
-            "CreateCommunityThreadRequest",
-            "PagedCommunityThread",
-            "PagedCommunityThreadReply",
-            "UpdateCommunityThreadRequest"
           ]
         },
         {
@@ -5436,12 +5556,12 @@
         }
       ],
       "summary": {
-        "routes": 20,
-        "pages": 21,
+        "routes": 21,
+        "pages": 22,
         "components": 39,
-        "sourceFiles": 136,
+        "sourceFiles": 132,
         "styleFiles": 4,
-        "typeScriptSignals": 195
+        "typeScriptSignals": 192
       }
     },
     {
