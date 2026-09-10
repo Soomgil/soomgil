@@ -1862,7 +1862,7 @@
           "images": [
             {
               "src": "slide.image",
-              "alt": "slide.title"
+              "alt": "slide.caption ?? slide.title"
             },
             {
               "src": "place.thumbnailUrl",
@@ -1914,6 +1914,8 @@
             "home-hero-card-overlay",
             "home-hero-content",
             "home-hero-copy",
+            "home-hero-credit",
+            "home-hero-credit-title",
             "home-hero-dots",
             "home-hero-slide",
             "home-nearest-card",
@@ -1964,9 +1966,7 @@
             "home-toplikes-header",
             "home-toplikes-img",
             "home-toplikes-info",
-            "home-toplikes-item",
-            "home-toplikes-list",
-            "home-toplikes-rank"
+            "home-toplikes-item"
           ],
           "assetRefs": []
         },
@@ -3325,6 +3325,18 @@
           ]
         },
         {
+          "path": "frontend/src/api/award.api.ts",
+          "relativePath": "src/api/award.api.ts",
+          "imports": [
+            "./http",
+            "@/types/award"
+          ],
+          "exports": [
+            "AwardPhotoParams",
+            "awardApi"
+          ]
+        },
+        {
           "path": "frontend/src/api/chat.api.ts",
           "relativePath": "src/api/chat.api.ts",
           "imports": [
@@ -4560,6 +4572,14 @@
           ]
         },
         {
+          "path": "frontend/src/types/award.ts",
+          "relativePath": "src/types/award.ts",
+          "imports": [],
+          "exports": [
+            "AwardPhoto"
+          ]
+        },
+        {
           "path": "frontend/src/types/chat.ts",
           "relativePath": "src/types/chat.ts",
           "imports": [
@@ -5419,9 +5439,9 @@
         "routes": 20,
         "pages": 21,
         "components": 39,
-        "sourceFiles": 134,
+        "sourceFiles": 136,
         "styleFiles": 4,
-        "typeScriptSignals": 193
+        "typeScriptSignals": 195
       }
     },
     {
