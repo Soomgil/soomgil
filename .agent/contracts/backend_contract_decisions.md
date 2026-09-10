@@ -33,8 +33,8 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 동일 이메일의 LOCAL 계정과 소셜 계정은 자동 병합하지 않고, 명시적 계정 연결 flow를 통해서만 연결합니다.
 - 신규 사용자는 운영자가 버전으로 관리하는 동일한 관광지 10개에 모두 반응해야 onboarding을 완료합니다.
 - onboarding 완료 전에는 회원가입 선호도 화면 외의 인증 필요 제품 화면에 진입할 수 없습니다.
-- 계정 삭제는 즉시 hard delete가 아니라 `PENDING_DELETION` 예약 상태를 거친 뒤 익명화/삭제합니다.
-- 계정 삭제 요청자가 `owner_user_id`인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 삭제 예약을 차단하고, 사용자가 해당 여행방을 삭제 또는 보존 정책에 맞게 정리하도록 요구합니다.
+- 계정 탈퇴는 즉시 `DELETED`로 전환하고, 인증 수단을 폐기하며 개인정보를 익명화합니다.
+- 소유 여행방은 가장 먼저 참여한 활성 구성원에게 이전하고, 승계 대상이 없으면 함께 삭제한 뒤 사용자를 모든 여행방 멤버십에서 탈퇴시킵니다.
 - 공개 커뮤니티 게시글 snapshot은 게시 시점 표시 데이터로 유지할 수 있으며, 삭제된 사용자 표시는 익명화합니다.
 - 개인 기록, 비공개 데이터, 업로드 미디어는 retention 정책에 따라 soft delete 후 purge합니다.
 - 운영 감사 로그와 보안 이벤트는 서비스 정책상 retention 기간 동안 보관하고, 사용자-facing 개인정보는 최소화 또는 마스킹합니다.
@@ -245,23 +245,25 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 일정 아이템 삭제처럼 route endpoint 밖에서 route 연결이 사라지는 변경은 영향을 받는 route segment를 응답에 포함해 프론트가 즉시 정리하게 합니다.
 - 일정 아이템에는 `start_at`, `end_at` 같은 시간 필드를 두지 않습니다.
 - 일정 협업은 REST 저장 + STOMP over WebSocket broadcast + version 충돌 처리로 설계합니다.
-- REST 요청은 `baseVersion`을 포함합니다.
-- 서버는 저장 성공 후 여행방 최신 `itineraryVersion`을 증가시키고 STOMP topic으로 broadcast합니다.
-- 버전 불일치 시 `409 Conflict` Problem Details를 반환합니다.
+- 일정/지도 REST 요청은 여행방의 `baseVersion`을 포함하고, 저장 성공 후 최신 `itineraryVersion`을 증가시켜 STOMP topic으로 broadcast합니다.
+- 메모 저장·삭제 요청은 메모별 `baseVersion`을 포함하고, 응답의 `Note.version`으로 다음 변경 기준을 전달합니다.
+- 메모 버전 불일치 시 `409 Conflict`와 `PLANNING_VERSION_CONFLICT`를 반환하며 기존 내용을 덮어쓰지 않습니다.
+- 체크리스트와 멤버별 완료 상태는 MVP에서 별도 version 없이 last-write-wins로 처리합니다.
 
 ## 협업 변경 이력과 Undo/Redo
 
-- 사용자 직접 UI 조작과 AI tool write는 같은 협업 command pipeline을 사용합니다.
-- undo/redo 대상 협업 command 예시: 일정 아이템 재정렬/day 이동/추가, snapped route 생성/수정/삭제, 저장된 지도 도형/경로 수정, 메모 생성/수정, 체크리스트 생성/수정/완료 처리.
+- 사용자 직접 일정/지도 UI 조작과 해당 AI tool write는 같은 협업 command pipeline을 사용합니다.
+- undo/redo 대상 협업 command 예시: 일정 아이템 재정렬/day 이동/추가, snapped route 생성/수정/삭제, 저장된 지도 도형/경로 수정.
+- 메모와 체크리스트 변경은 MVP undo/redo stack에 쌓지 않습니다.
 - undo/redo 가능 상태는 영구 히스토리가 아니라 사용자별 활성 WebSocket 세션별 command stack으로 관리합니다.
 - 사용자는 본인이 현재 활성 WebSocket 세션에서 실행한 command만 undo/redo할 수 있습니다.
-- AI tool write는 해당 tool을 요청한 사용자와 활성 WebSocket 세션의 command stack에만 쌓입니다.
+- undo 가능한 AI tool write는 해당 tool을 요청한 사용자와 활성 WebSocket 세션의 command stack에만 쌓입니다.
 - 사용자별 활성 WebSocket 세션의 undo stack과 redo stack은 각각 최대 5개로 제한합니다.
 - 새로고침, 재접속, 다른 기기 접속, WebSocket 세션 종료 이후에는 이전 세션의 undo/redo를 허용하지 않습니다.
 - 저장 전 자유 드로잉 preview는 프론트엔드 로컬 undo/redo로 처리하고, 백엔드 undo/redo는 저장된 snapped route나 저장된 도형/경로 command에만 적용합니다.
 - undo는 DB 트랜잭션 롤백이 아니라 보상 명령으로 구현합니다.
 - redo는 직전에 undo된 command의 보상 명령을 다시 적용하는 별도 command로 구현합니다.
-- undo/redo 가능한 command는 실행 시 이전 상태 또는 inverse/redo command를 저장해야 합니다. 예: 재정렬 전후 sort order, memo 수정 전후 본문, checklist 완료 전후 상태, route geometry 수정 전후 geometry, 새로 추가한 일정 아이템 ID.
+- undo/redo 가능한 command는 실행 시 이전 상태 또는 inverse/redo command를 저장해야 합니다. 예: 재정렬 전후 sort order, route geometry 수정 전후 geometry, 새로 추가한 일정 아이템 ID.
 - undo/redo 실행도 권한, 멤버십, 현재 version, 대상 리소스 변경 여부를 검사하고 성공 시 version 증가, 이벤트 저장, STOMP broadcast를 수행합니다.
 - undo 이후 새 write command가 실행되면 해당 세션의 redo stack은 비웁니다.
 - undo/redo 대상이 이후 다른 사용자 또는 같은 사용자의 다른 세션에 의해 변경되어 충돌이 있으면 자동 undo/redo를 거절하고 409 Problem Details로 응답합니다.
@@ -436,6 +438,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - MVP 메모는 여행방 전체 메모와 일차(day) 관리 메모만 지원합니다.
 - MVP 메모는 특정 itinerary item, place, map object에 직접 연결하지 않습니다.
 - 메모는 scope별 단일 관리 문서로 취급합니다.
+- 메모는 리소스별 `version`을 가지며 저장·삭제 요청의 `baseVersion`과 다르면 `PLANNING_VERSION_CONFLICT`로 거절합니다.
 - 여행방 전체 메모는 trip당 1개만 둡니다.
 - 일차(day) 관리 메모는 각 실제 itinerary day와 `UNSCHEDULED` group마다 1개만 둡니다.
 - 여행방 멤버는 메모를 soft delete할 수 있습니다.
@@ -443,6 +446,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - MVP 체크리스트는 여행방 전체 체크리스트와 일차(day) 관리 체크리스트만 지원합니다.
 - MVP 체크리스트는 특정 itinerary item, place, map object에 직접 연결하지 않습니다.
 - 체크리스트는 scope별 단일 리스트로 취급합니다.
+- 체크리스트와 멤버별 완료 상태는 MVP에서 별도 version 없이 last-write-wins로 처리합니다.
 - 여행방 전체 체크리스트는 trip당 1개만 둡니다.
 - 일차(day) 관리 체크리스트는 각 실제 itinerary day와 `UNSCHEDULED` group마다 1개만 둡니다.
 - MVP 체크리스트 항목에는 담당자 필드를 두지 않습니다.
@@ -467,13 +471,13 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - tool action은 허용된 tool registry 안에서만 실행하며, 임의 SQL/임의 API 호출은 허용하지 않습니다.
 - tool action은 `READ`, `REVERSIBLE_WRITE`, `BLOCKED_HIGH_RISK` 같은 execution policy를 가져야 합니다.
 - read/search tool은 확인 없이 실행합니다.
-- reversible write tool은 명시적인 사용자 요청이 있을 때 확인 없이 즉시 실행하고, 실행 결과에 undo/redo 가능 여부를 포함합니다.
+- write tool은 명시적인 사용자 요청이 있을 때 확인 없이 즉시 실행하며, 일정 command에만 실제 undo/redo 가능 여부를 포함합니다.
 - V1 AI tool은 pending confirmation 흐름을 만들지 않습니다.
 - 확인이 필요할 만큼 위험한 작업은 V1 AI tool registry에 등록하지 않고 `BLOCKED_HIGH_RISK`로 차단합니다.
 - blocked high-risk 예시: 일정/메모/체크리스트 삭제, 대량 변경, 공개 공유, 초대/권한/설정 변경, 되돌리기 어려운 외부 API 호출.
 - AI tool 호출은 `ai_tool_calls` 성격의 감사 로그에 요청자, 여행방, tool name, execution policy, arguments, status, version before/after, undo/redo 가능 여부를 기록해야 합니다.
-- AI tool write도 공통 협업 undo/redo command stack을 사용합니다.
-- 공유 AI agent session에서 실행된 AI tool write라도 command/undo/redo 소유권은 해당 tool을 요청한 사용자와 활성 WebSocket 세션에 귀속됩니다.
+- undo 가능한 AI 일정 tool write는 공통 협업 undo/redo command stack을 사용합니다.
+- 공유 AI agent session에서 실행된 undo 가능 command의 소유권은 해당 tool을 요청한 사용자와 활성 WebSocket 세션에 귀속됩니다.
 - `ai_tool_calls` 감사 로그는 영구 보관 정책을 따르지만, 감사 로그만으로 오래된 변경을 undo할 수 있게 만들지는 않습니다.
 
 ## 여행방 사용자 소통

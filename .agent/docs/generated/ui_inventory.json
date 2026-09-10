@@ -573,30 +573,31 @@
           "forms": 0,
           "classNames": [
             "4)}`",
-            "`thread-row__media--${Math.min(images.length,",
+            "`thread-card__media--${Math.min(images.length,",
             "danger",
             "material-symbols-rounded",
-            "thread-row",
-            "thread-row__author",
-            "thread-row__avatar",
-            "thread-row__body",
-            "thread-row__content",
-            "thread-row__edit",
-            "thread-row__edit-actions",
-            "thread-row__edit-cancel",
-            "thread-row__edit-counter",
-            "thread-row__edit-input",
-            "thread-row__edit-save",
-            "thread-row__head",
-            "thread-row__image",
-            "thread-row__media",
-            "thread-row__menu",
-            "thread-row__menu-backdrop",
-            "thread-row__menu-btn",
-            "thread-row__menu-wrap",
-            "thread-row__spacer",
-            "thread-row__time",
-            "thread-row__tombstone",
+            "thread-card",
+            "thread-card__author",
+            "thread-card__avatar",
+            "thread-card__body",
+            "thread-card__content",
+            "thread-card__edit",
+            "thread-card__edit-actions",
+            "thread-card__edit-cancel",
+            "thread-card__edit-counter",
+            "thread-card__edit-input",
+            "thread-card__edit-save",
+            "thread-card__head",
+            "thread-card__image",
+            "thread-card__main",
+            "thread-card__media",
+            "thread-card__menu",
+            "thread-card__menu-backdrop",
+            "thread-card__menu-btn",
+            "thread-card__menu-wrap",
+            "thread-card__spacer",
+            "thread-card__time",
+            "thread-card__tombstone",
             "{"
           ],
           "assetRefs": []
@@ -623,6 +624,7 @@
             "thread-composer__avatar",
             "thread-composer__bar",
             "thread-composer__counter",
+            "thread-composer__drop-hint",
             "thread-composer__input",
             "thread-composer__main",
             "thread-composer__preview",
@@ -632,7 +634,8 @@
             "thread-composer__reply-target",
             "thread-composer__row",
             "thread-composer__spacer",
-            "thread-composer__submit"
+            "thread-composer__submit",
+            "{"
           ],
           "assetRefs": []
         },
@@ -654,27 +657,31 @@
           "classNames": [
             "===",
             "?",
-            "accent-brand-violet",
             "bg-brand-rose",
-            "bg-surface",
+            "bg-brand-rose/10",
+            "bg-surface-2",
             "border",
             "border-line",
             "cursor-pointer",
-            "disabled:opacity-50",
+            "disabled:bg-surface-2",
             "disabled:pointer-events-none",
+            "disabled:shadow-none",
+            "disabled:text-muted",
             "flex",
             "flex-col",
+            "focus:bg-surface",
+            "focus:border-brand-violet",
             "focus:outline-none",
-            "focus:ring-2",
-            "focus:ring-brand-violet/30",
             "font-bold",
             "font-extrabold",
-            "font-semibold",
             "gap-2",
+            "gap-2.5",
             "gap-3",
+            "h-8",
             "hover:-translate-y-0.5",
             "hover:bg-surface-2",
             "items-center",
+            "justify-center",
             "justify-end",
             "material-symbols-rounded",
             "mb-1",
@@ -682,6 +689,7 @@
             "mb-5",
             "mt-5",
             "p-6",
+            "pl-[42px]",
             "placeholder:text-muted",
             "px-4",
             "px-5",
@@ -696,7 +704,9 @@
             "selected",
             "shadow-[0_10px_26px_rgba(255,92,141,0.35)]",
             "sm:p-7",
-            "text-[22px]",
+            "sr-only",
+            "text-[18px]",
+            "text-[20px]",
             "text-brand-rose",
             "text-center",
             "text-ink",
@@ -706,6 +716,7 @@
             "text-white",
             "transition-all",
             "transition-colors",
+            "w-8",
             "w-full"
           ],
           "assetRefs": []
@@ -725,9 +736,9 @@
           ],
           "forms": 0,
           "classNames": [
+            "[",
             "brand",
-            "nav",
-            "topbar"
+            "nav"
           ],
           "assetRefs": [
             "@/assets/images/soomgil_logo_none_text.png"
@@ -763,7 +774,6 @@
             "===",
             "editable,",
             "erasing:",
-            "map-drawing-hit-target",
             "map-drawing-overlay",
             "map-drawing-stroke",
             "tool",
@@ -1455,12 +1465,18 @@
             "page-hero__gradient",
             "vote-setup",
             "vote-setup__cta",
+            "vote-setup__dot",
+            "vote-setup__dots",
             "vote-setup__error",
             "vote-setup__lead",
             "vote-setup__note",
             "vote-setup__panel",
+            "vote-setup__rank",
+            "vote-setup__ranks",
             "vote-setup__row",
             "vote-setup__row-copy",
+            "vote-setup__row-icon",
+            "vote-setup__row-icon--rank",
             "vote-setup__stepper",
             "vote-setup__title"
           ],
@@ -1712,8 +1728,9 @@
           "classNames": [
             "community-feed",
             "community-feed__column",
-            "community-feed__divider",
-            "community-feed__surface",
+            "community-feed__composer-card",
+            "community-feed__list",
+            "community-feed__more",
             "material-symbols-rounded",
             "page-hero",
             "page-hero__copy",
@@ -1732,7 +1749,13 @@
           "kind": "page",
           "scriptLang": "ts",
           "scriptSetup": true,
-          "headings": [],
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "답글"
+            }
+          ],
           "images": [],
           "forms": 0,
           "classNames": [
@@ -1743,9 +1766,15 @@
             "thread-detail",
             "thread-detail__back",
             "thread-detail__column",
-            "thread-detail__divider",
+            "thread-detail__composer-card",
             "thread-detail__group",
             "thread-detail__replies",
+            "thread-detail__replies-card",
+            "thread-detail__replies-count",
+            "thread-detail__replies-empty",
+            "thread-detail__replies-head",
+            "thread-detail__replies-icon",
+            "thread-detail__replies-title",
             "thread-detail__reply",
             "thread-detail__reply-actions",
             "thread-detail__reply-author",
@@ -1758,7 +1787,6 @@
             "thread-detail__reply-edit-input",
             "thread-detail__reply-head",
             "thread-detail__reply-tombstone",
-            "thread-detail__surface",
             "{"
           ],
           "assetRefs": []
@@ -2092,12 +2120,12 @@
             {
               "level": 1,
               "id": "",
-              "text": "함께 만들던 여행을 바로 이어가세요"
+              "text": "{{ t('login.hero') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "로그인"
+              "text": "{{ t('auth.login') }}"
             }
           ],
           "images": [],
@@ -2332,7 +2360,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "페이지를 찾을 수 없습니다"
+              "text": "{{ tr('페이지를 찾을 수 없습니다', 'Page not found') }}"
             }
           ],
           "images": [],
@@ -2378,12 +2406,12 @@
             {
               "level": 2,
               "id": "",
-              "text": "로그인 처리 중..."
+              "text": "{{ tr('로그인 처리 중...', 'Processing login...') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "로그인 실패"
+              "text": "{{ tr('로그인 실패', 'Login failed') }}"
             }
           ],
           "images": [],
@@ -2415,6 +2443,11 @@
           "scriptLang": "ts",
           "scriptSetup": true,
           "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "See your travel memories at a glance"
+            },
             {
               "level": 1,
               "id": "",
@@ -2550,12 +2583,12 @@
             {
               "level": 1,
               "id": "",
-              "text": "친구들과 여행 취향부터 맞춰보세요"
+              "text": "{{ t('register.hero') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "{{ isOAuthOnboarding ? '가입 완료' : '회원가입' }}"
+              "text": "{{ isOAuthOnboarding ? '가입 완료' : t('auth.register') }}"
             }
           ],
           "images": [],
@@ -2589,7 +2622,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "비밀번호 재설정"
+              "text": "{{ tr('비밀번호 재설정', 'Reset password') }}"
             }
           ],
           "images": [],
@@ -2645,8 +2678,9 @@
             "period-text",
             "route-page-section",
             "section",
-            "sidebar",
             "sidebar-content",
+            "sidebar-sheet-handle",
+            "sidebar-toggle",
             "stat-label",
             "stat-value",
             "trip-card-dates",
@@ -2806,96 +2840,100 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 1,
+              "level": 2,
               "id": "",
-              "text": "서비스 환경 을 관리하세요"
+              "text": "{{ currentUser?.displayName || '여행자' }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "로그인 기기"
+              "text": "{{ t('settings.environment') }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "보안 활동"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "계정 삭제"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "환경 설정"
+              "text": "{{ t('settings.account') }}"
             }
           ],
-          "images": [],
+          "images": [
+            {
+              "src": "currentUser.profileImageUrl",
+              "alt": "currentUser?.displayName || "
+            }
+          ],
           "forms": 0,
           "classNames": [
-            "accent-brand-violet",
-            "bg-brand-violet",
-            "bg-surface",
-            "bg-white",
-            "block",
-            "border",
-            "border-b",
-            "border-brand-rose/20",
-            "border-brand-rose/30",
-            "border-line",
-            "disabled:opacity-50",
-            "flex",
-            "font-bold",
-            "font-semibold",
-            "gap-4",
-            "hover:bg-brand-rose/5",
-            "items-center",
-            "justify-between",
-            "last:border-0",
+            "animate-spin",
+            "avatar-fallback",
+            "btn",
+            "bullet-icon",
+            "danger-action-btn",
+            "danger-bullet-item",
+            "email-icon",
+            "error-status",
+            "field",
+            "lg:px-8",
+            "loading-spinner-wrap",
+            "loading-text",
             "material-symbols-rounded",
-            "max-w-2xl",
-            "mb-1",
-            "mb-2",
-            "mb-4",
-            "mb-6",
-            "mt-1",
-            "mt-4",
+            "max-w-6xl",
             "mx-auto",
-            "p-3",
-            "p-6",
-            "page-hero",
-            "page-hero__copy",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
-            "page-hero__lead",
-            "page-hero__title",
             "page-with-hero",
-            "px-3",
+            "panel-head-icon",
+            "panel-head-icon--orange",
+            "panel-head-icon--violet",
+            "panel-head-title-group",
+            "primary",
+            "profile-settings-page",
             "px-4",
-            "px-6",
-            "py-12",
-            "py-2",
-            "py-4",
-            "rounded-2xl",
-            "rounded-3xl",
-            "rounded-lg",
-            "rounded-xl",
-            "settings-card",
-            "settings-card-title",
-            "settings-heading",
+            "py-8",
+            "select-chevron",
+            "settings-actions-buttons",
+            "settings-actions-status",
+            "settings-cards-group",
+            "settings-danger-action",
+            "settings-danger-bullet-list",
+            "settings-danger-row",
+            "settings-item-card",
+            "settings-item-card--toggle",
+            "settings-item__control",
+            "settings-item__desc",
+            "settings-item__icon-wrap",
+            "settings-item__info",
+            "settings-item__title",
+            "settings-items-list",
+            "settings-layout",
+            "settings-loading-card",
             "settings-page",
-            "space-y-2",
-            "space-y-3",
-            "space-y-4",
+            "settings-panel",
+            "settings-panel--danger",
+            "settings-panel--unified",
+            "settings-panel__head",
+            "settings-save-btn",
+            "settings-save-status",
+            "settings-section",
+            "settings-section--actions",
+            "settings-select",
+            "settings-select-wrap",
+            "settings-summary",
+            "settings-summary__avatar",
+            "settings-summary__avatar-outer",
+            "settings-summary__avatar-wrap",
+            "settings-summary__bio",
+            "settings-summary__bio-section",
+            "settings-summary__cover",
+            "settings-summary__email-pill",
+            "settings-summary__email-section",
+            "settings-summary__name",
+            "settings-summary__profile",
+            "sm:px-6",
+            "summary-cover-art",
+            "switch-control",
+            "switch-track",
             "text-brand-rose",
-            "text-ink",
-            "text-muted",
-            "text-sm",
-            "text-white",
-            "text-xs",
-            "transition-colors",
-            "w-full"
+            "visibility-segment-btn",
+            "visibility-segmented-control",
+            "{"
           ],
           "assetRefs": []
         },
@@ -2972,7 +3010,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "초대 수락 완료"
+              "text": "{{ tr('초대 수락 완료', 'Invitation accepted') }}"
             }
           ],
           "images": [],
@@ -3213,7 +3251,12 @@
             {
               "level": 2,
               "id": "",
-              "text": "이메일 인증"
+              "text": "{{ tr('이메일 인증이 완료됐어요', 'Email verified') }}"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ submitting ? tr('이메일 인증 중…', 'Verifying email…') : tr('인증 메일을 확인해주세요', 'Check your verification email') }}"
             }
           ],
           "images": [],
@@ -3235,8 +3278,11 @@
             "field",
             "material-symbols-rounded",
             "muted",
+            "oauth-callback-state",
             "primary",
-            "small"
+            "small",
+            "verification-success-icon",
+            "verification-token-fallback"
           ],
           "assetRefs": []
         }
@@ -3773,6 +3819,26 @@
           ]
         },
         {
+          "path": "frontend/src/components/map/strokePaths.test.ts",
+          "relativePath": "src/components/map/strokePaths.test.ts",
+          "imports": [
+            "./strokePaths",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/map/strokePaths.ts",
+          "relativePath": "src/components/map/strokePaths.ts",
+          "imports": [
+            "@/utils/pathSimplification"
+          ],
+          "exports": [
+            "createStrokePathBuilder",
+            "strokePaths"
+          ]
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.test.ts",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.test.ts",
           "imports": [
@@ -3831,6 +3897,7 @@
           "imports": [
             "@/stores/auth.store",
             "@/types/auth",
+            "vue",
             "vue-router"
           ],
           "exports": [
@@ -3976,6 +4043,50 @@
           ],
           "exports": [
             "useToast"
+          ]
+        },
+        {
+          "path": "frontend/src/i18n/index.ts",
+          "relativePath": "src/i18n/index.ts",
+          "imports": [
+            "vue"
+          ],
+          "exports": [
+            "AppLocale",
+            "setLocale",
+            "useLocale"
+          ]
+        },
+        {
+          "path": "frontend/src/i18n/ui-localizer.test.ts",
+          "relativePath": "src/i18n/ui-localizer.test.ts",
+          "imports": [
+            "./ui-localizer",
+            "@/i18n",
+            "@vue/test-utils",
+            "vitest",
+            "vue"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/i18n/ui-localizer.ts",
+          "relativePath": "src/i18n/ui-localizer.ts",
+          "imports": [
+            "./ui-translations.en",
+            "@/i18n",
+            "vue"
+          ],
+          "exports": [
+            "useUiLocalizer"
+          ]
+        },
+        {
+          "path": "frontend/src/i18n/ui-translations.en.ts",
+          "relativePath": "src/i18n/ui-translations.en.ts",
+          "imports": [],
+          "exports": [
+            "uiTranslationsEn"
           ]
         },
         {
@@ -4173,6 +4284,7 @@
             "@/components/map/MapDrawingOverlay.vue",
             "@/types/collaboration",
             "@/types/geo",
+            "@/utils/pathSimplification",
             "vue"
           ],
           "exports": [
@@ -4258,11 +4370,23 @@
           "exports": []
         },
         {
+          "path": "frontend/src/stores/auth.store.test.ts",
+          "relativePath": "src/stores/auth.store.test.ts",
+          "imports": [
+            "./auth.store",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/stores/auth.store.ts",
           "relativePath": "src/stores/auth.store.ts",
           "imports": [
             "@/api/auth.api",
             "@/api/user.api",
+            "@/auth/accessToken",
+            "@/i18n",
             "@/realtime/collaborationSession",
             "@/types/auth",
             "pinia",
@@ -4421,14 +4545,12 @@
             "RegisterRequest",
             "RegisterResponse",
             "ResetPasswordRequest",
-            "SecurityEvent",
             "SendEmailVerificationRequest",
             "SocialLoginRequest",
             "UpdateMeRequest",
             "UpdateUserSettingsRequest",
             "User",
             "UserProfileVisibility",
-            "UserSession",
             "UserSettings",
             "UserStatus",
             "UserSummary",
@@ -4776,6 +4898,25 @@
           "exports": [
             "formatLikes",
             "truncate"
+          ]
+        },
+        {
+          "path": "frontend/src/utils/pathSimplification.test.ts",
+          "relativePath": "src/utils/pathSimplification.test.ts",
+          "imports": [
+            "./pathSimplification",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/pathSimplification.ts",
+          "relativePath": "src/utils/pathSimplification.ts",
+          "imports": [],
+          "exports": [
+            "CartesianPoint",
+            "simplifyPathToLimit",
+            "simplifyWithTolerance"
           ]
         },
         {
@@ -5278,9 +5419,9 @@
         "routes": 20,
         "pages": 21,
         "components": 39,
-        "sourceFiles": 125,
+        "sourceFiles": 134,
         "styleFiles": 4,
-        "typeScriptSignals": 184
+        "typeScriptSignals": 193
       }
     },
     {

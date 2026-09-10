@@ -49,7 +49,7 @@
 
 | 도메인 | 리소스 | 설명 |
 | :--- | :--- | :--- |
-| Auth | User, UserEmailAddress, UserProfile, UserSettings, AuthProvider, Session, PolicyDocument, SecurityEvent, Role | 이메일/비밀번호와 Kakao/Google 소셜 로그인, 약관 동의, 세션/보안 이벤트, 운영 RBAC |
+| Auth | User, UserEmailAddress, UserProfile, UserSettings, AuthProvider, Session, PolicyDocument, Role | 이메일/비밀번호와 Kakao/Google 소셜 로그인, 약관 동의, 내부 refresh 세션, 운영 RBAC |
 | Social | Follow | 앱 내부 directed follow edge |
 | Geo | LegalRegion | 법정동코드 10자리 기반 지역 |
 | Trip | Trip, TripRegion, TripMember, TripInvite, VoteCandidate, VoteSticker | 여행방, 초대, 첫 참여 투표 |
@@ -82,7 +82,7 @@
 
 | 상태/enum | 값 | 규칙 |
 | :--- | :--- | :--- |
-| UserStatus | `ACTIVE`, `SUSPENDED`, `PENDING_DELETION`, `DELETED` | 계정 삭제는 예약 상태를 거친 뒤 soft delete/purge 정책을 적용 |
+| UserStatus | `ACTIVE`, `SUSPENDED`, `PENDING_DELETION`, `DELETED` | 신규 탈퇴 요청은 즉시 `DELETED` 처리하며 `PENDING_DELETION`은 하위 호환을 위해 유지 |
 | TripStatus | `ACTIVE`, `ARCHIVED`, `DELETED` | 소유자만 설정/삭제 가능으로 설계 |
 | TripMemberRole | `MEMBER` | MVP `trip_members.role`에는 MEMBER만 저장. OWNER 표시는 `ownerUserId`에서 파생 |
 | TripMemberStatus | `ACTIVE`, `LEFT`, `REMOVED` | 제거/탈퇴 이력 보존 |
@@ -232,7 +232,7 @@ RFC7807 Problem Details를 사용한다.
 - 오브젝트 lease는 15초이며 편집 중 5초마다 갱신한다. 상태는 `/topic/trips/{tripId}/map-drawings`로 전파하고, 잠금 소유권은 서버가 부여한 `clientId`(WebSocket session ID)로 구분한다.
 - 오브젝트 transform preview는 활성 lease 소유 세션만 발행할 수 있고 `/topic/trips/{tripId}/map-drawings`로 중계한다. 다른 참여자는 preview를 즉시 표시하되 `END`/`CANCEL`에서 제거하고, 영구 상태는 조작 종료 후 REST 응답으로 확정한다.
 - cursor는 인증된 session의 lng/lat만 50ms 간격으로 중계하고 클라이언트는 10초 후 만료시킨다.
-- preview stroke는 클라이언트와 서버 모두 최대 32개 좌표로 제한한다.
+- preview stroke는 클라이언트와 서버 모두 최대 100개 좌표로 제한한다. 제한을 넘는 입력은 균일 간격 추출이 아니라 시작·끝과 큰 굴곡을 우선 보존해 단순화하며, `END`는 영구 저장 좌표와 같은 좌표 집합을 즉시 중계한다.
 
 ## 3. Endpoint 목록
 
@@ -424,17 +424,17 @@ RFC7807 Problem Details를 사용한다.
 
 #### DELETE `/me`
 
-- 설명: 계정 삭제를 예약한다. 즉시 hard delete가 아니라 `PENDING_DELETION` 상태와 삭제 예정 시각을 기록한다. 요청자가 `ownerUserId`인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 삭제 예약을 차단한다.
+- 설명: 계정을 즉시 `DELETED` 상태로 전환하고 세션·비밀번호·OAuth 연결을 폐기하며 이메일과 프로필 개인정보를 익명화한다. 소유 여행방은 가장 먼저 참여한 활성 구성원에게 이전하고, 다른 활성 구성원이 없으면 함께 삭제한 뒤 모든 여행방 멤버십에서 탈퇴한다.
 - 인증/권한: 로그인 사용자.
 - Path parameters: 없음.
 - Query parameters: 없음.
 - Request body schema: 없음.
-- Response body schema: 없음, `202 Accepted`.
-- 성공 응답 예시: `202`.
-- 실패 응답 예시: `409 ProblemDetails(code=ACCOUNT_DELETION_BLOCKED_BY_ACTIVE_OWNER_TRIP)`.
+- Response body schema: 없음, `204 No Content`.
+- 성공 응답 예시: `204`.
+- 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
 - 관련 화면: `/settings`.
-- 근거: `auth.users.status`, `deletion_requested_at`, `deletion_scheduled_at`.
-- 확정: 소유자인 활성 여행방이 있으면 삭제 예약을 차단하고, 사용자가 해당 여행방을 삭제 또는 보존 정책에 맞게 정리하도록 요구한다.
+- 근거: `auth.users.status`, `deleted_at`, 인증·프로필 관련 테이블.
+- 확정: 방장 승계는 활성 구성원의 `joinedAt`, 멤버십 ID 오름차순으로 결정한다. 승계 대상이 없는 여행방은 탈퇴와 함께 삭제한다.
 
 #### GET `/me/settings`
 
@@ -463,48 +463,6 @@ RFC7807 Problem Details를 사용한다.
 - 관련 화면: `/settings`.
 - 근거: `auth.user_settings`.
 - 확인 필요: 마케팅 동의를 `policy_acceptances`와 함께 관리할지.
-
-#### GET `/me/sessions`
-
-- 설명: 내 refresh session 목록을 조회한다.
-- 인증/권한: 로그인 사용자.
-- Path parameters: 없음.
-- Query parameters: `page`, `size`.
-- Request body schema: 없음.
-- Response body schema: `PagedUserSession`.
-- 성공 응답 예시: `200 {"items":[{"id":"...","deviceName":"Chrome on Windows","expiresAt":"..."}]}`
-- 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
-- 관련 화면: `/settings`.
-- 근거: `auth.user_sessions`.
-- 확인 필요: IP/user agent hash를 사용자에게 역변환 표시하지 않고 device label만 저장할지.
-
-#### DELETE `/me/sessions/{sessionId}`
-
-- 설명: 특정 로그인 세션을 revoke한다.
-- 인증/권한: 로그인 사용자. 본인 세션만 가능.
-- Path parameters: `sessionId`.
-- Query parameters: 없음.
-- Request body schema: 없음.
-- Response body schema: 없음, `204 No Content`.
-- 성공 응답 예시: `204`.
-- 실패 응답 예시: `404 ProblemDetails(code=SESSION_NOT_FOUND)`.
-- 관련 화면: `/settings`.
-- 근거: `auth.user_sessions.revoked_at`, `revoked_by_user_id`, `revocation_reason`.
-- 확인 필요: 현재 세션 revoke 시 즉시 로그아웃 UX.
-
-#### GET `/me/security-events`
-
-- 설명: 내 계정 보안 이벤트를 조회한다.
-- 인증/권한: 로그인 사용자.
-- Path parameters: 없음.
-- Query parameters: `page`, `size`.
-- Request body schema: 없음.
-- Response body schema: `PagedSecurityEvent`.
-- 성공 응답 예시: `200 {"items":[{"eventType":"LOGIN_SUCCESS","success":true,"createdAt":"..."}]}`
-- 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
-- 관련 화면: `/settings`.
-- 근거: `auth.user_security_events`.
-- 확인 필요: 실패 사유와 위치/IP 정보를 어느 수준까지 사용자에게 보여줄지.
 
 ### Social / Users / Regions
 
@@ -1157,6 +1115,20 @@ RFC7807 Problem Details를 사용한다.
 - 관련 화면: 지도 드로잉.
 - 근거: `itinerary.map_drawings.deleted_at`.
 - 확인 필요: AI tool registry에서 drawing 삭제 제외 유지.
+
+#### POST `/trips/{tripId}/map-drawings/batch-delete`
+
+- 설명: 한 번의 지우개 드래그 경로에 닿은 지도 도형·스티커·이미지를 일괄 soft delete한다.
+- 인증/권한: active trip member.
+- Path parameters: `tripId`.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 모든 대상 drawing lease가 필수다.
+- Request body schema: `DeleteMapDrawingsRequest` with `baseVersion`, `drawingIds`(1~100개).
+- Response body schema: `ItineraryMutationResponse`.
+- 성공 응답 예시: `200 {"itineraryVersion":26}`
+- 실패 응답 예시: `404 ProblemDetails(code=MAP_DRAWING_NOT_FOUND)`, `409 ProblemDetails(code=ITINERARY_VERSION_CONFLICT)`.
+- 관련 화면: 지도 지우개 드래그.
+- 근거: `itinerary.map_drawings.deleted_at`, `collab.collaboration_command_events`.
+- 확정: 전체 삭제는 itinerary version을 한 번만 증가시키고 단일 `DELETE_MAP_DRAWINGS` command event로 기록한다. undo/redo는 해당 목록 전체를 원자적으로 복원/재삭제한다.
 
 #### POST `/trips/{tripId}/collaboration/undo`
 
@@ -1904,7 +1876,7 @@ Deprecated: 전역 기록 탭 제거로 신규 화면에서 사용하지 않습�
 
 | Entity | 주요 필드 | 생성/수정/삭제 정책 |
 | :--- | :--- | :--- |
-| User | `id`, `status`, `statusReason`, `deletionRequestedAt`, `deletionScheduledAt` | 계정 생명주기 anchor. 삭제 예약 시 `PENDING_DELETION`을 거쳐 soft delete |
+| User | `id`, `status`, `statusReason`, `deletionRequestedAt`, `deletionScheduledAt` | 계정 생명주기 anchor. 즉시 탈퇴 시 `DELETED`와 `deletedAt`을 기록 |
 | UserEmailAddress | `userId`, `email`, `normalizedEmail`, `isPrimary`, `verifiedAt` | 로그인 식별자와 이메일 인증 상태. raw verification token은 저장하지 않음 |
 | UserProfile | `userId`, `displayName`, `profileImageUrl`, `profileMediaFileId`, `bio` | `PATCH /me`로 수정하는 표시 프로필 |
 | UserSettings | `userId`, `displayLanguage`, `timezone`, `marketingEmailOptIn`, `tripInviteEmailOptIn` | `GET/PATCH /me/settings`로 관리 |
@@ -2026,9 +1998,9 @@ DBML 최신 반영 요약:
 
 Best practice: 선택된 **A**를 따른다. 이메일 인증 완료 전 계정 활성화를 막고, refresh token은 rotation과 family revoke를 적용한다. 필수 약관은 가입 완료 조건으로 두고, 강제 재동의는 별도 policy acceptance flow로 처리한다.
 
-API/DBML 반영 지점: `auth.user_email_addresses`, `auth.user_email_verification_tokens`, `auth.user_password_credentials`, `auth.user_password_reset_tokens`, `auth.user_sessions`, `auth.policy_documents`, `auth.user_policy_acceptances`, `auth.user_security_events`, `POST /auth/register`, `POST /auth/refresh`, `POST /auth/logout`, `GET /me/sessions`, `GET /me/security-events`.
+API/DBML 반영 지점: `auth.user_email_addresses`, `auth.user_email_verification_tokens`, `auth.user_password_credentials`, `auth.user_password_reset_tokens`, `auth.user_sessions`, `auth.policy_documents`, `auth.user_policy_acceptances`, `POST /auth/register`, `POST /auth/refresh`, `POST /auth/logout`.
 
-결정 후 반영: 인증/재설정 token TTL과 재발송 cooldown, access/refresh token TTL, 전체 기기 로그아웃, 계정 삭제 예약 중 로그인 허용 여부.
+결정 후 반영: 인증/재설정 token TTL과 재발송 cooldown, access/refresh token TTL, 전체 기기 로그아웃, 탈퇴 직후 기존 access token 차단 여부.
 
 #### P0-2. OAuth/계정 연결: Kakao/Google callback, provider identity 충돌, 소셜 가입 보완
 
@@ -2184,18 +2156,18 @@ API/DBML 반영 지점: `media.media_files`, `auth.user_profiles.profile_media_f
 
 #### P0-10. 개인정보/삭제: user deletion, soft delete, 공개 콘텐츠 잔존
 
-문제 상세: `auth.users`는 삭제 예약/soft delete 필드를 갖고, 여러 도메인은 `deleted_at` 또는 moderation status를 갖는다. 계정 삭제가 곧 모든 콘텐츠 삭제인지, 공개 게시글은 익명화 후 유지되는지, 감사 로그는 보관되는지 정하지 않으면 사용자 요청 처리와 법적 보관 정책이 충돌한다. 소유자 계정이 삭제될 때 여행방 관리 주체가 사라지는 문제도 함께 해결해야 한다.
+문제 상세: `auth.users`는 계정 생명주기 필드를 갖고, 여러 도메인은 `deleted_at` 또는 moderation status를 갖는다. 계정 탈퇴가 곧 모든 콘텐츠 삭제인지, 공개 게시글은 익명화 후 유지되는지, 감사 로그는 보관되는지 정하지 않으면 사용자 요청 처리와 법적 보관 정책이 충돌한다. 소유자 계정이 삭제될 때 여행방 관리 주체가 사라지는 문제도 함께 해결해야 한다.
 
 | 선택 | 정책안 | 장점 | 리스크 |
 | :--- | :--- | :--- | :--- |
 | A | 계정 삭제 요청 즉시 hard delete cascade | 사용자가 기대하는 삭제감이 큼 | 협업/감사/공개 콘텐츠 무결성 붕괴 |
-| B | `PENDING_DELETION` 예약 후 익명화/삭제, 공개 snapshot은 정책에 따라 유지, 소유자인 여행방은 삭제 전 정리 요구 | 데이터 무결성과 개인정보 요구 균형 | retention/익명화 job 필요 |
+| B | 즉시 `DELETED` 전환 및 개인정보 익명화, 공개 snapshot은 정책에 따라 유지, 소유자인 여행방은 삭제 전 정리 요구 | 데이터 무결성과 개인정보 요구 균형 | 콘텐츠 보존 정책 명시 필요 |
 | C | 계정은 `DELETED` 상태만 두고 데이터는 영구 보관 | 구현 단순 | 개인정보 삭제 요구 대응 취약 |
 | D | 공개/비공개 콘텐츠를 모두 삭제하고 감사 로그도 제거 | 개인정보 최소화 | 운영 감사와 신고 처리 근거 상실 |
 
 선택 결과: **B**.
 
-Best practice: 선택된 **B**를 따른다. 계정 삭제는 예약 상태를 거쳐 처리하고, 소유자인 활성 여행방이 있으면 MVP에서는 이관이 없으므로 삭제 예약을 차단한다. 공개 커뮤니티 콘텐츠는 작성자 표시를 익명화하되 snapshot 유지 여부는 약관/개인정보 정책에 명시한다.
+Best practice: 선택된 **B**를 따른다. 계정은 즉시 탈퇴 처리하고, 소유 여행방은 다음 활성 구성원에게 이전하며 승계 대상이 없으면 함께 삭제한다. 공개 커뮤니티 콘텐츠는 작성자 표시를 익명화하되 snapshot 유지 여부는 약관/개인정보 정책에 명시한다.
 
 API/DBML 반영 지점: `auth.users.status/deletion_*`, `trip.trip_members.status`, 각 도메인의 `deleted_at`, `community.posts.moderation_status`, `ops.audit_logs`, `DELETE /me`, `DELETE /trips/{tripId}`, `DELETE /community/posts/{postId}`.
 

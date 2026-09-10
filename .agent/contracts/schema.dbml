@@ -896,7 +896,7 @@ Table planning.trip_notes {
   scope_type varchar(20) [not null, note: 'TRIP or DAY']
   itinerary_day_id uuid [note: 'Required for DAY scope, null for TRIP scope. Includes UNSCHEDULED day/group.']
   content text [not null, default: '']
-  version bigint [not null, default: 0]
+  version bigint [not null, default: 1]
   created_by_user_id uuid
   updated_by_user_id uuid
   deleted_by_user_id uuid
@@ -917,7 +917,6 @@ Table planning.checklists {
   scope_type varchar(20) [not null, note: 'TRIP or DAY']
   itinerary_day_id uuid [note: 'Required for DAY scope, null for TRIP scope. Includes UNSCHEDULED day/group.']
   title varchar(120)
-  version bigint [not null, default: 0]
   created_by_user_id uuid
   updated_by_user_id uuid
   deleted_by_user_id uuid

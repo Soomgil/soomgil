@@ -176,7 +176,7 @@
 - headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `4)}``, ``thread-row__media--${Math.min(images.length,`, `danger`, `material-symbols-rounded`, `thread-row`, `thread-row__author`, `thread-row__avatar`, `thread-row__body`, `thread-row__content`, `thread-row__edit`, `thread-row__edit-actions`, `thread-row__edit-cancel`, `thread-row__edit-counter`, `thread-row__edit-input`, `thread-row__edit-save`, `thread-row__head`, `thread-row__image`, `thread-row__media`, `thread-row__menu`, `thread-row__menu-backdrop`, `thread-row__menu-btn`, `thread-row__menu-wrap`, `thread-row__spacer`, `thread-row__time`, `thread-row__tombstone`, `{`
+- classes: `4)}``, ``thread-card__media--${Math.min(images.length,`, `danger`, `material-symbols-rounded`, `thread-card`, `thread-card__author`, `thread-card__avatar`, `thread-card__body`, `thread-card__content`, `thread-card__edit`, `thread-card__edit-actions`, `thread-card__edit-cancel`, `thread-card__edit-counter`, `thread-card__edit-input`, `thread-card__edit-save`, `thread-card__head`, `thread-card__image`, `thread-card__main`, `thread-card__media`, `thread-card__menu`, `thread-card__menu-backdrop`, `thread-card__menu-btn`, `thread-card__menu-wrap`, `thread-card__spacer`, `thread-card__time`, `thread-card__tombstone`, `{`
 
 #### frontend/src/components/community/ThreadComposer.vue
 
@@ -185,7 +185,7 @@
 - headings: 없음
 - forms: 1, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `thread-composer`, `thread-composer__attach`, `thread-composer__attach-count`, `thread-composer__avatar`, `thread-composer__bar`, `thread-composer__counter`, `thread-composer__input`, `thread-composer__main`, `thread-composer__preview`, `thread-composer__preview-loading`, `thread-composer__preview-remove`, `thread-composer__previews`, `thread-composer__reply-target`, `thread-composer__row`, `thread-composer__spacer`, `thread-composer__submit`
+- classes: `material-symbols-rounded`, `thread-composer`, `thread-composer__attach`, `thread-composer__attach-count`, `thread-composer__avatar`, `thread-composer__bar`, `thread-composer__counter`, `thread-composer__drop-hint`, `thread-composer__input`, `thread-composer__main`, `thread-composer__preview`, `thread-composer__preview-loading`, `thread-composer__preview-remove`, `thread-composer__previews`, `thread-composer__reply-target`, `thread-composer__row`, `thread-composer__spacer`, `thread-composer__submit`, `{`
 
 #### frontend/src/components/community/ThreadReportModal.vue
 
@@ -194,7 +194,7 @@
 - headings: h2 {{ targetLabel }} 신고
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `===`, `?`, `accent-brand-violet`, `bg-brand-rose`, `bg-surface`, `border`, `border-line`, `cursor-pointer`, `disabled:opacity-50`, `disabled:pointer-events-none`, `flex`, `flex-col`, `focus:outline-none`, `focus:ring-2`, `focus:ring-brand-violet/30`, `font-bold`, `font-extrabold`, `font-semibold`, `gap-2`, `gap-3`, `hover:-translate-y-0.5`, `hover:bg-surface-2`, `items-center`, `justify-end`, `material-symbols-rounded`, `mb-1`, `mb-4`, `mb-5`, `mt-5`, `p-6`
+- classes: `===`, `?`, `bg-brand-rose`, `bg-brand-rose/10`, `bg-surface-2`, `border`, `border-line`, `cursor-pointer`, `disabled:bg-surface-2`, `disabled:pointer-events-none`, `disabled:shadow-none`, `disabled:text-muted`, `flex`, `flex-col`, `focus:bg-surface`, `focus:border-brand-violet`, `focus:outline-none`, `font-bold`, `font-extrabold`, `gap-2`, `gap-2.5`, `gap-3`, `h-8`, `hover:-translate-y-0.5`, `hover:bg-surface-2`, `items-center`, `justify-center`, `justify-end`, `material-symbols-rounded`, `mb-1`
 
 #### frontend/src/components/layout/AppHeader.vue
 
@@ -203,7 +203,7 @@
 - headings: 없음
 - forms: 0, images: 1
 - asset refs: `@/assets/images/soomgil_logo_none_text.png`
-- classes: `brand`, `nav`, `topbar`
+- classes: `[`, `brand`, `nav`
 
 #### frontend/src/components/layout/AppShell.vue
 
@@ -221,7 +221,7 @@
 - headings: 없음
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `===`, `editable,`, `erasing:`, `map-drawing-hit-target`, `map-drawing-overlay`, `map-drawing-stroke`, `tool`, `{`
+- classes: `===`, `editable,`, `erasing:`, `map-drawing-overlay`, `map-drawing-stroke`, `tool`, `{`
 
 #### frontend/src/components/map/MapObjectOverlay.vue
 
@@ -356,7 +356,7 @@
 - headings: h1 스티커 투표 로 갈 곳을 함께 정해요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-setup`, `vote-setup__cta`, `vote-setup__error`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row-copy`, `vote-setup__stepper`, `vote-setup__title`
+- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-setup`, `vote-setup__cta`, `vote-setup__dot`, `vote-setup__dots`, `vote-setup__error`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__rank`, `vote-setup__ranks`, `vote-setup__row`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--rank`, `vote-setup__stepper`, `vote-setup__title`
 
 #### frontend/src/components/voting/VoteCandidateDeck.vue
 
@@ -410,16 +410,16 @@
 - headings: h1 여행자들의 이야기 를 나눠보세요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `community-feed`, `community-feed__column`, `community-feed__divider`, `community-feed__surface`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`
+- classes: `community-feed`, `community-feed__column`, `community-feed__composer-card`, `community-feed__list`, `community-feed__more`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`
 
 #### frontend/src/pages/CommunityThreadDetailPage.vue
 
 - 종류: page
 - script: setup / ts
-- headings: 없음
+- headings: h2 답글
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-with-hero`, `save`, `section`, `thread-detail`, `thread-detail__back`, `thread-detail__column`, `thread-detail__divider`, `thread-detail__group`, `thread-detail__replies`, `thread-detail__reply`, `thread-detail__reply-actions`, `thread-detail__reply-author`, `thread-detail__reply-avatar`, `thread-detail__reply-body`, `thread-detail__reply-content`, `thread-detail__reply-date`, `thread-detail__reply-edit`, `thread-detail__reply-edit-actions`, `thread-detail__reply-edit-input`, `thread-detail__reply-head`, `thread-detail__reply-tombstone`, `thread-detail__surface`, `{`
+- classes: `material-symbols-rounded`, `page-with-hero`, `save`, `section`, `thread-detail`, `thread-detail__back`, `thread-detail__column`, `thread-detail__composer-card`, `thread-detail__group`, `thread-detail__replies`, `thread-detail__replies-card`, `thread-detail__replies-count`, `thread-detail__replies-empty`, `thread-detail__replies-head`, `thread-detail__replies-icon`, `thread-detail__replies-title`, `thread-detail__reply`, `thread-detail__reply-actions`, `thread-detail__reply-author`, `thread-detail__reply-avatar`, `thread-detail__reply-body`, `thread-detail__reply-content`, `thread-detail__reply-date`, `thread-detail__reply-edit`, `thread-detail__reply-edit-actions`, `thread-detail__reply-edit-input`, `thread-detail__reply-head`, `thread-detail__reply-tombstone`, `{`
 
 #### frontend/src/pages/HomePage.vue
 
@@ -443,7 +443,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 함께 만들던 여행을 바로 이어가세요, h2 로그인
+- headings: h1 {{ t('login.hero') }}, h2 {{ t('auth.login') }}
 - forms: 1, images: 0
 - asset refs: `/images/랜딩페이지/korea_hero.png`
 - classes: `app-shell`, `auth-card`, `auth-check`, `auth-feedback-slot`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `auth-success-message`, `auth-switch`, `auth-visual-content`, `auth-visual-image`, `auth-visual-panel`, `btn`, `divider`, `eyebrow`, `field`, `material-symbols-rounded`, `muted`, `primary`, `small`
@@ -470,7 +470,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 페이지를 찾을 수 없습니다
+- headings: h1 {{ tr('페이지를 찾을 수 없습니다', 'Page not found') }}
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `bg-brand-violet`, `bg-clip-text`, `bg-gradient-to-br`, `flex`, `font-black`, `font-bold`, `from-brand-violet`, `hover:bg-brand-violet/90`, `items-center`, `justify-center`, `mb-8`, `min-h-screen`, `mt-2`, `mt-4`, `px-6`, `px-8`, `py-3`, `rounded-full`, `text-2xl`, `text-8xl`, `text-center`, `text-ink`, `text-muted`, `text-transparent`, `text-white`, `to-brand-blue`, `transition-colors`
@@ -479,7 +479,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 로그인 처리 중..., h2 로그인 실패
+- headings: h2 {{ tr('로그인 처리 중...', 'Processing login...') }}, h2 {{ tr('로그인 실패', 'Login failed') }}
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `oauth-error-icon`, `oauth-spinner`, `primary`, `small`
@@ -488,7 +488,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 여행의 기록 을 한눈에 모아보세요, h3 전체 기록, h3 {{ trip.title }}, h3 사진 추가
+- headings: h1 See your travel memories at a glance, h1 여행의 기록 을 한눈에 모아보세요, h3 전체 기록, h3 {{ trip.title }}, h3 사진 추가
 - forms: 1, images: 5
 - asset refs: 없음
 - classes: `avatar`, `btn`, `content-container`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `is-all`, `isUploadModalOpen`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `next`, `overlay-day`, `overlay-schedule`, `overlay-uploader`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `prev`, `preview-remove-btn`, `primary`
@@ -497,7 +497,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 친구들과 여행 취향부터 맞춰보세요, h2 {{ isOAuthOnboarding ? '가입 완료' : '회원가입' }}
+- headings: h1 {{ t('register.hero') }}, h2 {{ isOAuthOnboarding ? '가입 완료' : t('auth.register') }}
 - forms: 1, images: 0
 - asset refs: `/images/랜딩페이지/jeonju.png`
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-form-head`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-visual-content`, `auth-visual-image`, `auth-visual-panel`, `divider`, `eyebrow`
@@ -506,7 +506,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 비밀번호 재설정
+- headings: h2 {{ tr('비밀번호 재설정', 'Reset password') }}
 - forms: 1, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `field`, `material-symbols-rounded`, `muted`, `primary`, `small`
@@ -518,7 +518,7 @@
 - headings: h3 {{ trip.title }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `icon-calendar`, `material-symbols-rounded`, `period-text`, `route-page-section`, `section`, `sidebar`, `sidebar-content`, `stat-label`, `stat-value`, `trip-card-dates`, `trip-card-divider`, `trip-card-footer`, `trip-card-period-row`, `trip-card-title`, `trip-info-badge-row`, `trip-stat-item`, `trip-stats-grid`, `trip-status-badge`
+- classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `icon-calendar`, `material-symbols-rounded`, `period-text`, `route-page-section`, `section`, `sidebar-content`, `sidebar-sheet-handle`, `sidebar-toggle`, `stat-label`, `stat-value`, `trip-card-dates`, `trip-card-divider`, `trip-card-footer`, `trip-card-period-row`, `trip-card-title`, `trip-info-badge-row`, `trip-stat-item`, `trip-stats-grid`, `trip-status-badge`
 
 #### frontend/src/pages/SearchResultsPage.vue
 
@@ -533,10 +533,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 서비스 환경 을 관리하세요, h2 로그인 기기, h2 보안 활동, h2 계정 삭제, h2 환경 설정
-- forms: 0, images: 0
+- headings: h2 {{ currentUser?.displayName || '여행자' }}, h2 {{ t('settings.environment') }}, h2 {{ t('settings.account') }}
+- forms: 0, images: 1
 - asset refs: 없음
-- classes: `accent-brand-violet`, `bg-brand-violet`, `bg-surface`, `bg-white`, `block`, `border`, `border-b`, `border-brand-rose/20`, `border-brand-rose/30`, `border-line`, `disabled:opacity-50`, `flex`, `font-bold`, `font-semibold`, `gap-4`, `hover:bg-brand-rose/5`, `items-center`, `justify-between`, `last:border-0`, `material-symbols-rounded`, `max-w-2xl`, `mb-1`, `mb-2`, `mb-4`, `mb-6`, `mt-1`, `mt-4`, `mx-auto`, `p-3`, `p-6`
+- classes: `animate-spin`, `avatar-fallback`, `btn`, `bullet-icon`, `danger-action-btn`, `danger-bullet-item`, `email-icon`, `error-status`, `field`, `lg:px-8`, `loading-spinner-wrap`, `loading-text`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `px-4`, `py-8`, `select-chevron`, `settings-actions-buttons`, `settings-actions-status`, `settings-cards-group`, `settings-danger-action`, `settings-danger-bullet-list`
 
 #### frontend/src/pages/SwipePage.vue
 
@@ -551,7 +551,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 초대 수락 완료
+- headings: h1 {{ tr('초대 수락 완료', 'Invitation accepted') }}
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
@@ -578,10 +578,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 이메일 인증
+- headings: h2 {{ tr('이메일 인증이 완료됐어요', 'Email verified') }}, h2 {{ submitting ? tr('이메일 인증 중…', 'Verifying email…') : tr('인증 메일을 확인해주세요', 'Check your verification email') }}
 - forms: 1, images: 0
 - asset refs: 없음
-- classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `primary`, `small`
+- classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `primary`, `small`, `verification-success-icon`, `verification-token-fallback`
 
 ### Styles
 
