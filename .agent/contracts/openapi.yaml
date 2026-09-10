@@ -1552,15 +1552,16 @@ paths:
                 $ref: '#/components/schemas/CollaborationActionResponse'
         '409':
           $ref: '#/components/responses/Conflict'
-  /trips/{tripId}/notes:
+  /trips/{tripId}/planning/notes:
     get:
       tags: [Planning]
-      summary: 메모 목록 조회
-      operationId: listNotes
+      summary: scope별 메모 조회
+      operationId: getNote
       parameters:
         - $ref: '#/components/parameters/tripId'
         - name: scopeType
           in: query
+          required: true
           schema:
             $ref: '#/components/schemas/PlanningScopeType'
         - name: itineraryDayId
@@ -1574,16 +1575,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Note'
+                $ref: '#/components/schemas/Note'
+        '204':
+          description: 해당 scope에 메모 없음
     put:
       tags: [Planning]
       summary: scope별 메모 upsert
       operationId: upsertNote
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1597,7 +1597,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/notes/{noteId}:
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /trips/{tripId}/planning/notes/{noteId}:
     delete:
       tags: [Planning]
       summary: 메모 삭제
@@ -1610,21 +1612,18 @@ paths:
           schema:
             type: string
             format: uuid
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VersionedCommandRequest'
+              $ref: '#/components/schemas/DeleteNoteRequest'
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists:
+        '204':
+          description: No Content
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /trips/{tripId}/planning/checklists:
     get:
       tags: [Planning]
       summary: 체크리스트 목록 조회
@@ -1655,7 +1654,6 @@ paths:
       operationId: upsertChecklist
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1669,7 +1667,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items:
+  /trips/{tripId}/planning/checklists/{checklistId}:
+    delete:
+      tags: [Planning]
+      summary: 체크리스트 삭제
+      operationId: deleteChecklist
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - $ref: '#/components/parameters/checklistId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanningMutationResponse'
+  /trips/{tripId}/planning/checklists/{checklistId}/items:
     post:
       tags: [Planning]
       summary: 체크리스트 항목 생성
@@ -1677,7 +1690,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1691,7 +1703,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items/{itemId}:
+  /trips/{tripId}/planning/checklists/{checklistId}/items/{itemId}:
     patch:
       tags: [Planning]
       summary: 체크리스트 항목 수정
@@ -1700,7 +1712,6 @@ paths:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
         - $ref: '#/components/parameters/itemId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1722,21 +1733,10 @@ paths:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
         - $ref: '#/components/parameters/itemId'
-        - $ref: '#/components/parameters/websocketSessionId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VersionedCommandRequest'
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items/reorder:
+        '204':
+          description: No Content
+  /trips/{tripId}/planning/checklists/{checklistId}/items/order:
     put:
       tags: [Planning]
       summary: 체크리스트 항목 재정렬
@@ -1744,7 +1744,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1758,18 +1757,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items/{itemId}/member-statuses/{userId}:
-    put:
+  /trips/{tripId}/planning/checklists/{checklistId}/items/{itemId}/members/me:
+    patch:
       tags: [Planning]
       summary: 체크리스트 멤버별 완료 상태 변경
       operationId: updateChecklistMemberStatus
-      description: MVP에서는 현재 사용자 본인의 member status만 수정할 수 있다. userId가 현재 사용자와 다르면 403을 반환한다.
+      description: 현재 인증 사용자의 member status만 수정한다.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
         - $ref: '#/components/parameters/itemId'
-        - $ref: '#/components/parameters/userId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -3878,6 +3875,7 @@ components:
         baseVersion:
           type: integer
           format: int64
+          minimum: 0
     DeleteMapDrawingsRequest:
       allOf:
         - $ref: '#/components/schemas/VersionedCommandRequest'
@@ -4211,9 +4209,17 @@ components:
               format: uuid
             content:
               type: string
+    DeleteNoteRequest:
+      type: object
+      required: [baseVersion]
+      properties:
+        baseVersion:
+          type: integer
+          format: int64
+          minimum: 1
     Checklist:
       type: object
-      required: [id, tripId, scopeType, version, items]
+      required: [id, tripId, scopeType, items]
       properties:
         id:
           type: string
@@ -4228,9 +4234,6 @@ components:
           format: uuid
         title:
           type: string
-        version:
-          type: integer
-          format: int64
         items:
           type: array
           items:
@@ -4271,75 +4274,81 @@ components:
           type: string
           format: date-time
     UpsertChecklistRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [scopeType]
-          properties:
-            scopeType:
-              $ref: '#/components/schemas/PlanningScopeType'
-            itineraryDayId:
-              type: string
-              format: uuid
-            title:
-              type: string
+      type: object
+      required: [scopeType]
+      properties:
+        scopeType:
+          $ref: '#/components/schemas/PlanningScopeType'
+        itineraryDayId:
+          type: string
+          format: uuid
+        title:
+          type: string
     CreateChecklistItemRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [content]
-          properties:
-            content:
-              type: string
-            sortOrder:
-              type: integer
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+        sortOrder:
+          type: integer
     UpdateChecklistItemRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          properties:
-            content:
-              type: string
-            sortOrder:
-              type: integer
+      type: object
+      properties:
+        content:
+          type: string
+        sortOrder:
+          type: integer
     ReorderChecklistItemsRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [itemOrders]
-          properties:
-            itemOrders:
-              type: array
-              items:
-                type: object
-                required: [itemId, sortOrder]
-                properties:
-                  itemId:
-                    type: string
-                    format: uuid
-                  sortOrder:
-                    type: integer
+      type: object
+      required: [itemOrders]
+      properties:
+        itemOrders:
+          type: array
+          items:
+            type: object
+            required: [itemId, sortOrder]
+            properties:
+              itemId:
+                type: string
+                format: uuid
+              sortOrder:
+                type: integer
     UpdateChecklistMemberStatusRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [isCompleted]
-          properties:
-            isCompleted:
-              type: boolean
+      type: object
+      required: [isCompleted]
+      properties:
+        isCompleted:
+          type: boolean
     PlanningMutationResponse:
-      allOf:
-        - $ref: '#/components/schemas/CollaborationActionResponse'
-        - type: object
-          properties:
-            note:
-              $ref: '#/components/schemas/Note'
-            checklist:
-              $ref: '#/components/schemas/Checklist'
-            item:
-              $ref: '#/components/schemas/ChecklistItem'
-            memberStatus:
-              $ref: '#/components/schemas/ChecklistMemberStatus'
+      type: object
+      required: [tripId, undoAvailable, redoAvailable]
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        itineraryVersion:
+          type: integer
+          format: int64
+          nullable: true
+        commandEventId:
+          type: integer
+          format: int64
+          nullable: true
+        undoAvailable:
+          type: boolean
+          description: 메모·체크리스트 mutation에서는 false
+        redoAvailable:
+          type: boolean
+          description: 메모·체크리스트 mutation에서는 false
+        note:
+          $ref: '#/components/schemas/Note'
+        checklist:
+          $ref: '#/components/schemas/Checklist'
+        item:
+          $ref: '#/components/schemas/ChecklistItem'
+        memberStatus:
+          $ref: '#/components/schemas/ChecklistMemberStatus'
     TripChatMessage:
       type: object
       required: [id, tripId, sender, createdAt]
