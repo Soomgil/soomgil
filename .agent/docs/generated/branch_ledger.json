@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T01:16:53.214Z",
+  "generatedAt": "2026-09-10T04:33:13.059Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -171,6 +171,16 @@
       "status": "",
       "title": "KTO swipe feed runtime integration",
       "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md"
+    },
+    {
+      "id": "20260910T035310Z-feature__planning-collision-protection-note",
+      "branch": "feature__planning-collision-protection",
+      "branchKey": "feature__planning-collision-protection",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "메모 동시 수정 충돌 방지",
+      "file": ".agent/branch-ledger/branches/feature__planning-collision-protection/20260910T035310Z-feature__planning-collision-protection-note.md"
     },
     {
       "id": "20260623T072024Z-feature__product-fix-workboard-non-trip-note",
