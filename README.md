@@ -200,3 +200,5 @@ Windows에서는 `start-soomgil.bat`, macOS에서는 `start-soomgil.command`를 
 - [Git Flow·서브모듈 운영 규칙](.agent/docs/process/git_workflow.md)
 - [프론트엔드 실행 안내](https://github.com/Soomgil/soomgil-frontend#readme) · [백엔드 실행 안내](https://github.com/Soomgil/soomgil-backend#readme)
 - [관광 데이터 출처 정책](.agent/docs/product-specs/tourism_source_policy.md) · [화면·이미지 출처](docs/assets/README.md)
+- [워크스페이스 구성](.agent/workspaces.json) · [백엔드 계약 결정](.agent/contracts/backend_contract_decisions.md) · [브랜치 작업 기록](.agent/branch-ledger/)
+- 제품 코드 경계: `frontend/`는 웹 앱, `backend/`는 API 서버 서브모듈입니다.
