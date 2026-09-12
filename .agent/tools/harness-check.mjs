@@ -198,7 +198,7 @@ async function checkFrontend() {
 
   for (const module of frontend.vueModules) {
     for (const image of module.images) {
-      if (!image.alt) {
+      if (image.alt == null) {
         recordFailure(module.path, "이미지에는 alt 또는 :alt가 필요합니다.");
       }
     }

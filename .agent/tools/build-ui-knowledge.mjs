@@ -1,6 +1,7 @@
 import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractImages } from "./image-inventory.mjs";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const generatedDir = path.join(rootDir, ".agent", "docs", "generated");
@@ -84,10 +85,7 @@ async function inspectVue(filePath, workspaceRoot) {
     id: attrValue(match[2], "id"),
     text: stripTags(match[3]),
   }));
-  const images = [...template.matchAll(/<img\b([^>]*)>/gi)].map((match) => ({
-    src: attrValue(match[1], "src") || attrValue(match[1], ":src"),
-    alt: attrValue(match[1], "alt") || attrValue(match[1], ":alt"),
-  }));
+  const images = extractImages(template);
   const forms = [...template.matchAll(/<form\b/gi)].length;
 
   return {

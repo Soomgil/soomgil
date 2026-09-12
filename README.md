@@ -65,6 +65,14 @@
 | 협업 도구 | 여행방 채팅, AI 가이드, 메모, 체크리스트 |
 | 기록/커뮤니티 | 여행 사진 기록, 여행기 발행, 좋아요, 리트립 |
 
+## 팀 구성 👥
+
+| 이름 | GitHub | 구분 |
+| :--- | :--- | :--- |
+| 김지훈 | [@2hnK](https://github.com/2hnK) | 팀장 |
+| 민경철 | [@kcrmin](https://github.com/kcrmin) | 팀원 |
+| 윤정 | [@dbswjd0191a](https://github.com/dbswjd0191a) | 팀원 |
+
 ## 프로젝트 기술 스택 💡
 
 ### 프론트엔드
@@ -192,3 +200,5 @@ Windows에서는 `start-soomgil.bat`, macOS에서는 `start-soomgil.command`를 
 - [Git Flow·서브모듈 운영 규칙](.agent/docs/process/git_workflow.md)
 - [프론트엔드 실행 안내](https://github.com/Soomgil/soomgil-frontend#readme) · [백엔드 실행 안내](https://github.com/Soomgil/soomgil-backend#readme)
 - [관광 데이터 출처 정책](.agent/docs/product-specs/tourism_source_policy.md) · [화면·이미지 출처](docs/assets/README.md)
+- [워크스페이스 구성](.agent/workspaces.json) · [백엔드 계약 결정](.agent/contracts/backend_contract_decisions.md) · [브랜치 작업 기록](.agent/branch-ledger/)
+- 제품 코드 경계: `frontend/`는 웹 앱, `backend/`는 API 서버 서브모듈입니다.
