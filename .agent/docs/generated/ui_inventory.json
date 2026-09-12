@@ -627,8 +627,8 @@
           ],
           "images": [
             {
-              "src": "",
-              "alt": ""
+              "src": "photos[photoIndex]",
+              "alt": "title"
             }
           ],
           "forms": 0,
@@ -996,7 +996,7 @@
           ],
           "images": [
             {
-              "src": "place.thumbnailUrl ?? ",
+              "src": "place.thumbnailUrl ?? ''",
               "alt": "place.placeName"
             }
           ],
@@ -1701,12 +1701,12 @@
               "alt": "member avatar"
             },
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ''",
               "alt": "story.title"
             },
             {
               "src": "story.publishedBy.profileImageUrl",
-              "alt": "story.publishedBy.displayName ?? "
+              "alt": "story.publishedBy.displayName ?? ''"
             }
           ],
           "forms": 0,
@@ -2290,7 +2290,7 @@
           ],
           "images": [
             {
-              "src": "coverForTrip(trip.id) || ",
+              "src": "coverForTrip(trip.id) || ''",
               "alt": "trip.title"
             },
             {
@@ -2482,7 +2482,7 @@
           "images": [
             {
               "src": "m.profileImageUrl",
-              "alt": "m.displayName || "
+              "alt": "m.displayName || '멤버'"
             }
           ],
           "forms": 0,
@@ -2581,7 +2581,7 @@
               "alt": "place.name"
             },
             {
-              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ",
+              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ''",
               "alt": "post.title"
             },
             {
@@ -2771,8 +2771,8 @@
           ],
           "images": [
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
-              "alt": "story.title + "
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? '/images/랜딩페이지/korea_hero.png'",
+              "alt": "story.title + ' 스토리'"
             }
           ],
           "forms": 0,
@@ -2820,11 +2820,11 @@
           ],
           "images": [
             {
-              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ''",
               "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
-              "src": "media.servingUrl ?? media.publicUrl ?? ",
+              "src": "media.servingUrl ?? media.publicUrl ?? ''",
               "alt": "`로컬 사진 ${idx + 1}`"
             }
           ],
@@ -3014,7 +3014,7 @@
               "alt": "프로필 이미지"
             },
             {
-              "src": "(place.thumbnailUrl ?? ",
+              "src": "(place.thumbnailUrl ?? '')",
               "alt": "place.placeName"
             },
             {
