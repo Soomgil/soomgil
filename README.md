@@ -140,7 +140,7 @@ flowchart TB
 
 ## 빠른 실행 🚀
 
-Docker Desktop과 Node.js 18 이상이 필요합니다. 하네스 검사에는 Node.js 20 이상을 사용합니다.
+Docker Desktop이 필요합니다. 아래 Docker Compose 실행은 프론트엔드의 Node.js 환경도 컨테이너 안에서 준비합니다(`node:22-alpine`). 로컬에서 프론트엔드 개발·테스트나 실행 스크립트를 사용할 때는 **Node.js 22.12 이상인 22.x**를 권장합니다. 잠금 파일의 Vite 8·Vue 플러그인 요구 조건은 `^20.19.0 || >=22.12.0`이며, 하네스 자체 요구 조건은 Node.js 20 이상입니다.
 
 ```bash
 git clone --recurse-submodules https://github.com/Soomgil/soomgil.git
