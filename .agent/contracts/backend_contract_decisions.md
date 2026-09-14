@@ -224,6 +224,38 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 투표 모듈은 trip/place DB도 직접 읽지 않고 `TripAccessGuard`, `ListTripMembersHandler`, `ListTripRegionCodesHandler`, `PlaceRegionCandidateQueryHandler`를 사용합니다.
 - 투표 상태 실시간 반영은 V1에서 STOMP 대신 짧은 polling(5초)을 사용합니다. 협업 topic 화이트리스트 변경은 후속 과제로 둡니다.
 
+### 투표 지역 선택과 snapshot
+
+- 방장은 투표를 시작할 때 `legalRegionCodes`로 이번 투표의 지역을 직접 고를 수 있다. 비우면 여행방에 등록된 지역을 쓰고,
+  그것도 없으면 대표 목적지 문자열로 대체 검색한다. 셋 다 없으면 `VOTE_CANDIDATE_POOL_INSUFFICIENT`로 시작을 거절한다.
+- 후보 수 `candidateCount`(기본 10)는 방장이 정한다. 지급 개수와 선정 개수는 실제로 생성된 후보 수를 넘을 수 없다.
+- 사용한 지역은 `voting.vote_session_regions`에 코드와 이름을 함께 snapshot으로 저장하고 `TripVoteSessionDetail.regions`로 내려준다.
+  이후 여행방 지역이 바뀌어도 "이 후보가 어디서 나왔는지"가 유지된다.
+- 후보 query(`ListTripVoteCandidatesQuery.regionCodes`)는 지역 override를 받는다. 비어 있으면 trip의 `ListTripRegionCodesHandler`를 호출하는 기존 흐름과 같다.
+
+### 법정동 코드와 관광공사(KTO) 지역 코드
+
+- 여행방·투표는 10자리 법정동 코드로 지역을 저장하지만 관광 원천(KTO)은 자체 `areaCode`/`sigunguCode`를 쓴다. 그동안 법정동 코드가
+  그대로 KTO에 전달돼 지역 필터가 항상 비었고, 후보는 대표 목적지 문자열 검색으로만 만들어졌다.
+- place 모듈의 `LegalRegionKtoCodeResolver`가 법정동 코드를 KTO 코드로 바꾼다. 시도는 `LegalRegionKtoAreaPolicy`의 고정 대응표(강원 42→51,
+  전북 45→52 전환 코드 포함)를 쓰고, 시군구는 geo의 공개 query(`FindLegalRegionsByCodesHandler`)로 이름을 얻어 `tourism_source.guguns`에서
+  같은 이름의 KTO 시군구 코드를 찾는다. 이름을 못 찾으면 시도 범위로 넓힌다.
+- KTO 라이브 지역 조회의 제주 고정(`areaCode` 39만 허용)을 해제했다. `areaCode`가 오면 그대로 쓰고, 없을 때만 검색어·viewport의 제주 휴리스틱을 쓴다.
+- 지역 기준값: 공식 법정동 sync 전에도 지역 검색과 투표가 동작하도록 V48이 시도 17개와 서울·부산·대전·제주 시군구, KTO `sidos`/`guguns`
+  기준값을 심는다. 정식 sync는 같은 코드를 upsert하므로 seed와 충돌하지 않는다.
+- 여행 상세(`TripDetail.regions`)는 그동안 항상 빈 목록이었다. `FindTripDetailHandler`가 trip 지역 코드를 geo 공개 query로 이름과 함께 채운다.
+- 여행 생성 화면은 검색 결과에서 고른 지역을 필수로 받는다. 지역 없이 만든 여행은 추천도 투표도 동작하지 않기 때문이다.
+
+### 투표 진입 방식과 개수 제안
+
+- 진입: 라우터 가드는 투표 상태를 미리 읽기만 하고 강제로 `/vote`로 보내지 않는다. 투표는 지도 화면 위 모달(`TripVoteFlow`)로 열린다.
+  제출하지 않은 진행 중 투표가 있으면 지도 진입 시 모달을 한 번 자동으로 띄우고, 닫으면 여행 카드 버튼(`투표 중 · 미제출`)과 지도 상단 배너를 빨갛게 남겨 이어서 투표하게 한다.
+  `/trips/:tripId/vote` 페이지는 딥링크용으로 유지하며 같은 흐름 컴포넌트를 쓴다.
+- 개수 제안: 방장에게는 "하루에 몇 곳 갈지"(1~6, 기본 3) 하나만 묻는다. 여행 일수는 여행방의 시작·종료일에서 계산하고, 없으면 2일로 가정하고 그 사실을 표시한다.
+  선정 = 일수 × 하루 개수(최대 24), 후보 = 선정 × 2(6~24), 1인당 스티커 = 후보 ÷ 4 올림(3~8). 서버 계약(`stickerAllowance`, `selectionCount`, `candidateCount`)은 그대로이고 프론트가 계산해 보낸다.
+- 종료 후: 결과 화면에서 `AI에게 일정 배치 맡기기`를 누르면 선정 장소 이름으로 배치 프롬프트를 만들어 AI 패널을 열고 입력창에 채운다(`?panel=ai&aiPrompt=` 딥링크도 같은 동작).
+  프롬프트 문장은 `voteArrangePrompt.ts` 한 곳에서 관리한다.
+
 ## 일정과 협업
 
 - 일정은 `itinerary_days`와 `itinerary_items`로 관리합니다.

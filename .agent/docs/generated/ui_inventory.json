@@ -1452,21 +1452,95 @@
             "page-hero__eyebrow",
             "page-hero__gradient",
             "vote-setup",
+            "vote-setup__chip",
+            "vote-setup__chip-remove",
+            "vote-setup__chips",
             "vote-setup__cta",
-            "vote-setup__dot",
-            "vote-setup__dots",
             "vote-setup__error",
+            "vote-setup__hint",
+            "vote-setup__hint--warn",
             "vote-setup__lead",
             "vote-setup__note",
             "vote-setup__panel",
-            "vote-setup__rank",
-            "vote-setup__ranks",
             "vote-setup__row",
+            "vote-setup__row--question",
+            "vote-setup__row--regions",
             "vote-setup__row-copy",
             "vote-setup__row-icon",
+            "vote-setup__row-icon--count",
             "vote-setup__row-icon--rank",
+            "vote-setup__row-icon--region",
             "vote-setup__stepper",
+            "vote-setup__suggest",
+            "vote-setup__suggest-icon",
+            "vote-setup__suggest-label",
+            "vote-setup__suggest-list",
+            "vote-setup__suggest-title",
+            "vote-setup__suggest-unit",
             "vote-setup__title"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/TripVoteFlow.vue",
+          "relativePath": "src/components/voting/TripVoteFlow.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "진행 중인 투표가 없어요"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "투표가 진행 중이에요"
+            },
+            {
+              "level": 1,
+              "id": "",
+              "text": "어디로 갈까요?"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "제출을 마쳤어요"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "page-hero",
+            "page-hero__actions",
+            "page-hero__copy",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "page-hero__lead",
+            "page-hero__title",
+            "page-with-hero",
+            "section",
+            "trip-vote",
+            "trip-vote__back",
+            "trip-vote__close",
+            "trip-vote__cta",
+            "trip-vote__cta--ai",
+            "trip-vote__ghost",
+            "trip-vote__hero",
+            "trip-vote__hero-actions",
+            "trip-vote__idle",
+            "trip-vote__idle-icon",
+            "trip-vote__layout",
+            "trip-vote__narrow",
+            "trip-vote__panel",
+            "trip-vote__progress",
+            "trip-vote__result-actions",
+            "trip-vote__waiting",
+            "trip-vote__waiting-bar",
+            "trip-vote__waiting-progress",
+            "{"
           ],
           "assetRefs": []
         },
@@ -1612,7 +1686,6 @@
           "classNames": [
             "material-symbols-rounded",
             "vote-cart",
-            "vote-cart__close",
             "vote-cart__dot",
             "vote-cart__dots",
             "vote-cart__empty",
@@ -3206,57 +3279,10 @@
           "kind": "page",
           "scriptLang": "ts",
           "scriptSetup": true,
-          "headings": [
-            {
-              "level": 2,
-              "id": "",
-              "text": "진행 중인 투표가 없어요"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "투표가 진행 중이에요"
-            },
-            {
-              "level": 1,
-              "id": "",
-              "text": "어디로 갈까요?"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "제출을 마쳤어요"
-            }
-          ],
+          "headings": [],
           "images": [],
           "forms": 0,
-          "classNames": [
-            "material-symbols-rounded",
-            "page-hero",
-            "page-hero__actions",
-            "page-hero__copy",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
-            "page-hero__lead",
-            "page-hero__title",
-            "page-with-hero",
-            "section",
-            "trip-vote",
-            "trip-vote__back",
-            "trip-vote__cta",
-            "trip-vote__ghost",
-            "trip-vote__hero",
-            "trip-vote__idle",
-            "trip-vote__idle-icon",
-            "trip-vote__layout",
-            "trip-vote__narrow",
-            "trip-vote__panel",
-            "trip-vote__progress",
-            "trip-vote__result-actions",
-            "trip-vote__waiting",
-            "trip-vote__waiting-bar",
-            "trip-vote__waiting-progress"
-          ],
+          "classNames": [],
           "assetRefs": []
         },
         {
@@ -4051,6 +4077,27 @@
             "vitest"
           ],
           "exports": []
+        },
+        {
+          "path": "frontend/src/components/voting/OwnerVoteSetupPanel.test.ts",
+          "relativePath": "src/components/voting/OwnerVoteSetupPanel.test.ts",
+          "imports": [
+            "./OwnerVoteSetupPanel.vue",
+            "@/stores/voting.store",
+            "@/types/geo",
+            "@vue/test-utils",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/voting/voteArrangePrompt.ts",
+          "relativePath": "src/components/voting/voteArrangePrompt.ts",
+          "imports": [],
+          "exports": [
+            "buildVoteArrangePrompt"
+          ]
         },
         {
           "path": "frontend/src/composables/useAuth.ts",
@@ -4988,6 +5035,7 @@
             "OpenVoteSessionRequest",
             "TripVoteCandidate",
             "TripVoteParticipantSummary",
+            "TripVoteRegion",
             "TripVoteResultItem",
             "TripVoteSessionDetail",
             "TripVoteSessionResult",
@@ -5558,10 +5606,10 @@
       "summary": {
         "routes": 21,
         "pages": 22,
-        "components": 39,
-        "sourceFiles": 132,
+        "components": 40,
+        "sourceFiles": 134,
         "styleFiles": 4,
-        "typeScriptSignals": 192
+        "typeScriptSignals": 195
       }
     },
     {

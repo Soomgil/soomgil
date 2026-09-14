@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 39 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 40 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -357,7 +357,16 @@
 - headings: h1 스티커 투표 로 갈 곳을 함께 정해요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-setup`, `vote-setup__cta`, `vote-setup__dot`, `vote-setup__dots`, `vote-setup__error`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__rank`, `vote-setup__ranks`, `vote-setup__row`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--rank`, `vote-setup__stepper`, `vote-setup__title`
+- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__error`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--rank`, `vote-setup__row-icon--region`, `vote-setup__stepper`, `vote-setup__suggest`, `vote-setup__suggest-icon`, `vote-setup__suggest-label`, `vote-setup__suggest-list`, `vote-setup__suggest-title`, `vote-setup__suggest-unit`, `vote-setup__title`
+
+#### frontend/src/components/voting/TripVoteFlow.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h1 어디로 갈까요?, h2 제출을 마쳤어요
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`, `{`
 
 #### frontend/src/components/voting/VoteCandidateDeck.vue
 
@@ -393,7 +402,7 @@
 - headings: h2 shopping_bag 스티커 보드
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `vote-cart`, `vote-cart__close`, `vote-cart__dot`, `vote-cart__dots`, `vote-cart__empty`, `vote-cart__header`, `vote-cart__hint`, `vote-cart__item`, `vote-cart__list`, `vote-cart__name`, `vote-cart__remaining`, `vote-cart__reset`, `vote-cart__stepper`, `vote-cart__submit`, `vote-cart__thumb`, `vote-cart__thumb--empty`, `vote-cart__title`, `{`
+- classes: `material-symbols-rounded`, `vote-cart`, `vote-cart__dot`, `vote-cart__dots`, `vote-cart__empty`, `vote-cart__header`, `vote-cart__hint`, `vote-cart__item`, `vote-cart__list`, `vote-cart__name`, `vote-cart__remaining`, `vote-cart__reset`, `vote-cart__stepper`, `vote-cart__submit`, `vote-cart__thumb`, `vote-cart__thumb--empty`, `vote-cart__title`, `{`
 
 #### frontend/src/pages/AdminModerationPage.vue
 
@@ -570,10 +579,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h1 어디로 갈까요?, h2 제출을 마쳤어요
+- headings: 없음
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__cta`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`
+- classes: 없음
 
 #### frontend/src/pages/UserProfilePage.vue
 

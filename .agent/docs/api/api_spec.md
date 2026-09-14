@@ -745,10 +745,12 @@ RFC7807 Problem Details를 사용한다.
 - Query parameters: 없음.
 - Request body schema: `OpenVoteSessionRequest`.
 - Response body schema: `TripVoteSessionDetail`.
-- 성공 응답 예시: `201 {"id":"...","status":"OPEN","stickerAllowance":5,"selectionCount":3,"candidateCount":10}`
+- 성공 응답 예시: `201 {"id":"...","status":"OPEN","stickerAllowance":5,"selectionCount":3,"candidateCount":10,"regions":[{"code":"5013000000","name":"서귀포시"}]}`
 - 실패 응답 예시: `403 ProblemDetails(code=FORBIDDEN)`, `409 ProblemDetails(code=VOTE_SESSION_ALREADY_OPEN)`, `422 ProblemDetails(code=VOTE_CANDIDATE_POOL_INSUFFICIENT)`.
 - 관련 화면: `/trips/:tripId/vote`.
 - 확정: 후보는 방장이 고르지 않고 여행 지역과 활성 참여자 누적 취향으로 자동 구성한다. 기본 10개이며 지급 개수와 선정 개수는 후보 수를 넘을 수 없고 시작 후 변경할 수 없다.
+- 지역: 요청의 `legalRegionCodes`(10자리 법정동 코드, 최대 20개)로 이번 투표의 지역을 직접 고를 수 있다. 생략하면 여행방 지역, 그것도 없으면 대표 목적지 검색어를 쓴다. 셋 다 없으면 `422 VOTE_CANDIDATE_POOL_INSUFFICIENT`, 형식이 다른 코드는 `400 VALIDATION_FAILED`. 사용한 지역은 `regions`로 snapshot이 내려온다.
+- 후보 수: 요청의 `candidateCount`(1~100, 기본 10)로 정한다. 프론트 설정 패널은 5~30 범위를 제공한다.
 
 #### PUT `/trips/{tripId}/vote-sessions/{sessionId}/my-stickers`
 

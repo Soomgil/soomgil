@@ -3561,6 +3561,16 @@ components:
         candidates:
           type: array
           items: { $ref: '#/components/schemas/TripVoteCandidate' }
+        regions:
+          type: array
+          description: 후보를 뽑은 지역 snapshot. 방장이 고른 지역 또는 시작 시점의 여행방 지역이며 이름까지 고정된다.
+          items: { $ref: '#/components/schemas/TripVoteRegion' }
+    TripVoteRegion:
+      type: object
+      required: [code, name]
+      properties:
+        code: { type: string, minLength: 10, maxLength: 10, description: 10자리 법정동 코드 }
+        name: { type: string, description: 투표 시작 시점의 지역 이름 }
     TripVoteSessionState:
       type: object
       description: >-
@@ -3633,6 +3643,15 @@ components:
           minimum: 1
           nullable: true
           description: 만들 후보 수. 생략하면 기본 10개.
+        legalRegionCodes:
+          type: array
+          maxItems: 20
+          nullable: true
+          items: { type: string, minLength: 10, maxLength: 10 }
+          description: >-
+            이번 투표에서 후보를 뽑을 10자리 법정동 코드. 생략하면 여행방에 등록된 지역을 쓰고,
+            그것도 없으면 대표 목적지 문자열로 대체 검색한다. 셋 다 없으면 422 VOTE_CANDIDATE_POOL_INSUFFICIENT.
+            형식이 다른 코드는 400 VALIDATION_FAILED.
     SaveVoteStickersRequest:
       type: object
       description: 부분 변경이 아니라 현재 배치 전체를 보내는 snapshot 방식이다.

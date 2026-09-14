@@ -591,6 +591,7 @@ Table geo.legal_regions {
     sigungu_code
     is_active
   }
+  Note: 'V48 baseline seed loads 17 SIDO rows plus SIGUNGU rows for Seoul, Busan, Daejeon and Jeju so region search and voting work before the official legal-region sync has run. The sync upserts the same codes; the seed never blocks it (ON CONFLICT DO NOTHING).'
 }
 
 Table geo.legal_region_sync_logs {
@@ -1844,6 +1845,22 @@ Table voting.vote_session_candidates {
   Note: 'Immutable candidate snapshot generated from trip regions and the accumulated preferences of every active participant. The trip owner does not pick candidates. Recommendation changes during the vote do not affect these rows.'
 }
 
+Table voting.vote_session_regions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  vote_session_id uuid [not null]
+  legal_region_code varchar(10) [not null, note: '10-digit legal region code the candidates were drawn from.']
+  region_name varchar(200) [not null, note: 'Region name frozen when the vote opened. Falls back to the code when geo has no row.']
+  sort_order int [not null, default: 0, note: 'Order the owner chose the regions in.']
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+    (vote_session_id, legal_region_code) [unique]
+    (vote_session_id, sort_order)
+  }
+
+  Note: 'Snapshot of the regions used to build the candidate pool: the owner\'s explicit choice for this vote, otherwise the trip regions at open time. Kept so results and audits still show where candidates came from after the trip regions change.'
+}
+
 Table voting.vote_session_participants {
   id uuid [pk, default: `gen_random_uuid()`]
   vote_session_id uuid [not null]
@@ -2074,6 +2091,7 @@ Ref: voting.vote_sessions.created_by_user_id > auth.users.id
 Ref: voting.vote_sessions.completed_by_user_id > auth.users.id
 Ref: voting.vote_session_candidates.vote_session_id > voting.vote_sessions.id
 Ref: voting.vote_session_participants.vote_session_id > voting.vote_sessions.id
+Ref: voting.vote_session_regions.vote_session_id > voting.vote_sessions.id
 Ref: voting.vote_session_participants.user_id > auth.users.id
 Ref: voting.vote_stickers.vote_session_id > voting.vote_sessions.id
 Ref: voting.vote_stickers.participant_id > voting.vote_session_participants.id
