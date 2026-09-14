@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 34 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 35 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -196,6 +196,15 @@
 - asset refs: 없음
 - classes: `btn`, `field`, `ghost`, `material-symbols-rounded`, `photo-strip`, `photo-strip__empty`, `photo-strip__nav`, `photo-strip__nav--prev`, `photo-strip__row`, `photo-strip__upload`, `photo-strip__viewport`, `primary`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `tag-chip`, `tag-chip-input`, `tag-chip-input__field`, `tag-chip-input__icon`, `tag-chip__remove`, `{`
 
+#### frontend/src/components/itinerary/RouteTransportPanel.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `route-meta`, `route-name`, `saved-route`, `saved-routes`, `transport-heading`, `transport-options`, `transport-panel`, `unverified`
+
 #### frontend/src/components/layout/AppHeader.vue
 
 - 종류: component
@@ -371,10 +380,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 어떤 여행을 찾고 계신가요?, h1 여행의 시작은 설렘에서부터, h3 {{ slide.title }}, h3 내 취향 수집, h3 지도에서 루트 만들기, h3 친구 초대하기
-- forms: 0, images: 6
+- headings: h1 어떤 여행을 찾고 계신가요?
+- forms: 1, images: 0
 - asset refs: 없음
-- classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-community-placeholder`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-dots`, `home-hero-slide`, `home-nearest-card`
+- classes: `home-page`, `home-search-capsule`, `home-search-capsule-btn`, `home-search-capsule-btn-label`, `home-search-capsule-icon`, `home-search-capsule-input`, `home-search-hero`, `home-search-hero-inner`, `home-search-hero-title`, `material-symbols-rounded`
 
 #### frontend/src/pages/LandingPage.vue
 

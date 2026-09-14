@@ -703,6 +703,28 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/itinerary/RouteTransportPanel.vue",
+          "relativePath": "src/components/itinerary/RouteTransportPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "route-meta",
+            "route-name",
+            "saved-route",
+            "saved-routes",
+            "transport-heading",
+            "transport-options",
+            "transport-panel",
+            "unverified"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/layout/AppHeader.vue",
           "relativePath": "src/components/layout/AppHeader.vue",
           "kind": "component",
@@ -1019,7 +1041,7 @@
           ],
           "images": [
             {
-              "src": "place.thumbnailUrl ?? ",
+              "src": "place.thumbnailUrl ?? ''",
               "alt": "place.placeName"
             }
           ],
@@ -1651,174 +1673,24 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 2,
-              "id": "",
-              "text": "어떤 여행을 찾고 계신가요?"
-            },
-            {
               "level": 1,
               "id": "",
-              "text": "여행의 시작은 설렘에서부터"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "{{ slide.title }}"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "내 취향 수집"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "지도에서 루트 만들기"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "친구 초대하기"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "AI 추천 받기"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "Super-like TOP 3"
-            },
-            {
-              "level": 4,
-              "id": "",
-              "text": "{{ place.placeName }}"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "{{ nearestTrip.title }}"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "커뮤니티 인기 여행 후기"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "{{ story.title }}"
+              "text": "어떤 여행을 찾고 계신가요?"
             }
           ],
-          "images": [
-            {
-              "src": "slide.image",
-              "alt": "slide.title"
-            },
-            {
-              "src": "place.thumbnailUrl",
-              "alt": "place.placeName"
-            },
-            {
-              "src": "nearestTrip.coverImageUrl",
-              "alt": "nearestTrip.title"
-            },
-            {
-              "src": "thumb",
-              "alt": "member avatar"
-            },
-            {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
-              "alt": "story.title"
-            },
-            {
-              "src": "story.publishedBy.profileImageUrl",
-              "alt": "story.publishedBy.displayName ?? "
-            }
-          ],
-          "forms": 0,
+          "images": [],
+          "forms": 1,
           "classNames": [
-            "===",
-            "active:",
-            "activeSearchTab",
-            "avatar",
-            "avatars",
-            "btn",
-            "card-tag",
-            "cat.key",
-            "cmn-tag",
-            "content-container",
-            "eyebrow",
-            "ghost",
-            "home-action-card",
-            "home-action-icon",
-            "home-action-row",
-            "home-action-text",
-            "home-community-author",
-            "home-community-card",
-            "home-community-card-body",
-            "home-community-card-img",
-            "home-community-card-meta",
-            "home-community-grid",
-            "home-community-placeholder",
-            "home-hero",
-            "home-hero-card-overlay",
-            "home-hero-content",
-            "home-hero-copy",
-            "home-hero-dots",
-            "home-hero-slide",
-            "home-nearest-card",
-            "home-nearest-card--empty",
-            "home-nearest-card--plain",
-            "home-nearest-copy",
-            "home-nearest-dday-text",
-            "home-nearest-empty",
-            "home-nearest-empty-icon",
-            "home-nearest-empty-sub",
-            "home-nearest-empty-title",
-            "home-nearest-info",
-            "home-nearest-info-block",
-            "home-nearest-link",
-            "home-nearest-member-icon",
-            "home-nearest-members",
-            "home-nearest-meta-row",
-            "home-nearest-plain",
-            "home-nearest-plain-foot",
-            "home-nearest-status",
-            "home-nearest-tool-btn",
-            "home-nearest-tools",
-            "home-nearest-trip-title",
-            "home-nearest-visual",
-            "home-nearest-visual-fallback",
-            "home-nearest-waiting",
+            "home-page",
             "home-search-capsule",
             "home-search-capsule-btn",
+            "home-search-capsule-btn-label",
             "home-search-capsule-icon",
             "home-search-capsule-input",
-            "home-search-cat",
-            "home-search-cat-new",
-            "home-search-categories",
             "home-search-hero",
             "home-search-hero-inner",
             "home-search-hero-title",
-            "home-section-divider",
-            "home-section-spinner",
-            "home-section-state",
-            "home-section-state--loading",
-            "home-section-state--wide",
-            "home-section-state-cta",
-            "home-section-state-icon",
-            "home-section-title",
-            "home-spotlight-row",
-            "home-toplikes-badge",
-            "home-toplikes-card",
-            "home-toplikes-header",
-            "home-toplikes-img",
-            "home-toplikes-info",
-            "home-toplikes-item",
-            "home-toplikes-list",
-            "home-toplikes-rank"
+            "material-symbols-rounded"
           ],
           "assetRefs": []
         },
@@ -2323,7 +2195,7 @@
           ],
           "images": [
             {
-              "src": "coverForTrip(trip.id) || ",
+              "src": "coverForTrip(trip.id) || ''",
               "alt": "trip.title"
             },
             {
@@ -2515,7 +2387,7 @@
           "images": [
             {
               "src": "m.profileImageUrl",
-              "alt": "m.displayName || "
+              "alt": "m.displayName || '멤버'"
             }
           ],
           "forms": 0,
@@ -2615,7 +2487,7 @@
               "alt": "place.name"
             },
             {
-              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ",
+              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ''",
               "alt": "post.title"
             },
             {
@@ -2710,7 +2582,7 @@
           "images": [
             {
               "src": "currentUser.profileImageUrl",
-              "alt": "currentUser?.displayName || "
+              "alt": "currentUser?.displayName || 'User'"
             }
           ],
           "forms": 0,
@@ -2809,8 +2681,8 @@
           ],
           "images": [
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
-              "alt": "story.title + "
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? '/images/랜딩페이지/korea_hero.png'",
+              "alt": "story.title + ' 스토리'"
             }
           ],
           "forms": 0,
@@ -2858,11 +2730,11 @@
           ],
           "images": [
             {
-              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ''",
               "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
-              "src": "media.servingUrl ?? media.publicUrl ?? ",
+              "src": "media.servingUrl ?? media.publicUrl ?? ''",
               "alt": "`로컬 사진 ${idx + 1}`"
             }
           ],
@@ -3052,7 +2924,7 @@
               "alt": "프로필 이미지"
             },
             {
-              "src": "(place.thumbnailUrl ?? ",
+              "src": "(place.thumbnailUrl ?? '')",
               "alt": "place.placeName"
             },
             {
@@ -3226,6 +3098,18 @@
           "exports": [
             "LoginResult",
             "authApi"
+          ]
+        },
+        {
+          "path": "frontend/src/api/award.api.ts",
+          "relativePath": "src/api/award.api.ts",
+          "imports": [
+            "./http",
+            "@/types/award"
+          ],
+          "exports": [
+            "AwardPhotoParams",
+            "awardApi"
           ]
         },
         {
@@ -3561,6 +3445,17 @@
           "relativePath": "src/components/common/BaseButton.test.ts",
           "imports": [
             "./BaseButton.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/itinerary/RouteTransportPanel.test.ts",
+          "relativePath": "src/components/itinerary/RouteTransportPanel.test.ts",
+          "imports": [
+            "./RouteTransportPanel.vue",
+            "@/types/itinerary",
             "@vue/test-utils",
             "vitest"
           ],
@@ -4353,6 +4248,14 @@
             "VerifyEmailRequest",
             "getUserAvatar",
             "mapBackendUser"
+          ]
+        },
+        {
+          "path": "frontend/src/types/award.ts",
+          "relativePath": "src/types/award.ts",
+          "imports": [],
+          "exports": [
+            "AwardPhoto"
           ]
         },
         {
@@ -5174,10 +5077,10 @@
       "summary": {
         "routes": 20,
         "pages": 21,
-        "components": 34,
-        "sourceFiles": 122,
+        "components": 35,
+        "sourceFiles": 125,
         "styleFiles": 4,
-        "typeScriptSignals": 176
+        "typeScriptSignals": 180
       }
     },
     {
