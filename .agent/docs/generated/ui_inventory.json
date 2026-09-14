@@ -1673,24 +1673,174 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 1,
+              "level": 2,
               "id": "",
               "text": "어떤 여행을 찾고 계신가요?"
+            },
+            {
+              "level": 1,
+              "id": "",
+              "text": "여행의 시작은 설렘에서부터"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ slide.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "내 취향 수집"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "지도에서 루트 만들기"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "친구 초대하기"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "AI 추천 받기"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "Super-like TOP 3"
+            },
+            {
+              "level": 4,
+              "id": "",
+              "text": "{{ place.placeName }}"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ nearestTrip.title }}"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "커뮤니티 인기 여행 후기"
+            },
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ story.title }}"
             }
           ],
-          "images": [],
-          "forms": 1,
+          "images": [
+            {
+              "src": "slide.image",
+              "alt": "slide.title"
+            },
+            {
+              "src": "place.thumbnailUrl",
+              "alt": "place.placeName"
+            },
+            {
+              "src": "nearestTrip.coverImageUrl",
+              "alt": "nearestTrip.title"
+            },
+            {
+              "src": "thumb",
+              "alt": "member avatar"
+            },
+            {
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ''",
+              "alt": "story.title"
+            },
+            {
+              "src": "story.publishedBy.profileImageUrl",
+              "alt": "story.publishedBy.displayName ?? ''"
+            }
+          ],
+          "forms": 0,
           "classNames": [
-            "home-page",
+            "===",
+            "active:",
+            "activeSearchTab",
+            "avatar",
+            "avatars",
+            "btn",
+            "card-tag",
+            "cat.key",
+            "cmn-tag",
+            "content-container",
+            "eyebrow",
+            "ghost",
+            "home-action-card",
+            "home-action-icon",
+            "home-action-row",
+            "home-action-text",
+            "home-community-author",
+            "home-community-card",
+            "home-community-card-body",
+            "home-community-card-img",
+            "home-community-card-meta",
+            "home-community-grid",
+            "home-community-placeholder",
+            "home-hero",
+            "home-hero-card-overlay",
+            "home-hero-content",
+            "home-hero-copy",
+            "home-hero-dots",
+            "home-hero-slide",
+            "home-nearest-card",
+            "home-nearest-card--empty",
+            "home-nearest-card--plain",
+            "home-nearest-copy",
+            "home-nearest-dday-text",
+            "home-nearest-empty",
+            "home-nearest-empty-icon",
+            "home-nearest-empty-sub",
+            "home-nearest-empty-title",
+            "home-nearest-info",
+            "home-nearest-info-block",
+            "home-nearest-link",
+            "home-nearest-member-icon",
+            "home-nearest-members",
+            "home-nearest-meta-row",
+            "home-nearest-plain",
+            "home-nearest-plain-foot",
+            "home-nearest-status",
+            "home-nearest-tool-btn",
+            "home-nearest-tools",
+            "home-nearest-trip-title",
+            "home-nearest-visual",
+            "home-nearest-visual-fallback",
+            "home-nearest-waiting",
             "home-search-capsule",
             "home-search-capsule-btn",
-            "home-search-capsule-btn-label",
             "home-search-capsule-icon",
             "home-search-capsule-input",
+            "home-search-cat",
+            "home-search-cat-new",
+            "home-search-categories",
             "home-search-hero",
             "home-search-hero-inner",
             "home-search-hero-title",
-            "material-symbols-rounded"
+            "home-section-divider",
+            "home-section-spinner",
+            "home-section-state",
+            "home-section-state--loading",
+            "home-section-state--wide",
+            "home-section-state-cta",
+            "home-section-state-icon",
+            "home-section-title",
+            "home-spotlight-row",
+            "home-toplikes-badge",
+            "home-toplikes-card",
+            "home-toplikes-header",
+            "home-toplikes-img",
+            "home-toplikes-info",
+            "home-toplikes-item",
+            "home-toplikes-list",
+            "home-toplikes-rank"
           ],
           "assetRefs": []
         },
