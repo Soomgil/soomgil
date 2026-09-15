@@ -87,8 +87,10 @@
 | TripMemberRole | `MEMBER` | MVP `trip_members.role`에는 MEMBER만 저장. OWNER 표시는 `ownerUserId`에서 파생 |
 | TripMemberStatus | `ACTIVE`, `LEFT`, `REMOVED` | 제거/탈퇴 이력 보존 |
 | InviteStatus | `PENDING`, `ACCEPTED`, `REVOKED`, `EXPIRED` | 초대 링크/코드 지원 |
-| TripVoteStatus | `OPEN`, `CLOSED` | 전원 완료, OWNER 종료, 마감 중 첫 조건으로 종료 |
-| TripMemberVoteState | `JOINED`, `VOTED` | INVITED는 pending invite로 표현, VOTED 전 지도 진입 차단 |
+| VoteSessionStatus | `DRAFT`, `OPEN`, `COMPLETED` | `DRAFT`는 예약 값이며 V1 API로는 생성하지 않는다. 여행방당 진행 중 세션은 1개 |
+| VoteParticipantStatus | `NOT_STARTED`, `IN_PROGRESS`, `SUBMITTED` | 세션별 참여 상태. 첫 진입을 boolean 하나로 두지 않는다 |
+| VoteCompletionReason | `ALL_SUBMITTED`, `OWNER_EARLY_CLOSE` | 전원 제출 자동 종료와 방장 조기 종료 |
+| VoteNextScreen | `VOTE`, `WAITING`, `MAP` | 서버가 계산해 내려주는 여행 방 진입 화면 |
 | PreferenceSource | `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE` | source multiplier는 모두 `1.0` |
 | ItineraryDayGroupType | `DAY`, `UNSCHEDULED` | trip당 `UNSCHEDULED` 최대 1개 |
 | ItineraryItemType | `PLACE`, `CUSTOM_PLACE` | 외부 장소는 `provider + externalPlaceId`, 커스텀 장소는 item 안에 저장 |
@@ -215,7 +217,7 @@ RFC7807 Problem Details를 사용한다.
 - Handshake: `GET /ws`
 - Subscribe: `/topic/trips/{tripId}/itinerary`
 - Subscribe: `/topic/trips/{tripId}/map-drawings`
-- Subscribe: `/topic/trips/{tripId}/vote`
+- Subscribe: `/topic/trips/{tripId}/vote` (V1 미사용. 투표 상태는 짧은 polling으로 갱신하고 STOMP topic 확장은 후속 과제로 둔다)
 - Subscribe: `/topic/trips/{tripId}/presence`
 - Subscribe: `/topic/trips/{tripId}/route-matching`
 - Subscribe: `/topic/trips/{tripId}/chat`
@@ -711,14 +713,96 @@ RFC7807 Problem Details를 사용한다.
 
 ### Trip Vote
 
-- `GET /trips/{tripId}/vote`: 설정, 후보, 내 스티커, 참여자 완료 상태 조회.
-- `PATCH /trips/{tripId}/vote/settings`: OWNER가 스티커 수, 선정 수, 마감 시각 변경.
-- `POST /trips/{tripId}/vote/candidates`: active MEMBER가 후보 추가.
-- `DELETE /trips/{tripId}/vote/candidates/{candidateId}`: active MEMBER가 후보와 활성 스티커 제거.
-- `POST /trips/{tripId}/vote/candidates/{candidateId}/stickers`: 총 지급량 안에서 스티커 추가.
-- `DELETE /trips/{tripId}/vote/stickers/{stickerId}`: 종료 전 본인 스티커 제거.
-- `PUT /trips/{tripId}/vote/me/complete`: 1개 이상 사용한 개인 투표 완료 또는 재제출.
-- `POST /trips/{tripId}/vote/close`: OWNER 수동 종료. 자동 종료와 동일한 선정/`UNSCHEDULED` 추가 pipeline 사용.
+이전 `/trips/{tripId}/vote*` 계약은 폐기했습니다. 후보를 멤버가 직접 추가하는 구조와 2단계 참여 상태가
+확정 요구사항과 충돌해, 세션 기반 계약으로 교체했습니다. 상세 사유는
+`.agent/contracts/backend_contract_decisions.md`의 `## 여행 방 투표`를 참고합니다.
+
+- `GET /trips/{tripId}/vote-sessions/current`: 여행 방 진입 화면 판정과 현재 투표 상태 조회. 프론트 라우터 가드가 쓰는 단일 진입점.
+- `POST /trips/{tripId}/vote-sessions`: OWNER가 스티커 지급 개수와 선정 개수를 정해 투표 시작.
+- `GET /trips/{tripId}/vote-sessions/{sessionId}/result`: 종료된 투표 결과 조회.
+- `PUT /trips/{tripId}/vote-sessions/{sessionId}/my-stickers`: 제출 전 스티커 배치 전체 치환 저장.
+- `POST /trips/{tripId}/vote-sessions/{sessionId}/my-submission`: 개인 투표 제출. 마지막 제출이면 자동 종료.
+- `POST /trips/{tripId}/vote-sessions/{sessionId}/completion`: OWNER 조기 종료. 자동 종료와 동일한 선정/`UNSCHEDULED` 추가 pipeline 사용.
+
+#### GET `/trips/{tripId}/vote-sessions/current`
+
+- 설명: 여행 방에 들어갈 때 지도와 투표 중 무엇을 먼저 보여줄지 서버가 판정해 반환한다.
+- 인증/권한: 여행방 active member.
+- Path parameters: `tripId`.
+- Query parameters: 없음.
+- Request body schema: 없음.
+- Response body schema: `TripVoteSessionState`.
+- 성공 응답 예시: `200 {"hasSession":true,"nextScreen":"VOTE","session":{"id":"...","status":"OPEN","stickerAllowance":5,"selectionCount":3},"myParticipation":{"status":"IN_PROGRESS","remainingStickerCount":3}}`
+- 실패 응답 예시: `403 ProblemDetails(code=FORBIDDEN)`.
+- 관련 화면: `/trips/:tripId/vote`, `/trips/:tripId/route`.
+- 확정: 세션이 없거나 요청자가 참여자가 아니거나 이미 종료된 투표면 `MAP`을 반환한다. 클라이언트는 상태 조합을 다시 해석하지 않는다.
+
+#### POST `/trips/{tripId}/vote-sessions`
+
+- 설명: 투표를 시작하고 참여자와 추천 후보를 snapshot으로 고정한다.
+- 인증/권한: 여행방 OWNER.
+- Path parameters: `tripId`.
+- Query parameters: 없음.
+- Request body schema: `OpenVoteSessionRequest`.
+- Response body schema: `TripVoteSessionDetail`.
+- 성공 응답 예시: `201 {"id":"...","status":"OPEN","stickerAllowance":5,"selectionCount":3,"candidateCount":10,"regions":[{"code":"5013000000","name":"서귀포시"}]}`
+- 실패 응답 예시: `403 ProblemDetails(code=FORBIDDEN)`, `409 ProblemDetails(code=VOTE_SESSION_ALREADY_OPEN)`, `422 ProblemDetails(code=VOTE_CANDIDATE_POOL_INSUFFICIENT)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 후보는 방장이 고르지 않고 여행 지역과 활성 참여자 누적 취향으로 자동 구성한다. 기본 10개이며 지급 개수와 선정 개수는 후보 수를 넘을 수 없고 시작 후 변경할 수 없다.
+- 지역: 요청의 `legalRegionCodes`(10자리 법정동 코드, 최대 20개)로 이번 투표의 지역을 직접 고를 수 있다. 생략하면 여행방 지역, 그것도 없으면 대표 목적지 검색어를 쓴다. 셋 다 없으면 `422 VOTE_CANDIDATE_POOL_INSUFFICIENT`, 형식이 다른 코드는 `400 VALIDATION_FAILED`. 사용한 지역은 `regions`로 snapshot이 내려온다.
+- 후보 수: 요청의 `candidateCount`(1~100, 기본 10)로 정한다. 프론트 설정 패널은 5~30 범위를 제공한다.
+
+#### PUT `/trips/{tripId}/vote-sessions/{sessionId}/my-stickers`
+
+- 설명: 제출 전 스티커 배치를 저장한다.
+- 인증/권한: 투표 시작 시점에 확정된 참여자.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: `SaveVoteStickersRequest`.
+- Response body schema: `MyVoteStickerState`.
+- 성공 응답 예시: `200 {"sessionId":"...","myParticipation":{"status":"IN_PROGRESS","usedStickerCount":3,"remainingStickerCount":2}}`
+- 실패 응답 예시: `403 ProblemDetails(code=VOTE_NOT_PARTICIPANT)`, `409 ProblemDetails(code=VOTE_ALREADY_SUBMITTED)`, `422 ProblemDetails(code=VOTE_STICKER_ALLOWANCE_EXCEEDED)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 부분 변경이 아니라 배치 전체를 보내는 snapshot 방식이다. 목록에서 빠진 후보는 스티커 회수로 처리하므로 이동과 회수에 별도 endpoint를 두지 않는다. 한 후보에 여러 개를 몰아 붙일 수 있다.
+
+#### POST `/trips/{tripId}/vote-sessions/{sessionId}/my-submission`
+
+- 설명: 개인 투표를 제출한다.
+- 인증/권한: 확정된 참여자.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: `SubmitVoteRequest` (생략 가능).
+- Response body schema: `TripVoteSessionState`.
+- 성공 응답 예시: `200 {"nextScreen":"WAITING","myParticipation":{"status":"SUBMITTED"}}`
+- 실패 응답 예시: `409 ProblemDetails(code=VOTE_ALREADY_SUBMITTED)`, `409 ProblemDetails(code=VOTE_SESSION_CLOSED)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 제출 후에는 수정할 수 없다. 이 제출로 전원이 제출을 마치면 같은 transaction 안에서 자동 종료하고 결과를 확정한다.
+
+#### POST `/trips/{tripId}/vote-sessions/{sessionId}/completion`
+
+- 설명: 방장이 투표를 조기 종료한다.
+- 인증/권한: 여행방 OWNER.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: `CloseVoteSessionRequest`.
+- Response body schema: `TripVoteSessionResult`.
+- 성공 응답 예시: `200 {"sessionId":"...","status":"COMPLETED","completionReason":"OWNER_EARLY_CLOSE","results":[{"stickerCount":7,"selected":true,"selectedRank":1,"itineraryOutcome":"ADDED"}]}`
+- 실패 응답 예시: `422 ProblemDetails(code=VOTE_UNVOTED_PARTICIPANTS_NOT_ACKNOWLEDGED)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 이미 종료된 세션에 호출해도 실패가 아니라 같은 결과를 반환하는 멱등 연산이다. 마지막 제출과 동시에 실행돼도 종료와 결과 반영은 각각 한 번만 일어난다.
+
+#### GET `/trips/{tripId}/vote-sessions/{sessionId}/result`
+
+- 설명: 종료된 투표의 후보별 결과와 일정 반영 상태를 조회한다.
+- 인증/권한: 여행방 active member.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: 없음.
+- Response body schema: `TripVoteSessionResult`.
+- 성공 응답 예시: `200 {"selectionCount":3,"results":[{"selectedRank":2,"itineraryOutcome":"SKIPPED_DUPLICATE"}]}`
+- 실패 응답 예시: `404 ProblemDetails(code=VOTE_SESSION_NOT_FOUND)`.
+- 관련 화면: `/trips/:tripId/vote`, `/trips/:tripId/route`.
+- 확정: 진행 중 세션의 중간 집계는 노출하지 않는다. 마지막 순위 동점은 모두 선정되어 같은 `selectedRank`를 가진다.
 
 ### Places / Preference
 
@@ -1477,8 +1561,20 @@ Deprecated: 전역 기록 탭 제거로 신규 화면에서 사용하지 않습�
 - `GET /community/threads`, `POST /community/threads`
 - `GET /community/threads/{threadId}`, `PATCH /community/threads/{threadId}`, `DELETE /community/threads/{threadId}`
 - `GET /community/threads/{threadId}/replies`, `POST /community/threads/{threadId}/replies`
-- `DELETE /community/thread-replies/{replyId}`
+- `PATCH /community/threads/{threadId}/replies/{replyId}`, `DELETE /community/threads/{threadId}/replies/{replyId}`
 - `PUT /community/threads/{threadId}/like`, `DELETE /community/threads/{threadId}/like`
+
+커뮤니티 쓰레드 확정 규칙:
+
+- 목록/상세/답글 조회는 공개이며 비로그인 조회에서는 `likedByMe`와 `editableByMe`가 항상 false다.
+- 목록 정렬은 `createdAt desc, id desc`로 고정하고 `page`, `size`를 사용한다. `size`는 최대 100으로 보정한다.
+- 본문은 1~500자, 이미지는 선택 항목으로 최대 4장이다. 이미지는 요청자 소유의 ACTIVE media만 연결할 수 있다.
+- 답글 중첩은 1단계까지만 허용한다. 2단계 시도는 `THREAD_REPLY_DEPTH_EXCEEDED`(422)다.
+- 수정과 삭제는 작성자만 가능하고, 답글 삭제는 답글 작성자와 쓰레드 작성자가 가능하다.
+- 삭제/숨김된 쓰레드와 답글은 본문을 응답에 포함하지 않고 tombstone으로만 표시한다.
+- 좋아요는 `PUT`/`DELETE`로 멱등 처리한다. 같은 요청을 반복해도 `likeCount`가 변하지 않는다.
+- 신고는 기존 `POST /community/reports`에 `targetType`을 `THREAD` 또는 `THREAD_REPLY`로 보내 재사용한다.
+- 모더레이션도 기존 `POST /admin/moderation-actions`를 같은 `targetType`으로 재사용한다.
 
 아래 `/community/posts*`와 retrip endpoint는 기존 데이터 migration 호환용 deprecated 계약이며 신규 화면에서 사용하지 않습니다.
 

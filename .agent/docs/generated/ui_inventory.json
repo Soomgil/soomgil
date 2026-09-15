@@ -122,6 +122,13 @@
           "guestOnly": false
         },
         {
+          "path": "/trips/:tripId/vote",
+          "name": "TripVote",
+          "page": "src/pages/TripVotePage.vue",
+          "requiresAuth": true,
+          "guestOnly": false
+        },
+        {
           "path": "/community",
           "name": "Community",
           "page": "src/pages/CommunityPage.vue",
@@ -703,6 +710,28 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/itinerary/RouteTransportPanel.vue",
+          "relativePath": "src/components/itinerary/RouteTransportPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "route-meta",
+            "route-name",
+            "saved-route",
+            "saved-routes",
+            "transport-heading",
+            "transport-options",
+            "transport-panel",
+            "unverified"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/layout/AppHeader.vue",
           "relativePath": "src/components/layout/AppHeader.vue",
           "kind": "component",
@@ -1019,7 +1048,7 @@
           ],
           "images": [
             {
-              "src": "place.thumbnailUrl ?? ",
+              "src": "place.thumbnailUrl ?? ''",
               "alt": "place.placeName"
             }
           ],
@@ -1426,6 +1455,279 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/voting/OwnerVoteSetupPanel.vue",
+          "relativePath": "src/components/voting/OwnerVoteSetupPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "스티커 투표 로 갈 곳을 함께 정해요"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "vote-setup",
+            "vote-setup__chip",
+            "vote-setup__chip-remove",
+            "vote-setup__chips",
+            "vote-setup__cta",
+            "vote-setup__error",
+            "vote-setup__hint",
+            "vote-setup__hint--warn",
+            "vote-setup__lead",
+            "vote-setup__note",
+            "vote-setup__panel",
+            "vote-setup__row",
+            "vote-setup__row--question",
+            "vote-setup__row--regions",
+            "vote-setup__row-copy",
+            "vote-setup__row-icon",
+            "vote-setup__row-icon--count",
+            "vote-setup__row-icon--rank",
+            "vote-setup__row-icon--region",
+            "vote-setup__stepper",
+            "vote-setup__suggest",
+            "vote-setup__suggest-icon",
+            "vote-setup__suggest-label",
+            "vote-setup__suggest-list",
+            "vote-setup__suggest-title",
+            "vote-setup__suggest-unit",
+            "vote-setup__title"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/TripVoteFlow.vue",
+          "relativePath": "src/components/voting/TripVoteFlow.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "진행 중인 투표가 없어요"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "투표가 진행 중이에요"
+            },
+            {
+              "level": 1,
+              "id": "",
+              "text": "어디로 갈까요?"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "제출을 마쳤어요"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "page-hero",
+            "page-hero__actions",
+            "page-hero__copy",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "page-hero__lead",
+            "page-hero__title",
+            "page-with-hero",
+            "section",
+            "trip-vote",
+            "trip-vote__back",
+            "trip-vote__close",
+            "trip-vote__cta",
+            "trip-vote__cta--ai",
+            "trip-vote__ghost",
+            "trip-vote__hero",
+            "trip-vote__hero-actions",
+            "trip-vote__idle",
+            "trip-vote__idle-icon",
+            "trip-vote__layout",
+            "trip-vote__narrow",
+            "trip-vote__panel",
+            "trip-vote__progress",
+            "trip-vote__result-actions",
+            "trip-vote__waiting",
+            "trip-vote__waiting-bar",
+            "trip-vote__waiting-progress",
+            "{"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteCandidateDeck.vue",
+          "relativePath": "src/components/voting/VoteCandidateDeck.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ current.name ?? '이름 미상' }}"
+            }
+          ],
+          "images": [
+            {
+              "src": "imageUrl(current)!",
+              "alt": "current.name ?? '후보 관광지'"
+            },
+            {
+              "src": "imageUrl(candidate)!",
+              "alt": "candidate.name ?? '후보 썸네일'"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "vote-deck",
+            "vote-deck__address",
+            "vote-deck__badge",
+            "vote-deck__caption",
+            "vote-deck__category",
+            "vote-deck__controls",
+            "vote-deck__count",
+            "vote-deck__count-unit",
+            "vote-deck__count-value",
+            "vote-deck__counter",
+            "vote-deck__name",
+            "vote-deck__nav",
+            "vote-deck__nav--next",
+            "vote-deck__nav--prev",
+            "vote-deck__photo",
+            "vote-deck__photo--empty",
+            "vote-deck__scrim",
+            "vote-deck__slide",
+            "vote-deck__stage",
+            "vote-deck__step",
+            "vote-deck__step--add",
+            "vote-deck__thumb",
+            "vote-deck__thumb-badge",
+            "vote-deck__thumbs",
+            "{"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteResultMapOverlay.vue",
+          "relativePath": "src/components/voting/VoteResultMapOverlay.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "투표가 끝났어요!"
+            }
+          ],
+          "images": [
+            {
+              "src": "row.thumbnailUrl",
+              "alt": "row.name ?? '선정 관광지'"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "vote-map-overlay",
+            "vote-map-overlay__backdrop",
+            "vote-map-overlay__card",
+            "vote-map-overlay__count",
+            "vote-map-overlay__cta",
+            "vote-map-overlay__icon",
+            "vote-map-overlay__item",
+            "vote-map-overlay__lead",
+            "vote-map-overlay__list",
+            "vote-map-overlay__name",
+            "vote-map-overlay__rank",
+            "vote-map-overlay__thumb",
+            "vote-map-overlay__thumb--empty",
+            "vote-map-overlay__title"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteResultPanel.vue",
+          "relativePath": "src/components/voting/VoteResultPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "",
+              "text": "투표가 끝났어요!"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "page-hero__eyebrow",
+            "page-hero__gradient",
+            "vote-result",
+            "vote-result__header",
+            "vote-result__lead",
+            "vote-result__title"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteStickerCart.vue",
+          "relativePath": "src/components/voting/VoteStickerCart.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "shopping_bag 스티커 보드"
+            }
+          ],
+          "images": [
+            {
+              "src": "row.candidate.thumbnailUrl",
+              "alt": "row.candidate.name ?? '후보 썸네일'"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "vote-cart",
+            "vote-cart__dot",
+            "vote-cart__dots",
+            "vote-cart__empty",
+            "vote-cart__header",
+            "vote-cart__hint",
+            "vote-cart__item",
+            "vote-cart__list",
+            "vote-cart__name",
+            "vote-cart__remaining",
+            "vote-cart__reset",
+            "vote-cart__stepper",
+            "vote-cart__submit",
+            "vote-cart__thumb",
+            "vote-cart__thumb--empty",
+            "vote-cart__title",
+            "{"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/pages/AdminModerationPage.vue",
           "relativePath": "src/pages/AdminModerationPage.vue",
           "kind": "page",
@@ -1714,7 +2016,7 @@
           "images": [
             {
               "src": "slide.image",
-              "alt": "slide.title"
+              "alt": "slide.caption ?? slide.title"
             },
             {
               "src": "place.thumbnailUrl",
@@ -1729,12 +2031,12 @@
               "alt": "member avatar"
             },
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ''",
               "alt": "story.title"
             },
             {
               "src": "story.publishedBy.profileImageUrl",
-              "alt": "story.publishedBy.displayName ?? "
+              "alt": "story.publishedBy.displayName ?? ''"
             }
           ],
           "forms": 0,
@@ -1766,6 +2068,8 @@
             "home-hero-card-overlay",
             "home-hero-content",
             "home-hero-copy",
+            "home-hero-credit",
+            "home-hero-credit-title",
             "home-hero-dots",
             "home-hero-slide",
             "home-nearest-card",
@@ -1816,9 +2120,7 @@
             "home-toplikes-header",
             "home-toplikes-img",
             "home-toplikes-info",
-            "home-toplikes-item",
-            "home-toplikes-list",
-            "home-toplikes-rank"
+            "home-toplikes-item"
           ],
           "assetRefs": []
         },
@@ -2087,11 +2389,6 @@
             {
               "level": 2,
               "id": "",
-              "text": "{{ currentTrip.title }}"
-            },
-            {
-              "level": 2,
-              "id": "",
               "text": "여행 목록"
             },
             {
@@ -2107,12 +2404,12 @@
           ],
           "images": [
             {
-              "src": "logoUrl",
-              "alt": "숨길 로고"
+              "src": "trip.coverImageUrl!",
+              "alt": ""
             },
             {
-              "src": "trip.coverImageUrl",
-              "alt": "trip.title"
+              "src": "user.profileImageUrl",
+              "alt": ""
             }
           ],
           "forms": 1,
@@ -2122,26 +2419,12 @@
             "active",
             "active:",
             "activeFilter",
-            "airport-code",
             "app-shell",
-            "avatar",
-            "boarding-pass-card",
-            "boarding-pass-card--placeholder",
-            "boarding-pass-container",
-            "bottom",
             "btn",
-            "carousel-btn",
-            "carousel-dot",
-            "carousel-dots-container",
-            "carouselIndex",
-            "city-name",
             "compact-title",
+            "companion-avatar",
+            "companion-count",
             "createModal.isOpen.value",
-            "d-day-badge",
-            "dashed-line",
-            "departure",
-            "destination",
-            "detail-item",
             "eyebrow",
             "field",
             "filter.value",
@@ -2149,14 +2432,9 @@
             "form-label-text",
             "getStatusCls(trip)",
             "ghost",
-            "i",
             "icon-btn",
-            "label",
-            "line",
             "load-more-error",
             "load-more-row",
-            "logo-image",
-            "logo-text",
             "material-symbols-rounded",
             "modal-card",
             "modal-header",
@@ -2164,11 +2442,6 @@
             "my-trips-dashboard",
             "my-trips-timeline",
             "my-trips-timeline-wrapper",
-            "next-btn",
-            "next-trip-dots",
-            "next-trip-members",
-            "next-trip-nav",
-            "next-trip-panel",
             "page-hero",
             "page-hero__actions",
             "page-hero__copy",
@@ -2177,30 +2450,52 @@
             "page-hero__lead",
             "page-hero__title",
             "page-with-hero",
-            "plane-icon",
-            "prev-btn",
             "primary",
-            "punch-hole",
-            "route-path",
-            "route-point",
             "search-box",
             "section",
             "section-title",
+            "selected-companion-chip",
+            "selected-companions",
             "show:",
             "sr-only",
-            "stub-action-btn",
-            "stub-actions",
-            "stub-controls",
-            "stub-date-info",
-            "stub-detail-btn",
-            "stub-header",
-            "stub-title",
-            "stub-title-label",
-            "ticket-badge"
+            "timeline-card",
+            "timeline-card-actions",
+            "timeline-card-avatar-wrapper",
+            "timeline-card-badges",
+            "timeline-card-body",
+            "timeline-card-date",
+            "timeline-card-destination",
+            "timeline-card-header",
+            "timeline-card-info",
+            "timeline-card-open",
+            "timeline-card-role",
+            "timeline-card-status-badge",
+            "timeline-card-title",
+            "timeline-card-vote",
+            "travel-page-head",
+            "trip-create-card",
+            "trip-create-companions",
+            "trip-create-date-grid",
+            "trip-create-duration",
+            "trip-create-form",
+            "trip-create-grid",
+            "trip-create-hint",
+            "trip-create-intro",
+            "trip-create-modal",
+            "trip-create-section-head",
+            "trip-dashboard-layout",
+            "trip-dashboard-main",
+            "trip-intent-guide",
+            "trip-list-head",
+            "trip-list-section",
+            "trip-search",
+            "trip-tabs",
+            "trip-toolbar",
+            "trip-view-panel",
+            "{",
+            "}"
           ],
-          "assetRefs": [
-            "@/assets/images/soomgil_logo_none_text.png"
-          ]
+          "assetRefs": []
         },
         {
           "path": "frontend/src/pages/NotFoundPage.vue",
@@ -2323,7 +2618,7 @@
           ],
           "images": [
             {
-              "src": "coverForTrip(trip.id) || ",
+              "src": "coverForTrip(trip.id) || ''",
               "alt": "trip.title"
             },
             {
@@ -2515,7 +2810,7 @@
           "images": [
             {
               "src": "m.profileImageUrl",
-              "alt": "m.displayName || "
+              "alt": "m.displayName || '멤버'"
             }
           ],
           "forms": 0,
@@ -2615,7 +2910,7 @@
               "alt": "place.name"
             },
             {
-              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ",
+              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ''",
               "alt": "post.title"
             },
             {
@@ -2710,7 +3005,7 @@
           "images": [
             {
               "src": "currentUser.profileImageUrl",
-              "alt": "currentUser?.displayName || "
+              "alt": "currentUser?.displayName || 'User'"
             }
           ],
           "forms": 0,
@@ -2809,8 +3104,8 @@
           ],
           "images": [
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
-              "alt": "story.title + "
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? '/images/랜딩페이지/korea_hero.png'",
+              "alt": "story.title + ' 스토리'"
             }
           ],
           "forms": 0,
@@ -2858,11 +3153,11 @@
           ],
           "images": [
             {
-              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ''",
               "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
-              "src": "media.servingUrl ?? media.publicUrl ?? ",
+              "src": "media.servingUrl ?? media.publicUrl ?? ''",
               "alt": "`로컬 사진 ${idx + 1}`"
             }
           ],
@@ -2994,6 +3289,18 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/pages/TripVotePage.vue",
+          "relativePath": "src/pages/TripVotePage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/pages/UserProfilePage.vue",
           "relativePath": "src/pages/UserProfilePage.vue",
           "kind": "page",
@@ -3052,7 +3359,7 @@
               "alt": "프로필 이미지"
             },
             {
-              "src": "(place.thumbnailUrl ?? ",
+              "src": "(place.thumbnailUrl ?? '')",
               "alt": "place.placeName"
             },
             {
@@ -3226,6 +3533,18 @@
           "exports": [
             "LoginResult",
             "authApi"
+          ]
+        },
+        {
+          "path": "frontend/src/api/award.api.ts",
+          "relativePath": "src/api/award.api.ts",
+          "imports": [
+            "./http",
+            "@/types/award"
+          ],
+          "exports": [
+            "AwardPhotoParams",
+            "awardApi"
           ]
         },
         {
@@ -3486,6 +3805,26 @@
           ]
         },
         {
+          "path": "frontend/src/api/voting.api.test.ts",
+          "relativePath": "src/api/voting.api.test.ts",
+          "imports": [
+            "./voting.api",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/api/voting.api.ts",
+          "relativePath": "src/api/voting.api.ts",
+          "imports": [
+            "./http",
+            "@/types/voting"
+          ],
+          "exports": [
+            "votingApi"
+          ]
+        },
+        {
           "path": "frontend/src/api/yoonjung.api.test.ts",
           "relativePath": "src/api/yoonjung.api.test.ts",
           "imports": [
@@ -3561,6 +3900,17 @@
           "relativePath": "src/components/common/BaseButton.test.ts",
           "imports": [
             "./BaseButton.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/itinerary/RouteTransportPanel.test.ts",
+          "relativePath": "src/components/itinerary/RouteTransportPanel.test.ts",
+          "imports": [
+            "./RouteTransportPanel.vue",
+            "@/types/itinerary",
             "@vue/test-utils",
             "vitest"
           ],
@@ -3753,6 +4103,27 @@
             "vitest"
           ],
           "exports": []
+        },
+        {
+          "path": "frontend/src/components/voting/OwnerVoteSetupPanel.test.ts",
+          "relativePath": "src/components/voting/OwnerVoteSetupPanel.test.ts",
+          "imports": [
+            "./OwnerVoteSetupPanel.vue",
+            "@/stores/voting.store",
+            "@/types/geo",
+            "@vue/test-utils",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/voting/voteArrangePrompt.ts",
+          "relativePath": "src/components/voting/voteArrangePrompt.ts",
+          "imports": [],
+          "exports": [
+            "buildVoteArrangePrompt"
+          ]
         },
         {
           "path": "frontend/src/composables/useAuth.ts",
@@ -4041,6 +4412,18 @@
           "exports": []
         },
         {
+          "path": "frontend/src/pages/TripVotePage.test.ts",
+          "relativePath": "src/pages/TripVotePage.test.ts",
+          "imports": [
+            "./TripVotePage.vue",
+            "@/types/voting",
+            "@vue/test-utils",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/pages/UserProfilePage.test.ts",
           "relativePath": "src/pages/UserProfilePage.test.ts",
           "imports": [
@@ -4160,11 +4543,21 @@
           ]
         },
         {
+          "path": "frontend/src/router/community-routes.test.ts",
+          "relativePath": "src/router/community-routes.test.ts",
+          "imports": [
+            "./index",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/router/guards.ts",
           "relativePath": "src/router/guards.ts",
           "imports": [
             "@/stores/auth.store",
             "@/stores/swipe.store",
+            "@/stores/voting.store",
             "vue-router"
           ],
           "exports": [
@@ -4186,6 +4579,17 @@
           "imports": [
             "./index",
             "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/router/vote-gate.test.ts",
+          "relativePath": "src/router/vote-gate.test.ts",
+          "imports": [
+            "./guards",
+            "pinia",
+            "vitest",
+            "vue-router"
           ],
           "exports": []
         },
@@ -4281,6 +4685,30 @@
           ]
         },
         {
+          "path": "frontend/src/stores/voting.store.test.ts",
+          "relativePath": "src/stores/voting.store.test.ts",
+          "imports": [
+            "./voting.store",
+            "@/types/voting",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/stores/voting.store.ts",
+          "relativePath": "src/stores/voting.store.ts",
+          "imports": [
+            "@/api/voting.api",
+            "@/types/voting",
+            "pinia",
+            "vue"
+          ],
+          "exports": [
+            "useVotingStore"
+          ]
+        },
+        {
           "path": "frontend/src/test/setup.ts",
           "relativePath": "src/test/setup.ts",
           "imports": [
@@ -4353,6 +4781,14 @@
             "VerifyEmailRequest",
             "getUserAvatar",
             "mapBackendUser"
+          ]
+        },
+        {
+          "path": "frontend/src/types/award.ts",
+          "relativePath": "src/types/award.ts",
+          "imports": [],
+          "exports": [
+            "AwardPhoto"
           ]
         },
         {
@@ -4613,6 +5049,28 @@
             "UserPreferenceAnalysis",
             "UserProfile",
             "UserStats"
+          ]
+        },
+        {
+          "path": "frontend/src/types/voting.ts",
+          "relativePath": "src/types/voting.ts",
+          "imports": [],
+          "exports": [
+            "MyVoteParticipation",
+            "MyVoteStickerState",
+            "OpenVoteSessionRequest",
+            "TripVoteCandidate",
+            "TripVoteParticipantSummary",
+            "TripVoteRegion",
+            "TripVoteResultItem",
+            "TripVoteSessionDetail",
+            "TripVoteSessionResult",
+            "TripVoteSessionState",
+            "VoteCompletionReason",
+            "VoteNextScreen",
+            "VoteParticipantStatus",
+            "VoteSessionStatus",
+            "VoteStickerPlacement"
           ]
         },
         {
@@ -5172,12 +5630,12 @@
         }
       ],
       "summary": {
-        "routes": 20,
-        "pages": 21,
-        "components": 34,
-        "sourceFiles": 122,
+        "routes": 21,
+        "pages": 22,
+        "components": 41,
+        "sourceFiles": 135,
         "styleFiles": 4,
-        "typeScriptSignals": 176
+        "typeScriptSignals": 197
       }
     },
     {

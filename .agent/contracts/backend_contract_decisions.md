@@ -127,6 +127,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 기본 추천 후보 풀은 현재 보고 있는 지도 viewport 안의 관광공사 장소입니다.
 - 기본 추천은 현재 지도 viewport 안의 장소만 후보로 사용합니다.
 - 추천 장소 API의 `bbox`는 필수이며, 검색 실행 또는 사용자의 수동 새로고침 버튼 클릭 시점의 현재 지도 viewport를 전달합니다.
+- 단, 여행 방 투표 후보 생성은 사용자가 지도를 보고 있지 않은 서버-side 흐름이므로 `bbox` 대신 여행방 법정동 코드를 기준으로 하는 별도 내부 query(`PlaceRegionCandidateQuery`)를 사용합니다. 지역이 등록되어 있지 않으면 대표 목적지 문자열을 검색어로 사용합니다.
 - 사용자가 지도를 pan/zoom하는 것만으로 추천 장소 API를 자동 재호출하지 않습니다.
 - 기본 추천 정렬은 참여자들의 누적 스와이프 태그 매칭 점수를 중심으로 합니다.
 - 거리는 보조 점수 또는 동점 처리 기준으로 사용합니다.
@@ -162,8 +163,98 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 장소 상세 조회, 일정 추가/삭제, 저장, 커뮤니티 반응은 선호도 점수에 반영하지 않습니다.
 - 선호도 projection은 사용자 개인 전역 기준으로 관리하되 원본 이벤트는 source와 source resource id를 기록합니다.
 - 여행방 투표 이벤트도 개인 전역 projection에 동일 source multiplier로 반영합니다.
+- `TRIP_VOTE` 근거는 `preference.user_place_vote_evidences`에 별도로 기록하고, 태그 근거만 `user_preference_tag_weights`에 가산합니다.
+- `TRIP_VOTE`는 스와이프 최종 반응(`user_place_reactions`), 선호 이벤트 로그, 저장 장소를 변경하지 않습니다. 반응 되돌리기 로직과 저장 장소 정책이 오염되지 않도록 완전히 분리합니다.
+- 일정 최종 선정 여부와 무관하게 사용자가 스티커를 붙인 모든 관광지를 반영하며 장소별 스티커 개수를 보존합니다.
+- 스티커 개수를 근거 단위로 환산하는 규칙은 기존 projection 계산 공식과 분리된 `TripVoteEvidencePolicy`가 담당합니다.
+- 환산식은 `units(n) = min(baseWeight + stickerStep x (n - 1), maxWeight)`이며 기본값은 1.0 / 0.5 / 2.0입니다. 스티커 1개는 LIKE 강도, 상한은 SUPER_LIKE 강도에 맞춥니다. 이것이 "source multiplier는 1.0으로 두고 스티커 수만 별도 반영한다"는 규칙의 구현입니다.
+- 환산 정책 버전은 `trip-vote-evidence-v1`이며 근거 row에 함께 저장해 재처리 대상을 식별할 수 있게 합니다.
+- 태그 근거 분배는 기존 `PlaceTagEvidenceCalculator`, 점수 재계산은 기존 `UserPreferenceWeightCalculator`를 그대로 사용합니다.
+- `(voteSessionId, userId, provider, externalPlaceId)` unique 제약으로 같은 제출을 재시도해도 근거가 중복 반영되지 않습니다.
+- `user_preference_tag_weights.vote_evidence`와 `vote_place_count`는 감사용이며, 추천 계산은 기존과 동일하게 `positive_evidence`를 사용합니다.
 - 커뮤니티 저장/북마크는 MVP에서 별도 반응으로 두지 않고, 커뮤니티 게시글 좋아요와 리트립을 지원합니다.
 - 장소 저장은 사용자가 해당 장소를 `SUPER_LIKE`한 경우에만 허용합니다.
+
+## 여행 방 투표
+
+이 절이 현재 투표 기준입니다. 이전 `trip.trips.vote_*` / `trip.trip_vote_candidates` / `trip.trip_vote_stickers` /
+`trip_members.vote_state` 계약은 확정 요구사항과 충돌해 폐기했습니다. 폐기 사유는 아래에 함께 적습니다.
+
+폐기된 계약과의 차이:
+
+| 항목 | 폐기된 `trip.*` 계약 | 현재 `voting.*` 계약 | 사유 |
+| :--- | :--- | :--- | :--- |
+| 후보 출처 | `trip_vote_candidates.added_by_user_id`로 멤버가 직접 추가 | 추천이 자동 구성한 snapshot | 방장이 후보를 직접 고르지 않는다는 확정 요구 |
+| 참여 상태 | `trip_members.vote_state` = JOINED/VOTED | 세션별 NOT_STARTED/IN_PROGRESS/SUBMITTED | 첫 진입을 boolean 하나로 두지 않는다는 확정 요구 |
+| 세션 | 없음. 상태가 `trips` 컬럼에 있어 여행방당 1회 | `voting.vote_sessions`로 세션 단위 관리 | 세션별 참여 상태와 후보 snapshot이 필요 |
+| 후보 고정 | 없음 | 시작 시점 snapshot 저장 | 투표 도중 추천 변동 차단 |
+| 종료 조건 | ALL_VOTED / OWNER_CLOSED / DEADLINE_REACHED | ALL_SUBMITTED / OWNER_EARLY_CLOSE | 마감시한은 확정 요구에 없음 |
+| 스티커 | 활성 row 1개 = 스티커 1개 | (참여자, 후보)당 개수 컬럼 | 개수를 취향 근거로 그대로 보존해야 함 |
+
+- 방장이 여행 방을 만들고 초대 링크 또는 초대 코드로 참여자를 초대하는 기존 흐름을 그대로 재사용합니다. 초대 기능은 새로 만들지 않습니다.
+- 방장이 투표를 시작하면 그 시점의 활성 참여자(`trip_members.status = ACTIVE`) 전원이 투표 참여자로 확정됩니다.
+- 세션 시작 이후 합류한 멤버는 참여자로 추가하지 않고 지도 화면으로 보냅니다.
+- 첫 진입 여부는 boolean 하나가 아니라 세션별 참여 상태 `NOT_STARTED`, `IN_PROGRESS`, `SUBMITTED`로 모델링합니다.
+- 세션 상태는 `OPEN`, `COMPLETED`를 사용하고 `DRAFT`는 예약 값으로만 두며 V1 API로는 생성하지 않습니다.
+- 여행방당 진행 중 세션은 최대 1개이며 `status IN (DRAFT, OPEN)` 부분 unique 인덱스로 강제합니다.
+- 진입 화면 판정은 서버가 계산해 `nextScreen`(`VOTE`, `WAITING`, `MAP`)으로 내려줍니다. 클라이언트는 상태 조합을 다시 해석하지 않습니다.
+- 후보 관광지는 방장이 직접 고르지 않고, 여행 지역과 모든 활성 참여자의 누적 취향으로 추천 시스템이 자동 구성합니다.
+- 기본 후보 수는 10개입니다.
+- 투표 시작 시점의 후보를 세션 snapshot으로 저장해 투표 도중 추천 결과가 바뀌어도 후보가 변하지 않게 합니다.
+- 투표 후보 API는 다른 참여자의 raw/normalized 선호도 점수, 세부 태그 가중치, matched member 정보를 반환하지 않습니다. 노출 필드는 순위와 장소 표시 정보뿐입니다.
+- 진행 중 세션에서는 후보별 스티커 중간 집계도 노출하지 않습니다. 집계는 종료된 세션의 결과 조회에서만 채웁니다.
+- 스티커 지급 개수와 최종 선정 개수는 방장이 투표 시작 전에 정하며 시작 후에는 변경할 수 없습니다.
+- 두 값 모두 1 이상이고 실제로 생성된 후보 수를 넘을 수 없습니다. 후보가 선정 개수보다 적으면 `VOTE_CANDIDATE_POOL_INSUFFICIENT`(422)로 시작을 거절합니다.
+- 한 사용자가 같은 관광지에 스티커를 여러 개 몰아 붙일 수 있습니다.
+- 사용한 스티커 총합은 지급량을 넘을 수 없습니다. 초과하면 `VOTE_STICKER_ALLOWANCE_EXCEEDED`(422)입니다.
+- 제출 전에는 스티커를 이동하거나 회수할 수 있습니다. 배치 저장은 부분 변경이 아니라 전체 snapshot 치환이며, 목록에서 빠진 후보는 회수로 처리합니다.
+- 제출 후에는 수정할 수 없고 이중 제출은 `VOTE_ALREADY_SUBMITTED`(409)입니다.
+- 모든 활성 참여자가 제출하면 자동 종료합니다.
+- 방장은 미투표 참여자가 있다는 경고를 확인한 뒤 조기 종료할 수 있습니다. 확인 없이 요청하면 `VOTE_UNVOTED_PARTICIPANTS_NOT_ACKNOWLEDGED`(422)입니다.
+- 마지막 제출과 방장 조기 종료가 동시에 발생해도 종료는 한 번만 일어납니다. 종료 전이는 `UPDATE ... WHERE status = 'OPEN'` 조건부 UPDATE 한 곳으로만 수행하고 영향 row 수로 판정합니다.
+- 결과 반영도 `result_applied_at IS NULL` 조건부 UPDATE로 보호해 재시도해도 일정과 취향이 중복 반영되지 않습니다.
+- 최종 선정은 스티커 총합이 높은 후보부터 선정 개수만큼 고릅니다.
+- 마지막 선정 순위가 동점이면 동점 관광지를 모두 선정합니다. 이 경우 결과 개수가 선정 개수를 넘을 수 있습니다.
+- 스티커를 하나도 받지 못한 후보는 선정 개수가 남아 있어도 선정하지 않습니다.
+- 스티커 수가 같으면 후보 snapshot 순서를 유지해 결과 순서가 매번 같도록 합니다.
+- 선정된 관광지만 기존 "일차 미정"(`UNSCHEDULED`) 그룹에 추가합니다.
+- 이미 같은 관광지가 일차 미정이나 확정 일정에 있으면 중복 추가하지 않고 `SKIPPED_DUPLICATE`로 기록합니다.
+- 투표 모듈은 itinerary mapper나 DB를 직접 수정하지 않고 `AddPlacesToUnscheduledHandler` 공개 command만 호출합니다.
+- 투표 모듈은 preference mapper나 DB를 직접 수정하지 않고 `ApplyTripVotePreferenceCommandHandler` 공개 command만 호출합니다.
+- 투표 모듈은 trip/place DB도 직접 읽지 않고 `TripAccessGuard`, `ListTripMembersHandler`, `ListTripRegionCodesHandler`, `PlaceRegionCandidateQueryHandler`를 사용합니다.
+- 투표 상태 실시간 반영은 V1에서 STOMP 대신 짧은 polling(5초)을 사용합니다. 협업 topic 화이트리스트 변경은 후속 과제로 둡니다.
+
+### 투표 지역 선택과 snapshot
+
+- 방장은 투표를 시작할 때 `legalRegionCodes`로 이번 투표의 지역을 직접 고를 수 있다. 비우면 여행방에 등록된 지역을 쓰고,
+  그것도 없으면 대표 목적지 문자열로 대체 검색한다. 셋 다 없으면 `VOTE_CANDIDATE_POOL_INSUFFICIENT`로 시작을 거절한다.
+- 후보 수 `candidateCount`(기본 10)는 방장이 정한다. 지급 개수와 선정 개수는 실제로 생성된 후보 수를 넘을 수 없다.
+- 사용한 지역은 `voting.vote_session_regions`에 코드와 이름을 함께 snapshot으로 저장하고 `TripVoteSessionDetail.regions`로 내려준다.
+  이후 여행방 지역이 바뀌어도 "이 후보가 어디서 나왔는지"가 유지된다.
+- 후보 query(`ListTripVoteCandidatesQuery.regionCodes`)는 지역 override를 받는다. 비어 있으면 trip의 `ListTripRegionCodesHandler`를 호출하는 기존 흐름과 같다.
+
+### 법정동 코드와 관광공사(KTO) 지역 코드
+
+- 여행방·투표는 10자리 법정동 코드로 지역을 저장하지만 관광 원천(KTO)은 자체 `areaCode`/`sigunguCode`를 쓴다. 그동안 법정동 코드가
+  그대로 KTO에 전달돼 지역 필터가 항상 비었고, 후보는 대표 목적지 문자열 검색으로만 만들어졌다.
+- place 모듈의 `LegalRegionKtoCodeResolver`가 법정동 코드를 KTO 코드로 바꾼다. 시도는 `LegalRegionKtoAreaPolicy`의 고정 대응표(강원 42→51,
+  전북 45→52 전환 코드 포함)를 쓰고, 시군구는 geo의 공개 query(`FindLegalRegionsByCodesHandler`)로 이름을 얻어 `tourism_source.guguns`에서
+  같은 이름의 KTO 시군구 코드를 찾는다. 이름을 못 찾으면 시도 범위로 넓힌다.
+- KTO 라이브 지역 조회의 제주 고정(`areaCode` 39만 허용)을 해제했다. `areaCode`가 오면 그대로 쓰고, 없을 때만 검색어·viewport의 제주 휴리스틱을 쓴다.
+- 지역 기준값: 공식 법정동 sync 전에도 지역 검색과 투표가 동작하도록 V48이 시도 17개와 서울·부산·대전·제주 시군구, KTO `sidos`/`guguns`
+  기준값을 심는다. 정식 sync는 같은 코드를 upsert하므로 seed와 충돌하지 않는다.
+- 여행 상세(`TripDetail.regions`)는 그동안 항상 빈 목록이었다. `FindTripDetailHandler`가 trip 지역 코드를 geo 공개 query로 이름과 함께 채운다.
+- 여행 생성 화면은 검색 결과에서 고른 지역을 필수로 받는다. 지역 없이 만든 여행은 추천도 투표도 동작하지 않기 때문이다.
+
+### 투표 진입 방식과 개수 제안
+
+- 진입: 라우터 가드는 투표 상태를 미리 읽기만 하고 강제로 `/vote`로 보내지 않는다. 투표는 지도 화면 위 모달(`TripVoteFlow`)로 열린다.
+  제출하지 않은 진행 중 투표가 있으면 지도 진입 시 모달을 한 번 자동으로 띄우고, 닫으면 여행 카드 버튼(`투표 중 · 미제출`)과 지도 상단 배너를 빨갛게 남겨 이어서 투표하게 한다.
+  `/trips/:tripId/vote` 페이지는 딥링크용으로 유지하며 같은 흐름 컴포넌트를 쓴다.
+- 개수 제안: 방장에게는 "하루에 몇 곳 갈지"(1~6, 기본 3) 하나만 묻는다. 여행 일수는 여행방의 시작·종료일에서 계산하고, 없으면 2일로 가정하고 그 사실을 표시한다.
+  선정 = 일수 × 하루 개수(최대 24), 후보 = 선정 × 2(6~24), 1인당 스티커 = 후보 ÷ 4 올림(3~8). 서버 계약(`stickerAllowance`, `selectionCount`, `candidateCount`)은 그대로이고 프론트가 계산해 보낸다.
+- 종료 후: 결과 화면에서 `AI에게 일정 배치 맡기기`를 누르면 선정 장소 이름으로 배치 프롬프트를 만들어 AI 패널을 열고 입력창에 채운다(`?panel=ai&aiPrompt=` 딥링크도 같은 동작).
+  프롬프트 문장은 `voteArrangePrompt.ts` 한 곳에서 관리한다.
 
 ## 일정과 협업
 
@@ -248,7 +339,19 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 쓰레드 좋아요는 로그인 사용자 기준 토글형 1회 반응이며 `thread_id + user_id` unique 제약을 둡니다.
 - 쓰레드 좋아요는 선호도 점수에 반영하지 않습니다.
 - 신고와 모더레이션 대상은 쓰레드와 답글입니다.
-- 기존 `community.posts` 공개 API와 신규 발행은 종료하고 기존 데이터 보존/이관은 별도 migration으로 처리합니다.
+- 쓰레드 본문은 1~500자이며 DB CHECK 제약과 application 정책이 함께 보장합니다.
+- 쓰레드 이미지는 선택 항목으로 최대 4장이며 `community.thread_media`로 순서를 관리합니다.
+- 이미지 purpose는 기존 `COMMUNITY_POST`를 재사용하고, 연결 전에 요청자 소유의 ACTIVE 미디어인지 media 모듈 application 경계로 검증합니다.
+- 답글 중첩은 기존 댓글 정책과 같은 방향으로 최대 1단계까지만 허용하며 `parent_reply_id`와 `depth`로 표현합니다.
+- 2단계 이상 중첩 시도는 `THREAD_REPLY_DEPTH_EXCEEDED`(422)로 거절하고 DB CHECK 제약으로도 막습니다.
+- 쓰레드 수정과 삭제는 작성자만 가능합니다. 답글 삭제는 답글 작성자와 쓰레드 작성자가 가능합니다.
+- 좋아요는 `PUT`/`DELETE`로 멱등 처리하며 `(thread_id, user_id)` 복합 PK가 제약이자 멱등성의 근거입니다.
+- 좋아요 수와 답글 수는 denormalized counter를 두지 않고 조회 시 COUNT로 계산합니다. 따라서 counter 보정 job이 필요 없습니다.
+- 쓰레드에는 공개 범위 컬럼을 두지 않습니다. 공개 피드 전용이며 `UNLISTED`는 지원하지 않습니다.
+- 목록/상세/답글 조회는 비로그인도 가능하며 이때 `likedByMe`와 `editableByMe`는 항상 false입니다.
+- 공개 피드 정렬은 `created_at DESC, id DESC`로 고정하고 `page`/`size` 페이지네이션을 사용합니다.
+- 신고와 모더레이션은 기존 `community.content_reports`, `community.moderation_actions`를 재사용하고 `target_type`에 `THREAD`, `THREAD_REPLY`를 추가합니다. 두 컬럼은 `varchar(20)`이고 CHECK 제약이 없어 값 추가에 migration이 필요 없습니다.
+- 기존 `community.posts` 계열 테이블과 API는 즉시 삭제하지 않고 deprecated 상태로 보존합니다. 신규 커뮤니티 표면에서는 사용하지 않지만, 마이페이지 등 기존 화면이 아직 참조하고 있어 API 자체는 살려 둡니다. 신규 발행 UI는 제거했습니다.
 
 ### 폐기된 게시물 계약
 
