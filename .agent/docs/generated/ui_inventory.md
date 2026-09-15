@@ -480,10 +480,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 내 여행 준비 를 이어가세요, h2 여행 목록, h3 {{ trip.title }}, h3 새 여행 만들기
-- forms: 1, images: 2
+- headings: h1 내 여행, h2 여행 목록, h3 {{ trip.title }}, h3 새 여행 만들기
+- forms: 1, images: 3
 - asset refs: 없음
-- classes: `===`, `[getStatusCls(trip),`, `active`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `companion-avatar`, `companion-count`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `getStatusCls(trip)`, `ghost`, `icon-btn`, `load-more-error`, `load-more-row`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `my-trips-timeline`, `my-trips-timeline-wrapper`, `page-hero`, `page-hero__actions`
+- classes: `===`, `[getStatusCls(trip),`, `active`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `companion-avatar`, `companion-count`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `getStatusCls(trip)`, `icon-btn`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `my-trips-timeline`, `my-trips-timeline-wrapper`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`
 
 #### frontend/src/pages/NotFoundPage.vue
 

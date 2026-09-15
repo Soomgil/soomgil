@@ -2276,7 +2276,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "내 여행 준비 를 이어가세요"
+              "text": "내 여행"
             },
             {
               "level": 2,
@@ -2298,6 +2298,10 @@
             {
               "src": "trip.coverImageUrl!",
               "alt": ""
+            },
+            {
+              "src": "member.user.profileImageUrl",
+              "alt": "member.user.displayName"
             },
             {
               "src": "user.profileImageUrl",
@@ -2323,10 +2327,7 @@
             "form-label",
             "form-label-text",
             "getStatusCls(trip)",
-            "ghost",
             "icon-btn",
-            "load-more-error",
-            "load-more-row",
             "material-symbols-rounded",
             "modal-card",
             "modal-header",
@@ -2335,10 +2336,8 @@
             "my-trips-timeline",
             "my-trips-timeline-wrapper",
             "page-hero",
-            "page-hero__actions",
             "page-hero__copy",
             "page-hero__eyebrow",
-            "page-hero__gradient",
             "page-hero__lead",
             "page-hero__title",
             "page-with-hero",
@@ -2365,6 +2364,8 @@
             "timeline-card-title",
             "timeline-card-vote",
             "travel-page-head",
+            "travel-paper",
+            "trip-create-button",
             "trip-create-card",
             "trip-create-companions",
             "trip-create-date-grid",
@@ -2380,12 +2381,15 @@
             "trip-intent-guide",
             "trip-list-head",
             "trip-list-section",
+            "trip-member-avatar",
+            "trip-member-overflow",
+            "trip-members",
+            "trip-options",
+            "trip-pagination",
             "trip-search",
+            "trip-search-actions",
             "trip-tabs",
-            "trip-toolbar",
-            "trip-view-panel",
-            "{",
-            "}"
+            "trip-toolbar"
           ],
           "assetRefs": []
         },
