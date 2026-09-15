@@ -12,6 +12,7 @@ const ts = requireFromFrontend("typescript");
 
 const allowedDelegates = new Map([
   ["frontend/src/api/community.api.ts#toggleLike", "likedByMe에 따라 같은 client의 like/unlike HTTP method로 위임"],
+  ["frontend/src/api/community-thread.api.ts#toggleLike", "likedByMe에 따라 같은 client의 like/unlike HTTP method로 위임"],
 ]);
 
 async function listFiles(directory) {
