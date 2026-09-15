@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 34 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 35 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -195,6 +195,15 @@
 - forms: 1, images: 0
 - asset refs: 없음
 - classes: `btn`, `field`, `ghost`, `material-symbols-rounded`, `photo-strip`, `photo-strip__empty`, `photo-strip__nav`, `photo-strip__nav--prev`, `photo-strip__row`, `photo-strip__upload`, `photo-strip__viewport`, `primary`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `tag-chip`, `tag-chip-input`, `tag-chip-input__field`, `tag-chip-input__icon`, `tag-chip__remove`, `{`
+
+#### frontend/src/components/itinerary/RouteTransportPanel.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `route-meta`, `route-name`, `saved-route`, `saved-routes`, `transport-heading`, `transport-options`, `transport-panel`, `unverified`
 
 #### frontend/src/components/layout/AppHeader.vue
 
