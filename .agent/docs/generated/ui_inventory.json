@@ -1986,10 +1986,6 @@
           ],
           "forms": 1,
           "classNames": [
-            "===",
-            "active:",
-            "activeSearchTab",
-            "category.key",
             "home-artwork-caption",
             "home-artwork-credit",
             "home-artwork-footer",
@@ -2005,19 +2001,16 @@
             "home-photo-count",
             "home-photo-status",
             "home-search",
-            "home-search-capsule",
-            "home-search-capsule-btn",
-            "home-search-capsule-icon",
-            "home-search-capsule-input",
-            "home-search-cat",
-            "home-search-categories",
             "home-search-history",
             "home-search-history-heading",
             "home-search-position",
             "home-sr-only",
             "material-symbols-rounded",
-            "{",
-            "}"
+            "paper-search",
+            "paper-search-field",
+            "paper-search-icon",
+            "paper-search-input",
+            "paper-search-submit"
           ],
           "assetRefs": [
             "@/assets/textures/ink-reveal-mask.png"
@@ -2751,7 +2744,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "필요한 여행 정보 를 한 번에 찾아보세요"
+              "text": "{{ searchHeading }}"
             },
             {
               "level": 3,
@@ -2823,16 +2816,14 @@
             "active:",
             "activeTab",
             "avatar",
-            "btn",
-            "ghost",
             "material-symbols-rounded",
-            "page-hero",
-            "page-hero__copy",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
-            "page-hero__lead",
-            "page-hero__title",
-            "page-with-hero",
+            "paper-search",
+            "paper-search-clear",
+            "paper-search-field",
+            "paper-search-icon",
+            "paper-search-input",
+            "paper-search-submit",
+            "search-back-link",
             "search-body",
             "search-card",
             "search-card--place",
@@ -2847,16 +2838,12 @@
             "search-card-thumb",
             "search-card-thumb--avatar",
             "search-card-title",
-            "search-clear-btn",
+            "search-content",
             "search-empty-panel",
-            "search-form",
-            "search-form--capsule",
             "search-grid",
+            "search-grid--users",
             "search-head",
-            "search-input",
-            "search-input-icon",
-            "search-input-wrap",
-            "search-input-wrap--capsule",
+            "search-kicker",
             "search-more-btn",
             "search-page",
             "search-recent",
@@ -2865,18 +2852,21 @@
             "search-recent-item",
             "search-recent-list",
             "search-recent-remove",
+            "search-result-caption",
             "search-section",
             "search-section-count",
             "search-section-head",
             "search-section-icon",
-            "search-submit-btn",
+            "search-summary",
             "search-tab",
             "search-tabs",
             "tab.key",
             "{",
             "}"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "@/assets/textures/ink-reveal-mask.png"
+          ]
         },
         {
           "path": "frontend/src/pages/SettingsPage.vue",
@@ -4293,6 +4283,20 @@
           "exports": []
         },
         {
+          "path": "frontend/src/pages/SearchResultsPage.test.ts",
+          "relativePath": "src/pages/SearchResultsPage.test.ts",
+          "imports": [
+            "./SearchResultsPage.vue",
+            "@/api/place.api",
+            "@/api/search.api",
+            "@/types/search",
+            "@vue/test-utils",
+            "vitest",
+            "vue-router"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/pages/SettingsPage.test.ts",
           "relativePath": "src/pages/SettingsPage.test.ts",
           "imports": [
@@ -5490,6 +5494,22 @@
           ]
         },
         {
+          "path": "frontend/src/styles/paper-search.css",
+          "relativePath": "src/styles/paper-search.css",
+          "importsTailwind": false,
+          "tokens": [],
+          "classes": [
+            "material-symbols-rounded",
+            "paper-search",
+            "paper-search-clear",
+            "paper-search-field",
+            "paper-search-icon",
+            "paper-search-input",
+            "paper-search-submit"
+          ],
+          "animations": []
+        },
+        {
           "path": "frontend/src/styles/scroll-explore.css",
           "relativePath": "src/styles/scroll-explore.css",
           "importsTailwind": false,
@@ -5562,9 +5582,9 @@
         "routes": 21,
         "pages": 22,
         "components": 42,
-        "sourceFiles": 138,
-        "styleFiles": 4,
-        "typeScriptSignals": 201
+        "sourceFiles": 139,
+        "styleFiles": 5,
+        "typeScriptSignals": 202
       }
     },
     {

@@ -447,7 +447,7 @@
 - headings: h1 어디로 떠나고 싶으세요?, h2 {{ photoTitle }}
 - forms: 1, images: 1
 - asset refs: `@/assets/textures/ink-reveal-mask.png`
-- classes: `===`, `active:`, `activeSearchTab`, `category.key`, `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-capsule`, `home-search-capsule-btn`, `home-search-capsule-icon`, `home-search-capsule-input`, `home-search-cat`, `home-search-categories`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`
+- classes: `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
 
 #### frontend/src/pages/LandingPage.vue
 
@@ -543,10 +543,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 필요한 여행 정보 를 한 번에 찾아보세요, h3 최근 검색어, h2 luggage 여행 {{ visibleTrips.length }}, h3 {{ trip.title }}, h2 place 장소 {{ visiblePlaces.length }}, h3 {{ place.name }}
+- headings: h1 {{ searchHeading }}, h3 최근 검색어, h2 luggage 여행 {{ visibleTrips.length }}, h3 {{ trip.title }}, h2 place 장소 {{ visiblePlaces.length }}, h3 {{ place.name }}
 - forms: 1, images: 4
-- asset refs: 없음
-- classes: `===`, `active:`, `activeTab`, `avatar`, `btn`, `ghost`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `search-body`, `search-card`, `search-card--place`, `search-card--post`, `search-card--trip`, `search-card--user`, `search-card-author`, `search-card-avatar-fallback`, `search-card-body`, `search-card-eyebrow`, `search-card-meta`, `search-card-thumb`, `search-card-thumb--avatar`, `search-card-title`, `search-clear-btn`, `search-empty-panel`
+- asset refs: `@/assets/textures/ink-reveal-mask.png`
+- classes: `===`, `active:`, `activeTab`, `avatar`, `material-symbols-rounded`, `paper-search`, `paper-search-clear`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`, `search-back-link`, `search-body`, `search-card`, `search-card--place`, `search-card--post`, `search-card--trip`, `search-card--user`, `search-card-author`, `search-card-avatar-fallback`, `search-card-body`, `search-card-eyebrow`, `search-card-meta`, `search-card-thumb`, `search-card-thumb--avatar`, `search-card-title`, `search-content`, `search-empty-panel`, `search-grid`, `search-grid--users`
 
 #### frontend/src/pages/SettingsPage.vue
 
@@ -639,6 +639,12 @@
 - Tailwind import: 없음
 - tokens: `--bg`, `--blue`, `--cyan`, `--day-color`, `--day-color-bg`, `--day-color-border`, `--detailbar-gap`, `--detailbar-offset`, `--detailbar-width`, `--feed-list-height`, `--feed-panel-offset`, `--font-sans`, `--glint`, `--ink`, `--lavender`, `--line`, `--muted`, `--rose`, `--shadow`, `--sidebar-width`, `--soft-shadow`, `--surface`, `--surface-2`, `--violet`, `--yellow`
 - animations: `activeDotPop`, `aiGlowAnimation`, `clickParticleFade`, `fadeInUp`, `likeEmojiFloat`, `likeParticleBurst`, `likeParticleTrail`, `mic-pulse`, `nopeEmojiFloat`, `nopeParticleBurst`, `nopeParticleTrail`, `popover-in`, `pulseSpark`, `routeBurstDot`, `routeBurstGlint`, `routeBurstPin`, `scrollArrowBounce`, `scrollLineMove`, `superlikeEmojiFloat`, `superlikeParticleBurst`, `superlikeParticleTrail`, `swipeFingerAnimNew`, `swipeParticleFade`, `swipeRippleAnim`, `swipeUpAnim`, `typingBounce`, `wave-bounce`
+
+#### frontend/src/styles/paper-search.css
+
+- Tailwind import: 없음
+- tokens: 없음
+- animations: 없음
 
 #### frontend/src/styles/scroll-explore.css
 
