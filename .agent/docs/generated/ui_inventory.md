@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 41 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 42 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -224,6 +224,15 @@
 - asset refs: 없음
 - classes: `flex`, `flex-1`, `flex-col`, `min-h-screen`, `{`
 
+#### frontend/src/components/layout/InkWashBackdrop.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `paper-grain`
+
 #### frontend/src/components/map/MapDrawingOverlay.vue
 
 - 종류: component
@@ -437,8 +446,8 @@
 - script: setup / ts
 - headings: h1 어디로 떠나고 싶으세요?, h2 {{ photoTitle }}
 - forms: 1, images: 1
-- asset refs: 없음
-- classes: `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-bar`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-search-scope`, `home-search-submit`, `home-search-submit-text`, `home-shade`, `home-sr-only`, `material-symbols-rounded`
+- asset refs: `@/assets/textures/ink-reveal-mask.png`
+- classes: `===`, `active:`, `activeSearchTab`, `category.key`, `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-capsule`, `home-search-capsule-btn`, `home-search-capsule-icon`, `home-search-capsule-input`, `home-search-cat`, `home-search-categories`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`
 
 #### frontend/src/pages/LandingPage.vue
 

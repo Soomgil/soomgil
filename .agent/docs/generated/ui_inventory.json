@@ -773,6 +773,20 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/layout/InkWashBackdrop.vue",
+          "relativePath": "src/components/layout/InkWashBackdrop.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "paper-grain"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/map/MapDrawingOverlay.vue",
           "relativePath": "src/components/map/MapDrawingOverlay.vue",
           "kind": "component",
@@ -1972,6 +1986,10 @@
           ],
           "forms": 1,
           "classNames": [
+            "===",
+            "active:",
+            "activeSearchTab",
+            "category.key",
             "home-artwork-caption",
             "home-artwork-credit",
             "home-artwork-footer",
@@ -1980,22 +1998,30 @@
             "home-artwork-title",
             "home-backdrop",
             "home-canvas",
+            "home-explore-link",
+            "home-gallery",
+            "home-ink-underlay",
             "home-photo-controls",
             "home-photo-count",
             "home-photo-status",
             "home-search",
-            "home-search-bar",
+            "home-search-capsule",
+            "home-search-capsule-btn",
+            "home-search-capsule-icon",
+            "home-search-capsule-input",
+            "home-search-cat",
+            "home-search-categories",
             "home-search-history",
             "home-search-history-heading",
             "home-search-position",
-            "home-search-scope",
-            "home-search-submit",
-            "home-search-submit-text",
-            "home-shade",
             "home-sr-only",
-            "material-symbols-rounded"
+            "material-symbols-rounded",
+            "{",
+            "}"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "@/assets/textures/ink-reveal-mask.png"
+          ]
         },
         {
           "path": "frontend/src/pages/LandingPage.vue",
@@ -4972,6 +4998,23 @@
           ]
         },
         {
+          "path": "frontend/src/utils/awardPhotoLayout.test.ts",
+          "relativePath": "src/utils/awardPhotoLayout.test.ts",
+          "imports": [
+            "./awardPhotoLayout",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/awardPhotoLayout.ts",
+          "relativePath": "src/utils/awardPhotoLayout.ts",
+          "imports": [],
+          "exports": [
+            "fitAwardPhoto"
+          ]
+        },
+        {
           "path": "frontend/src/utils/community.ts",
           "relativePath": "src/utils/community.ts",
           "imports": [
@@ -5518,10 +5561,10 @@
       "summary": {
         "routes": 21,
         "pages": 22,
-        "components": 41,
-        "sourceFiles": 136,
+        "components": 42,
+        "sourceFiles": 138,
         "styleFiles": 4,
-        "typeScriptSignals": 198
+        "typeScriptSignals": 201
       }
     },
     {
