@@ -1,0 +1,9 @@
+# 기존 soomgil 서비스들과 연결하면서 새 홈 worktree만 빌드/마운트합니다.
+services:
+  frontend:
+    build:
+      context: D:/vscode-workspace/soomgil-home-award/frontend
+    volumes:
+      - type: bind
+        source: D:/vscode-workspace/soomgil-home-award/frontend
+        target: /workspace

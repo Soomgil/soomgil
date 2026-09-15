@@ -37,3 +37,10 @@ status: complete
 
 - 프론트엔드 PR이 merge된 뒤 상위 저장소 submodule pointer를 갱신합니다. 이번 작업에서는 merge/push하지 않습니다.
 - merge 완료 후 작업 브랜치를 로컬/원격에서 삭제하는 저장소 정책을 따릅니다.
+
+## Docker 실행 경로 후속 수정
+
+- 원래 폴더의 Compose는 soomgil/frontend를 빌드하고 /workspace에 bind mount하므로 새 홈 worktree가 반영되지 않았습니다.
+- qa/compose.home-preview.yaml로 frontend build context와 /workspace mount를 soomgil-home-award/frontend로 지정했습니다.
+- 기존 Compose 프로젝트에서 frontend만 재빌드/재생성했습니다. 재실행은 qa/start-home-preview.ps1을 사용합니다.
+- 기본 명령만 원래 폴더에서 다시 실행하면 이전 frontend 작업 폴더로 돌아가므로 새 홈 검토 중에는 위 스크립트를 사용합니다.
