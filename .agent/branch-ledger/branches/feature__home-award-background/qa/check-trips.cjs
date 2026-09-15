@@ -27,6 +27,12 @@ const path=require('node:path');
   await page.setViewportSize({width:390,height:844});await page.evaluate(()=>scrollTo(0,0));
   await page.screenshot({path:path.join(__dirname,'trips-mobile.png'),fullPage:true});
   if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)) throw Error('overflow');
-  console.log('Trips pages and mobile passed');
+  await page.locator('.trip-options').first().click();
+  await page.locator('.trip-settings-card').waitFor();
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('.trip-settings-overlay')).opacity==='1');
+  await page.screenshot({path:path.join(__dirname,'trip-settings-mobile.png')});
+  await page.setViewportSize({width:1440,height:1000});
+  await page.screenshot({path:path.join(__dirname,'trip-settings-desktop.png')});
+  console.log('Trips pages and settings passed');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -1452,6 +1452,7 @@
             "modal-tabs",
             "open,",
             "primary",
+            "settings-dates",
             "show:",
             "status",
             "status-option",
@@ -2358,7 +2359,6 @@
             "timeline-card-destination",
             "timeline-card-header",
             "timeline-card-info",
-            "timeline-card-open",
             "timeline-card-role",
             "timeline-card-status-badge",
             "timeline-card-title",
@@ -2389,7 +2389,8 @@
             "trip-search",
             "trip-search-actions",
             "trip-tabs",
-            "trip-toolbar"
+            "trip-toolbar",
+            "trip-view-panel"
           ],
           "assetRefs": []
         },
