@@ -31,6 +31,14 @@
 | `/admin/moderation` | AdminModeration | `frontend/src/pages/AdminModerationPage.vue` | 필요 |
 | `/:pathMatch(.*)*` | NotFound | `frontend/src/pages/NotFoundPage.vue` | 공개 |
 
+## 홈 화면
+
+- `/home`은 수상작 사진을 전체 배경으로 표시하고 검색 폼, 작품 출처, 수동 사진 전환 버튼을 제공합니다.
+- 검색 범위(전체/계획/여행지/커뮤니티/유저)를 선택하면 `/search?q=...&tab=...`으로 이동합니다.
+- 최근 검색어는 브라우저에 최대 5개 저장하고 전체 삭제할 수 있습니다.
+- 사진 조회/로딩 실패와 빈 목록 상태에서도 검색을 이용할 수 있습니다.
+- 기존 홈의 콘텐츠 목록과 해당 목록용 API 호출을 제거했습니다. 좋아요는 수상작과 장소 식별자의 확정 연결 이후 별도로 적용합니다.
+
 ## 여행 방 진입 가드
 
 `/trips/:tripId/route`와 `/trips/:tripId/vote`는 `frontend/src/router/guards.ts`에서

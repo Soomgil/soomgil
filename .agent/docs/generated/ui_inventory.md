@@ -222,7 +222,7 @@
 - headings: 없음
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `flex`, `flex-1`, `flex-col`, `min-h-screen`
+- classes: `flex`, `flex-1`, `flex-col`, `min-h-screen`, `{`
 
 #### frontend/src/components/map/MapDrawingOverlay.vue
 
@@ -435,10 +435,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 어떤 여행을 찾고 계신가요?, h1 여행의 시작은 설렘에서부터, h3 {{ slide.title }}, h3 내 취향 수집, h3 지도에서 루트 만들기, h3 친구 초대하기
-- forms: 0, images: 6
+- headings: h1 어디로 떠나고 싶으세요?, h2 {{ photoTitle }}
+- forms: 1, images: 1
 - asset refs: 없음
-- classes: `===`, `active:`, `activeSearchTab`, `avatar`, `avatars`, `btn`, `card-tag`, `cat.key`, `cmn-tag`, `content-container`, `eyebrow`, `ghost`, `home-action-card`, `home-action-icon`, `home-action-row`, `home-action-text`, `home-community-author`, `home-community-card`, `home-community-card-body`, `home-community-card-img`, `home-community-card-meta`, `home-community-grid`, `home-community-placeholder`, `home-hero`, `home-hero-card-overlay`, `home-hero-content`, `home-hero-copy`, `home-hero-credit`, `home-hero-credit-title`, `home-hero-dots`
+- classes: `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-bar`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-search-scope`, `home-search-submit`, `home-search-submit-text`, `home-shade`, `home-sr-only`, `material-symbols-rounded`
 
 #### frontend/src/pages/LandingPage.vue
 
