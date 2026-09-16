@@ -2700,17 +2700,9 @@
             "avatars",
             "avatars-group",
             "full-screen",
-            "material-symbols-rounded",
-            "route-back-link",
             "route-page-section",
             "section",
-            "sidebar-content",
-            "sidebar-sheet-handle",
-            "sidebar-toggle",
-            "trip-map-actions",
-            "trip-sidebar-details",
-            "trip-sidebar-summary",
-            "trip-title-toggle"
+            "trip-map-actions"
           ],
           "assetRefs": []
         },
