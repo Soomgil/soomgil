@@ -21,13 +21,13 @@ const path=require('node:path');
   });
   const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://localhost:5173/trips/qa/route');
-  await page.locator('.route-back-link').waitFor();
+  await page.locator('.trip-sidebar-summary').waitFor({state:'attached'});
   if(await page.locator('header.topbar').count()) throw Error('header remains');
   for(const width of [1440,390]) {
     await page.setViewportSize({width,height:900});
     const result=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,top:document.querySelector('.route-page-section').getBoundingClientRect().top}));
     if(result.overflow || result.top!==0) throw Error(JSON.stringify(result));
-    if(!await page.locator('.route-back-link').isVisible()) throw Error('missing return link');
+    if(!await page.locator('.route-back-link').isVisible().catch(()=>false) && !await page.locator('.trip-sidebar-back').isVisible()) throw Error('missing return link');
     await page.screenshot({path:path.join(__dirname,'route-no-header-'+width+'.png')});
   }
   console.log('Header hidden, full height, return link verified');
