@@ -1421,49 +1421,6 @@ Table ai.ai_tool_calls {
 // Trip Records
 // ============================================================
 
-Table record.trip_record_entries {
-  id uuid [pk, default: `gen_random_uuid()`]
-  trip_id uuid [not null]
-  itinerary_day_id uuid
-  itinerary_item_id uuid
-  uploaded_by_user_id uuid [not null]
-  title varchar(160)
-  caption text
-  location_name varchar(240)
-  lat decimal(10,7)
-  lng decimal(10,7)
-  taken_at timestamptz
-  visibility varchar(30) [not null, default: 'TRIP_MEMBERS', note: 'TRIP_MEMBERS in MVP. PUBLIC is through community shared posts.']
-  status varchar(30) [not null, default: 'ACTIVE', note: 'ACTIVE, DELETED']
-  created_at timestamptz [not null, default: `now()`]
-  updated_at timestamptz [not null, default: `now()`]
-  deleted_at timestamptz
-
-  Indexes {
-    trip_id
-    itinerary_day_id
-    itinerary_item_id
-    uploaded_by_user_id
-    taken_at
-    status
-    created_at
-  }
-}
-
-Table record.trip_record_media {
-  record_entry_id uuid [not null]
-  media_file_id uuid [not null]
-  sort_order int [not null, default: 0]
-  caption text
-  created_at timestamptz [not null, default: `now()`]
-
-  Indexes {
-    (record_entry_id, media_file_id) [pk]
-    media_file_id
-    (record_entry_id, sort_order)
-  }
-}
-
 // ============================================================
 // Community Threads and Replies
 // ============================================================
@@ -2077,12 +2034,6 @@ Ref: ai.ai_tool_calls.request_message_id > ai.ai_chat_messages.id
 Ref: ai.ai_tool_calls.result_message_id > ai.ai_chat_messages.id
 Ref: ai.ai_tool_calls.requested_by_user_id > auth.users.id
 
-Ref: record.trip_record_entries.trip_id > trip.trips.id
-Ref: record.trip_record_entries.itinerary_day_id > itinerary.itinerary_days.id
-Ref: record.trip_record_entries.itinerary_item_id > itinerary.itinerary_items.id
-Ref: record.trip_record_entries.uploaded_by_user_id > auth.users.id
-Ref: record.trip_record_media.record_entry_id > record.trip_record_entries.id
-Ref: record.trip_record_media.media_file_id > media.media_files.id
 
 Ref: community.thread_media.thread_id > community.threads.id
 Ref: community.thread_replies.parent_reply_id > community.thread_replies.id
