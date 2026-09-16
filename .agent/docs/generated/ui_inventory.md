@@ -435,10 +435,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 Share your travel stories , discover new routes, h1 여행의 기록 을 나누고, 새로운 루트 를 발견하세요, h3 {{ currentPopular.title }}, h2 {{ currentPopular.title }}, h2 최신 여행기, h3 {{ story.title }}
-- forms: 0, images: 5
+- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 눈길이 머문 여행, h3 {{ story.title }}, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
+- forms: 0, images: 6
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-hero-eyebrow`, `community-hero-gradient`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `idx`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
+- classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-empty`, `community-hero-eyebrow`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-paper`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
 
 #### frontend/src/pages/HomePage.vue
 

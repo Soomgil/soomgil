@@ -1809,27 +1809,22 @@
             {
               "level": 1,
               "id": "",
-              "text": "Share your travel stories , discover new routes"
+              "text": "{{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}"
             },
             {
-              "level": 1,
-              "id": "",
-              "text": "여행의 기록 을 나누고, 새로운 루트 를 발견하세요"
+              "level": 2,
+              "id": "popular-stories-title",
+              "text": "눈길이 머문 여행"
             },
             {
               "level": 3,
               "id": "",
-              "text": "{{ currentPopular.title }}"
+              "text": "{{ story.title }}"
             },
             {
               "level": 2,
               "id": "",
-              "text": "{{ currentPopular.title }}"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "최신 여행기"
+              "text": "방금 도착한 여행 이야기"
             },
             {
               "level": 3,
@@ -1844,8 +1839,12 @@
           ],
           "images": [
             {
-              "src": "currentPopular.image",
-              "alt": "currentPopular.title"
+              "src": "story.image",
+              "alt": "story.title"
+            },
+            {
+              "src": "story.authorProfileImageUrl",
+              "alt": ""
             },
             {
               "src": "story.image",
@@ -1870,14 +1869,15 @@
             "active:",
             "carousel-btn",
             "community-content-container",
+            "community-empty",
             "community-hero-eyebrow",
-            "community-hero-gradient",
             "community-hero-header",
             "community-hero-lead",
             "community-hero-text",
             "community-hero-title",
             "community-page",
             "community-pagination",
+            "community-paper",
             "community-pill",
             "community-pill-primary",
             "community-story-search",
@@ -1887,7 +1887,6 @@
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
-            "idx",
             "latest-stories-eyebrow",
             "latest-stories-header",
             "latest-stories-icon",
@@ -1910,10 +1909,10 @@
             "polaroid-image",
             "polaroid-stat",
             "polaroid-stats",
-            "polaroid-tape",
             "polaroid-title",
-            "polaroid-wrap",
-            "popularIndex",
+            "popular-gallery",
+            "popular-heading",
+            "popular-no-photo",
             "prev",
             "prev-btn",
             "search-box",
