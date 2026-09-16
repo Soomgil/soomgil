@@ -7,3 +7,10 @@ services:
       - type: bind
         source: D:/vscode-workspace/soomgil-home-award/frontend
         target: /workspace
+  backend:
+    build:
+      context: D:/vscode-workspace/soomgil-home-award/backend
+    volumes:
+      - type: bind
+        source: D:/vscode-workspace/soomgil-home-award/backend
+        target: /workspace

@@ -124,13 +124,6 @@
         {
           "path": "/trips/:tripId/vote",
           "name": "TripVote",
-          "page": "src/pages/TripVotePage.vue",
-          "requiresAuth": true,
-          "guestOnly": false
-        },
-        {
-          "path": "/community",
-          "name": "Community",
           "page": "src/pages/CommunityPage.vue",
           "requiresAuth": false,
           "guestOnly": false
@@ -146,13 +139,6 @@
           "path": "/community/story-write",
           "name": "StoryWrite",
           "page": "src/pages/StoryWritePage.vue",
-          "requiresAuth": true,
-          "guestOnly": false
-        },
-        {
-          "path": "/record",
-          "name": "Record",
-          "page": "src/pages/RecordPage.vue",
           "requiresAuth": true,
           "guestOnly": false
         },
@@ -2470,143 +2456,6 @@
           "assetRefs": []
         },
         {
-          "path": "frontend/src/pages/RecordPage.vue",
-          "relativePath": "src/pages/RecordPage.vue",
-          "kind": "page",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [
-            {
-              "level": 1,
-              "id": "",
-              "text": "See your travel memories at a glance"
-            },
-            {
-              "level": 1,
-              "id": "",
-              "text": "여행의 기록 을 한눈에 모아보세요"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "전체 기록"
-            },
-            {
-              "level": 3,
-              "id": "",
-              "text": "{{ trip.title }}"
-            },
-            {
-              "level": 3,
-              "id": "record-photo-title",
-              "text": "사진 추가"
-            }
-          ],
-          "images": [
-            {
-              "src": "coverForTrip(trip.id) || ''",
-              "alt": "trip.title"
-            },
-            {
-              "src": "photoSource(photo)",
-              "alt": "photoLabel(photo)"
-            },
-            {
-              "src": "uploaderProfileImage(photo)!",
-              "alt": "`${uploaderName(photo)} 프로필`"
-            },
-            {
-              "src": "photo.previewUrl",
-              "alt": "`선택한 사진 ${index + 1}`"
-            },
-            {
-              "src": "viewerSrc",
-              "alt": "viewerAlt"
-            }
-          ],
-          "forms": 1,
-          "classNames": [
-            "avatar",
-            "btn",
-            "content-container",
-            "eyebrow",
-            "field",
-            "form-label",
-            "form-label-text",
-            "ghost",
-            "icon-btn",
-            "is-all",
-            "isUploadModalOpen",
-            "material-symbols-rounded",
-            "modal-card",
-            "modal-header",
-            "modal-overlay",
-            "next",
-            "overlay-day",
-            "overlay-schedule",
-            "overlay-uploader",
-            "page-hero",
-            "page-hero__actions",
-            "page-hero__copy",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
-            "page-hero__lead",
-            "page-hero__title",
-            "page-with-hero",
-            "prev",
-            "preview-remove-btn",
-            "primary",
-            "record-action-icon",
-            "record-actions",
-            "record-divider",
-            "record-load-more-error",
-            "record-load-more-sentinel",
-            "record-load-more-status",
-            "record-masonry",
-            "record-masonry-item",
-            "record-masonry-overlay",
-            "record-page",
-            "record-page-head",
-            "record-page-title",
-            "record-page-toolbar",
-            "record-photo-assignment",
-            "record-photo-card",
-            "record-photo-day-select",
-            "record-photo-detection",
-            "record-photo-file-name",
-            "record-photo-form",
-            "record-photo-modal",
-            "record-photo-number",
-            "record-photo-preview",
-            "record-photo-preview-list",
-            "record-photo-preview-row",
-            "record-trip-card",
-            "record-trip-card-body",
-            "record-trip-card-cover",
-            "record-trip-card-cover-placeholder",
-            "record-trip-card-meta",
-            "record-trip-slider",
-            "record-trip-slider-btn",
-            "record-trip-slider-container",
-            "record-upload-helper",
-            "record-upload-icon",
-            "record-upload-title",
-            "record-upload-zone",
-            "record-uploader-avatar",
-            "record-viewer-close",
-            "record-viewer-img",
-            "record-viewer-overlay",
-            "section",
-            "show:",
-            "sr-only",
-            "trip-create-actions",
-            "trip-create-error",
-            "{",
-            "}"
-          ],
-          "assetRefs": []
-        },
-        {
           "path": "frontend/src/pages/RegisterPage.vue",
           "relativePath": "src/pages/RegisterPage.vue",
           "kind": "page",
@@ -3014,10 +2863,6 @@
           ],
           "images": [
             {
-              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ''",
-              "alt": "`여행 기록 사진 ${idx + 1}`"
-            },
-            {
               "src": "media.servingUrl ?? media.publicUrl ?? ''",
               "alt": "`로컬 사진 ${idx + 1}`"
             }
@@ -3147,18 +2992,6 @@
             "primary",
             "success"
           ],
-          "assetRefs": []
-        },
-        {
-          "path": "frontend/src/pages/TripVotePage.vue",
-          "relativePath": "src/pages/TripVotePage.vue",
-          "kind": "page",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [],
-          "images": [],
-          "forms": 0,
-          "classNames": [],
           "assetRefs": []
         },
         {
@@ -3533,7 +3366,6 @@
           "relativePath": "src/api/media.api.ts",
           "imports": [
             "./http",
-            "@/types/api",
             "@/types/media"
           ],
           "exports": [
@@ -3979,6 +3811,18 @@
           "exports": []
         },
         {
+          "path": "frontend/src/components/voting/TripVoteFlow.test.ts",
+          "relativePath": "src/components/voting/TripVoteFlow.test.ts",
+          "imports": [
+            "@/components/voting/TripVoteFlow.vue",
+            "@/types/voting",
+            "@vue/test-utils",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/voting/voteArrangePrompt.ts",
           "relativePath": "src/components/voting/voteArrangePrompt.ts",
           "imports": [],
@@ -4063,29 +3907,6 @@
           ],
           "exports": [
             "useModal"
-          ]
-        },
-        {
-          "path": "frontend/src/composables/useRecordPhotoUrlRefresh.test.ts",
-          "relativePath": "src/composables/useRecordPhotoUrlRefresh.test.ts",
-          "imports": [
-            "./useRecordPhotoUrlRefresh",
-            "@/types/media",
-            "vitest",
-            "vue"
-          ],
-          "exports": []
-        },
-        {
-          "path": "frontend/src/composables/useRecordPhotoUrlRefresh.ts",
-          "relativePath": "src/composables/useRecordPhotoUrlRefresh.ts",
-          "imports": [
-            "@/api/media.api",
-            "@/types/media",
-            "vue"
-          ],
-          "exports": [
-            "useRecordPhotoUrlRefresh"
           ]
         },
         {
@@ -4220,17 +4041,6 @@
           "exports": []
         },
         {
-          "path": "frontend/src/pages/RecordPage.test.ts",
-          "relativePath": "src/pages/RecordPage.test.ts",
-          "imports": [
-            "./RecordPage.vue",
-            "@vue/test-utils",
-            "vitest",
-            "vue"
-          ],
-          "exports": []
-        },
-        {
           "path": "frontend/src/pages/RegisterPage.test.ts",
           "relativePath": "src/pages/RegisterPage.test.ts",
           "imports": [
@@ -4295,18 +4105,6 @@
           "imports": [
             "./TripInviteAcceptPage.vue",
             "@vue/test-utils",
-            "vitest"
-          ],
-          "exports": []
-        },
-        {
-          "path": "frontend/src/pages/TripVotePage.test.ts",
-          "relativePath": "src/pages/TripVotePage.test.ts",
-          "imports": [
-            "./TripVotePage.vue",
-            "@/types/voting",
-            "@vue/test-utils",
-            "pinia",
             "vitest"
           ],
           "exports": []
@@ -4804,24 +4602,24 @@
           ]
         },
         {
+          "path": "frontend/src/types/map-theme.ts",
+          "relativePath": "src/types/map-theme.ts",
+          "imports": [],
+          "exports": [
+            "MAP_THEMES",
+            "MapTheme"
+          ]
+        },
+        {
           "path": "frontend/src/types/media.ts",
           "relativePath": "src/types/media.ts",
           "imports": [],
           "exports": [
-            "CreateTripRecordRequest",
             "MediaFile",
             "MediaPurpose",
             "MediaStatus",
             "MediaUploadMetadata",
-            "MediaUploadUrl",
-            "PhotoRecord",
-            "TripRecordDay",
-            "TripRecordEntry",
-            "TripRecordMedia",
-            "TripRecordPhoto",
-            "TripRecordPhotoReadUrl",
-            "TripRecordPhotoSummary",
-            "TripRecordPhotoSummaryResponse"
+            "MediaUploadUrl"
           ]
         },
         {
@@ -5036,28 +4834,6 @@
             "CartesianPoint",
             "simplifyPathToLimit",
             "simplifyWithTolerance"
-          ]
-        },
-        {
-          "path": "frontend/src/utils/record-photo-metadata.test.ts",
-          "relativePath": "src/utils/record-photo-metadata.test.ts",
-          "imports": [
-            "./record-photo-metadata",
-            "exifr",
-            "vitest"
-          ],
-          "exports": []
-        },
-        {
-          "path": "frontend/src/utils/record-photo-metadata.ts",
-          "relativePath": "src/utils/record-photo-metadata.ts",
-          "imports": [
-            "exifr"
-          ],
-          "exports": [
-            "DatedTripDay",
-            "findItineraryDayByTakenAt",
-            "readPhotoTakenAt"
           ]
         },
         {
@@ -5617,12 +5393,12 @@
         }
       ],
       "summary": {
-        "routes": 21,
-        "pages": 22,
+        "routes": 19,
+        "pages": 20,
         "components": 42,
-        "sourceFiles": 139,
+        "sourceFiles": 135,
         "styleFiles": 6,
-        "typeScriptSignals": 202
+        "typeScriptSignals": 196
       }
     },
     {

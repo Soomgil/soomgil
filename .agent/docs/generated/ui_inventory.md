@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 42 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 19, pages 20, components 42 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -31,11 +31,9 @@
 | `/trip-invites/:inviteCode` | TripInviteAccept | `src/pages/TripInviteAcceptPage.vue` | 필요 | 아니오 |
 | `/swipe` | Swipe | `src/pages/SwipePage.vue` | 필요 | 아니오 |
 | `/trips/:tripId/swipe` | Route | `src/pages/RoutePage.vue` | 필요 | 아니오 |
-| `/trips/:tripId/vote` | TripVote | `src/pages/TripVotePage.vue` | 필요 | 아니오 |
-| `/community` | Community | `src/pages/CommunityPage.vue` | 공개 | 아니오 |
+| `/trips/:tripId/vote` | TripVote | `src/pages/CommunityPage.vue` | 공개 | 아니오 |
 | `/community/feed` | Feed | `src/pages/StoriesPage.vue` | 공개 | 아니오 |
 | `/community/story-write` | StoryWrite | `src/pages/StoryWritePage.vue` | 필요 | 아니오 |
-| `/record` | Record | `src/pages/RecordPage.vue` | 필요 | 아니오 |
 | `/mypage` | MyPage | `src/pages/MyPage.vue` | 필요 | 아니오 |
 | `/mypage/:userId` | UserProfile | `src/pages/UserProfilePage.vue` | 공개 | 아니오 |
 | `/settings` | Settings | `src/pages/SettingsPage.vue` | 필요 | 아니오 |
@@ -503,15 +501,6 @@
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `oauth-error-icon`, `oauth-spinner`, `primary`, `small`
 
-#### frontend/src/pages/RecordPage.vue
-
-- 종류: page
-- script: setup / ts
-- headings: h1 See your travel memories at a glance, h1 여행의 기록 을 한눈에 모아보세요, h3 전체 기록, h3 {{ trip.title }}, h3 사진 추가
-- forms: 1, images: 5
-- asset refs: 없음
-- classes: `avatar`, `btn`, `content-container`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `is-all`, `isUploadModalOpen`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `next`, `overlay-day`, `overlay-schedule`, `overlay-uploader`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `prev`, `preview-remove-btn`, `primary`
-
 #### frontend/src/pages/RegisterPage.vue
 
 - 종류: page
@@ -571,7 +560,7 @@
 - 종류: page
 - script: setup / ts
 - headings: h1 당신의 여행 을 들려주세요, h3 작성 미리보기
-- forms: 1, images: 2
+- forms: 1, images: 1
 - asset refs: 없음
 - classes: `btn`, `content-container`, `detail-topline`, `editor-toolbar`, `field`, `form-group`, `form-group-icon-wrap`, `ghost`, `material-symbols-rounded`, `muted`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `primary`, `section`, `small`, `text-area`, `upload-grid`, `write-form`, `write-layout`, `write-main`, `write-page`, `write-page-hero`, `write-preview-feed-frame`, `write-preview-sidebar`
 
@@ -592,15 +581,6 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
-
-#### frontend/src/pages/TripVotePage.vue
-
-- 종류: page
-- script: setup / ts
-- headings: 없음
-- forms: 0, images: 0
-- asset refs: 없음
-- classes: 없음
 
 #### frontend/src/pages/UserProfilePage.vue
 

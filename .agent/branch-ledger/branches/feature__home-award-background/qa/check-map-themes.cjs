@@ -1,7 +1,7 @@
 const {chromium}=require('C:/Users/kimgh/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const path=require('node:path');
 (async()=>{
- const photos=await(await fetch('http://localhost:8080/api/v1/award-photos?limit=5')).json();
+ const photos=[{placeName:'대전',regionName:'대전',imageUrl:'/src/assets/images/busan.png'}];
  const browser=await chromium.launch({channel:'msedge',headless:true});
  try {
   const context=await browser.newContext({viewport:{width:1440,height:1000}});
@@ -21,25 +21,34 @@ const path=require('node:path');
    else if(url.pathname.includes('/places/')) {const p=places[0];body={...p,placeName:p.name,description:'바다와 풍경을 천천히 둘러볼 수 있는 여행지입니다. 이 문장은 화면 검증용 데이터입니다.',photos:[p.thumbnailUrl]};}
    await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(body)});
   });
-  const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const page=await context.newPage();const styles=[];page.on('response', r=>{const p=new URL(r.url()).pathname;if(/^\/styles\/v1\/mapbox\/[^/]+$/.test(p)) styles.push({path:p,status:r.status()});});const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://localhost:5173/trips/qa/route');
   await page.locator('.trip-sidebar-summary').waitFor({state:'attached'});
   if(await page.locator('header.topbar').count()) throw Error('header remains');
-  for(const width of [1440,390,320]) {
-    await page.setViewportSize({width,height:900});
-    const result=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,top:document.querySelector('.route-page-section').getBoundingClientRect().top}));
-    if(result.overflow || result.top!==0) throw Error(JSON.stringify(result));
-    if(!await page.locator('.route-back-link').isVisible().catch(()=>false) && !await page.locator('.trip-sidebar-back').isVisible()) throw Error('missing return link');
+  await page.locator('.mapboxgl-canvas').waitFor();
+  for(const [value,style] of [['dark','dark-v11'],['navigation-day','navigation-day-v1'],['navigation-night','navigation-night-v1'],['standard','standard'],['light','light-v11']]) {
     await page.locator('.map-theme-button').click();
-    const popover=page.locator('.map-theme-popover');
-    await popover.waitFor();
-    const bounds=await popover.boundingBox();
-    if(bounds.x<0 || bounds.x+bounds.width>width) throw Error('theme popover overflow');
-    await page.screenshot({path:path.join(__dirname,'route-map-theme-'+width+'.png')});
-    await popover.locator('input[value="navigation-night"]').click();
-    if(await page.evaluate(()=>localStorage.getItem('soomgil-map-theme'))!=='navigation-night') throw Error('theme not persisted');
-    await page.locator('.map-theme-button').press('Escape');
+    const loaded=page.waitForResponse(r=>new URL(r.url()).pathname===`/styles/v1/mapbox/${style}`,{timeout:45000});
+    await page.locator(`.map-theme-popover input[value="${value}"]`).click();
+    const response=await loaded;
+    if(!response.ok()) throw Error(`Style ${style}: ${response.status()}`);
+    await page.waitForTimeout(1500);
+    if(await page.locator('.itinerary-map__error').count()) throw Error(await page.locator('.itinerary-map__error').innerText());
+    const count=styles.length;
+    for(const selector of ['[data-tool="pen"]','[data-tool="route-pen"]','[data-toggle="standard-view"]','[data-toggle="drawing"]','[data-tool="cursor"]']) {
+      await page.locator(selector).click();
+    }
+    await page.waitForTimeout(700);
+    if(styles.length!==count) throw Error(`${value}: mode changed map style`);
+    if(await page.evaluate(()=>localStorage.getItem('soomgil-map-theme'))!==value) throw Error(`${value}: lost selection`);
+    await page.screenshot({path:path.join(__dirname,`map-live-${value}.png`)});
+    console.log(`${value}: HTTP 200, drawing/route/3D preserve style`);
   }
+  await page.reload();
+  await page.locator('.mapboxgl-canvas').waitFor();
+  await page.locator('.map-theme-button').click();
+  if(!await page.locator('input[value="light"]').isChecked()) throw Error('reload lost theme');
+  console.log(JSON.stringify(styles));
   await page.goto('http://localhost:5173/trips/qa/vote');
   await page.locator('[data-testid="vote-setup"]').waitFor({timeout:10000}).catch(async e=>{console.log(await page.locator('body').innerText());console.log(page.url(),errors);await page.screenshot({path:path.join(__dirname,'vote-debug.png')});throw e;});
   if(!page.url().includes('/trips/qa/route')) throw Error('vote redirect failed');

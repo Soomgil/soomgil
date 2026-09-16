@@ -2,7 +2,7 @@
 
 현재 활성 화면은 `frontend/src/router/index.ts`의 Vue Router 라우트가 기준입니다.
 
-> 커뮤니티 thread 형식과 `/trips/:tripId/vote`는 구현 완료 상태입니다. 독립 `/record`와 `/swipe` 정리는 아직 진행 중이며 목표 정책은 `../product-specs/product_experience_policy.md`를 따릅니다.
+> 여행기 커뮤니티를 제공하며, 투표 설정·참여·결과는 지도 모달에서 진행합니다. 기록 화면과 서버 기능은 제거했습니다.
 
 | 경로 | 이름 | Page | 인증 |
 | :--- | :--- | :--- | :--- |
@@ -18,13 +18,11 @@
 | `/trip-invites/:inviteCode` | TripInviteAccept | `frontend/src/pages/TripInviteAcceptPage.vue` | 필요 |
 | `/swipe` | Swipe | `frontend/src/pages/SwipePage.vue` | 필요 |
 | `/trips/:tripId/route` | Route | `frontend/src/pages/RoutePage.vue` | 필요 |
-| `/trips/:tripId/vote` | TripVote | `frontend/src/pages/TripVotePage.vue` | 필요 |
-| `/community` | Community | `frontend/src/pages/CommunityFeedPage.vue` | 공개 |
-| `/community/threads/:threadId` | CommunityThread | `frontend/src/pages/CommunityThreadDetailPage.vue` | 공개 |
+| `/trips/:tripId/vote` | TripVote | `/trips/:tripId/route?vote=1` redirect | 필요 |
+| `/community` | Community | `frontend/src/pages/CommunityPage.vue` | 공개 |
 | `/community/feed` | Feed | `/community` redirect | 공개 |
-| `/community/stories` | Stories | `/community` redirect | 공개 |
-| `/community/story-write` | StoryWrite | `/community` redirect | 공개 |
-| `/record` | Record | `frontend/src/pages/RecordPage.vue` | 필요 |
+| `/community/stories` | Stories | `frontend/src/pages/StoriesPage.vue` | 공개 |
+| `/community/story-write` | StoryWrite | `frontend/src/pages/StoryWritePage.vue` | 필요 |
 | `/mypage` | MyPage | `frontend/src/pages/MyPage.vue` | 필요 |
 | `/mypage/:userId` | UserProfile | `frontend/src/pages/UserProfilePage.vue` | 공개 |
 | `/settings` | Settings | `frontend/src/pages/SettingsPage.vue` | 필요 |
@@ -49,22 +47,19 @@
 - 검색어 제목과 현재 표시 중인 결과 수를 제공하며 결과 필터는 검색창 아래의 텍스트 버튼입니다.
 - 사진 카드 클릭 시 기존 여행/사용자 이동, 장소 상세 및 여행기 상세 기능을 유지합니다.
 
-## 여행 방 진입 가드
+## 여행 방 진입과 지도 테마
 
-`/trips/:tripId/route`와 `/trips/:tripId/vote`는 `frontend/src/router/guards.ts`에서
-`GET /trips/{tripId}/vote-sessions/current`의 `nextScreen`으로 분기합니다.
+- 여행방 생성 후 `/trips/:tripId/route?vote=1`로 이동하여 투표 설정 모달을 엽니다. AI 진입 의도도 유지합니다.
+- 내 여행 카드 투표와 기존 `/trips/:tripId/vote` 링크도 지도 모달로 연결합니다.
+- 진입 가드는 투표 상태를 미리 읽고 지도로 통과시킵니다. 미제출 상태에서는 모달을 자동으로 엽니다.
+- 관리 오른쪽의 지도 테마 버튼으로 밝게/어둡게/주간 도로/야간 도로/기본 지도를 선택합니다.
+- 테마는 브라우저에 저장하고 드로잉·3D 카메라·앱 다크 모드 전환과 독립적으로 유지합니다.
 
-- `VOTE` 또는 `WAITING`이면 지도 대신 `/trips/:tripId/vote`로 보냅니다.
-- `MAP`이면 투표 화면 대신 `/trips/:tripId/route`로 보냅니다.
-- 게이트 조회가 실패하면 여행 방 진입 자체를 막지 않고 지도로 통과시킵니다.
+## 기록 기능 제거
 
-## 제거된 화면
-
-여행 스냅샷 게시글 UI는 신규 커뮤니티에서 사용하지 않아 제거했습니다.
-
-- `CommunityPage.vue`, `StoriesPage.vue`, `StoryWritePage.vue`
-- `components/community/StoryCard.vue`, `StoryPostPreview.vue`, `StoryWriteModal.vue`
-- `components/community/StoryDetailOverlay.vue`는 마이페이지, 홈, 검색에서 계속 사용하므로 유지합니다.
+- `/record`, 기록 메뉴, 기록 전용 API client·타입·사진 메타데이터 보조 코드를 제거했습니다.
+- 여행기 작성은 기기에서 사진을 업로드합니다. 여행 기록에서 사진을 가져오지 않습니다.
+- backend V51에서 기록 테이블과 데이터를 삭제하고 기록 전용 객체를 스토리지 cleanup 대상으로 전환합니다. 다른 기능이 참조하는 공용 사진은 유지합니다.
 
 ## 갱신 기준
 
