@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-15T12:12:31.375Z
+생성 시각: 2026-09-16T12:24:03.662Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -23,6 +23,27 @@
 - unknown | feature__home-api-integration | scope 없음 | FEI-131, FEI-132 MyTripsPage 및 SettingsPage 연동 검증 및 테스트 통과 처리 완료 | .agent/branch-ledger/branches/feature__home-api-integration/20260622T112206Z-feature__home-api-integration-fei-131-fei-132-mytripspage-settingspage.md
 - unknown | feature__home-api-integration | scope 없음 | FEI-131, FEI-132, FEI-133, FEI-140 완료 | .agent/branch-ledger/branches/feature__home-api-integration/20260622T114913Z-feature__home-api-integration-fei-131-fei-132-fei-133-fei-140.md
 - unknown | feature__home-api-integration | scope 없음 | API 통합 이후 UI 및 UX 개선사항 적용 완료 | .agent/branch-ledger/branches/feature__home-api-integration/20260622T115949Z-feature__home-api-integration-api-ui-ux.md
+- unknown | feature__home-award-background | scope 없음 | 홈 수상작 배경 재설계 | .agent/branch-ledger/branches/feature__home-award-background/20260915T130850Z-feature__home-award-background-note.md
+- unknown | feature__home-award-background | scope 없음 | 커뮤니티 화이트 매거진 | .agent/branch-ledger/branches/feature__home-award-background/20260916-community-magazine.md
+- unknown | feature__home-award-background | scope 없음 | develop integration (2026-09-16) | .agent/branch-ledger/branches/feature__home-award-background/20260916-develop-integration.md
+- unknown | feature__home-award-background | scope 없음 | 홈 검색 위치 조정 | .agent/branch-ledger/branches/feature__home-award-background/20260916-home-search-position.md
+- unknown | feature__home-award-background | scope 없음 | 기록 기능 폐지와 지도 투표·테마 통합 | .agent/branch-ledger/branches/feature__home-award-background/20260916-map-voting-record-retirement.md
+- unknown | feature__home-award-background | scope 없음 | 멤버 프로필 및 설정 정리 | .agent/branch-ledger/branches/feature__home-award-background/20260916-member-profiles.md
+- unknown | feature__home-award-background | scope 없음 | 홈 검색 단순화와 검색 결과 테마 통일 | .agent/branch-ledger/branches/feature__home-award-background/20260916-paper-search-results.md
+- unknown | feature__home-award-background | scope 없음 | 지도 공통 헤더 숨김 | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-hide-header.md
+- unknown | feature__home-award-background | scope 없음 | 지도 작업공간 상호작용 개선 (2026-09-16) | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-interactions.md
+- unknown | feature__home-award-background | scope 없음 | 지도 복귀 위치 및 관리 버튼 크기 | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-navigation-controls.md
+- unknown | feature__home-award-background | scope 없음 | 지도 이중 헤더 제거 | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-single-header.md
+- unknown | feature__home-award-background | scope 없음 | 지도 스카이 테마 | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-sky-theme.md
+- unknown | feature__home-award-background | scope 없음 | 여행정보 및 참가자 상시 표시 | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-visible-info.md
+- unknown | feature__home-award-background | scope 없음 | 지도 여행방 바와 일정 전용 좌측 패널 | .agent/branch-ledger/branches/feature__home-award-background/20260916-route-workspace-bar.md
+- unknown | feature__home-award-background | scope 없음 | 공통 화이트 헤더 | .agent/branch-ledger/branches/feature__home-award-background/20260916-shared-header.md
+- unknown | feature__home-award-background | scope 없음 | 스카이 컬러 테마 | .agent/branch-ledger/branches/feature__home-award-background/20260916-sky-palette.md
+- unknown | feature__home-award-background | scope 없음 | 취향 수집: 내 여행 스타일 통일 (2026-09-16) | .agent/branch-ledger/branches/feature__home-award-background/20260916-swipe-design.md
+- unknown | feature__home-award-background | scope 없음 | 내 여행 화이트 앨범 | .agent/branch-ledger/branches/feature__home-award-background/20260916-travel-album.md
+- unknown | feature__home-award-background | scope 없음 | 여행 카드 탐색 및 설정 모달 후속 | .agent/branch-ledger/branches/feature__home-award-background/20260916-trip-settings-refinement.md
+- unknown | feature__home-award-background | scope 없음 | 지도 스타일 캐싱과 투표 모달 개편 (2026-09-16) | .agent/branch-ledger/branches/feature__home-award-background/20260916-vote-design-cache.md
+- unknown | feature__home-award-background | scope 없음 | 화이트 먹 번짐 홈 | .agent/branch-ledger/branches/feature__home-award-background/20260916-white-ink-gallery.md
 - unknown | feature__map-collaboration-objects | scope 없음 | 지도 협업 오브젝트 구현 | .agent/branch-ledger/branches/feature__map-collaboration-objects/20260823T170038Z-feature__map-collaboration-objects-note.md
 - unknown | feature__place-search-detail | scope 없음 | 태그 좋아요 통계 정책 | .agent/branch-ledger/branches/feature__place-search-detail/20260620T023313Z-feature__place-search-detail-tag-statistics-policy.md
 - unknown | feature__place-search-detail | scope 없음 | 프론트 장소 취향 추천 연결 | .agent/branch-ledger/branches/feature__place-search-detail/20260621T065741Z-feature__place-search-detail-note.md
