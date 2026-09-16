@@ -197,6 +197,15 @@
 - asset refs: 없음
 - classes: `btn`, `field`, `ghost`, `material-symbols-rounded`, `photo-strip`, `photo-strip__empty`, `photo-strip__nav`, `photo-strip__nav--prev`, `photo-strip__row`, `photo-strip__upload`, `photo-strip__viewport`, `primary`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `tag-chip`, `tag-chip-input`, `tag-chip-input__field`, `tag-chip-input__icon`, `tag-chip__remove`, `{`
 
+#### frontend/src/components/itinerary/RouteTransportPanel.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `material-symbols-rounded`, `route-meta`, `route-name`, `saved-route`, `saved-routes`, `transport-heading`, `transport-options`, `transport-panel`, `unverified`
+
 #### frontend/src/components/layout/AppHeader.vue
 
 - 종류: component
@@ -471,10 +480,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 내 여행 준비 를 이어가세요, h2 {{ currentTrip.title }}, h2 여행 목록, h3 {{ trip.title }}, h3 새 여행 만들기
+- headings: h1 내 여행 준비 를 이어가세요, h2 여행 목록, h3 {{ trip.title }}, h3 새 여행 만들기
 - forms: 1, images: 2
-- asset refs: `@/assets/images/soomgil_logo_none_text.png`
-- classes: `===`, `[getStatusCls(trip),`, `active`, `active:`, `activeFilter`, `airport-code`, `app-shell`, `avatar`, `boarding-pass-card`, `boarding-pass-card--placeholder`, `boarding-pass-container`, `bottom`, `btn`, `carousel-btn`, `carousel-dot`, `carousel-dots-container`, `carouselIndex`, `city-name`, `compact-title`, `createModal.isOpen.value`, `d-day-badge`, `dashed-line`, `departure`, `destination`, `detail-item`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`
+- asset refs: 없음
+- classes: `===`, `[getStatusCls(trip),`, `active`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `companion-avatar`, `companion-count`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `getStatusCls(trip)`, `ghost`, `icon-btn`, `load-more-error`, `load-more-row`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `my-trips-timeline`, `my-trips-timeline-wrapper`, `page-hero`, `page-hero__actions`
 
 #### frontend/src/pages/NotFoundPage.vue
 

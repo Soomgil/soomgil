@@ -710,6 +710,28 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/itinerary/RouteTransportPanel.vue",
+          "relativePath": "src/components/itinerary/RouteTransportPanel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "route-meta",
+            "route-name",
+            "saved-route",
+            "saved-routes",
+            "transport-heading",
+            "transport-options",
+            "transport-panel",
+            "unverified"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/layout/AppHeader.vue",
           "relativePath": "src/components/layout/AppHeader.vue",
           "kind": "component",
@@ -1026,7 +1048,7 @@
           ],
           "images": [
             {
-              "src": "place.thumbnailUrl ?? ",
+              "src": "place.thumbnailUrl ?? ''",
               "alt": "place.placeName"
             }
           ],
@@ -1561,11 +1583,11 @@
           "images": [
             {
               "src": "imageUrl(current)!",
-              "alt": "current.name ?? "
+              "alt": "current.name ?? '후보 관광지'"
             },
             {
               "src": "imageUrl(candidate)!",
-              "alt": "candidate.name ?? "
+              "alt": "candidate.name ?? '후보 썸네일'"
             }
           ],
           "forms": 0,
@@ -1617,7 +1639,7 @@
           "images": [
             {
               "src": "row.thumbnailUrl",
-              "alt": "row.name ?? "
+              "alt": "row.name ?? '선정 관광지'"
             }
           ],
           "forms": 0,
@@ -1682,7 +1704,7 @@
           "images": [
             {
               "src": "row.candidate.thumbnailUrl",
-              "alt": "row.candidate.name ?? "
+              "alt": "row.candidate.name ?? '후보 썸네일'"
             }
           ],
           "forms": 0,
@@ -2030,12 +2052,12 @@
               "alt": "member avatar"
             },
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ''",
               "alt": "story.title"
             },
             {
               "src": "story.publishedBy.profileImageUrl",
-              "alt": "story.publishedBy.displayName ?? "
+              "alt": "story.publishedBy.displayName ?? ''"
             }
           ],
           "forms": 0,
@@ -2388,11 +2410,6 @@
             {
               "level": 2,
               "id": "",
-              "text": "{{ currentTrip.title }}"
-            },
-            {
-              "level": 2,
-              "id": "",
               "text": "여행 목록"
             },
             {
@@ -2408,12 +2425,12 @@
           ],
           "images": [
             {
-              "src": "logoUrl",
-              "alt": "숨길 로고"
+              "src": "trip.coverImageUrl!",
+              "alt": ""
             },
             {
-              "src": "trip.coverImageUrl",
-              "alt": "trip.title"
+              "src": "user.profileImageUrl",
+              "alt": ""
             }
           ],
           "forms": 1,
@@ -2423,26 +2440,12 @@
             "active",
             "active:",
             "activeFilter",
-            "airport-code",
             "app-shell",
-            "avatar",
-            "boarding-pass-card",
-            "boarding-pass-card--placeholder",
-            "boarding-pass-container",
-            "bottom",
             "btn",
-            "carousel-btn",
-            "carousel-dot",
-            "carousel-dots-container",
-            "carouselIndex",
-            "city-name",
             "compact-title",
+            "companion-avatar",
+            "companion-count",
             "createModal.isOpen.value",
-            "d-day-badge",
-            "dashed-line",
-            "departure",
-            "destination",
-            "detail-item",
             "eyebrow",
             "field",
             "filter.value",
@@ -2450,14 +2453,9 @@
             "form-label-text",
             "getStatusCls(trip)",
             "ghost",
-            "i",
             "icon-btn",
-            "label",
-            "line",
             "load-more-error",
             "load-more-row",
-            "logo-image",
-            "logo-text",
             "material-symbols-rounded",
             "modal-card",
             "modal-header",
@@ -2465,11 +2463,6 @@
             "my-trips-dashboard",
             "my-trips-timeline",
             "my-trips-timeline-wrapper",
-            "next-btn",
-            "next-trip-dots",
-            "next-trip-members",
-            "next-trip-nav",
-            "next-trip-panel",
             "page-hero",
             "page-hero__actions",
             "page-hero__copy",
@@ -2478,30 +2471,52 @@
             "page-hero__lead",
             "page-hero__title",
             "page-with-hero",
-            "plane-icon",
-            "prev-btn",
             "primary",
-            "punch-hole",
-            "route-path",
-            "route-point",
             "search-box",
             "section",
             "section-title",
+            "selected-companion-chip",
+            "selected-companions",
             "show:",
             "sr-only",
-            "stub-action-btn",
-            "stub-actions",
-            "stub-controls",
-            "stub-date-info",
-            "stub-detail-btn",
-            "stub-header",
-            "stub-title",
-            "stub-title-label",
-            "ticket-badge"
+            "timeline-card",
+            "timeline-card-actions",
+            "timeline-card-avatar-wrapper",
+            "timeline-card-badges",
+            "timeline-card-body",
+            "timeline-card-date",
+            "timeline-card-destination",
+            "timeline-card-header",
+            "timeline-card-info",
+            "timeline-card-open",
+            "timeline-card-role",
+            "timeline-card-status-badge",
+            "timeline-card-title",
+            "timeline-card-vote",
+            "travel-page-head",
+            "trip-create-card",
+            "trip-create-companions",
+            "trip-create-date-grid",
+            "trip-create-duration",
+            "trip-create-form",
+            "trip-create-grid",
+            "trip-create-hint",
+            "trip-create-intro",
+            "trip-create-modal",
+            "trip-create-section-head",
+            "trip-dashboard-layout",
+            "trip-dashboard-main",
+            "trip-intent-guide",
+            "trip-list-head",
+            "trip-list-section",
+            "trip-search",
+            "trip-tabs",
+            "trip-toolbar",
+            "trip-view-panel",
+            "{",
+            "}"
           ],
-          "assetRefs": [
-            "@/assets/images/soomgil_logo_none_text.png"
-          ]
+          "assetRefs": []
         },
         {
           "path": "frontend/src/pages/NotFoundPage.vue",
@@ -2624,7 +2639,7 @@
           ],
           "images": [
             {
-              "src": "coverForTrip(trip.id) || ",
+              "src": "coverForTrip(trip.id) || ''",
               "alt": "trip.title"
             },
             {
@@ -2816,7 +2831,7 @@
           "images": [
             {
               "src": "m.profileImageUrl",
-              "alt": "m.displayName || "
+              "alt": "m.displayName || '멤버'"
             }
           ],
           "forms": 0,
@@ -2916,7 +2931,7 @@
               "alt": "place.name"
             },
             {
-              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ",
+              "src": "post.coverMedia?.servingUrl ?? post.coverMedia?.publicUrl ?? ''",
               "alt": "post.title"
             },
             {
@@ -3011,7 +3026,7 @@
           "images": [
             {
               "src": "currentUser.profileImageUrl",
-              "alt": "currentUser?.displayName || "
+              "alt": "currentUser?.displayName || 'User'"
             }
           ],
           "forms": 0,
@@ -3110,8 +3125,8 @@
           ],
           "images": [
             {
-              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? ",
-              "alt": "story.title + "
+              "src": "story.coverMedia?.servingUrl ?? story.coverMedia?.publicUrl ?? '/images/랜딩페이지/korea_hero.png'",
+              "alt": "story.title + ' 스토리'"
             }
           ],
           "forms": 0,
@@ -3159,11 +3174,11 @@
           ],
           "images": [
             {
-              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ",
+              "src": "photo.media.servingUrl ?? photo.media.publicUrl ?? ''",
               "alt": "`여행 기록 사진 ${idx + 1}`"
             },
             {
-              "src": "media.servingUrl ?? media.publicUrl ?? ",
+              "src": "media.servingUrl ?? media.publicUrl ?? ''",
               "alt": "`로컬 사진 ${idx + 1}`"
             }
           ],
@@ -3365,7 +3380,7 @@
               "alt": "프로필 이미지"
             },
             {
-              "src": "(place.thumbnailUrl ?? ",
+              "src": "(place.thumbnailUrl ?? '')",
               "alt": "place.placeName"
             },
             {
@@ -3906,6 +3921,17 @@
           "relativePath": "src/components/common/BaseButton.test.ts",
           "imports": [
             "./BaseButton.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/itinerary/RouteTransportPanel.test.ts",
+          "relativePath": "src/components/itinerary/RouteTransportPanel.test.ts",
+          "imports": [
+            "./RouteTransportPanel.vue",
+            "@/types/itinerary",
             "@vue/test-utils",
             "vitest"
           ],

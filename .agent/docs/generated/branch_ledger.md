@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-10T04:33:13.059Z
+생성 시각: 2026-09-15T12:12:31.375Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -15,6 +15,8 @@
 - unknown | chore__fei-131-tracking | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md
 - 2026-08-23T10:08:16.689Z | chore/product-policy-realignment | shared | 작업 기록 | .agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md
 - unknown | chore__record-api-integration-tracking | scope 없음 | FEI-100-110 record API integration | .agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md
+- unknown | feature__community-trip-voting | scope 없음 | community thread feed and trip sticker voting | .agent/branch-ledger/branches/feature__community-trip-voting/20260825T031654Z-feature__community-trip-voting-community-thread-feed-and-trip-sticker-voting.md
+- unknown | feature__community-trip-voting | scope 없음 | vote region selection and candidate count | .agent/branch-ledger/branches/feature__community-trip-voting/20260913T165524Z-feature__community-trip-voting-vote-region-selection-and-candidate-count.md
 - unknown | feature__frontend-api-integration-fei-141-180 | scope 없음 | FEI 141-180 frontend API integration | .agent/branch-ledger/branches/feature__frontend-api-integration-fei-141-180/20260623T003736Z-feature__frontend-api-integration-fei-141-180-fei-141-180-frontend-api-integration.md
 - unknown | feature__home-api-integration | scope 없음 | FEI-120 and FEI-121: HomePage API Integration | .agent/branch-ledger/branches/feature__home-api-integration/20260622T105334Z-feature__home-api-integration-fei-120-and-fei-121-homepage-api-integration.md
 - unknown | feature__home-api-integration | scope 없음 | FEI-120, FEI-121 HomePage 백엔드 API 직접 구현 및 핫픽스 적용 완료 | .agent/branch-ledger/branches/feature__home-api-integration/20260622T110714Z-feature__home-api-integration-fei-120-fei-121-homepage-api.md
