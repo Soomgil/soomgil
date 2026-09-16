@@ -44,6 +44,10 @@ status: draft
 - frontend: `npx vitest run` 415 passed, `npm run build` OK. root: `harness:index`, `harness:check` 통과.
 - backend tools: `python -m unittest test_place_tagging.py` 10 OK, `test_jeju_tagging.py` OK. 덤프 없는 환경에서 `[설정 문제]` 메시지 확인.
 
+### 라이브 확인 후 고친 것
+- 머지된 UI에서 생성 → 지도+투표 설정 모달 → 나중에 → 투표 시작 → 스티커 → 닫기(빨간 경고) 흐름을 Playwright로 재확인.
+- 버그: 초기 설정 통합이 기간을 일정 DAY 그룹으로 저장해 설정 모달이 항상 "2일로 가정"이었다 → 여행 상세에 날짜가 없으면
+  일정 DAY 그룹으로 일수를 센다(`TripVoteFlow.countItineraryDays`). 4일 여행 → 선정 12곳 확인.
+
 ## 남은 일
 - 실제 덤프로 `plan` 실행해 A/B/C 장소 수 확인(이 컴퓨터에는 덤프가 없음).
-- 머지된 develop UI에서 생성 → 투표 설정 모달 → 투표 → AI 배치 흐름 라이브 재확인.
