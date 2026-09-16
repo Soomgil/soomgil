@@ -1738,7 +1738,7 @@
           "images": [
             {
               "src": "src",
-              "alt": "muted ? "
+              "alt": "muted ? '남은 스티커 자리' : '붙인 스티커'"
             }
           ],
           "forms": 0,
@@ -5665,10 +5665,10 @@
       "summary": {
         "routes": 21,
         "pages": 22,
-        "components": 41,
-        "sourceFiles": 135,
+        "components": 42,
+        "sourceFiles": 136,
         "styleFiles": 4,
-        "typeScriptSignals": 197
+        "typeScriptSignals": 199
       }
     },
     {

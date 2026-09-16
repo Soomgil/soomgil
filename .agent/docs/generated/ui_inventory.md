@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 41 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 21, pages 22, components 42 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
