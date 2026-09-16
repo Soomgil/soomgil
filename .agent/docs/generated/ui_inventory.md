@@ -646,6 +646,12 @@
 - tokens: 없음
 - animations: 없음
 
+#### frontend/src/styles/route-sky-theme.css
+
+- Tailwind import: 없음
+- tokens: `--bg`, `--blue`, `--ink`, `--line`, `--muted`, `--surface`, `--surface-2`, `--violet`
+- animations: 없음
+
 #### frontend/src/styles/scroll-explore.css
 
 - Tailwind import: 없음
