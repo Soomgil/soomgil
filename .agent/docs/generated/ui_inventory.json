@@ -1383,11 +1383,6 @@
             },
             {
               "level": 4,
-              "id": "trip-status-title",
-              "text": "여행 상태 설정"
-            },
-            {
-              "level": 4,
               "id": "delete-trip-title",
               "text": "여행 삭제"
             },
@@ -1410,9 +1405,7 @@
           ],
           "forms": 1,
           "classNames": [
-            "===",
             "[",
-            "active:",
             "advanced-modal",
             "advanced-overlay",
             "btn",
@@ -1440,8 +1433,11 @@
             "material-symbols-rounded",
             "member-avatar",
             "member-count",
+            "member-info",
             "member-item",
             "member-list",
+            "member-name",
+            "member-role",
             "members-header",
             "members-tab-content",
             "modal-body",
@@ -1454,12 +1450,6 @@
             "primary",
             "settings-dates",
             "show:",
-            "status",
-            "status-option",
-            "status-option-check",
-            "status-option-copy",
-            "status-option-grid",
-            "status-option-icon",
             "trip-create-actions",
             "trip-create-error",
             "trip-create-form",

@@ -363,10 +363,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h3 여행 관리, h4 여행 상태 설정, h4 여행 삭제, h4 초대 링크 공유, h4 참여 중인 멤버
+- headings: h3 여행 관리, h4 여행 삭제, h4 초대 링크 공유, h4 참여 중인 멤버
 - forms: 1, images: 1
 - asset refs: 없음
-- classes: `===`, `[`, `active:`, `advanced-modal`, `advanced-overlay`, `btn`, `danger-button`, `danger-zone`, `delete-confirmation`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `invite-action-btn`, `invite-action-btn--ghost`, `invite-action-btn--primary`, `invite-actions`, `invite-error`, `invite-link-box`, `invite-link-icon`, `invite-share-section`, `management-section`, `management-section-head`, `management-section-icon`, `management-section-icon--danger`, `material-symbols-rounded`, `member-avatar`, `member-count`
+- classes: `[`, `advanced-modal`, `advanced-overlay`, `btn`, `danger-button`, `danger-zone`, `delete-confirmation`, `eyebrow`, `field`, `form-label`, `form-label-text`, `ghost`, `icon-btn`, `invite-action-btn`, `invite-action-btn--ghost`, `invite-action-btn--primary`, `invite-actions`, `invite-error`, `invite-link-box`, `invite-link-icon`, `invite-share-section`, `management-section`, `management-section-head`, `management-section-icon`, `management-section-icon--danger`, `material-symbols-rounded`, `member-avatar`, `member-count`, `member-info`, `member-item`
 
 #### frontend/src/components/voting/OwnerVoteSetupPanel.vue
 

@@ -33,6 +33,10 @@ const path=require('node:path');
   await page.screenshot({path:path.join(__dirname,'trip-settings-mobile.png')});
   await page.setViewportSize({width:1440,height:1000});
   await page.screenshot({path:path.join(__dirname,'trip-settings-desktop.png')});
-  console.log('Trips pages and settings passed');
+  await page.locator('[data-tab=tab-members]').click();
+  await page.locator('.member-item').first().waitFor();
+  if(await page.locator('.member-avatar').count()!==5) throw Error('members missing');
+  await page.screenshot({path:path.join(__dirname,'trip-members.png')});
+  console.log('Trips pages, settings and members passed');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
