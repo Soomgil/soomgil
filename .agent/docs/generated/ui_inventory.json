@@ -2686,13 +2686,7 @@
           "kind": "page",
           "scriptLang": "ts",
           "scriptSetup": true,
-          "headings": [
-            {
-              "level": 1,
-              "id": "",
-              "text": "{{ trip.title }}"
-            }
-          ],
+          "headings": [],
           "images": [
             {
               "src": "m.profileImageUrl",
@@ -2709,13 +2703,13 @@
             "material-symbols-rounded",
             "route-page-section",
             "section",
-            "trip-info-toggle",
-            "trip-status-badge",
-            "trip-workspace-actions",
-            "trip-workspace-bar",
-            "trip-workspace-details",
-            "trip-workspace-identity",
-            "{"
+            "sidebar-content",
+            "sidebar-sheet-handle",
+            "sidebar-toggle",
+            "trip-map-actions",
+            "trip-sidebar-details",
+            "trip-sidebar-summary",
+            "trip-title-toggle"
           ],
           "assetRefs": []
         },
