@@ -2936,7 +2936,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "우리만의 여행 취향 을 모아보세요"
+              "text": "취향 수집"
             },
             {
               "level": 2,
@@ -2964,10 +2964,8 @@
             "material-symbols-rounded",
             "meta-row",
             "page-hero",
-            "page-hero__actions",
             "page-hero__copy",
             "page-hero__eyebrow",
-            "page-hero__gradient",
             "page-hero__lead",
             "page-hero__title",
             "page-with-hero",
@@ -2976,11 +2974,14 @@
             "section",
             "swipe-body",
             "swipe-card",
-            "swipe-filter-actions",
+            "swipe-discovery",
+            "swipe-guide",
+            "swipe-guide--left",
+            "swipe-guide--right",
+            "swipe-guide--top",
             "swipe-layout",
             "swipe-main-column",
             "swipe-place-placeholder",
-            "swipe-region-filter",
             "swipe-stage",
             "swipe-workspace-card",
             "tag",

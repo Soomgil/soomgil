@@ -568,10 +568,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 우리만의 여행 취향 을 모아보세요, h2 취향 수집 완료!, h2 {{ currentPlace.placeName }}
+- headings: h1 취향 수집, h2 취향 수집 완료!, h2 {{ currentPlace.placeName }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `lead`, `material-symbols-rounded`, `meta-row`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `section`, `swipe-body`, `swipe-card`, `swipe-filter-actions`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-region-filter`, `swipe-stage`, `swipe-workspace-card`, `tag`, `tag-row`, `{`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `lead`, `material-symbols-rounded`, `meta-row`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `section`, `swipe-body`, `swipe-card`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-stage`, `swipe-workspace-card`, `tag`, `tag-row`, `{`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 
