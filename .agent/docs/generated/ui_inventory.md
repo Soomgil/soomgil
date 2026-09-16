@@ -534,10 +534,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h3 {{ trip.title }}
+- headings: h1 {{ trip.title }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `icon-calendar`, `material-symbols-rounded`, `period-text`, `route-page-section`, `section`, `sidebar-content`, `sidebar-sheet-handle`, `sidebar-toggle`, `stat-label`, `stat-value`, `trip-card-dates`, `trip-card-divider`, `trip-card-footer`, `trip-card-period-row`, `trip-card-title`, `trip-info-badge-row`, `trip-stat-item`, `trip-stats-grid`, `trip-status-badge`
+- classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `material-symbols-rounded`, `route-page-section`, `section`, `trip-info-toggle`, `trip-status-badge`, `trip-workspace-actions`, `trip-workspace-bar`, `trip-workspace-details`, `trip-workspace-identity`, `{`
 
 #### frontend/src/pages/SearchResultsPage.vue
 

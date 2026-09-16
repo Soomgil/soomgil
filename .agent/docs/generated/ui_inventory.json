@@ -2688,7 +2688,7 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 3,
+              "level": 1,
               "id": "",
               "text": "{{ trip.title }}"
             }
@@ -2706,25 +2706,16 @@
             "avatars",
             "avatars-group",
             "full-screen",
-            "icon-calendar",
             "material-symbols-rounded",
-            "period-text",
             "route-page-section",
             "section",
-            "sidebar-content",
-            "sidebar-sheet-handle",
-            "sidebar-toggle",
-            "stat-label",
-            "stat-value",
-            "trip-card-dates",
-            "trip-card-divider",
-            "trip-card-footer",
-            "trip-card-period-row",
-            "trip-card-title",
-            "trip-info-badge-row",
-            "trip-stat-item",
-            "trip-stats-grid",
-            "trip-status-badge"
+            "trip-info-toggle",
+            "trip-status-badge",
+            "trip-workspace-actions",
+            "trip-workspace-bar",
+            "trip-workspace-details",
+            "trip-workspace-identity",
+            "{"
           ],
           "assetRefs": []
         },
