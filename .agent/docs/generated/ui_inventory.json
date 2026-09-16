@@ -1456,7 +1456,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "스티커 투표 로 갈 곳을 함께 정해요"
+              "text": "스티커 투표로 갈 곳을 함께 정해요"
             }
           ],
           "images": [],
@@ -1464,13 +1464,14 @@
           "classNames": [
             "material-symbols-rounded",
             "page-hero__eyebrow",
-            "page-hero__gradient",
             "vote-setup",
             "vote-setup__chip",
             "vote-setup__chip-remove",
             "vote-setup__chips",
             "vote-setup__cta",
+            "vote-setup__destination",
             "vote-setup__error",
+            "vote-setup__footer",
             "vote-setup__hint",
             "vote-setup__hint--warn",
             "vote-setup__lead",
@@ -1484,6 +1485,7 @@
             "vote-setup__row-icon--count",
             "vote-setup__row-icon--rank",
             "vote-setup__row-icon--region",
+            "vote-setup__step",
             "vote-setup__stepper",
             "vote-setup__suggest",
             "vote-setup__suggest-icon",
@@ -1491,7 +1493,8 @@
             "vote-setup__suggest-list",
             "vote-setup__suggest-title",
             "vote-setup__suggest-unit",
-            "vote-setup__title"
+            "vote-setup__title",
+            "vote-setup__trip"
           ],
           "assetRefs": []
         },
@@ -1550,6 +1553,7 @@
             "trip-vote__narrow",
             "trip-vote__panel",
             "trip-vote__progress",
+            "trip-vote__restart",
             "trip-vote__result-actions",
             "trip-vote__waiting",
             "trip-vote__waiting-bar",
@@ -1661,19 +1665,40 @@
             {
               "level": 1,
               "id": "",
-              "text": "투표가 끝났어요!"
+              "text": "{{ showAll ? '전체 투표 결과' : '우리의 다음 여행지' }}"
             }
           ],
-          "images": [],
+          "images": [
+            {
+              "src": "row.thumbnailUrl",
+              "alt": "row.name ?? '여행지'"
+            }
+          ],
           "forms": 0,
           "classNames": [
             "material-symbols-rounded",
-            "page-hero__eyebrow",
-            "page-hero__gradient",
+            "row.selected,",
+            "selected:",
+            "sr-only",
             "vote-result",
+            "vote-result__all",
+            "vote-result__badge",
+            "vote-result__body",
+            "vote-result__count",
+            "vote-result__empty",
+            "vote-result__eyebrow",
+            "vote-result__favorite",
             "vote-result__header",
             "vote-result__lead",
-            "vote-result__title"
+            "vote-result__list",
+            "vote-result__media",
+            "vote-result__name",
+            "vote-result__outcome",
+            "vote-result__rank",
+            "vote-result__row",
+            "vote-result__selected",
+            "vote-result__title",
+            "{"
           ],
           "assetRefs": []
         },
@@ -3672,6 +3697,7 @@
             "./MapDrawingOverlay.vue",
             "./MapboxItineraryMap.vue",
             "@/composables/useTheme",
+            "@/utils/mapStyleCache",
             "@vue/test-utils",
             "vitest",
             "vue"
@@ -3818,6 +3844,17 @@
             "@/types/voting",
             "@vue/test-utils",
             "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteResultPanel.test.ts",
+          "relativePath": "src/components/voting/VoteResultPanel.test.ts",
+          "imports": [
+            "./VoteResultPanel.vue",
+            "@/types/voting",
+            "@vue/test-utils",
             "vitest"
           ],
           "exports": []
@@ -4818,6 +4855,28 @@
           ]
         },
         {
+          "path": "frontend/src/utils/mapStyleCache.test.ts",
+          "relativePath": "src/utils/mapStyleCache.test.ts",
+          "imports": [
+            "./mapStyleCache",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/mapStyleCache.ts",
+          "relativePath": "src/utils/mapStyleCache.ts",
+          "imports": [
+            "@/types/map-theme",
+            "mapbox-gl"
+          ],
+          "exports": [
+            "cachedMapStyle",
+            "loadMapStyle",
+            "prefetchMapStyles"
+          ]
+        },
+        {
           "path": "frontend/src/utils/pathSimplification.test.ts",
           "relativePath": "src/utils/pathSimplification.test.ts",
           "imports": [
@@ -5396,9 +5455,9 @@
         "routes": 19,
         "pages": 20,
         "components": 42,
-        "sourceFiles": 135,
+        "sourceFiles": 138,
         "styleFiles": 6,
-        "typeScriptSignals": 196
+        "typeScriptSignals": 199
       }
     },
     {

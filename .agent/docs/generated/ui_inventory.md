@@ -370,10 +370,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h1 스티커 투표 로 갈 곳을 함께 정해요
+- headings: h1 스티커 투표로 갈 곳을 함께 정해요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__error`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--rank`, `vote-setup__row-icon--region`, `vote-setup__stepper`, `vote-setup__suggest`, `vote-setup__suggest-icon`, `vote-setup__suggest-label`, `vote-setup__suggest-list`, `vote-setup__suggest-title`, `vote-setup__suggest-unit`, `vote-setup__title`
+- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__footer`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--rank`, `vote-setup__row-icon--region`, `vote-setup__step`, `vote-setup__stepper`, `vote-setup__suggest`, `vote-setup__suggest-icon`, `vote-setup__suggest-label`, `vote-setup__suggest-list`, `vote-setup__suggest-title`
 
 #### frontend/src/components/voting/TripVoteFlow.vue
 
@@ -382,7 +382,7 @@
 - headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h1 어디로 갈까요?, h2 제출을 마쳤어요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`, `{`
+- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__restart`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`, `{`
 
 #### frontend/src/components/voting/VoteCandidateDeck.vue
 
@@ -406,10 +406,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h1 투표가 끝났어요!
-- forms: 0, images: 0
+- headings: h1 {{ showAll ? '전체 투표 결과' : '우리의 다음 여행지' }}
+- forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `page-hero__gradient`, `vote-result`, `vote-result__header`, `vote-result__lead`, `vote-result__title`
+- classes: `material-symbols-rounded`, `row.selected,`, `selected:`, `sr-only`, `vote-result`, `vote-result__all`, `vote-result__badge`, `vote-result__body`, `vote-result__count`, `vote-result__empty`, `vote-result__eyebrow`, `vote-result__favorite`, `vote-result__header`, `vote-result__lead`, `vote-result__list`, `vote-result__media`, `vote-result__name`, `vote-result__outcome`, `vote-result__rank`, `vote-result__row`, `vote-result__selected`, `vote-result__title`, `{`
 
 #### frontend/src/components/voting/VoteStickerCart.vue
 
