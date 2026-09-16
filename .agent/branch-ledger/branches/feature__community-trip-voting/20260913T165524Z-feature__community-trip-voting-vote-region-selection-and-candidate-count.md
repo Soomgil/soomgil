@@ -63,3 +63,8 @@ status: draft
 - 전역 `.modal-overlay`는 `.show`가 있어야 보이므로 투표 오버레이에 `show is-open`을 준다(우측 탭바가 클릭을 가로채던 원인).
 - 검증: vitest 400개 중 399 통과(잔여 1개는 기존 RoutePage AI 재시도), build 통과. 라이브: `/route` 진입 시 URL 유지·모달 자동, 닫기 → 경고, 배너로 재오픈, 시작 패널 제안값(3일·하루 3곳 → 9/18/5), 제출 → 자동 종료(동점 2위 둘 다 선정) → 결과 모달 → AI 입력 채움.
 - 참고: 미지원 경로 요청이 404가 아니라 500(`NoResourceFoundException`)으로 응답한다(전역 예외 처리, 기존 동작).
+
+### 후속: 생성 직후 투표 모달과 스티커 에셋 (2026-09-16)
+- 여행 생성 → `router.replace(Route, { voteSetup: '1' })`. `RoutePage`는 방장·세션 없음일 때만 설정 모달을 자동 오픈. 설정 패널에 `지금은 나중에 할게요`(`later` emit) 추가.
+- 스티커 6종 SVG(`public/vote-stickers/`), `voteStickerCatalog.ts`, `VoteStickerMark.vue`. 덱 사진 위 겹침(최대 8, 회전), 보드 도트를 스티커 자리로 교체(미사용은 흐림).
+- 검증: 호스트 vitest 405/405, build 통과. (컨테이너에서 실패하던 RoutePage AI 재시도 테스트는 호스트에서 통과 — 컨테이너 환경 flake로 판단)

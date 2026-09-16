@@ -1459,6 +1459,7 @@
             "vote-setup__error",
             "vote-setup__hint",
             "vote-setup__hint--warn",
+            "vote-setup__later",
             "vote-setup__lead",
             "vote-setup__note",
             "vote-setup__panel",
@@ -1591,6 +1592,8 @@
             "vote-deck__stage",
             "vote-deck__step",
             "vote-deck__step--add",
+            "vote-deck__sticker",
+            "vote-deck__stickers",
             "vote-deck__thumb",
             "vote-deck__thumb-badge",
             "vote-deck__thumbs",
@@ -1686,7 +1689,6 @@
           "classNames": [
             "material-symbols-rounded",
             "vote-cart",
-            "vote-cart__dot",
             "vote-cart__dots",
             "vote-cart__empty",
             "vote-cart__header",
@@ -1700,7 +1702,26 @@
             "vote-cart__submit",
             "vote-cart__thumb",
             "vote-cart__thumb--empty",
-            "vote-cart__title",
+            "vote-cart__title"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/voting/VoteStickerMark.vue",
+          "relativePath": "src/components/voting/VoteStickerMark.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [
+            {
+              "src": "src",
+              "alt": "muted ? "
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "vote-sticker-mark",
             "{"
           ],
           "assetRefs": []
@@ -4100,6 +4121,18 @@
           ]
         },
         {
+          "path": "frontend/src/components/voting/voteStickerCatalog.ts",
+          "relativePath": "src/components/voting/voteStickerCatalog.ts",
+          "imports": [],
+          "exports": [
+            "DEFAULT_VOTE_STICKER",
+            "VOTE_STICKERS",
+            "VoteStickerDefinition",
+            "VoteStickerStyle",
+            "voteStickerSrc"
+          ]
+        },
+        {
           "path": "frontend/src/composables/useAuth.ts",
           "relativePath": "src/composables/useAuth.ts",
           "imports": [
@@ -5606,10 +5639,10 @@
       "summary": {
         "routes": 21,
         "pages": 22,
-        "components": 40,
-        "sourceFiles": 134,
+        "components": 41,
+        "sourceFiles": 135,
         "styleFiles": 4,
-        "typeScriptSignals": 195
+        "typeScriptSignals": 197
       }
     },
     {
