@@ -21,15 +21,15 @@ const path=require('node:path');
   });
   const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://localhost:5173/trips/qa/route');
-  await page.locator('.trip-workspace-bar').waitFor();
+  await page.locator('.route-back-link').waitFor();
+  if(await page.locator('header.topbar').count()) throw Error('header remains');
   for(const width of [1440,390]) {
     await page.setViewportSize({width,height:900});
-    const result=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,bar:document.querySelector('.trip-workspace-bar').getBoundingClientRect().bottom,map:document.querySelector('.map-shell').getBoundingClientRect().top}));
-    if(result.overflow || result.map<result.bar-1) throw Error(JSON.stringify(result));
-    await page.screenshot({path:path.join(__dirname,'route-workspace-'+width+'.png')});
+    const result=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,top:document.querySelector('.route-page-section').getBoundingClientRect().top}));
+    if(result.overflow || result.top!==0) throw Error(JSON.stringify(result));
+    if(!await page.locator('.route-back-link').isVisible()) throw Error('missing return link');
+    await page.screenshot({path:path.join(__dirname,'route-no-header-'+width+'.png')});
   }
-  await page.getByRole('button',{name:'여행 정보'}).click();
-  if(await page.getByRole('button',{name:'여행 정보'}).getAttribute('aria-expanded')!=='true') throw Error('expand');
-  console.log('Workspace bar positioning and mobile expansion passed');
+  console.log('Header hidden, full height, return link verified');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

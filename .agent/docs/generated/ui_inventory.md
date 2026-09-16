@@ -537,7 +537,7 @@
 - headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `material-symbols-rounded`, `route-page-section`, `section`, `sidebar-content`, `sidebar-sheet-handle`, `sidebar-toggle`, `trip-map-actions`, `trip-sidebar-details`, `trip-sidebar-summary`, `trip-title-toggle`
+- classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `material-symbols-rounded`, `route-back-link`, `route-page-section`, `section`, `sidebar-content`, `sidebar-sheet-handle`, `sidebar-toggle`, `trip-map-actions`, `trip-sidebar-details`, `trip-sidebar-summary`, `trip-title-toggle`
 
 #### frontend/src/pages/SearchResultsPage.vue
 
