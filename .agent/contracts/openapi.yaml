@@ -5321,14 +5321,14 @@ components:
           format: uuid
         type:
           type: string
-          enum: [TRIP_INVITE]
-          description: MVP는 직접 여행방 초대 알림만 생성.
+          enum: [TRIP_INVITE, VOTE_STARTED, VOTE_COMPLETED]
+          description: 직접 여행 초대 및 참여 중인 투표의 시작·결과 확정 알림.
         title:
           type: string
         body:
           type: string
         payload:
-          $ref: '#/components/schemas/TripInviteNotificationPayload'
+          $ref: '#/components/schemas/NotificationPayload'
         readAt:
           type: string
           format: date-time
@@ -5350,6 +5350,25 @@ components:
         route:
           type: string
           example: /trips/invites/{inviteCode}
+    NotificationPayload:
+      type: object
+      required: [tripId]
+      description: 초대는 inviteId·inviteCode, 투표는 voteSessionId로 대상이 고정된다.
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        inviteId:
+          type: [string, 'null']
+          format: uuid
+        inviteCode:
+          type: [string, 'null']
+        voteSessionId:
+          type: [string, 'null']
+          format: uuid
+        route:
+          type: [string, 'null']
+          example: /trips/00000000-0000-0000-0000-000000000001/route?vote=1&voteSession=00000000-0000-0000-0000-000000000002
     PagedNotification:
       type: object
       properties:

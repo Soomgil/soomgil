@@ -58,3 +58,17 @@ status: draft
 - 최종 API 관련 backend 54 tests 통과. schema.dbml PostgreSQL 변환 및 최종 harness 검사 통과.
 
 - 최종 backend 재기동 및 /actuator/health HTTP 200 확인. 별개 기존 Gemini 태그 추출에서 401 인증 오류 관찰(API 키 변경하지 않음).
+
+
+## 브리핑·알림 및 커뮤니티 보기 방식 (2026-09-17)
+
+- 사용자 확정: 한국 시간의 오늘 일정 + 가장 가까운 미래 일정, 여행 초대 + 투표 시작·결과 알림.
+- 헤더를 화이트·하늘색 패널로 통일, 날짜/여행명/방문 순서, 빈 상태/실패 재시도, Escape 및 모바일 폭 대응.
+- 미읽음 숫자는 서버 전체 개수. 활성 탭 30초 간격 및 포커스 복귀 시 갱신하며 외부 관광 API 호출은 없음. 전체 읽음·삭제·초대 이동을 연결.
+- voting 공개 포트와 notification adapter 연결. 같은 트랜잭션에서 활성 참여자만 저장, 세션/종류/수신자 고정 ID로 중복 방지. 과거 알림은 해당 세션 결과 조회, 새 투표에 소급 생성하지 않음.
+- 커뮤니티 최근 글 기본 그리드, 리스트 토글. 전환 시 검색/페이지 유지 및 재조회 없음. 정사각 사진·흰 종이 테두리·넓은 하단 여백의 폴라로이드, 사진 없음/오류 표지 지원.
+- 홈 검색 버튼은 하늘색 단색/아이콘/기존 입력창과 일관된 높이를 제안만 했고 변경하지 않음.
+- 먼저 실패 테스트를 확인한 뒤 구현. frontend 관련 43 tests, backend 33 tests(실제 PostgreSQL 알림 범위·중복 방지 포함), frontend build 통과.
+- 전체 frontend에서는 420 pass/1 fail: 별도 작업의 Mapbox NavigationControl 제거와 기존 addControl 기대값 충돌. 해당 별도 변경과 Community 인기 제목 제거, RoutePage 다른 UI 수정은 그대로 미커밋 상태로 보존.
+- 1440/390/320px Playwright fixture로 브리핑/알림/그리드/리스트 및 읽음/닫기 확인. 실제 운영 계정으로 초대·투표 알림을 발송하지 않음.
+- backend 재시작 후 health HTTP 200 확인. 마이그레이션 추가 없음. 한국 시간 nearest 쿼리는 실제 PostgreSQL EXPLAIN 통과.

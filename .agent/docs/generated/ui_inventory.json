@@ -494,6 +494,11 @@
           "scriptSetup": true,
           "headings": [
             {
+              "level": 2,
+              "id": "popular-stories-title",
+              "text": "여행자들이 좋아한 이야기"
+            },
+            {
               "level": 3,
               "id": "",
               "text": "{{ story.title }}"
@@ -524,6 +529,7 @@
             "material-symbols-rounded",
             "photo-caption",
             "popular-carousel",
+            "popular-heading",
             "read-story",
             "slide-count"
           ],
@@ -1867,11 +1873,6 @@
             },
             {
               "level": 2,
-              "id": "popular-stories-title",
-              "text": "눈길이 머문 여행"
-            },
-            {
-              "level": 2,
               "id": "",
               "text": "방금 도착한 여행 이야기"
             },
@@ -1944,7 +1945,6 @@
             "pg-arrow",
             "pg-btn",
             "pg-num",
-            "popular-heading",
             "prev",
             "prev-btn",
             "search-box",
@@ -1963,6 +1963,7 @@
             "story-overlay-backdrop",
             "story-overlay-close",
             "story-overlay-panel",
+            "story-photo-placeholder",
             "story-post",
             "story-post-head",
             "story-post-photo-frame",
@@ -1982,10 +1983,10 @@
             "story-tile-summary",
             "story-tile-tags",
             "story-tile-title",
+            "story-view-toggle",
             "story-write-pill",
             "story.likedByMe",
-            "tag",
-            "tag-row"
+            "tag"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -2878,11 +2879,9 @@
             "btn",
             "detail-topline",
             "ghost",
-            "material-symbols-rounded",
             "muted",
             "page-hero",
             "page-hero__copy",
-            "page-hero__eyebrow",
             "page-hero__gradient",
             "page-hero__lead",
             "page-hero__title",
@@ -4082,6 +4081,16 @@
           "exports": [
             "uiTranslationsEn"
           ]
+        },
+        {
+          "path": "frontend/src/pages/CommunityPage.test.ts",
+          "relativePath": "src/pages/CommunityPage.test.ts",
+          "imports": [
+            "./CommunityPage.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
         },
         {
           "path": "frontend/src/pages/HomePage.test.ts",
@@ -5498,9 +5507,9 @@
         "routes": 19,
         "pages": 20,
         "components": 43,
-        "sourceFiles": 139,
+        "sourceFiles": 140,
         "styleFiles": 6,
-        "typeScriptSignals": 201
+        "typeScriptSignals": 202
       }
     },
     {

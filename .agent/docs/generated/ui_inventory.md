@@ -163,10 +163,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h3 {{ story.title }}
+- headings: h2 여행자들이 좋아한 이야기, h3 {{ story.title }}
 - forms: 0, images: 2
 - asset refs: 없음
-- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-label`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `read-story`, `slide-count`
+- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-label`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `popular-heading`, `read-story`, `slide-count`
 
 #### frontend/src/components/community/StoryCard.vue
 
@@ -442,7 +442,7 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 눈길이 머문 여행, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
+- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
 - forms: 0, images: 4
 - asset refs: `/images/랜딩페이지/korea_hero.png`
 - classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-empty`, `community-hero-eyebrow`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-paper`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
@@ -562,7 +562,7 @@
 - headings: h1 우리들의 여행 이야기 를 둘러보세요, h3 {{ story.title }}
 - forms: 0, images: 1
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `btn`, `detail-topline`, `ghost`, `material-symbols-rounded`, `muted`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `post-type`, `primary`, `section`, `story`, `story-list-card`, `story-list-grid`
+- classes: `btn`, `detail-topline`, `ghost`, `muted`, `page-hero`, `page-hero__copy`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `post-type`, `primary`, `section`, `story`, `story-list-card`, `story-list-grid`
 
 #### frontend/src/pages/StoryWritePage.vue
 
