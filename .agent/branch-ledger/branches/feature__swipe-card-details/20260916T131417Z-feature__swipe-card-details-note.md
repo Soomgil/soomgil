@@ -97,3 +97,7 @@ status: draft
 - Frontend PR #16 merged as 536c5b1; original frontend switched to develop and fast-forwarded.
 - Original desktop preview work preserved in named stashes; its feature branch remains. Root tmp directory preserved.
 - Backend PR #20 created; full Gradle suite running before merge.
+
+- Backend full run: 889 tests / 887 passed, 2 failed due stale KTO region fixture and shared DB seed mutation. Fixed fixture and transactional isolation; fresh seed context. Four affected/neighbor classes rerun: 11 tests passed, no skips. Python seed tests 4 passed.
+- Backend PR #20 merged as 81dc956. Frontend #16 merged as 536c5b1. Both task feature branches deleted locally/remotely after merge.
+- Original frontend preview saved in stashes (source 5bb855a4e2aa2beac53d1963eab6fb62150070ec plus generated dist snapshot); no preview changes discarded.
