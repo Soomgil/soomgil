@@ -72,3 +72,8 @@ status: draft
 - 전체 frontend에서는 420 pass/1 fail: 별도 작업의 Mapbox NavigationControl 제거와 기존 addControl 기대값 충돌. 해당 별도 변경과 Community 인기 제목 제거, RoutePage 다른 UI 수정은 그대로 미커밋 상태로 보존.
 - 1440/390/320px Playwright fixture로 브리핑/알림/그리드/리스트 및 읽음/닫기 확인. 실제 운영 계정으로 초대·투표 알림을 발송하지 않음.
 - backend 재시작 후 health HTTP 200 확인. 마이그레이션 추가 없음. 한국 시간 nearest 쿼리는 실제 PostgreSQL EXPLAIN 통과.
+
+## 2026-09-17 Home search visual refinement
+- Applied home-only hanji ivory surface, thin border, restrained shadow, modest corner radius and muted blue-gray search button; matched recent-search dropdown.
+- Updated placeholder to 어떤 한국의 풍경을 만나고 싶나요? Existing search routing/history preserved.
+- Validation: HomePage 9 tests passed, frontend production build passed, harness passed. Mock-only browser QA verified 1440/390/320 widths, styles, recent searches, Escape and no horizontal overflow; mobile screenshot inspected.
