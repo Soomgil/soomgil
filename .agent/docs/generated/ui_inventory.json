@@ -5501,6 +5501,43 @@
             "marquee",
             "scroll-wheel"
           ]
+        },
+        {
+          "path": "frontend/src/styles/travel-page-actions.css",
+          "relativePath": "src/styles/travel-page-actions.css",
+          "importsTailwind": false,
+          "tokens": [
+            "--action-blue",
+            "--action-blue-hover",
+            "--action-border",
+            "--action-soft"
+          ],
+          "classes": [
+            "active",
+            "carousel-controls",
+            "community-paper",
+            "community-story-search",
+            "paper-search-field",
+            "paper-search-icon",
+            "paper-search-submit",
+            "pg-btn",
+            "read-story",
+            "search-box__button",
+            "search-more-btn",
+            "search-page",
+            "search-tab",
+            "search-tabs",
+            "story-view-toggle",
+            "story-write-pill",
+            "timeline-card-vote",
+            "travel-paper",
+            "trip-create-button",
+            "trip-options",
+            "trip-pagination",
+            "trip-search",
+            "trip-tabs"
+          ],
+          "animations": []
         }
       ],
       "summary": {
@@ -5508,7 +5545,7 @@
         "pages": 20,
         "components": 43,
         "sourceFiles": 140,
-        "styleFiles": 6,
+        "styleFiles": 7,
         "typeScriptSignals": 202
       }
     },

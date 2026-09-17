@@ -647,6 +647,12 @@
 - tokens: `--bg`, `--blue`, `--glass`, `--ink`, `--line`, `--muted`, `--rose`, `--shadow`, `--surface`, `--violet`
 - animations: `marquee`, `scroll-wheel`
 
+#### frontend/src/styles/travel-page-actions.css
+
+- Tailwind import: 없음
+- tokens: `--action-blue`, `--action-blue-hover`, `--action-border`, `--action-soft`
+- animations: 없음
+
 ## 하네스 사용법
 
 - 구조 변경 후 `npm --prefix .agent run harness:index`로 재생성합니다.

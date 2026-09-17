@@ -89,3 +89,11 @@ status: draft
 - Header utility buttons: unified pale sky circular surfaces, thin borders and stronger hover/open states for briefing, notifications and profile. Profile exposes expanded state. Header 12 tests, build and responsive browser checks passed.
 
 - Community grid/list toggle now slides its selection pill using the header easing and 420ms duration, with reduced-motion support. Existing toggle test and build passed; fixture browser verified intermediate translation, duration and responsive layout at 1440/390/320. Color inversion scope pending user clarification.
+
+## Integration preparation (2026-09-17)
+- User authorized committing all task changes, merging develop and updating the original worktree.
+- Remaining carousel/map/discovery refinements committed; removed map control expectation aligned with UI.
+- Full frontend suite: 62 files, 426 tests passed. Production build and full harness passed.
+- Frontend PR #16 merged as 536c5b1; original frontend switched to develop and fast-forwarded.
+- Original desktop preview work preserved in named stashes; its feature branch remains. Root tmp directory preserved.
+- Backend PR #20 created; full Gradle suite running before merge.
