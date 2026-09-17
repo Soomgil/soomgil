@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-17T02:02:50.116Z
+생성 시각: 2026-09-17T14:57:01.548Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -44,6 +44,10 @@
 - unknown | feature__home-award-background | scope 없음 | 여행 카드 탐색 및 설정 모달 후속 | .agent/branch-ledger/branches/feature__home-award-background/20260916-trip-settings-refinement.md
 - unknown | feature__home-award-background | scope 없음 | 지도 스타일 캐싱과 투표 모달 개편 (2026-09-16) | .agent/branch-ledger/branches/feature__home-award-background/20260916-vote-design-cache.md
 - unknown | feature__home-award-background | scope 없음 | 화이트 먹 번짐 홈 | .agent/branch-ledger/branches/feature__home-award-background/20260916-white-ink-gallery.md
+- unknown | feature__map-action-polish | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/feature__map-action-polish/20260917T021158Z-feature__map-action-polish-note.md
+- unknown | feature__map-action-polish | scope 없음 | 지도 관리 및 취향 UI 개선 | .agent/branch-ledger/branches/feature__map-action-polish/map-management-refinement.md
+- unknown | feature__map-action-polish | scope 없음 | 지도 취향 보기 · 투표 안내 축소 | .agent/branch-ledger/branches/feature__map-action-polish/map-taste-view.md
+- unknown | feature__map-action-polish | scope 없음 | 마이페이지 캐시와 UI 언어 일관성 | .agent/branch-ledger/branches/feature__map-action-polish/mypage-cache-and-ui-locale.md
 - unknown | feature__map-collaboration-objects | scope 없음 | 지도 협업 오브젝트 구현 | .agent/branch-ledger/branches/feature__map-collaboration-objects/20260823T170038Z-feature__map-collaboration-objects-note.md
 - unknown | feature__place-search-detail | scope 없음 | 태그 좋아요 통계 정책 | .agent/branch-ledger/branches/feature__place-search-detail/20260620T023313Z-feature__place-search-detail-tag-statistics-policy.md
 - unknown | feature__place-search-detail | scope 없음 | 프론트 장소 취향 추천 연결 | .agent/branch-ledger/branches/feature__place-search-detail/20260621T065741Z-feature__place-search-detail-note.md
