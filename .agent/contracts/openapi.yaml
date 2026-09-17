@@ -1202,6 +1202,50 @@ paths:
           description: No Content
         '404':
           $ref: '#/components/responses/NotFound'
+  /trips/{tripId}/preference-places:
+    get:
+      tags: [Places]
+      summary: 여행 멤버가 실제 좋아한 지도 관광지
+      operationId: listTripPreferencePlaces
+      description: >
+        ACTIVE 여행 멤버만 조회할 수 있다. DB에 저장된 KTO 관광지 최대 200개의
+        LIKE/SUPER_LIKE 반응을 반환하며 외부 관광 API를 호출하지 않는다.
+        본인, PUBLIC 프로필, 승인된 팔로워에게 공개되는 PRIVATE 프로필만 포함한다.
+        지도 이동만으로 재호출하지 않고 열기 또는 이 지역 다시 찾기로 갱신한다.
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - name: bbox
+          in: query
+          required: true
+          description: 서쪽,남쪽,동쪽,북쪽 경위도. 날짜변경선을 가로지르지 않는다.
+          schema: { type: string }
+      responses:
+        '200':
+          description: 장소별로 각 멤버의 최종 긍정 반응 한 행씩 반환
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required: [provider, externalPlaceId, name, lat, lng, userId, displayName, reaction]
+                  properties:
+                    provider: { type: string, enum: [KTO] }
+                    externalPlaceId: { type: string }
+                    name: { type: string }
+                    address: { type: string, nullable: true }
+                    lat: { type: number, format: double }
+                    lng: { type: number, format: double }
+                    thumbnailUrl: { type: string, nullable: true }
+                    category: { type: string, nullable: true }
+                    userId: { type: string, format: uuid }
+                    displayName: { type: string }
+                    profileImageUrl: { type: string, nullable: true }
+                    reaction: { type: string, enum: [LIKE, SUPER_LIKE] }
+        '400':
+          description: 지도 범위가 올바르지 않음
+        '403':
+          description: 여행방 접근 권한 없음
   /trips/{tripId}/place-recommendations:
     get:
       tags: [Places]
