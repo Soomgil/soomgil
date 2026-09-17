@@ -647,6 +647,12 @@
 - tokens: `--bg`, `--blue`, `--glass`, `--ink`, `--line`, `--muted`, `--rose`, `--shadow`, `--surface`, `--violet`
 - animations: `marquee`, `scroll-wheel`
 
+#### frontend/src/styles/story-detail-theme.css
+
+- Tailwind import: 없음
+- tokens: `--blue`, `--ink`, `--line`, `--muted`, `--surface-2`, `--violet`
+- animations: 없음
+
 #### frontend/src/styles/travel-page-actions.css
 
 - Tailwind import: 없음

@@ -35,3 +35,10 @@ status: draft
 - 먼저 실패하는 기존 동작 테스트 2개 확인 후 수정. RoutePage 79 tests, production build, full harness 통과.
 - frontend 컨테이너를 원본 ./frontend bind mount로 재생성. backend 및 데이터 볼륨은 변경하지 않음.
 - 제품 커밋은 frontend에 저장. 상위 pointer는 child PR 병합 전 갱신하지 않음.
+
+## 후속 상세보기 및 프로필
+- 투표 안내 한 줄 및 클릭 닫기, 내 여행 복귀 알약 버튼. RoutePage/Header 합계 91 tests 통과.
+- 프로필 카드: 계정 요약·원형 사진·메뉴·로그아웃 구분. 기존 important 스타일 충돌 수정.
+- story-detail-theme.css를 CommunityPage와 StoryDetailOverlay 모두에 연결. Search/MyPage는 공통 overlay, 다른 사용자 게시물은 community 경유.
+- 데스크톱 사진/본문 1.6 : 댓글 1, 모바일 세로 흐름. 화이트/하늘색 표면, 사진 contain, 작은 안내 알약.
+- Community/Search/MyPage/Header 20 tests, build 통과. Fixture browser 1440/390 layout 확인 및 스크린샷 검토.

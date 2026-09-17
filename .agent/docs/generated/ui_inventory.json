@@ -5503,6 +5503,49 @@
           ]
         },
         {
+          "path": "frontend/src/styles/story-detail-theme.css",
+          "relativePath": "src/styles/story-detail-theme.css",
+          "importsTailwind": false,
+          "tokens": [
+            "--blue",
+            "--ink",
+            "--line",
+            "--muted",
+            "--surface-2",
+            "--violet"
+          ],
+          "classes": [
+            "active",
+            "comment-count-badge",
+            "comment-submit-btn",
+            "fc-item",
+            "fc-text",
+            "feed-comment-header",
+            "feed-comment-input-area",
+            "feed-comment-scroll",
+            "feed-comment-widget",
+            "feed-layout",
+            "feed-scroll-guide",
+            "feed-scroll-guide-pill",
+            "feed-sidebar",
+            "guide-text",
+            "story-action-bar",
+            "story-body",
+            "story-feed",
+            "story-feed-window",
+            "story-like-button",
+            "story-overlay",
+            "story-overlay-close",
+            "story-overlay-panel",
+            "story-post",
+            "story-post-photo-frame",
+            "story-post-photo-img",
+            "swipe-track-container",
+            "widget-card"
+          ],
+          "animations": []
+        },
+        {
           "path": "frontend/src/styles/travel-page-actions.css",
           "relativePath": "src/styles/travel-page-actions.css",
           "importsTailwind": false,
@@ -5545,7 +5588,7 @@
         "pages": 20,
         "components": 43,
         "sourceFiles": 140,
-        "styleFiles": 7,
+        "styleFiles": 8,
         "typeScriptSignals": 202
       }
     },
