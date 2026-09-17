@@ -1053,6 +1053,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/provider'
         - $ref: '#/components/parameters/externalPlaceId'
+        - name: includeInfo
+          in: query
+          description: false이면 이용·접근성 상세 정보 호출을 생략한다. 사진과 기본 장소 정보는 반환한다.
+          schema:
+            type: boolean
+            default: true
       responses:
         '200':
           description: OK
@@ -1102,6 +1108,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/SwipeFeedResponse'
   /places/{provider}/{externalPlaceId}/swipe-reaction:
+    get:
+      tags: [Preference]
+      summary: 현재 사용자의 장소 반응 조회
+      operationId: getMyPlaceReaction
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema: { type: string }
+        - name: externalPlaceId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 저장된 반응. 미선택은 null.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reaction:
+                    type: string
+                    nullable: true
+                    enum: [NOPE, LIKE, SUPER_LIKE]
     put:
       tags: [Swipe]
       summary: 최종 스와이프 반응 upsert
@@ -5290,14 +5321,14 @@ components:
           format: uuid
         type:
           type: string
-          enum: [TRIP_INVITE]
-          description: MVP는 직접 여행방 초대 알림만 생성.
+          enum: [TRIP_INVITE, VOTE_STARTED, VOTE_COMPLETED]
+          description: 직접 여행 초대 및 참여 중인 투표의 시작·결과 확정 알림.
         title:
           type: string
         body:
           type: string
         payload:
-          $ref: '#/components/schemas/TripInviteNotificationPayload'
+          $ref: '#/components/schemas/NotificationPayload'
         readAt:
           type: string
           format: date-time
@@ -5319,6 +5350,25 @@ components:
         route:
           type: string
           example: /trips/invites/{inviteCode}
+    NotificationPayload:
+      type: object
+      required: [tripId]
+      description: 초대는 inviteId·inviteCode, 투표는 voteSessionId로 대상이 고정된다.
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        inviteId:
+          type: [string, 'null']
+          format: uuid
+        inviteCode:
+          type: [string, 'null']
+        voteSessionId:
+          type: [string, 'null']
+          format: uuid
+        route:
+          type: [string, 'null']
+          example: /trips/00000000-0000-0000-0000-000000000001/route?vote=1&voteSession=00000000-0000-0000-0000-000000000002
     PagedNotification:
       type: object
       properties:

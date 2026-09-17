@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-16T12:24:03.662Z
+생성 시각: 2026-09-17T02:02:50.116Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -53,6 +53,7 @@
 - unknown | feature__product-ux-backend-integration | scope 없음 | 마이페이지 설정 기록 일정 UX 및 API 상태 동기화 | .agent/branch-ledger/branches/feature__product-ux-backend-integration/20260623T065022Z-feature__product-ux-backend-integration-ux-api.md
 - unknown | feature__route-api-integration | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/feature__route-api-integration/20260622T103004Z-feature__route-api-integration-fei-140-routepage-api-mockplaces.md
 - unknown | feature__route-api-integration | scope 없음 | FEI-120 and FEI-121: HomePage API Integration | .agent/branch-ledger/branches/feature__route-api-integration/20260622T104801Z-feature__route-api-integration-fei-120-and-fei-121-homepage-api-integration.md
+- unknown | feature__swipe-card-details | scope 없음 | 취향 수집 사진 탐색과 애니메이션, 홈 상단 검색, 인기 여행기 캐러셀 | .agent/branch-ledger/branches/feature__swipe-card-details/20260916T131417Z-feature__swipe-card-details-note.md
 - unknown | feature__trip-basic-access | scope 없음 | 김지훈 백엔드 완료 조건 보완 | .agent/branch-ledger/branches/feature__trip-basic-access/20260618T065800Z-feature__trip-basic-access-note.md
 - unknown | feature__trip-basic-access | scope 없음 | 프론트엔드 3인 역할 배분 | .agent/branch-ledger/branches/feature__trip-basic-access/20260619T131321Z-feature__trip-basic-access-note.md
 - unknown | feature__trip-basic-access | scope 없음 | 프론트 역할 최종 검토 보완 | .agent/branch-ledger/branches/feature__trip-basic-access/20260619T132309Z-feature__trip-basic-access-note.md
