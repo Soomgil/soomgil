@@ -56,3 +56,5 @@ status: draft
 - 기존 Redis 단편 캐시 일괄 이관은 하지 않음. DB 우선 목록은 전체 최신 외부 목록을 보장하지 않음. 명시적 수동 갱신 또는 seed 갱신 사용.
 
 - 최종 API 관련 backend 54 tests 통과. schema.dbml PostgreSQL 변환 및 최종 harness 검사 통과.
+
+- 최종 backend 재기동 및 /actuator/health HTTP 200 확인. 별개 기존 Gemini 태그 추출에서 401 인증 오류 관찰(API 키 변경하지 않음).
