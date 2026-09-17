@@ -48,3 +48,10 @@ status: draft
 - Replies: only root comments expose reply action; selected reply pill is blue. Server max depth 1 and rejects any parent with parentCommentId. Existing nested records are retained. Failing regression reproduced then handler 4 tests passed, frontend 8 tests/build passed. Thread connectors use continuous 2px gray-blue spine and rounded branches, ending at final reply. Backend container remounted to original workspace for updated policy.
 
 - Feed pointer drag tracks displacement live, 65px commit threshold, edge resistance and snap-back; touch and mouse use unified pointer events, interactive controls excluded. Entry nudge twice plus text guide; dismiss on interaction; reduced motion disables automatic nudge. Wheel throttled 500ms. Eight related tests/build passed and browser fixture checked drag offset and layout at desktop/mobile widths.
+
+## Persistent header and account pages
+- App owns one header instance; page shells/direct page headers removed. Route changes preserve navigation indicator and inbox state; map and landing hide the header without remounting. Existing route watcher closes dropdowns.
+- Regression first failed because App had no shared header; navigation test verifies instance identity, single mount, map hide/show. Existing swipe bootstrap test retained with route/header fixtures.
+- Shared account-theme.css aligns MyPage/Settings with white/sky palette, serif headings and common body font. Profile actions use desktop right column, compact centered mobile profile. Saved places and stories/preferences have separate surfaces; settings uses profile summary beside controls, compact summary on mobile.
+- API fixtures: browser checks at 1440/390px verify header identity, no duplicate header, no horizontal overflow; screenshots reviewed. Account API contracts unchanged; no JavaDoc required.
+- Final validation: 427 frontend tests passed, production build and full harness passed. Frontend commit 0850d8f; original workspace/HMR updated. Child pointers remain unstaged pending PR merge.

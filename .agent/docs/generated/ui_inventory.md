@@ -478,10 +478,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 나의 여행 프로필 을 관리하세요, h2 {{ displayName }}
+- headings: h1 여행으로 채운 나의 공간, h2 {{ displayName }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-page-heading`, `mypage-profile-card`, `mypage-shell`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `profile-avatar-col`, `profile-avatar-img`, `profile-avatar-wrap`, `profile-bio`, `profile-display-name`, `profile-handle`, `profile-header-card`, `profile-info-col`, `profile-stat-item`, `profile-stat-label`, `profile-stat-value`, `profile-stats-row`, `section`, `{`
+- classes: `account-page-link`, `material-symbols-rounded`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-page-heading`, `mypage-profile-card`, `mypage-shell`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `profile-avatar-col`, `profile-avatar-img`, `profile-avatar-wrap`, `profile-bio`, `profile-display-name`, `profile-handle`, `profile-header-card`, `profile-info-col`, `profile-stat-item`, `profile-stat-label`, `profile-stat-value`, `profile-stats-row`, `section`, `{`
 
 #### frontend/src/pages/MyTripsPage.vue
 
@@ -550,10 +550,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 {{ currentUser?.displayName || '여행자' }}, h2 {{ t('settings.environment') }}, h2 {{ t('settings.account') }}
+- headings: h1 나에게 맞는 여행 환경, h2 {{ currentUser?.displayName || '여행자' }}, h2 {{ t('settings.environment') }}, h2 {{ t('settings.account') }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `animate-spin`, `avatar-fallback`, `btn`, `bullet-icon`, `danger-action-btn`, `danger-bullet-item`, `email-icon`, `error-status`, `field`, `lg:px-8`, `loading-spinner-wrap`, `loading-text`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `px-4`, `py-8`, `select-chevron`, `settings-actions-buttons`, `settings-actions-status`, `settings-cards-group`, `settings-danger-action`, `settings-danger-bullet-list`
+- classes: `account-page-link`, `animate-spin`, `avatar-fallback`, `btn`, `bullet-icon`, `danger-action-btn`, `danger-bullet-item`, `email-icon`, `error-status`, `field`, `lg:px-8`, `loading-spinner-wrap`, `loading-text`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `px-4`, `py-8`
 
 #### frontend/src/pages/StoriesPage.vue
 
@@ -610,6 +610,12 @@
 - classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `primary`, `small`, `verification-success-icon`, `verification-token-fallback`
 
 ### Styles
+
+#### frontend/src/styles/account-theme.css
+
+- Tailwind import: 없음
+- tokens: `--blue`, `--ink`, `--line`, `--muted`, `--violet`
+- animations: 없음
 
 #### frontend/src/styles/main.css
 

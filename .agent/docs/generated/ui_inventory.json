@@ -2253,7 +2253,7 @@
             {
               "level": 1,
               "id": "mypage-title",
-              "text": "나의 여행 프로필 을 관리하세요"
+              "text": "여행으로 채운 나의 공간"
             },
             {
               "level": 2,
@@ -2269,6 +2269,7 @@
           ],
           "forms": 0,
           "classNames": [
+            "account-page-link",
             "material-symbols-rounded",
             "mypage-hero",
             "mypage-hero__avatar",
@@ -2279,7 +2280,6 @@
             "page-hero",
             "page-hero__copy",
             "page-hero__eyebrow",
-            "page-hero__gradient",
             "page-hero__lead",
             "page-hero__title",
             "page-with-hero",
@@ -2755,6 +2755,11 @@
           "scriptSetup": true,
           "headings": [
             {
+              "level": 1,
+              "id": "",
+              "text": "나에게 맞는 여행 환경"
+            },
+            {
               "level": 2,
               "id": "",
               "text": "{{ currentUser?.displayName || '여행자' }}"
@@ -2778,6 +2783,7 @@
           ],
           "forms": 0,
           "classNames": [
+            "account-page-link",
             "animate-spin",
             "avatar-fallback",
             "btn",
@@ -2793,6 +2799,11 @@
             "material-symbols-rounded",
             "max-w-6xl",
             "mx-auto",
+            "page-hero",
+            "page-hero__copy",
+            "page-hero__eyebrow",
+            "page-hero__lead",
+            "page-hero__title",
             "page-with-hero",
             "panel-head-icon",
             "panel-head-icon--orange",
@@ -3598,6 +3609,18 @@
             "@vue/test-utils",
             "pinia",
             "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/app/AppNavigation.test.ts",
+          "relativePath": "src/app/AppNavigation.test.ts",
+          "imports": [
+            "./App.vue",
+            "@vue/test-utils",
+            "vitest",
+            "vue",
+            "vue-router"
           ],
           "exports": []
         },
@@ -4972,6 +4995,99 @@
       ],
       "styles": [
         {
+          "path": "frontend/src/styles/account-theme.css",
+          "relativePath": "src/styles/account-theme.css",
+          "importsTailwind": false,
+          "tokens": [
+            "--blue",
+            "--ink",
+            "--line",
+            "--muted",
+            "--violet"
+          ],
+          "classes": [
+            "account-page-link",
+            "danger-action-btn",
+            "is-active",
+            "mypage-body-container",
+            "mypage-empty-cta",
+            "mypage-empty-desc",
+            "mypage-empty-state",
+            "mypage-empty-title",
+            "mypage-glass-container",
+            "mypage-hero",
+            "mypage-hero__content",
+            "mypage-more-link",
+            "mypage-place-card",
+            "mypage-profile-card",
+            "mypage-section",
+            "mypage-section-header",
+            "mypage-section-title",
+            "mypage-share-notice",
+            "mypage-shell",
+            "mypage-stories-magazine",
+            "mypage-story-magazine-item",
+            "page-hero__eyebrow",
+            "page-hero__lead",
+            "page-hero__title",
+            "panel-head-icon--violet",
+            "panel-head-title-group",
+            "place-title-h3",
+            "pref-empty-desc",
+            "pref-empty-title",
+            "primary",
+            "profile-actions-row",
+            "profile-avatar-col",
+            "profile-avatar-img",
+            "profile-avatar-wrap",
+            "profile-bio",
+            "profile-bottom-col",
+            "profile-bottom-grid",
+            "profile-display-name",
+            "profile-handle",
+            "profile-header-card",
+            "profile-info-col",
+            "profile-pill-btn",
+            "profile-settings-page",
+            "profile-stat-item",
+            "profile-stat-label",
+            "profile-stat-value",
+            "profile-stats-row",
+            "secondary",
+            "section-icon",
+            "settings-cards-group",
+            "settings-item-card",
+            "settings-item-card--toggle",
+            "settings-item__control",
+            "settings-item__desc",
+            "settings-item__icon-wrap",
+            "settings-item__info",
+            "settings-item__title",
+            "settings-layout",
+            "settings-page",
+            "settings-panel",
+            "settings-panel--danger",
+            "settings-save-btn",
+            "settings-section--actions",
+            "settings-select",
+            "settings-summary",
+            "settings-summary__avatar",
+            "settings-summary__avatar-wrap",
+            "settings-summary__bio-section",
+            "settings-summary__cover",
+            "settings-summary__email-pill",
+            "settings-summary__email-section",
+            "settings-summary__profile",
+            "story-magazine-title",
+            "summary-cover-art",
+            "switch-control",
+            "switch-track",
+            "visibility-segment-btn",
+            "visibility-segmented-control"
+          ],
+          "animations": []
+        },
+        {
           "path": "frontend/src/styles/main.css",
           "relativePath": "src/styles/main.css",
           "importsTailwind": true,
@@ -5609,9 +5725,9 @@
         "routes": 19,
         "pages": 20,
         "components": 43,
-        "sourceFiles": 140,
-        "styleFiles": 8,
-        "typeScriptSignals": 202
+        "sourceFiles": 141,
+        "styleFiles": 9,
+        "typeScriptSignals": 203
       }
     },
     {
