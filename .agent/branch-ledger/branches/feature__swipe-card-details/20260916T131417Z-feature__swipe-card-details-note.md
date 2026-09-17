@@ -77,3 +77,5 @@ status: draft
 - Applied home-only hanji ivory surface, thin border, restrained shadow, modest corner radius and muted blue-gray search button; matched recent-search dropdown.
 - Updated placeholder to 어떤 한국의 풍경을 만나고 싶나요? Existing search routing/history preserved.
 - Validation: HomePage 9 tests passed, frontend production build passed, harness passed. Mock-only browser QA verified 1440/390/320 widths, styles, recent searches, Escape and no horizontal overflow; mobile screenshot inspected.
+
+- Follow-up: restored capsule search field/button, hid redundant leading icon, softened shadow and rounded history dropdown. Home tests 9 passed, build passed, browser QA at 1440/390/320 passed; screenshot inspected. Frontend commit 4299ec9.
