@@ -42,3 +42,5 @@ status: draft
 - story-detail-theme.css를 CommunityPage와 StoryDetailOverlay 모두에 연결. Search/MyPage는 공통 overlay, 다른 사용자 게시물은 community 경유.
 - 데스크톱 사진/본문 1.6 : 댓글 1, 모바일 세로 흐름. 화이트/하늘색 표면, 사진 contain, 작은 안내 알약.
 - Community/Search/MyPage/Header 20 tests, build 통과. Fixture browser 1440/390 layout 확인 및 스크린샷 검토.
+
+- Feed follow-up: viewport-fitted layout, summary line limits, mouse vertical drag and direct wheel navigation; comment composer focus action, report/comment pills, red filled animated heart and photo transitions in both implementations. Desktop maximum width 1000px with 1.25:1 columns. Removed comment/reply borders and connector pseudo-elements. Eight related page tests, build, desktop/mobile fixture layout checks passed. Long text is summarized; comment list retains internal scrolling.

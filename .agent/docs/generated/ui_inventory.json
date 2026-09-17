@@ -631,9 +631,11 @@
             "story-action-bar",
             "story-author",
             "story-body",
+            "story-comment-button",
             "story-detail-panel",
             "story-feed",
             "story-feed-window",
+            "story-heart-button",
             "story-like-button",
             "story-overlay",
             "story-overlay-backdrop",
@@ -1955,9 +1957,11 @@
             "story-author",
             "story-body",
             "story-card-grid",
+            "story-comment-button",
             "story-detail-panel",
             "story-feed",
             "story-feed-window",
+            "story-heart-button",
             "story-like-button",
             "story-overlay",
             "story-overlay-backdrop",
@@ -1984,9 +1988,7 @@
             "story-tile-tags",
             "story-tile-title",
             "story-view-toggle",
-            "story-write-pill",
-            "story.likedByMe",
-            "tag"
+            "story-write-pill"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -5519,6 +5521,7 @@
             "comment-count-badge",
             "comment-submit-btn",
             "fc-item",
+            "fc-reply",
             "fc-text",
             "feed-comment-header",
             "feed-comment-input-area",
@@ -5529,21 +5532,34 @@
             "feed-scroll-guide-pill",
             "feed-sidebar",
             "guide-text",
+            "is-reply",
+            "material-symbols-rounded",
             "story-action-bar",
             "story-body",
             "story-feed",
             "story-feed-window",
+            "story-heart-button",
             "story-like-button",
             "story-overlay",
             "story-overlay-close",
             "story-overlay-panel",
+            "story-photo-enter-active",
+            "story-photo-enter-from",
+            "story-photo-leave-active",
+            "story-photo-leave-to",
             "story-post",
+            "story-post-head",
             "story-post-photo-frame",
             "story-post-photo-img",
+            "story-report-btn",
             "swipe-track-container",
+            "tag-row",
             "widget-card"
           ],
-          "animations": []
+          "animations": [
+            "story-heart-float",
+            "story-heart-pop"
+          ]
         },
         {
           "path": "frontend/src/styles/travel-page-actions.css",
