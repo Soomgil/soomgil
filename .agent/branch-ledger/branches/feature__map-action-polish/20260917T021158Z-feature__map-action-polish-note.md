@@ -44,3 +44,5 @@ status: draft
 - Community/Search/MyPage/Header 20 tests, build 통과. Fixture browser 1440/390 layout 확인 및 스크린샷 검토.
 
 - Feed follow-up: viewport-fitted layout, summary line limits, mouse vertical drag and direct wheel navigation; comment composer focus action, report/comment pills, red filled animated heart and photo transitions in both implementations. Desktop maximum width 1000px with 1.25:1 columns. Removed comment/reply borders and connector pseudo-elements. Eight related page tests, build, desktop/mobile fixture layout checks passed. Long text is summarized; comment list retains internal scrolling.
+
+- Replies: only root comments expose reply action; selected reply pill is blue. Server max depth 1 and rejects any parent with parentCommentId. Existing nested records are retained. Failing regression reproduced then handler 4 tests passed, frontend 8 tests/build passed. Thread connectors use continuous 2px gray-blue spine and rounded branches, ending at final reply. Backend container remounted to original workspace for updated policy.
