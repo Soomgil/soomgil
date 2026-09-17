@@ -571,3 +571,13 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 사용자 preference tag weight는 `user_preference_events`에서 재생성 가능한 projection으로 유지합니다.
 - 초반에는 `.agent/contracts/openapi.yaml`을 contract source로 두고, backend 구현/생성 OpenAPI와의 diff 검증을 CI 후보로 둡니다.
 - 프론트 타입 생성은 tagged release 또는 PR 단위로 고정된 OpenAPI 파일에서 수행합니다.
+
+
+## 2026-09-17 관광공사 API 호출 최소화
+
+- 사용자 요청에 따라 스케줄러를 두지 않는다. DB 관광지 목록을 우선 조회하고, 비어 있을 때 외부 목록 한 페이지만 수집한다.
+- 성공 원천 응답은 tourism_source.kto_responses에 영속 저장하며 인증키는 제거한다. 동일 요청은 DB 잠금으로 수집을 합친다.
+- 실패 시 기존 데이터를 유지하고 요청별 재시도 제한을 적용한다. 자동 재시도 작업은 없다.
+- 상세의 includeInfo=false는 이용·접근성 API 조회를 생략한다. UI의 정보 펼치기에서만 요청한다.
+- 관광 데이터 전용 seed는 중복 식별자와 원천 수정 시각으로 병합한다. 사용자·여행 데이터는 제외한다.
+- 갱신은 수동 장소 갱신 표시 또는 seed 가져오기로 수행한다. DB 검색 결과가 전체 최신 관광공사 데이터임을 보장하지 않는다.

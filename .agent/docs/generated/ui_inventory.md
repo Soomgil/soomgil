@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 19, pages 20, components 42 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 19, pages 20, components 43 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -158,6 +158,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `animate-spin`, `border-3`, `border-line`, `border-t-brand-violet`, `flex`, `h-8`, `items-center`, `justify-center`, `py-20`, `rounded-full`, `w-8`
+
+#### frontend/src/components/community/PopularStoryCarousel.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h3 {{ story.title }}
+- forms: 0, images: 2
+- asset refs: 없음
+- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-label`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `read-story`, `slide-count`
 
 #### frontend/src/components/community/StoryCard.vue
 
@@ -433,8 +442,8 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 눈길이 머문 여행, h3 {{ story.title }}, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
-- forms: 0, images: 6
+- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 눈길이 머문 여행, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
+- forms: 0, images: 4
 - asset refs: `/images/랜딩페이지/korea_hero.png`
 - classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-empty`, `community-hero-eyebrow`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-paper`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
 
@@ -568,10 +577,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 취향 수집, h2 취향 수집 완료!, h2 {{ currentPlace.placeName }}
+- headings: h1 취향 수집, h2 취향 수집 완료!
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `lead`, `material-symbols-rounded`, `meta-row`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `section`, `swipe-body`, `swipe-card`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-stage`, `swipe-workspace-card`, `tag`, `tag-row`, `{`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-stage`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 

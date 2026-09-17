@@ -1053,6 +1053,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/provider'
         - $ref: '#/components/parameters/externalPlaceId'
+        - name: includeInfo
+          in: query
+          description: false이면 이용·접근성 상세 정보 호출을 생략한다. 사진과 기본 장소 정보는 반환한다.
+          schema:
+            type: boolean
+            default: true
       responses:
         '200':
           description: OK
@@ -1102,6 +1108,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/SwipeFeedResponse'
   /places/{provider}/{externalPlaceId}/swipe-reaction:
+    get:
+      tags: [Preference]
+      summary: 현재 사용자의 장소 반응 조회
+      operationId: getMyPlaceReaction
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema: { type: string }
+        - name: externalPlaceId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 저장된 반응. 미선택은 null.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reaction:
+                    type: string
+                    nullable: true
+                    enum: [NOPE, LIKE, SUPER_LIKE]
     put:
       tags: [Swipe]
       summary: 최종 스와이프 반응 upsert

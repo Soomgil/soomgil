@@ -1,0 +1,58 @@
+---
+id: 20260916T131417Z-feature__swipe-card-details-note
+branch: feature/swipe-card-details
+branchKey: feature__swipe-card-details
+createdAt: 2026-09-16T13:14:17.258Z
+baseRef: develop
+scope: shared
+status: draft
+---
+
+# 취향 수집 사진 탐색과 애니메이션, 홈 상단 검색, 인기 여행기 캐러셀
+
+## 배경
+
+- 사용자 요청으로 홈 검색 위치를 최상단으로 확정했다.
+- 취향 수집의 사진 목록은 같은 장소의 다른 사진을 뜻한다.
+
+## 변경 요약
+
+- SwipePage: 설명과 장소 정보를 우측 패널로 이동, 손그림 방향 가이드 복원, Travel Preferences 표기.
+- 사진 썸네일과 이전/다음 선택을 복원하고 저장 성공 후 하트·별·고리 애니메이션을 적용했다. 동작 줄이기 환경은 효과를 생략한다.
+- HomePage: 검색을 home-gallery 첫 요소로 배치했다.
+- CommunityPage: 인기 사진 한 장과 설명, 6초 자동재생, 이전/다음 및 일시정지 컨트롤을 추가했다.
+- 테스트 18개, production 빌드, harness 검사 통과. Playwright로 320/390/1440px 사진 탐색 및 390/1440px 커뮤니티 확인.
+
+## 에이전트 주의사항
+
+- 실제 수정 경로는 soomgil-home-award/frontend이며 원래 soomgil/frontend의 별도 미커밋 작업은 보존한다.
+- API는 시각 검증에서 fixture를 사용했다. 캐러셀은 hover, 키보드 포커스, 비활성 탭에서 자동 전환을 멈춘다.
+
+## develop 통합 시 반영할 내용
+
+- frontend PR 병합 후 root의 submodule pointer 갱신. 현재 병합하지 않았다.
+
+## 장소 상세 모달 후속 변경 (2026-09-17)
+
+- 사진 중심 고정 높이 모달, 썸네일 높이 스타일 분리, 상세 정보 내부 스크롤 및 스크롤바 숨김.
+- 반응 순서 SUPER_LIKE / LIKE / NOPE, 낙관적 UI와 실패 롤백, 이전 모달 요청 응답 무시.
+- GET /places/{provider}/{externalPlaceId}/swipe-reaction 추가. 인증 사용자의 DB 반응을 조회해 재진입 상태 복원.
+- 저장 성공 시 취향 수집 피드 캐시를 초기화해 다음 진입에서 최신 상태 조회.
+- 프론트 상세 테스트 5개와 백엔드 조회 handler 테스트, compileJava 통과. 사진/모달 높이/닫기는 fixture 기반 브라우저 검증.
+- 로컬 backend 컨테이너를 재시작해 추가 API 반영. DB schema 변경 없음.
+
+- 최신 요청: 모바일 메인 사진은 contain으로 원본 전체 표시, 썸네일 영역 72px 분리. 데스크톱은 cover로 채움. 스크롤바는 숨기되 휠/터치/자동 스크롤 유지.
+
+
+## 관광 API 최적화 및 최종 사진 배치 (2026-09-17)
+
+- 사진 contain 및 원본 비율에 따른 높이, 사진 바로 아래 썸네일 배치로 하단 공백 축소. 사용자 확인 완료.
+- 목록 DB 우선, 미수집 목록 한 페이지, 상세·이용 정보 지연 조회. 외부 모달 반응은 기존 피드를 초기화하지 않고 해당 항목에만 반영.
+- V52 성공 원천 응답 영속 캐시, V53 원천 수정 시각/수동 갱신 표시. 초기 V52가 로컬에 적용되어 체크섬을 유지하고 후속 필드를 V53으로 분리.
+- PostgreSQL 잠금으로 동일 요청 수집 병합, 실패/할당량 제한 cooldown. 스케줄러와 자동 갱신은 없음.
+- 관광 전용 seed CLI export/import/refresh. 실제 PostgreSQL 중복·반복 적용·오래된 seed·roundtrip 검증과 Python 4 tests 통과.
+- frontend 416 tests 중 전체 실행에서 드로잉 대용량 테스트 1건 timeout, 해당 파일 단독 재실행 16 tests 통과. frontend production build, harness check 통과.
+- 로컬 V52/V53 migration 성공. seeds/local/tourism.json으로 관광지 153개/이미지 165개/성공 응답 11개 export 및 dry-run 성공(시점별 수집량은 달라질 수 있음).
+- 기존 Redis 단편 캐시 일괄 이관은 하지 않음. DB 우선 목록은 전체 최신 외부 목록을 보장하지 않음. 명시적 수동 갱신 또는 seed 갱신 사용.
+
+- 최종 API 관련 backend 54 tests 통과. schema.dbml PostgreSQL 변환 및 최종 harness 검사 통과.

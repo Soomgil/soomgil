@@ -2087,3 +2087,19 @@ Ref: community.content_reports.resolved_by_user_id > auth.users.id
 Ref: community.moderation_actions.moderator_user_id > auth.users.id
 
 Ref: ops.audit_logs.actor_user_id > auth.users.id
+
+
+Table tourism_source.kto_responses {
+  request_key text [pk, note: '인증키를 제외한 정규화 요청 경로 및 쿼리']
+  payload jsonb
+  fetched_at timestamptz
+  source_modified_at timestamptz
+  refresh_requested boolean [not null, default: false]
+  retry_after timestamptz
+  failure_count integer [not null, default: 0]
+
+  indexes {
+    fetched_at [name: 'kto_responses_fetched_at']
+  }
+  Note: '성공 응답은 자동 만료 없이 재사용. 실패와 정상 빈 응답을 구분하며 주기적 갱신은 하지 않는다.'
+}

@@ -487,6 +487,49 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/community/PopularStoryCarousel.vue",
+          "relativePath": "src/components/community/PopularStoryCarousel.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 3,
+              "id": "",
+              "text": "{{ story.title }}"
+            }
+          ],
+          "images": [
+            {
+              "src": "story.image",
+              "alt": "story.title"
+            },
+            {
+              "src": "story.authorProfileImageUrl",
+              "alt": ""
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "author-avatar",
+            "carousel-controls",
+            "featured-author",
+            "featured-copy",
+            "featured-label",
+            "featured-photo",
+            "featured-polaroid",
+            "featured-stats",
+            "featured-story",
+            "featured-summary",
+            "material-symbols-rounded",
+            "photo-caption",
+            "popular-carousel",
+            "read-story",
+            "slide-count"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/community/StoryCard.vue",
           "relativePath": "src/components/community/StoryCard.vue",
           "kind": "component",
@@ -1828,11 +1871,6 @@
               "text": "눈길이 머문 여행"
             },
             {
-              "level": 3,
-              "id": "",
-              "text": "{{ story.title }}"
-            },
-            {
               "level": 2,
               "id": "",
               "text": "방금 도착한 여행 이야기"
@@ -1849,14 +1887,6 @@
             }
           ],
           "images": [
-            {
-              "src": "story.image",
-              "alt": "story.title"
-            },
-            {
-              "src": "story.authorProfileImageUrl",
-              "alt": ""
-            },
             {
               "src": "story.image",
               "alt": "story.title"
@@ -1914,16 +1944,7 @@
             "pg-arrow",
             "pg-btn",
             "pg-num",
-            "polaroid-author",
-            "polaroid-caption",
-            "polaroid-card",
-            "polaroid-image",
-            "polaroid-stat",
-            "polaroid-stats",
-            "polaroid-title",
-            "popular-gallery",
             "popular-heading",
-            "popular-no-photo",
             "prev",
             "prev-btn",
             "search-box",
@@ -1955,7 +1976,16 @@
             "story-tile-footer",
             "story-tile-image",
             "story-tile-image-wrap",
-            "story-tile-like"
+            "story-tile-like",
+            "story-tile-stat",
+            "story-tile-stat-end",
+            "story-tile-summary",
+            "story-tile-tags",
+            "story-tile-title",
+            "story-write-pill",
+            "story.likedByMe",
+            "tag",
+            "tag-row"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -2942,11 +2972,6 @@
               "level": 2,
               "id": "",
               "text": "취향 수집 완료!"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "{{ currentPlace.placeName }}"
             }
           ],
           "images": [
@@ -2960,9 +2985,10 @@
             "[swipeClass,",
             "app-shell",
             "btn",
+            "celebration-particle",
+            "celebration-ring",
             "lead",
             "material-symbols-rounded",
-            "meta-row",
             "page-hero",
             "page-hero__copy",
             "page-hero__eyebrow",
@@ -2971,9 +2997,12 @@
             "page-with-hero",
             "panel",
             "primary",
+            "ring-echo",
             "section",
-            "swipe-body",
+            "sketch-echo",
+            "swipe-breeze",
             "swipe-card",
+            "swipe-celebration",
             "swipe-discovery",
             "swipe-guide",
             "swipe-guide--left",
@@ -2983,9 +3012,10 @@
             "swipe-main-column",
             "swipe-place-placeholder",
             "swipe-stage",
+            "swipe-success",
+            "swipe-success-icon",
             "swipe-workspace-card",
-            "tag",
-            "tag-row",
+            "swipeClass",
             "{"
           ],
           "assetRefs": []
@@ -3625,6 +3655,16 @@
           "exports": []
         },
         {
+          "path": "frontend/src/components/community/PopularStoryCarousel.test.ts",
+          "relativePath": "src/components/community/PopularStoryCarousel.test.ts",
+          "imports": [
+            "./PopularStoryCarousel.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/itinerary/RouteTransportPanel.test.ts",
           "relativePath": "src/components/itinerary/RouteTransportPanel.test.ts",
           "imports": [
@@ -4109,8 +4149,10 @@
             "./SearchResultsPage.vue",
             "@/api/place.api",
             "@/api/search.api",
+            "@/api/swipe.api",
             "@/types/search",
             "@vue/test-utils",
+            "pinia",
             "vitest",
             "vue-router"
           ],
@@ -5455,10 +5497,10 @@
       "summary": {
         "routes": 19,
         "pages": 20,
-        "components": 42,
-        "sourceFiles": 138,
+        "components": 43,
+        "sourceFiles": 139,
         "styleFiles": 6,
-        "typeScriptSignals": 199
+        "typeScriptSignals": 201
       }
     },
     {
