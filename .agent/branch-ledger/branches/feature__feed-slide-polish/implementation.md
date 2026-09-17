@@ -9,3 +9,10 @@
 - 피드 viewport에 scroll-snap-type:none, overflow:clip, scroll-padding:0, overflow-anchor:none을 적용하고 카드 snap 제거.
 - 수정 후 브라우저 프레임 계측: scrollTop 0 유지, 778px 실제 슬라이드 이동. 사진 양방향, 휠/키보드/드래그, 정착 후 위치 안정성 확인.
 - 데스크톱 1440px, 모바일 390px fixture 화면 점검. 홈/커뮤니티 테스트 10개 및 production build 검증.
+
+## 후속 전환 수정
+- 커뮤니티 자체 상세창과 공통 상세창의 중복 구현 모두에 동시 전환 및 wheel gate를 적용.
+- 400ms 입력 정지와 900ms 전환 간격을 함께 확인해 지연 관성 입력의 중복 넘김 방지. 키 반복 입력 차단.
+- 드래그 중 다음/이전 글의 표지·제목 미리보기를 포인터에 붙여 표시하고 인접 표지 이미지 선로딩.
+- 3개 글 fixture로 관성 입력 후 두 번째 글 유지, 전환 및 드래그 중 글 사이 공백 1px 이하, 도착 후 위치 고정 검증.
+- production build 및 관련 테스트 13개 통과.

@@ -596,10 +596,19 @@
             {
               "level": 3,
               "id": "",
+              "text": "{{ adjacentDragStory.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
               "text": "{{ visibleStory.title }}"
             }
           ],
           "images": [
+            {
+              "src": "adjacentDragStory.image",
+              "alt": ""
+            },
             {
               "src": "visibleStory.authorProfileImageUrl",
               "alt": "`${visibleStory.author} 프로필 사진`"
@@ -614,6 +623,7 @@
             "active:",
             "carousel-btn",
             "fc-avatar",
+            "feed-drag-preview",
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
@@ -1961,6 +1971,11 @@
             {
               "level": 3,
               "id": "",
+              "text": "{{ adjacentDragStory.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
               "text": "{{ visibleStory.title }}"
             }
           ],
@@ -1972,6 +1987,10 @@
             {
               "src": "story.authorProfileImageUrl",
               "alt": "`${story.author} 프로필 사진`"
+            },
+            {
+              "src": "adjacentDragStory.image",
+              "alt": ""
             },
             {
               "src": "visibleStory.authorProfileImageUrl",
@@ -2003,6 +2022,7 @@
             "currentPage",
             "eyebrow",
             "fc-avatar",
+            "feed-drag-preview",
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
@@ -2062,8 +2082,7 @@
             "story-tile-summary",
             "story-tile-tags",
             "story-tile-title",
-            "story-view-toggle",
-            "story-write-pill"
+            "story-view-toggle"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -5026,6 +5045,23 @@
           ]
         },
         {
+          "path": "frontend/src/utils/feedWheelGate.test.ts",
+          "relativePath": "src/utils/feedWheelGate.test.ts",
+          "imports": [
+            "./feedWheelGate",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/feedWheelGate.ts",
+          "relativePath": "src/utils/feedWheelGate.ts",
+          "imports": [],
+          "exports": [
+            "createFeedWheelGate"
+          ]
+        },
+        {
           "path": "frontend/src/utils/format.ts",
           "relativePath": "src/utils/format.ts",
           "imports": [],
@@ -5754,6 +5790,7 @@
             "feed-comment-input-area",
             "feed-comment-scroll",
             "feed-comment-widget",
+            "feed-drag-preview",
             "feed-layout",
             "feed-scroll-guide",
             "feed-scroll-guide-pill",
@@ -5852,9 +5889,9 @@
         "routes": 19,
         "pages": 20,
         "components": 46,
-        "sourceFiles": 143,
+        "sourceFiles": 145,
         "styleFiles": 9,
-        "typeScriptSignals": 207
+        "typeScriptSignals": 209
       }
     },
     {
