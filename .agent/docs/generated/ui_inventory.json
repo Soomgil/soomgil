@@ -5522,6 +5522,7 @@
             "comment-submit-btn",
             "fc-item",
             "fc-reply",
+            "fc-reply-btn",
             "fc-text",
             "feed-comment-header",
             "feed-comment-input-area",
@@ -5532,8 +5533,12 @@
             "feed-scroll-guide-pill",
             "feed-sidebar",
             "guide-text",
+            "has-replies",
+            "is-dragging",
+            "is-last-reply",
             "is-reply",
             "material-symbols-rounded",
+            "show-swipe-demo",
             "story-action-bar",
             "story-body",
             "story-feed",
@@ -5557,6 +5562,7 @@
             "widget-card"
           ],
           "animations": [
+            "feed-swipe-demo",
             "story-heart-float",
             "story-heart-pop"
           ]

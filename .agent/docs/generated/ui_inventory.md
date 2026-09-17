@@ -651,7 +651,7 @@
 
 - Tailwind import: 없음
 - tokens: `--blue`, `--ink`, `--line`, `--muted`, `--surface-2`, `--violet`
-- animations: `story-heart-float`, `story-heart-pop`
+- animations: `feed-swipe-demo`, `story-heart-float`, `story-heart-pop`
 
 #### frontend/src/styles/travel-page-actions.css
 
