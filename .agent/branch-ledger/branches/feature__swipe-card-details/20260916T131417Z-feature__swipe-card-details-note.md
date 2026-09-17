@@ -83,3 +83,5 @@ status: draft
 - Follow-up: white capsule search surface with soft blue #487DB5 button, #396A9E hover, pale blue-gray border and matching focus/history colors. Production build and fixture browser QA at 1440/390/320 passed; mobile screenshot inspected.
 
 - Unified My Trips, Community and Search page controls using shared scoped travel-page-actions.css: soft-blue capsule primary actions and selected filters, white outlined secondary actions, matching focus/hover/search surfaces and carousel controls. Existing unrelated Community changes preserved. Validation: 24 page tests passed; production build passed; mocked browser QA at 1440/390/320 passed; travel/search mobile screenshots inspected.
+
+- Header: fresh white/sky palette, transparent utility buttons, sliding selected-menu pill retained across page shell remounts; responsive ResizeObserver alignment and reduced-motion support. User requested removing glass effect: final pill is opaque pale sky blue with a defined border. Header tests 12 passed; build passed; browser verified actual active CSS transition across navigation, alignment at 1440/768/390/320 and reduced motion. Screenshot inspected.
