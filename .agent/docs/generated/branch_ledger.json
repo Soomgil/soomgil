@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T02:02:50.116Z",
+  "generatedAt": "2026-09-17T14:57:01.548Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -361,6 +361,46 @@
       "status": "",
       "title": "화이트 먹 번짐 홈",
       "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-white-ink-gallery.md"
+    },
+    {
+      "id": "20260917T021158Z-feature__map-action-polish-note",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/20260917T021158Z-feature__map-action-polish-note.md"
+    },
+    {
+      "id": "map-management-refinement",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 관리 및 취향 UI 개선",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/map-management-refinement.md"
+    },
+    {
+      "id": "map-taste-view",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 취향 보기 · 투표 안내 축소",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/map-taste-view.md"
+    },
+    {
+      "id": "mypage-cache-and-ui-locale",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "마이페이지 캐시와 UI 언어 일관성",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/mypage-cache-and-ui-locale.md"
     },
     {
       "id": "20260823T170038Z-feature__map-collaboration-objects-note",
