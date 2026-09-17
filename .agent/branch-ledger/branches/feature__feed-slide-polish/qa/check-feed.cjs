@@ -1,0 +1,26 @@
+const { chromium } = require('C:/Users/kimgh/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{ const browser=await chromium.launch({channel:'msedge',headless:true}); try {
+const page=await browser.newPage({viewport:{width:1440,height:900}});
+const photos=['/qa-blue.svg','/qa-green.svg'];
+await page.route('**/qa-*.svg',r=>r.fulfill({contentType:'image/svg+xml',body:`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="800" height="600" fill="${r.request().url().includes('blue')?'#77b9e5':'#80c5ad'}"/></svg>`}));
+const posts=['바다 여행','숲 여행'].map((title,i)=>({id:String(i+1),title,summary:'여행 이야기',publishedAt:'2026-09-17T00:00:00Z',publishedBy:null,hashtags:[],likeCount:4,commentCount:0,coverMedia:{publicUrl:photos[0]}}));
+await page.route('**/api/v1/**',r=>{const p=new URL(r.request().url()).pathname;let body={items:[],page:{totalPages:1,totalElements:0}};if(p.endsWith('/stories'))body={items:posts,page:{totalPages:1,totalElements:2}};if(/\/stories\/[12]$/.test(p))body={...posts[Number(p.at(-1))-1],snapshot:{days:[]},media:photos.map(publicUrl=>({publicUrl}))};return r.fulfill({contentType:'application/json',body:JSON.stringify(body)});});
+await page.goto('http://localhost:5173/community');await page.locator('.story-tile').first().click();
+await page.locator('.feed-photo-nav.next').click();
+await page.waitForFunction(()=>document.querySelectorAll('.story-post-photo-img').length===1 && document.querySelector('.story-post-photo-img')?.getAttribute('src')==='/qa-green.svg');
+await page.locator('.feed-photo-nav.prev').click();
+await page.waitForFunction(()=>document.querySelectorAll('.story-post-photo-img').length===1 && document.querySelector('.story-post-photo-img')?.getAttribute('src')==='/qa-blue.svg');
+const window=page.locator('.story-feed-window');await window.hover();await page.evaluate(()=>{window.feedFrames=[];let start=performance.now();function sample(){const w=document.querySelector('.story-feed-window');const el=document.querySelector('[data-story-id="2"]');window.feedFrames.push({t:performance.now()-start,scroll:w.scrollTop,y:el?.getBoundingClientRect().y,transform:el&&getComputedStyle(el).transform});if(performance.now()-start<1400)requestAnimationFrame(sample)}requestAnimationFrame(sample)});await page.mouse.wheel(0,160);
+await page.waitForFunction(()=>document.querySelectorAll('.story-post').length===1 && document.querySelector('.story-post')?.getAttribute('data-story-id')==='2');
+await page.waitForFunction(()=>!document.querySelector('.slide-up-enter-active')); const frames=await page.evaluate(()=>window.feedFrames.filter(f=>f.y!==undefined));
+if(!frames.length || frames.some(f=>f.scroll!==0))throw Error('Native scroll fights feed transition');
+if(Math.max(...frames.map(f=>f.y))-Math.min(...frames.map(f=>f.y))<100)throw Error('Feed must slide instead of jitter in place');
+console.log('Transition scroll offset remains zero; slide travel:', Math.round(Math.max(...frames.map(f=>f.y))-Math.min(...frames.map(f=>f.y)))); await window.press('ArrowUp');await page.waitForFunction(()=>document.querySelectorAll('.story-post').length===1 && document.querySelector('.story-post')?.getAttribute('data-story-id')==='1');
+await page.waitForFunction(()=>!document.querySelector('.slide-down-enter-active'));
+const box=await window.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+150);await page.mouse.down();await page.mouse.move(box.x+box.width/2,box.y+50,{steps:10});await page.mouse.up();
+await page.waitForFunction(()=>document.querySelectorAll('.story-post').length===1 && document.querySelector('.story-post')?.getAttribute('data-story-id')==='2' && !document.querySelector('.slide-up-enter-active'));
+const samples=await page.evaluate(async()=>{let rects=[];for(let i=0;i<30;i++){await new Promise(requestAnimationFrame);const el=document.querySelector('.story-post');rects.push(el.getBoundingClientRect().y);}return rects});
+if(Math.max(...samples)-Math.min(...samples)>1)throw Error('Feed moves after transition');
+await page.screenshot({path:__dirname+'/feed-desktop.png'});await page.setViewportSize({width:390,height:844});await page.screenshot({path:__dirname+'/feed-mobile.png'});
+console.log('Photo next/previous, wheel next, keyboard previous, drag and settled-position checks passed');
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

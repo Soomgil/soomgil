@@ -163,10 +163,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h2 여행자들이 좋아한 이야기, h3 {{ story.title }}
+- headings: h3 {{ story.title }}
 - forms: 0, images: 2
 - asset refs: 없음
-- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-label`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `popular-heading`, `read-story`, `slide-count`
+- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `read-story`, `slide-count`
 
 #### frontend/src/components/community/StoryCard.vue
 
@@ -481,7 +481,7 @@
 - headings: h1 어디로 떠나고 싶으세요?, h2 {{ photoTitle }}
 - forms: 1, images: 1
 - asset refs: `@/assets/textures/ink-reveal-mask.png`
-- classes: `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
+- classes: `home-artwork-actions`, `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
 
 #### frontend/src/pages/LandingPage.vue
 
@@ -684,7 +684,7 @@
 
 - Tailwind import: 없음
 - tokens: `--blue`, `--ink`, `--line`, `--muted`, `--surface-2`, `--violet`
-- animations: `feed-swipe-demo`, `story-heart-float`, `story-heart-pop`
+- animations: `story-heart-float`, `story-heart-pop`
 
 #### frontend/src/styles/travel-page-actions.css
 

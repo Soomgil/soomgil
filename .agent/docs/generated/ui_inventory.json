@@ -497,11 +497,6 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 2,
-              "id": "popular-stories-title",
-              "text": "여행자들이 좋아한 이야기"
-            },
-            {
               "level": 3,
               "id": "",
               "text": "{{ story.title }}"
@@ -523,7 +518,6 @@
             "carousel-controls",
             "featured-author",
             "featured-copy",
-            "featured-label",
             "featured-photo",
             "featured-polaroid",
             "featured-stats",
@@ -532,7 +526,6 @@
             "material-symbols-rounded",
             "photo-caption",
             "popular-carousel",
-            "popular-heading",
             "read-story",
             "slide-count"
           ],
@@ -2102,6 +2095,7 @@
           ],
           "forms": 1,
           "classNames": [
+            "home-artwork-actions",
             "home-artwork-caption",
             "home-artwork-credit",
             "home-artwork-footer",
@@ -5770,7 +5764,25 @@
             "is-last-reply",
             "is-reply",
             "material-symbols-rounded",
+            "photo-next-enter-active",
+            "photo-next-enter-from",
+            "photo-next-leave-active",
+            "photo-next-leave-to",
+            "photo-prev-enter-active",
+            "photo-prev-enter-from",
+            "photo-prev-leave-active",
+            "photo-prev-leave-to",
             "show-swipe-demo",
+            "slide-down-enter-active",
+            "slide-down-enter-from",
+            "slide-down-leave-active",
+            "slide-down-leave-from",
+            "slide-down-leave-to",
+            "slide-up-enter-active",
+            "slide-up-enter-from",
+            "slide-up-leave-active",
+            "slide-up-leave-from",
+            "slide-up-leave-to",
             "story-action-bar",
             "story-body",
             "story-feed",
@@ -5794,7 +5806,6 @@
             "widget-card"
           ],
           "animations": [
-            "feed-swipe-demo",
             "story-heart-float",
             "story-heart-pop"
           ]
