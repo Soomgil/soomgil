@@ -1,0 +1,197 @@
+[
+  [
+    "대상 ID: {0} · 신고자: {1}",
+    [
+      "pages\\AdminModerationPage.vue"
+    ]
+  ],
+  [
+    "{0}님에게 보낸 답글",
+    [
+      "pages\\CommunityPage.vue",
+      "components\\community\\StoryDetailOverlay.vue"
+    ]
+  ],
+  [
+    "{0}님에게 답글",
+    [
+      "pages\\CommunityPage.vue",
+      "components\\community\\StoryDetailOverlay.vue"
+    ]
+  ],
+  [
+    "{0}박 {1}일 일정으로 만들어요.",
+    [
+      "pages\\MyTripsPage.vue"
+    ]
+  ],
+  [
+    "{0}명 선택",
+    [
+      "pages\\MyTripsPage.vue"
+    ]
+  ],
+  [
+    "{0}곳",
+    [
+      "pages\\RoutePage.vue",
+      "pages\\RoutePage.vue",
+      "pages\\UserProfilePage.vue"
+    ]
+  ],
+  [
+    "{0}명",
+    [
+      "pages\\RoutePage.vue",
+      "components\\common\\FollowListModal.vue",
+      "components\\trip\\TripAccessModal.vue",
+      "components\\trip\\TripSettingsModal.vue"
+    ]
+  ],
+  [
+    "{0}자",
+    [
+      "pages\\RoutePage.vue"
+    ]
+  ],
+  [
+    "좋아요 {0} · 댓글 {1}",
+    [
+      "pages\\SearchResultsPage.vue"
+    ]
+  ],
+  [
+    "팔로워 {0}명",
+    [
+      "pages\\SearchResultsPage.vue"
+    ]
+  ],
+  [
+    "{0} · 좋아요 {1} · 댓글 {2}",
+    [
+      "pages\\StoriesPage.vue"
+    ]
+  ],
+  [
+    "글자 수: {0}자",
+    [
+      "pages\\StoryWritePage.vue",
+      "components\\community\\StoryWriteModal.vue"
+    ]
+  ],
+  [
+    "{0}장 선택 · 첫 사진이 커버",
+    [
+      "pages\\StoryWritePage.vue",
+      "components\\community\\StoryWriteModal.vue"
+    ]
+  ],
+  [
+    "{0}님의 여행 프로필",
+    [
+      "pages\\UserProfilePage.vue"
+    ]
+  ],
+  [
+    "{0}님의 여행기",
+    [
+      "pages\\UserProfilePage.vue"
+    ]
+  ],
+  [
+    "{0} / {1} 페이지",
+    [
+      "components\\community\\StoryWriteModal.vue"
+    ]
+  ],
+  [
+    "연결된 구간 {0}개",
+    [
+      "components\\itinerary\\RouteTransportPanel.vue"
+    ]
+  ],
+  [
+    "{0}개",
+    [
+      "components\\mypage\\MyStoriesModal.vue"
+    ]
+  ],
+  [
+    "댓글 {0}",
+    [
+      "components\\mypage\\MyStoryDetailModal.vue"
+    ]
+  ],
+  [
+    "서울에서 {0}까지",
+    [
+      "components\\trip\\BoardingPassCard.vue"
+    ]
+  ],
+  [
+    "총 {0}일 여행",
+    [
+      "components\\trip\\TripSettingsModal.vue"
+    ]
+  ],
+  [
+    "{0} 지역에서 후보를 찾아요.",
+    [
+      "components\\voting\\OwnerVoteSetupPanel.vue"
+    ]
+  ],
+  [
+    "{0}일 여행이에요. 하루 {1}곳이면 총 {2}곳을 뽑아요.",
+    [
+      "components\\voting\\OwnerVoteSetupPanel.vue"
+    ]
+  ],
+  [
+    "여행 일정이 아직 없어 {0}일로 가정했어요. 하루 {1}곳이면 총 {2}곳을 뽑아요.",
+    [
+      "components\\voting\\OwnerVoteSetupPanel.vue"
+    ]
+  ],
+  [
+    "{0}/{1}명 제출",
+    [
+      "components\\voting\\TripVoteFlow.vue"
+    ]
+  ],
+  [
+    "아직 제출하지 않은 멤버가 {0}명 있어요. 지금 마감하면 그분들의 스티커는 반영되지 않아요.",
+    [
+      "components\\voting\\TripVoteFlow.vue"
+    ]
+  ],
+  [
+    "스티커 {0}",
+    [
+      "components\\voting\\VoteCandidateDeck.vue"
+    ]
+  ],
+  [
+    "{0}. 선정된 {1}곳을",
+    [
+      "components\\voting\\VoteResultMapOverlay.vue"
+    ]
+  ],
+  [
+    "{0}곳 선정",
+    [
+      "components\\voting\\VoteResultPanel.vue"
+    ]
+  ],
+  [
+    "일차 미정에 {0}곳 추가",
+    [
+      "components\\voting\\VoteResultPanel.vue"
+    ]
+  ],
+  [
+    "· 이미 일정에 {0}곳",
+    [
+      "components\\voting\\VoteResultPanel.vue"
+    ]
+  ]
+]
