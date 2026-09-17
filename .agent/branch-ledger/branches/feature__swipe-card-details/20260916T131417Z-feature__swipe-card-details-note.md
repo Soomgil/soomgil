@@ -79,3 +79,5 @@ status: draft
 - Validation: HomePage 9 tests passed, frontend production build passed, harness passed. Mock-only browser QA verified 1440/390/320 widths, styles, recent searches, Escape and no horizontal overflow; mobile screenshot inspected.
 
 - Follow-up: restored capsule search field/button, hid redundant leading icon, softened shadow and rounded history dropdown. Home tests 9 passed, build passed, browser QA at 1440/390/320 passed; screenshot inspected. Frontend commit 4299ec9.
+
+- Follow-up: white capsule search surface with soft blue #487DB5 button, #396A9E hover, pale blue-gray border and matching focus/history colors. Production build and fixture browser QA at 1440/390/320 passed; mobile screenshot inspected.
