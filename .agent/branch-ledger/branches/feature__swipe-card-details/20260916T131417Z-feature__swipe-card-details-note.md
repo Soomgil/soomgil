@@ -81,3 +81,5 @@ status: draft
 - Follow-up: restored capsule search field/button, hid redundant leading icon, softened shadow and rounded history dropdown. Home tests 9 passed, build passed, browser QA at 1440/390/320 passed; screenshot inspected. Frontend commit 4299ec9.
 
 - Follow-up: white capsule search surface with soft blue #487DB5 button, #396A9E hover, pale blue-gray border and matching focus/history colors. Production build and fixture browser QA at 1440/390/320 passed; mobile screenshot inspected.
+
+- Unified My Trips, Community and Search page controls using shared scoped travel-page-actions.css: soft-blue capsule primary actions and selected filters, white outlined secondary actions, matching focus/hover/search surfaces and carousel controls. Existing unrelated Community changes preserved. Validation: 24 page tests passed; production build passed; mocked browser QA at 1440/390/320 passed; travel/search mobile screenshots inspected.
