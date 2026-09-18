@@ -41,3 +41,10 @@
 - 지도 취향 로딩 텍스트 제거(aria-busy 유지), 취향 마커 z-index 8/9로 이미지 애셋 레이어4보다 높임.
 - 추천 문구를 n명의 취향과 잘 맞아요로 통일, 커스텀 일정 추가 버튼은 선명한 파랑.
 - 관련 테스트35개, 마이페이지4개 및 browser fixture 통과. production build 통과.
+
+## Final integration validation
+- Final search card surfaces match My Trips; taste ranks use restrained sage, lavender and pastel colors.
+- Full frontend suite: 67 files, 445 tests passed. Production build, harness and SPA smoke checks passed.
+- Frontend PR: https://github.com/Soomgil/soomgil-frontend/pull/18
+- Merged frontend commit: b52566f15013e087d870f47bbab2156d5ddd2ced
+- No backend or API contract changes. User tmp directory is excluded.
