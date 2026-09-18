@@ -905,15 +905,16 @@
           "forms": 0,
           "classNames": [
             "active:",
+            "enabled",
             "map-taste-control",
             "material-symbols-rounded",
-            "open",
             "taste-close",
-            "taste-count",
             "taste-members",
             "taste-panel",
             "taste-reload",
-            "taste-super",
+            "taste-switch",
+            "taste-switch-row",
+            "taste-tab-indicator",
             "taste-tabs",
             "taste-toggle",
             "{",
@@ -963,15 +964,12 @@
               "alt": "place.placeName"
             }
           ],
-          "forms": 0,
+          "forms": 1,
           "classNames": [
             "material-symbols-rounded",
             "modal-scroll-container",
-            "mypage-header-search-row",
             "mypage-place-card",
             "mypage-places-grid",
-            "mypage-search-inline",
-            "mypage-section-header",
             "mypage-section-title",
             "place-desc-text",
             "place-image-placeholder",
@@ -982,6 +980,13 @@
             "place-tag-pill",
             "place-tag-row",
             "place-title-h3",
+            "saved-board-content",
+            "saved-board-empty",
+            "saved-board-heading",
+            "saved-board-pagination",
+            "saved-board-panel",
+            "saved-board-search",
+            "saved-note-board",
             "section-icon",
             "section-icon--sky",
             "story-overlay",
@@ -3943,6 +3948,16 @@
           ]
         },
         {
+          "path": "frontend/src/components/mypage/LikedPlacesModal.test.ts",
+          "relativePath": "src/components/mypage/LikedPlacesModal.test.ts",
+          "imports": [
+            "./LikedPlacesModal.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.test.ts",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.test.ts",
           "imports": [
@@ -5889,9 +5904,9 @@
         "routes": 19,
         "pages": 20,
         "components": 46,
-        "sourceFiles": 145,
+        "sourceFiles": 146,
         "styleFiles": 9,
-        "typeScriptSignals": 209
+        "typeScriptSignals": 210
       }
     },
     {

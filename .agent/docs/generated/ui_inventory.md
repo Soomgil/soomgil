@@ -274,7 +274,7 @@
 - headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `active:`, `map-taste-control`, `material-symbols-rounded`, `open`, `taste-close`, `taste-count`, `taste-members`, `taste-panel`, `taste-reload`, `taste-super`, `taste-tabs`, `taste-toggle`, `{`, `}`
+- classes: `active:`, `enabled`, `map-taste-control`, `material-symbols-rounded`, `taste-close`, `taste-members`, `taste-panel`, `taste-reload`, `taste-switch`, `taste-switch-row`, `taste-tab-indicator`, `taste-tabs`, `taste-toggle`, `{`, `}`
 
 #### frontend/src/components/map/MapboxItineraryMap.vue
 
@@ -290,9 +290,9 @@
 - 종류: component
 - script: setup / ts
 - headings: h2 star 슈퍼라이크한 장소, h3 {{ place.placeName }}
-- forms: 0, images: 1
+- forms: 1, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `modal-scroll-container`, `mypage-header-search-row`, `mypage-place-card`, `mypage-places-grid`, `mypage-search-inline`, `mypage-section-header`, `mypage-section-title`, `place-desc-text`, `place-image-placeholder`, `place-img-wrap`, `place-info-wrap`, `place-region-category`, `place-super-like-btn`, `place-tag-pill`, `place-tag-row`, `place-title-h3`, `section-icon`, `section-icon--sky`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `{`
+- classes: `material-symbols-rounded`, `modal-scroll-container`, `mypage-place-card`, `mypage-places-grid`, `mypage-section-title`, `place-desc-text`, `place-image-placeholder`, `place-img-wrap`, `place-info-wrap`, `place-region-category`, `place-super-like-btn`, `place-tag-pill`, `place-tag-row`, `place-title-h3`, `saved-board-content`, `saved-board-empty`, `saved-board-heading`, `saved-board-pagination`, `saved-board-panel`, `saved-board-search`, `saved-note-board`, `section-icon`, `section-icon--sky`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `{`
 
 #### frontend/src/components/mypage/MyStoriesModal.vue
 
