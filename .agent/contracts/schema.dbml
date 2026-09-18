@@ -1242,6 +1242,7 @@ Table preference.user_place_reactions {
   reaction varchar(20) [not null, note: 'LIKE, NOPE, SUPER_LIKE']
   last_source varchar(30) [not null, note: 'ONBOARDING, HOME_BACKGROUND, TRIP_VOTE']
   last_source_resource_id varchar(160)
+  evidence_multiplier decimal(4,2) [not null, default: 1.0, note: '3.0 for ONBOARDING; 1.0 for HOME_BACKGROUND and TRIP_VOTE.']
   reaction_count int [not null, default: 1]
   first_reacted_at timestamptz [not null, default: `now()`]
   last_reacted_at timestamptz [not null, default: `now()`]
@@ -1264,8 +1265,9 @@ Table preference.user_preference_events {
   action varchar(20) [not null, note: 'UPSERT or REMOVE']
   reaction varchar(20) [note: 'LIKE, NOPE, SUPER_LIKE. Null when action is REMOVE.']
   previous_reaction varchar(20)
-  source varchar(30) [not null, note: 'ONBOARDING, HOME_BACKGROUND, TRIP_VOTE. Every source multiplier is 1.0.']
+  source varchar(30) [not null, note: 'ONBOARDING, HOME_BACKGROUND, TRIP_VOTE.']
   source_resource_id varchar(160)
+  evidence_multiplier decimal(4,2) [not null, default: 1.0, note: '3.0 for ONBOARDING; 1.0 for HOME_BACKGROUND and TRIP_VOTE.']
   calculation_policy_version varchar(80) [not null, default: 'preference-evidence-v2']
   source_modified_at timestamptz
   place_tag_enrichment_id uuid
@@ -1299,7 +1301,7 @@ Table preference.user_preference_tag_weights {
     preference_score
   }
 
-  Note: 'Materialized user-tag preference projection. Source multiplier is always 1.0. Reaction changes/removals reverse previous evidence; raw history remains in user_preference_events. Each active trip vote sticker contributes one positive evidence unit.'
+  Note: 'Materialized user-tag preference projection. ONBOARDING evidence uses multiplier 3.0; HOME_BACKGROUND and TRIP_VOTE use 1.0. Reaction changes/removals reverse previous weighted evidence; raw history remains in user_preference_events.'
 }
 
 Table preference.user_place_vote_evidences {

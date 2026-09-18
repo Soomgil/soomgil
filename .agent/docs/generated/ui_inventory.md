@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 19, pages 20, components 46 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 47 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -26,6 +26,7 @@
 | `/verify-email` | VerifyEmail | `src/pages/VerifyEmailPage.vue` | 공개 | 예 |
 | `/reset-password` | ResetPassword | `src/pages/ResetPasswordPage.vue` | 공개 | 아니오 |
 | `/home` | Home | `src/pages/HomePage.vue` | 필요 | 아니오 |
+| `/onboarding/preferences` | OnboardingPreferences | `src/pages/OnboardingPreferencePage.vue` | 필요 | 아니오 |
 | `/search` | Search | `src/pages/SearchResultsPage.vue` | 필요 | 아니오 |
 | `/my-trips` | MyTrips | `src/pages/MyTripsPage.vue` | 필요 | 아니오 |
 | `/trip-invites/:inviteCode` | TripInviteAccept | `src/pages/TripInviteAcceptPage.vue` | 필요 | 아니오 |
@@ -312,6 +313,15 @@
 - asset refs: 없음
 - classes: `btn`, `eyebrow`, `ghost`, `material-symbols-rounded`, `muted`, `my-story-body`, `my-story-comment`, `my-story-comments`, `my-story-detail`, `my-story-gallery`, `my-story-head`, `my-story-state`, `my-story-state--error`, `my-story-tags`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`
 
+#### frontend/src/components/onboarding/MapSectionTour.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 {{ step.title }}
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `===`, `active:`, `index`, `map-tour`, `map-tour-actions`, `map-tour-backdrop`, `map-tour-card`, `map-tour-footer`, `map-tour-next`, `map-tour-previous`, `map-tour-progress`, `map-tour-spotlight`, `map-tour-topline`, `material-symbols-rounded`, `stepIndex`, `{`, `}`
+
 #### frontend/src/components/place/PlaceDiscoveryPanel.vue
 
 - 종류: component
@@ -536,6 +546,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `oauth-error-icon`, `oauth-spinner`, `primary`, `small`
+
+#### frontend/src/pages/OnboardingPreferencePage.vue
+
+- 종류: page
+- script: setup / ts
+- headings: h1 당신다운 여행을 골라주세요, h2 {{ currentPlace.name }}
+- forms: 0, images: 1
+- asset refs: 없음
+- classes: `!==`, `[`, `animating`, `dragStartX`, `dragging:`, `leaving:`, `like`, `material-symbols-rounded`, `nope`, `null,`, `preference-action`, `preference-actions`, `preference-address`, `preference-back`, `preference-card`, `preference-card-copy`, `preference-card-shade`, `preference-card-stage`, `preference-description`, `preference-eyebrow`, `preference-footer`, `preference-header`, `preference-image-placeholder`, `preference-onboarding`, `preference-progress`, `preference-progress-copy`, `preference-secondary`, `preference-shell`, `preference-state`, `preference-submit-error`
 
 #### frontend/src/pages/RegisterPage.vue
 

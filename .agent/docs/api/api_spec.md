@@ -66,7 +66,7 @@
 
 ### 주요 유스케이스
 
-- 사용자는 회원가입 관광지 10개, 홈 관광지 배경, 여행방 투표에서 취향 데이터를 쌓으며 세 수집 경로 가중치는 동일하다.
+- 사용자는 회원가입 관광지 10개, 홈 관광지 배경, 여행방 투표에서 취향 데이터를 쌓으며 회원가입 응답은 콜드 스타트 완화를 위해 3배로 반영한다.
 - 사용자는 `SUPER_LIKE`한 장소만 저장할 수 있다.
 - 첫 참여자는 스티커 투표를 완료해야 지도에 진입하고 선정 장소는 `UNSCHEDULED` 일정에 추가된다.
 - 여행방 멤버는 누적 선호도를 바탕으로 viewport 안 추천 장소를 받고, 추천 카드를 일정에 바로 추가한다.
@@ -91,7 +91,7 @@
 | VoteParticipantStatus | `NOT_STARTED`, `IN_PROGRESS`, `SUBMITTED` | 세션별 참여 상태. 첫 진입을 boolean 하나로 두지 않는다 |
 | VoteCompletionReason | `ALL_SUBMITTED`, `OWNER_EARLY_CLOSE` | 전원 제출 자동 종료와 방장 조기 종료 |
 | VoteNextScreen | `VOTE`, `WAITING`, `MAP` | 서버가 계산해 내려주는 여행 방 진입 화면 |
-| PreferenceSource | `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE` | source multiplier는 모두 `1.0` |
+| PreferenceSource | `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE` | multiplier는 각각 `3.0`, `1.0`, `1.0` |
 | ItineraryDayGroupType | `DAY`, `UNSCHEDULED` | trip당 `UNSCHEDULED` 최대 1개 |
 | ItineraryItemType | `PLACE`, `CUSTOM_PLACE` | 외부 장소는 `provider + externalPlaceId`, 커스텀 장소는 item 안에 저장 |
 | PlaceSourceStatus | `AVAILABLE`, `DELETED`, `UNKNOWN` | 외부 원본 불가 시 snapshot/item에서 상태 표시 |

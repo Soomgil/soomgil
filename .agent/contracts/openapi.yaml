@@ -46,8 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: '#/components/schemas/OnboardingPreferenceSurvey'
   /onboarding/preference-survey/responses:
     put:
       tags: [Preference]
@@ -59,11 +58,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: true
+              $ref: '#/components/schemas/CompleteOnboardingPreferenceSurveyRequest'
       responses:
         '200':
           description: Onboarding completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingPreferenceCompletion'
   /home/place-background:
     get:
       tags: [Preference]
@@ -85,7 +87,7 @@ paths:
       tags: [Preference]
       summary: 장소 선호 반응 저장
       operationId: upsertPreferenceReaction
-      description: ONBOARDING, HOME_BACKGROUND, TRIP_VOTE source multiplier는 모두 1.0이다.
+      description: ONBOARDING source multiplier는 3.0, HOME_BACKGROUND와 TRIP_VOTE는 1.0이다.
       requestBody:
         required: true
         content:
@@ -2916,6 +2918,90 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
   schemas:
+    OnboardingPreferenceSurvey:
+      type: object
+      required: [surveyVersionId, code, requiredPlaceCount, completed, places]
+      properties:
+        surveyVersionId:
+          type: string
+          format: uuid
+        code:
+          type: string
+        requiredPlaceCount:
+          type: integer
+          const: 10
+        completedAt:
+          type: [string, 'null']
+          format: date-time
+        completed:
+          type: boolean
+        places:
+          type: array
+          minItems: 10
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/OnboardingPreferencePlace'
+    OnboardingPreferencePlace:
+      type: object
+      required: [provider, externalPlaceId, name, tags, sortOrder]
+      properties:
+        provider:
+          $ref: '#/components/schemas/PlaceProvider'
+        externalPlaceId:
+          type: string
+        name:
+          type: string
+        address:
+          type: [string, 'null']
+        thumbnailUrl:
+          type: [string, 'null']
+          format: uri
+        category:
+          type: [string, 'null']
+        description:
+          type: [string, 'null']
+        tags:
+          type: array
+          items:
+            type: string
+        sortOrder:
+          type: integer
+          minimum: 1
+          maximum: 10
+    CompleteOnboardingPreferenceSurveyRequest:
+      type: object
+      required: [surveyVersionId, responses]
+      properties:
+        surveyVersionId:
+          type: string
+          format: uuid
+        responses:
+          type: array
+          minItems: 10
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/OnboardingPreferenceAnswer'
+    OnboardingPreferenceAnswer:
+      type: object
+      required: [provider, externalPlaceId, reaction]
+      properties:
+        provider:
+          $ref: '#/components/schemas/PlaceProvider'
+        externalPlaceId:
+          type: string
+        reaction:
+          type: string
+          enum: [LIKE, NOPE]
+    OnboardingPreferenceCompletion:
+      type: object
+      required: [surveyVersionId, completedAt]
+      properties:
+        surveyVersionId:
+          type: string
+          format: uuid
+        completedAt:
+          type: string
+          format: date-time
     ProblemDetails:
       type: object
       required: [type, title, status, code]
