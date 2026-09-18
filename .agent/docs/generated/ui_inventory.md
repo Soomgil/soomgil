@@ -274,7 +274,7 @@
 - headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `active:`, `enabled`, `map-taste-control`, `material-symbols-rounded`, `taste-close`, `taste-members`, `taste-panel`, `taste-reload`, `taste-switch`, `taste-switch-row`, `taste-tab-indicator`, `taste-tabs`, `taste-toggle`, `{`, `}`
+- classes: `active:`, `enabled`, `map-taste-control`, `material-symbols-rounded`, `taste-description`, `taste-members`, `taste-panel`, `taste-reload`, `taste-switch`, `taste-switch-row`, `taste-tab-indicator`, `taste-tabs`, `taste-toggle`, `{`, `}`
 
 #### frontend/src/components/map/MapboxItineraryMap.vue
 
