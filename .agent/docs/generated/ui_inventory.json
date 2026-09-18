@@ -497,11 +497,6 @@
           "scriptSetup": true,
           "headings": [
             {
-              "level": 2,
-              "id": "popular-stories-title",
-              "text": "여행자들이 좋아한 이야기"
-            },
-            {
               "level": 3,
               "id": "",
               "text": "{{ story.title }}"
@@ -523,7 +518,6 @@
             "carousel-controls",
             "featured-author",
             "featured-copy",
-            "featured-label",
             "featured-photo",
             "featured-polaroid",
             "featured-stats",
@@ -532,7 +526,6 @@
             "material-symbols-rounded",
             "photo-caption",
             "popular-carousel",
-            "popular-heading",
             "read-story",
             "slide-count"
           ],
@@ -603,10 +596,19 @@
             {
               "level": 3,
               "id": "",
+              "text": "{{ adjacentDragStory.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
               "text": "{{ visibleStory.title }}"
             }
           ],
           "images": [
+            {
+              "src": "adjacentDragStory.image",
+              "alt": ""
+            },
             {
               "src": "visibleStory.authorProfileImageUrl",
               "alt": "`${visibleStory.author} 프로필 사진`"
@@ -621,6 +623,7 @@
             "active:",
             "carousel-btn",
             "fc-avatar",
+            "feed-drag-preview",
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
@@ -902,15 +905,16 @@
           "forms": 0,
           "classNames": [
             "active:",
+            "enabled",
             "map-taste-control",
             "material-symbols-rounded",
-            "open",
-            "taste-close",
-            "taste-count",
+            "taste-description",
             "taste-members",
             "taste-panel",
             "taste-reload",
-            "taste-super",
+            "taste-switch",
+            "taste-switch-row",
+            "taste-tab-indicator",
             "taste-tabs",
             "taste-toggle",
             "{",
@@ -960,15 +964,12 @@
               "alt": "place.placeName"
             }
           ],
-          "forms": 0,
+          "forms": 1,
           "classNames": [
             "material-symbols-rounded",
             "modal-scroll-container",
-            "mypage-header-search-row",
             "mypage-place-card",
             "mypage-places-grid",
-            "mypage-search-inline",
-            "mypage-section-header",
             "mypage-section-title",
             "place-desc-text",
             "place-image-placeholder",
@@ -979,6 +980,13 @@
             "place-tag-pill",
             "place-tag-row",
             "place-title-h3",
+            "saved-board-content",
+            "saved-board-empty",
+            "saved-board-heading",
+            "saved-board-pagination",
+            "saved-board-panel",
+            "saved-board-search",
+            "saved-note-board",
             "section-icon",
             "section-icon--sky",
             "story-overlay",
@@ -1968,6 +1976,11 @@
             {
               "level": 3,
               "id": "",
+              "text": "{{ adjacentDragStory.title }}"
+            },
+            {
+              "level": 3,
+              "id": "",
               "text": "{{ visibleStory.title }}"
             }
           ],
@@ -1979,6 +1992,10 @@
             {
               "src": "story.authorProfileImageUrl",
               "alt": "`${story.author} 프로필 사진`"
+            },
+            {
+              "src": "adjacentDragStory.image",
+              "alt": ""
             },
             {
               "src": "visibleStory.authorProfileImageUrl",
@@ -2010,6 +2027,7 @@
             "currentPage",
             "eyebrow",
             "fc-avatar",
+            "feed-drag-preview",
             "feed-layout",
             "feed-photo-count",
             "feed-photo-nav",
@@ -2069,8 +2087,7 @@
             "story-tile-summary",
             "story-tile-tags",
             "story-tile-title",
-            "story-view-toggle",
-            "story-write-pill"
+            "story-view-toggle"
           ],
           "assetRefs": [
             "/images/랜딩페이지/korea_hero.png"
@@ -2102,6 +2119,7 @@
           ],
           "forms": 1,
           "classNames": [
+            "home-artwork-actions",
             "home-artwork-caption",
             "home-artwork-credit",
             "home-artwork-footer",
@@ -3930,6 +3948,16 @@
           ]
         },
         {
+          "path": "frontend/src/components/mypage/LikedPlacesModal.test.ts",
+          "relativePath": "src/components/mypage/LikedPlacesModal.test.ts",
+          "imports": [
+            "./LikedPlacesModal.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.test.ts",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.test.ts",
           "imports": [
@@ -5032,6 +5060,23 @@
           ]
         },
         {
+          "path": "frontend/src/utils/feedWheelGate.test.ts",
+          "relativePath": "src/utils/feedWheelGate.test.ts",
+          "imports": [
+            "./feedWheelGate",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/feedWheelGate.ts",
+          "relativePath": "src/utils/feedWheelGate.ts",
+          "imports": [],
+          "exports": [
+            "createFeedWheelGate"
+          ]
+        },
+        {
           "path": "frontend/src/utils/format.ts",
           "relativePath": "src/utils/format.ts",
           "imports": [],
@@ -5760,6 +5805,7 @@
             "feed-comment-input-area",
             "feed-comment-scroll",
             "feed-comment-widget",
+            "feed-drag-preview",
             "feed-layout",
             "feed-scroll-guide",
             "feed-scroll-guide-pill",
@@ -5770,7 +5816,25 @@
             "is-last-reply",
             "is-reply",
             "material-symbols-rounded",
+            "photo-next-enter-active",
+            "photo-next-enter-from",
+            "photo-next-leave-active",
+            "photo-next-leave-to",
+            "photo-prev-enter-active",
+            "photo-prev-enter-from",
+            "photo-prev-leave-active",
+            "photo-prev-leave-to",
             "show-swipe-demo",
+            "slide-down-enter-active",
+            "slide-down-enter-from",
+            "slide-down-leave-active",
+            "slide-down-leave-from",
+            "slide-down-leave-to",
+            "slide-up-enter-active",
+            "slide-up-enter-from",
+            "slide-up-leave-active",
+            "slide-up-leave-from",
+            "slide-up-leave-to",
             "story-action-bar",
             "story-body",
             "story-feed",
@@ -5794,7 +5858,6 @@
             "widget-card"
           ],
           "animations": [
-            "feed-swipe-demo",
             "story-heart-float",
             "story-heart-pop"
           ]
@@ -5841,9 +5904,9 @@
         "routes": 19,
         "pages": 20,
         "components": 46,
-        "sourceFiles": 143,
+        "sourceFiles": 146,
         "styleFiles": 9,
-        "typeScriptSignals": 207
+        "typeScriptSignals": 210
       }
     },
     {

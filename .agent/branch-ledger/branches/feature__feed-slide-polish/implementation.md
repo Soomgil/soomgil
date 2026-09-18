@@ -1,0 +1,50 @@
+# 홈 배치 및 커뮤니티 슬라이드
+
+- 최신 develop에서 feature/feed-slide-polish 생성.
+- 홈 둘러보기 버튼을 사진 컨트롤 위로 이동하고 라벨/캡션 위치 교환.
+- 인기 여행기 두 헤더 문구 제거, 영역 접근성 이름 유지.
+- 공유 게시물 상세 피드의 out-in 대기를 동시 슬라이드로 변경. 사진은 방향에 맞는 좌우 슬라이드.
+- 드래그 종료 위치에서 피드 전환 시작, 전환 상태 중복 방지 및 휠 관성 중복 전환 제한.
+- 잔떨림 원인: original.css의 scroll-snap-type:y mandatory가 transform과 충돌해 전환 매 프레임 scrollTop을 보정. 브라우저에서 최대 762px의 자동 스크롤과 1px 내외 제자리 진동 재현.
+- 피드 viewport에 scroll-snap-type:none, overflow:clip, scroll-padding:0, overflow-anchor:none을 적용하고 카드 snap 제거.
+- 수정 후 브라우저 프레임 계측: scrollTop 0 유지, 778px 실제 슬라이드 이동. 사진 양방향, 휠/키보드/드래그, 정착 후 위치 안정성 확인.
+- 데스크톱 1440px, 모바일 390px fixture 화면 점검. 홈/커뮤니티 테스트 10개 및 production build 검증.
+
+## 후속 전환 수정
+- 커뮤니티 자체 상세창과 공통 상세창의 중복 구현 모두에 동시 전환 및 wheel gate를 적용.
+- 400ms 입력 정지와 900ms 전환 간격을 함께 확인해 지연 관성 입력의 중복 넘김 방지. 키 반복 입력 차단.
+- 드래그 중 다음/이전 글의 표지·제목 미리보기를 포인터에 붙여 표시하고 인접 표지 이미지 선로딩.
+- 3개 글 fixture로 관성 입력 후 두 번째 글 유지, 전환 및 드래그 중 글 사이 공백 1px 이하, 도착 후 위치 고정 검증.
+- production build 및 관련 테스트 13개 통과.
+
+## 커뮤니티 카드와 헤더
+- 그리드 축소: 4/3/2열 및 한 페이지 2행(8/6/4개). 리스트 최대 900px, 약 136~168px 높이, 한 페이지 2개. 보기/폭 변경 시 첫 페이지.
+- 헤더 fixed + body 고정 padding 및 홈 음수 margin 조합을 제거. sticky 정상 흐름으로 실제 헤더 높이 확보, 불투명 배경 적용.
+- 1440/768/390px 카드 크기·가로 넘침·초기 본문/헤더 경계 fixture 검증. App/Home/Community 테스트 및 production build 통과, 반응형 페이지 개수 회귀 테스트 추가 통과.
+`n- 사용자 최종 요청: 그리드/리스트 모두 페이지당 8개 고정. 반응형은 열 수만 변경해 행이 자연스럽게 증가하며 화면 크기·보기 전환 시 현재 페이지 유지. 관련 테스트 2개 통과.
+
+## 마이페이지 포스트잇 및 취향
+- 슈퍼라이크 8개 미리보기를 파스텔 포스트잇/테이프/도트 보드로 표현. 4/3/2열 반응형, 모두 보기 및 슈퍼라이크 취소/복원 유지.
+- 대표 API 취향과 인사이트를 TRAVEL DNA 카드로, 태그와 비율을 순위별 미터 카드로 표현. 데이터 생성/추정 없음.
+- production build, MyPage 테스트 4개, 1440/390px fixture 시각 점검 및 가로 넘침 검사, harness 통과.
+
+## 모두 보기 및 지도 취향 설정
+- 슈퍼라이크 모두 보기: 동일 포스트잇 보드, 데스크톱 4열/모바일 2열, 페이지당 8개, 검색 제출 버튼과 페이지 이동. 제목/닫기 행과 검색 행 분리.
+- 지도 취향 표시 상태를 패널 개폐에서 분리. 닫아도 마커 유지, 표시 토글 off 때 제거. 슈퍼라이크 필터와 지도 표시 스위치 및 탭 알약 슬라이딩 적용.
+- 지도 표시 스위치는 슈퍼라이크 필터 바로 위. 요청된 설명/개수/재검색 문구 제거. 유의미한 bbox 변경에 500ms 지연 갱신.
+- build, 지도/모달 테스트 4개 및 모두보기 데스크톱/모바일 검색·닫기 비중첩/페이지 검증 통과.
+
+## UI 밀도 및 지도 표시 정리
+- 데이터 기반 소개와 taste-signature 제거. 취향 비율 내림차순 정렬, 1위 큰 수치/9px 막대/하늘색 카드, 2위 중간 강조/7px 막대.
+- 모두 보기 모달은 화면 내 고정 높이(최대760px/92dvh). 검색 결과 0개에서도 높이 동일함을 1440/390px에서 검증.
+- 계정 페이지 eyebrow를 커뮤니티의 작은 텍스트 스타일로 통일.
+- 지도 취향 로딩 텍스트 제거(aria-busy 유지), 취향 마커 z-index 8/9로 이미지 애셋 레이어4보다 높임.
+- 추천 문구를 n명의 취향과 잘 맞아요로 통일, 커스텀 일정 추가 버튼은 선명한 파랑.
+- 관련 테스트35개, 마이페이지4개 및 browser fixture 통과. production build 통과.
+
+## Final integration validation
+- Final search card surfaces match My Trips; taste ranks use restrained sage, lavender and pastel colors.
+- Full frontend suite: 67 files, 445 tests passed. Production build, harness and SPA smoke checks passed.
+- Frontend PR: https://github.com/Soomgil/soomgil-frontend/pull/18
+- Merged frontend commit: b52566f15013e087d870f47bbab2156d5ddd2ced
+- No backend or API contract changes. User tmp directory is excluded.

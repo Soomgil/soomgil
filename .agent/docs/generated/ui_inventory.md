@@ -163,10 +163,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h2 여행자들이 좋아한 이야기, h3 {{ story.title }}
+- headings: h3 {{ story.title }}
 - forms: 0, images: 2
 - asset refs: 없음
-- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-label`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `popular-heading`, `read-story`, `slide-count`
+- classes: `author-avatar`, `carousel-controls`, `featured-author`, `featured-copy`, `featured-photo`, `featured-polaroid`, `featured-stats`, `featured-story`, `featured-summary`, `material-symbols-rounded`, `photo-caption`, `popular-carousel`, `read-story`, `slide-count`
 
 #### frontend/src/components/community/StoryCard.vue
 
@@ -181,10 +181,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h3 {{ visibleStory.title }}
-- forms: 0, images: 2
+- headings: h3 {{ adjacentDragStory.title }}, h3 {{ visibleStory.title }}
+- forms: 0, images: 3
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-comment-button`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-heart-button`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`, `story-post-photo-img`
+- classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-drag-preview`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-comment-button`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-heart-button`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`
 
 #### frontend/src/components/community/StoryPostPreview.vue
 
@@ -274,7 +274,7 @@
 - headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `active:`, `map-taste-control`, `material-symbols-rounded`, `open`, `taste-close`, `taste-count`, `taste-members`, `taste-panel`, `taste-reload`, `taste-super`, `taste-tabs`, `taste-toggle`, `{`, `}`
+- classes: `active:`, `enabled`, `map-taste-control`, `material-symbols-rounded`, `taste-description`, `taste-members`, `taste-panel`, `taste-reload`, `taste-switch`, `taste-switch-row`, `taste-tab-indicator`, `taste-tabs`, `taste-toggle`, `{`, `}`
 
 #### frontend/src/components/map/MapboxItineraryMap.vue
 
@@ -290,9 +290,9 @@
 - 종류: component
 - script: setup / ts
 - headings: h2 star 슈퍼라이크한 장소, h3 {{ place.placeName }}
-- forms: 0, images: 1
+- forms: 1, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `modal-scroll-container`, `mypage-header-search-row`, `mypage-place-card`, `mypage-places-grid`, `mypage-search-inline`, `mypage-section-header`, `mypage-section-title`, `place-desc-text`, `place-image-placeholder`, `place-img-wrap`, `place-info-wrap`, `place-region-category`, `place-super-like-btn`, `place-tag-pill`, `place-tag-row`, `place-title-h3`, `section-icon`, `section-icon--sky`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `{`
+- classes: `material-symbols-rounded`, `modal-scroll-container`, `mypage-place-card`, `mypage-places-grid`, `mypage-section-title`, `place-desc-text`, `place-image-placeholder`, `place-img-wrap`, `place-info-wrap`, `place-region-category`, `place-super-like-btn`, `place-tag-pill`, `place-tag-row`, `place-title-h3`, `saved-board-content`, `saved-board-empty`, `saved-board-heading`, `saved-board-pagination`, `saved-board-panel`, `saved-board-search`, `saved-note-board`, `section-icon`, `section-icon--sky`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `{`
 
 #### frontend/src/components/mypage/MyStoriesModal.vue
 
@@ -469,10 +469,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ visibleStory.title }}
-- forms: 0, images: 4
+- headings: h1 {{ locale === 'en' ? 'Travel stories' : '여행 이야기' }}, h2 방금 도착한 여행 이야기, h3 {{ story.title }}, h3 {{ adjacentDragStory.title }}, h3 {{ visibleStory.title }}
+- forms: 0, images: 5
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-empty`, `community-hero-eyebrow`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-paper`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`, `material-symbols-rounded`
+- classes: `===`, `active:`, `carousel-btn`, `community-content-container`, `community-empty`, `community-hero-eyebrow`, `community-hero-header`, `community-hero-lead`, `community-hero-text`, `community-hero-title`, `community-page`, `community-pagination`, `community-paper`, `community-pill`, `community-pill-primary`, `community-story-search`, `currentPage`, `eyebrow`, `fc-avatar`, `feed-drag-preview`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `latest-stories-eyebrow`, `latest-stories-header`, `latest-stories-icon`, `latest-stories-section`, `latest-stories-title`, `latest-stories-tools`, `lead`
 
 #### frontend/src/pages/HomePage.vue
 
@@ -481,7 +481,7 @@
 - headings: h1 어디로 떠나고 싶으세요?, h2 {{ photoTitle }}
 - forms: 1, images: 1
 - asset refs: `@/assets/textures/ink-reveal-mask.png`
-- classes: `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
+- classes: `home-artwork-actions`, `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
 
 #### frontend/src/pages/LandingPage.vue
 
@@ -684,7 +684,7 @@
 
 - Tailwind import: 없음
 - tokens: `--blue`, `--ink`, `--line`, `--muted`, `--surface-2`, `--violet`
-- animations: `feed-swipe-demo`, `story-heart-float`, `story-heart-pop`
+- animations: `story-heart-float`, `story-heart-pop`
 
 #### frontend/src/styles/travel-page-actions.css
 
