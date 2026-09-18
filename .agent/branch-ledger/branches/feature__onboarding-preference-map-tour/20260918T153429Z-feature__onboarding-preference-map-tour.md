@@ -27,7 +27,7 @@ status: draft
 
 ## 검증
 
-- 프론트엔드 전체 Vitest: 69 files, 449 tests 통과.
+- 프론트엔드 전체 Vitest: 70 files, 452 tests 통과.
 - 프론트엔드 production build 통과.
 - 백엔드 compileJava 및 온보딩 단위 테스트 통과.
 - Testcontainers 통합 테스트는 로컬 Docker daemon 미가동으로 실행 환경을 확보하지 못했습니다.
