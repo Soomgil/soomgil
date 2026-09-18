@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T14:57:01.548Z",
+  "generatedAt": "2026-09-18T04:59:34.937Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -91,6 +91,16 @@
       "status": "",
       "title": "vote region selection and candidate count",
       "file": ".agent/branch-ledger/branches/feature__community-trip-voting/20260913T165524Z-feature__community-trip-voting-vote-region-selection-and-candidate-count.md"
+    },
+    {
+      "id": "implementation",
+      "branch": "feature__feed-slide-polish",
+      "branchKey": "feature__feed-slide-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "홈 배치 및 커뮤니티 슬라이드",
+      "file": ".agent/branch-ledger/branches/feature__feed-slide-polish/implementation.md"
     },
     {
       "id": "20260623T003736Z-feature__frontend-api-integration-fei-141-180-fei-141-180-frontend-api-integration",
