@@ -19,11 +19,12 @@ status: draft
 
 - 태그가 준비된 서로 다른 제주 관광지 10개를 versioned 설문으로 고정했습니다.
 - 가입 설문과 일반 취향 수집이 동일한 `SwipePage` 카드·상세 패널·세 방향 제스처 UI를 공유합니다.
+- 가입 설문 중에는 일반 서비스 메뉴 대신 안내 문구, 실시간 진행도, 로그아웃만 제공하는 전용 헤더를 표시합니다.
 - 10개 `LIKE`/`NOPE`/`SUPER_LIKE` 전체 제출을 원자적으로 저장하고 `ONBOARDING` 근거를 일반 반응의 3배로 반영합니다.
 - 기존 사용자는 migration 시 완료 처리하고, 이후 가입한 활성 사용자는 설문 완료 전 다른 화면 진입을 막습니다.
 - 지도 화면의 일정, 지도, 지도 도구, 여행방 관리, 협업 도구를 설명하는 최초 1회 안내와 다시 보기 버튼을 추가했습니다.
 - API/OpenAPI/DBML/제품 정책의 source multiplier를 `ONBOARDING=3.0`, 나머지 `1.0`으로 동기화했습니다.
-- frontend commits: `5e2d5df` (`feat(frontend): add preference onboarding and map tour`), `b9eec93` (`feat(preference): reuse swipe UI for onboarding`)
+- frontend commits: `5e2d5df` (`feat(frontend): add preference onboarding and map tour`), `b9eec93` (`feat(preference): reuse swipe UI for onboarding`), `a99d877` (`feat(preference): add focused onboarding header`)
 - backend commits: `dc6cf8f` (`feat(preference): add required onboarding survey`), `a45645a` (`feat(preference): allow onboarding super likes`)
 
 ## 검증
