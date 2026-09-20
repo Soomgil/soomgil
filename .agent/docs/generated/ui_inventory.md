@@ -437,16 +437,16 @@
 - headings: h1 새 투표를 시작할까요?
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__footer`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--region`, `vote-setup__stepper`, `vote-setup__title`, `vote-setup__trip`
+- classes: `material-symbols-rounded`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__eyebrow`, `vote-setup__footer`, `vote-setup__header`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--region`, `vote-setup__stepper`, `vote-setup__title`
 
 #### frontend/src/components/voting/TripVoteFlow.vue
 
 - 종류: component
 - script: setup / ts
-- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h1 어디로 갈까요?, h2 제출을 마쳤어요
+- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h2 내 투표를 제출했어요, h1 어디로 갈까요?
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__restart`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`, `{`
+- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__observer-card`, `trip-vote__observer-copy`, `trip-vote__observer-cta`, `trip-vote__observer-progress`, `trip-vote__observer-progress-head`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__restart`, `trip-vote__result-actions`, `trip-vote__state-eyebrow`
 
 #### frontend/src/components/voting/VoteCandidateDeck.vue
 
@@ -589,7 +589,7 @@
 - script: setup / ts
 - headings: 없음
 - forms: 0, images: 1
-- asset refs: 없음
+- asset refs: `@/assets/images/ai-profile.png`
 - classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `route-page-section`, `section`, `trip-map-actions`
 
 #### frontend/src/pages/SearchResultsPage.vue
@@ -641,10 +641,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 {{ tr('초대 수락 완료', 'Invitation accepted') }}
+- headings: h1 {{ tr('초대 수락 완료!', 'Invitation accepted!') }}
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
+- classes: ``is-${state}``, `app-shell`, `invite-actions`, `invite-button`, `invite-lead`, `invite-loading`, `invite-page`, `invite-shell`, `invite-status`, `invite-trip-card`, `invite-trip-card__check`, `invite-trip-card__pin`, `material-symbols-rounded`, `primary`, `secondary`
 
 #### frontend/src/pages/UserProfilePage.vue
 
@@ -653,7 +653,7 @@
 - headings: h1 {{ user.displayName }}님의 여행 공간, h2 {{ user.displayName }}, h2 비공개 프로필입니다, h2 star 슈퍼라이크한 장소, h3 {{ place.placeName }}, h2 auto_stories {{ formatUiText("{0}님의 여행기", "Stories by {0}", [user.displayName]) }}
 - forms: 0, images: 4
 - asset refs: 없음
-- classes: `account-page-hero`, `account-page-link`, `btn`, `keepsake-board`, `keepsake-note`, `liked-places-layout`, `material-symbols-rounded`, `mypage-body-container`, `mypage-empty-desc`, `mypage-empty-icon`, `mypage-empty-state`, `mypage-empty-title`, `mypage-glass-container`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-more-link`, `mypage-page-heading`, `mypage-place-card`, `mypage-place-card--slider`, `mypage-places-slider`, `mypage-places-slider-wrapper`, `mypage-profile-card`, `mypage-section`, `mypage-section-content`, `mypage-section-header`, `mypage-section-title`, `mypage-shell`, `mypage-stories-magazine`, `mypage-story-magazine-item`
+- classes: `account-page-hero`, `account-page-link`, `keepsake-board`, `keepsake-note`, `liked-places-layout`, `material-symbols-rounded`, `mypage-body-container`, `mypage-empty-desc`, `mypage-empty-icon`, `mypage-empty-state`, `mypage-empty-title`, `mypage-glass-container`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-more-link`, `mypage-page-heading`, `mypage-place-card`, `mypage-place-card--slider`, `mypage-places-slider`, `mypage-places-slider-wrapper`, `mypage-profile-card`, `mypage-section`, `mypage-section-content`, `mypage-section-header`, `mypage-section-title`, `mypage-shell`, `mypage-stories-magazine`, `mypage-story-magazine-item`, `page-hero`
 
 #### frontend/src/pages/VerifyEmailPage.vue
 

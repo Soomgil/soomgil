@@ -482,13 +482,13 @@ RFC7807 Problem Details를 사용한다.
 
 #### GET `/users/{userId}`
 
-- 설명: 사용자 프로필 조회. `PRIVATE` 프로필은 승인된 follower에게만 전체 프로필을 반환한다.
+- 설명: 사용자 프로필 조회. `PUBLIC` 프로필은 슈퍼라이크 장소와 여행 취향을 포함하며, `PRIVATE` 프로필은 본인과 승인된 follower에게만 해당 상세 정보를 반환한다.
 - 인증/권한: 로그인 사용자. 미승인 사용자는 제한된 summary만 조회한다.
 - Path parameters: `userId`.
 - Query parameters: 없음.
 - Request body schema: 없음.
 - Response body schema: `UserPublicProfile`.
-- 성공 응답 예시: `200 {"id":"...","displayName":"현우","profileImageUrl":"https://...","profileVisibility":"PRIVATE","followStatus":"ACTIVE"}`
+- 성공 응답 예시: `200 {"id":"...","displayName":"현우","profileImageUrl":"https://...","profileVisibility":"PUBLIC","superLikedPlaces":[{"id":"...","place":{"provider":"KTO","externalPlaceId":"126508","name":"성산일출봉"},"createdAt":"..."}],"preferences":{"topCategories":[],"travelStyle":"...","preferredTags":[]}}`
 - 실패 응답 예시: `404 ProblemDetails(code=USER_NOT_FOUND)`.
 - 관련 화면: 팔로우/커뮤니티 작성자 프로필.
 - 근거: `auth.users`, `social.user_follows`.
