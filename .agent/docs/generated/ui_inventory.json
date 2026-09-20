@@ -89,7 +89,7 @@
         {
           "path": "/onboarding/preferences",
           "name": "OnboardingPreferences",
-          "page": "src/pages/OnboardingPreferencePage.vue",
+          "page": "src/pages/SwipePage.vue",
           "requiresAuth": true,
           "guestOnly": false
         },
@@ -2635,70 +2635,6 @@
           "assetRefs": []
         },
         {
-          "path": "frontend/src/pages/OnboardingPreferencePage.vue",
-          "relativePath": "src/pages/OnboardingPreferencePage.vue",
-          "kind": "page",
-          "scriptLang": "ts",
-          "scriptSetup": true,
-          "headings": [
-            {
-              "level": 1,
-              "id": "preference-title",
-              "text": "당신다운 여행을 골라주세요"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "{{ currentPlace.name }}"
-            }
-          ],
-          "images": [
-            {
-              "src": "currentPlace.thumbnailUrl",
-              "alt": "currentPlace.name"
-            }
-          ],
-          "forms": 0,
-          "classNames": [
-            "!==",
-            "[",
-            "animating",
-            "dragStartX",
-            "dragging:",
-            "leaving:",
-            "like",
-            "material-symbols-rounded",
-            "nope",
-            "null,",
-            "preference-action",
-            "preference-actions",
-            "preference-address",
-            "preference-back",
-            "preference-card",
-            "preference-card-copy",
-            "preference-card-shade",
-            "preference-card-stage",
-            "preference-description",
-            "preference-eyebrow",
-            "preference-footer",
-            "preference-header",
-            "preference-image-placeholder",
-            "preference-onboarding",
-            "preference-progress",
-            "preference-progress-copy",
-            "preference-secondary",
-            "preference-shell",
-            "preference-state",
-            "preference-submit-error",
-            "preference-submit-status",
-            "preference-tags",
-            "spin",
-            "{",
-            "}"
-          ],
-          "assetRefs": []
-        },
-        {
           "path": "frontend/src/pages/RegisterPage.vue",
           "relativePath": "src/pages/RegisterPage.vue",
           "kind": "page",
@@ -3161,7 +3097,7 @@
             {
               "level": 1,
               "id": "",
-              "text": "취향 수집"
+              "text": "{{ onboardingMode ? '첫 여행 취향 찾기' : '취향 수집' }}"
             },
             {
               "level": 2,
@@ -3188,6 +3124,7 @@
             "page-hero__copy",
             "page-hero__eyebrow",
             "page-hero__lead",
+            "page-hero__progress",
             "page-hero__title",
             "page-with-hero",
             "panel",
@@ -4460,6 +4397,7 @@
           "relativePath": "src/pages/SwipePage.test.ts",
           "imports": [
             "./SwipePage.vue",
+            "@/stores/auth.store",
             "@vue/test-utils",
             "pinia",
             "vitest"
@@ -5038,7 +4976,8 @@
           "path": "frontend/src/types/onboarding.ts",
           "relativePath": "src/types/onboarding.ts",
           "imports": [
-            "@/types/place"
+            "@/types/place",
+            "@/types/swipe"
           ],
           "exports": [
             "OnboardingPreferenceAnswer",
@@ -6069,11 +6008,11 @@
       ],
       "summary": {
         "routes": 20,
-        "pages": 21,
+        "pages": 20,
         "components": 47,
         "sourceFiles": 152,
         "styleFiles": 9,
-        "typeScriptSignals": 218
+        "typeScriptSignals": 217
       }
     },
     {
