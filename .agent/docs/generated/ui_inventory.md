@@ -266,7 +266,7 @@
 - headings: 없음
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `map-object`, `map-object-handle`, `map-object-hitbox`, `map-object-image`, `map-object-lock-mask`, `map-object-overlay`, `map-object-placeholder`, `map-object-rotation-handle`, `map-object-rotation-line`, `map-object-selection`, `{`
+- classes: `map-object`, `map-object-handle`, `map-object-hitbox`, `map-object-image`, `map-object-lock-mask`, `map-object-overlay`, `map-object-placeholder`, `map-object-rotation-handle`, `map-object-rotation-line`, `map-object-selection`, `map-object-sticker`, `{`
 
 #### frontend/src/components/map/MapTasteControl.vue
 
@@ -419,7 +419,7 @@
 - headings: h1 스티커 투표로 갈 곳을 함께 정해요
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__footer`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__note`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--rank`, `vote-setup__row-icon--region`, `vote-setup__step`, `vote-setup__stepper`, `vote-setup__suggest`, `vote-setup__suggest-icon`, `vote-setup__suggest-label`, `vote-setup__suggest-list`, `vote-setup__suggest-title`
+- classes: `material-symbols-rounded`, `page-hero__eyebrow`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__footer`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--region`, `vote-setup__step`, `vote-setup__stepper`, `vote-setup__title`, `vote-setup__trip`
 
 #### frontend/src/components/voting/TripVoteFlow.vue
 
@@ -452,10 +452,10 @@
 
 - 종류: component
 - script: setup / ts
-- headings: h1 {{ showAll ? '전체 투표 결과' : '우리의 다음 여행지' }}
+- headings: 없음
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `row.selected,`, `selected:`, `sr-only`, `vote-result`, `vote-result__all`, `vote-result__badge`, `vote-result__body`, `vote-result__count`, `vote-result__empty`, `vote-result__eyebrow`, `vote-result__favorite`, `vote-result__header`, `vote-result__lead`, `vote-result__list`, `vote-result__media`, `vote-result__name`, `vote-result__outcome`, `vote-result__rank`, `vote-result__row`, `vote-result__selected`, `vote-result__title`, `{`
+- classes: `material-symbols-rounded`, `row.selected,`, `selected:`, `sr-only`, `vote-result`, `vote-result__all`, `vote-result__badge`, `vote-result__body`, `vote-result__count`, `vote-result__empty`, `vote-result__favorite`, `vote-result__list`, `vote-result__media`, `vote-result__name`, `vote-result__rank`, `vote-result__row`, `vote-result__selected`, `{`
 
 #### frontend/src/components/voting/VoteStickerCart.vue
 
@@ -491,7 +491,7 @@
 - headings: h1 어디로 떠나고 싶으세요?, h2 {{ photoTitle }}
 - forms: 1, images: 1
 - asset refs: `@/assets/textures/ink-reveal-mask.png`
-- classes: `home-artwork-actions`, `home-artwork-caption`, `home-artwork-credit`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
+- classes: `home-artwork-actions`, `home-artwork-caption`, `home-artwork-credit`, `home-artwork-cta-row`, `home-artwork-footer`, `home-artwork-info`, `home-artwork-label`, `home-artwork-title`, `home-backdrop`, `home-canvas`, `home-explore-link`, `home-gallery`, `home-ink-underlay`, `home-photo-controls`, `home-photo-count`, `home-photo-status`, `home-plan-link`, `home-search`, `home-search-history`, `home-search-history-heading`, `home-search-position`, `home-sr-only`, `material-symbols-rounded`, `paper-search`, `paper-search-field`, `paper-search-icon`, `paper-search-input`, `paper-search-submit`
 
 #### frontend/src/pages/LandingPage.vue
 
@@ -525,9 +525,9 @@
 - 종류: page
 - script: setup / ts
 - headings: h1 내 여행, h2 여행 목록, h3 {{ trip.title }}, h3 새 여행 만들기
-- forms: 1, images: 3
+- forms: 1, images: 2
 - asset refs: 없음
-- classes: `===`, `[getStatusCls(trip),`, `active`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `companion-avatar`, `companion-count`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `getStatusCls(trip)`, `icon-btn`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `my-trips-timeline`, `my-trips-timeline-wrapper`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`
+- classes: `===`, `[getStatusCls(trip),`, `active`, `active:`, `activeFilter`, `app-shell`, `btn`, `compact-title`, `createModal.isOpen.value`, `eyebrow`, `field`, `filter.value`, `form-label`, `form-label-text`, `getStatusCls(trip)`, `ghost`, `icon-btn`, `material-symbols-rounded`, `modal-card`, `modal-header`, `modal-overlay`, `my-trips-dashboard`, `my-trips-timeline`, `my-trips-timeline-wrapper`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`
 
 #### frontend/src/pages/NotFoundPage.vue
 
@@ -599,7 +599,7 @@
 - headings: h1 나에게 맞는 여행 환경, h2 {{ currentUser?.displayName || '여행자' }}, h2 {{ t('settings.environment') }}, h2 {{ t('settings.account') }}
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `account-page-link`, `animate-spin`, `avatar-fallback`, `btn`, `bullet-icon`, `danger-action-btn`, `danger-bullet-item`, `email-icon`, `error-status`, `field`, `lg:px-8`, `loading-spinner-wrap`, `loading-text`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `px-4`, `py-8`
+- classes: `account-page-link`, `animate-spin`, `avatar-fallback`, `btn`, `bullet-icon`, `danger-action-btn`, `danger-bullet-item`, `email-icon`, `error-status`, `lg:px-8`, `loading-spinner-wrap`, `loading-text`, `material-symbols-rounded`, `max-w-6xl`, `mx-auto`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel-head-icon`, `panel-head-icon--orange`, `panel-head-icon--violet`, `panel-head-title-group`, `primary`, `profile-settings-page`, `px-4`, `py-8`, `settings-actions-buttons`
 
 #### frontend/src/pages/StoriesPage.vue
 
