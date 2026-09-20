@@ -32,6 +32,7 @@
         "vue-router"
       ],
       "devDependencies": [
+        "@playwright/test",
         "@types/node",
         "@types/qrcode",
         "@vitejs/plugin-vue",
@@ -674,7 +675,6 @@
             "story-action-bar",
             "story-author",
             "story-body",
-            "story-comment-button",
             "story-detail-panel",
             "story-feed",
             "story-feed-window",
@@ -1271,6 +1271,42 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/onboarding/SwipeIntroTour.vue",
+          "relativePath": "src/components/onboarding/SwipeIntroTour.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ step.title }}"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "===",
+            "active:",
+            "index",
+            "material-symbols-rounded",
+            "stepIndex",
+            "swipe-tour",
+            "swipe-tour-actions",
+            "swipe-tour-backdrop",
+            "swipe-tour-card",
+            "swipe-tour-footer",
+            "swipe-tour-next",
+            "swipe-tour-previous",
+            "swipe-tour-progress",
+            "swipe-tour-spotlight",
+            "swipe-tour-topline",
+            "{",
+            "}"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.vue",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.vue",
           "kind": "component",
@@ -1782,7 +1818,9 @@
             "vote-setup__cta",
             "vote-setup__destination",
             "vote-setup__error",
+            "vote-setup__eyebrow",
             "vote-setup__footer",
+            "vote-setup__header",
             "vote-setup__hint",
             "vote-setup__hint--warn",
             "vote-setup__lead",
@@ -1795,8 +1833,7 @@
             "vote-setup__row-icon--count",
             "vote-setup__row-icon--region",
             "vote-setup__stepper",
-            "vote-setup__title",
-            "vote-setup__trip"
+            "vote-setup__title"
           ],
           "assetRefs": []
         },
@@ -1818,14 +1855,14 @@
               "text": "투표가 진행 중이에요"
             },
             {
+              "level": 2,
+              "id": "",
+              "text": "내 투표를 제출했어요"
+            },
+            {
               "level": 1,
               "id": "",
               "text": "어디로 갈까요?"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "제출을 마쳤어요"
             }
           ],
           "images": [],
@@ -1849,16 +1886,29 @@
             "trip-vote__hero",
             "trip-vote__hero-actions",
             "trip-vote__idle",
-            "trip-vote__idle-icon",
             "trip-vote__layout",
             "trip-vote__narrow",
+            "trip-vote__observer-card",
+            "trip-vote__observer-copy",
+            "trip-vote__observer-cta",
+            "trip-vote__observer-progress",
+            "trip-vote__observer-progress-head",
             "trip-vote__panel",
             "trip-vote__progress",
             "trip-vote__restart",
             "trip-vote__result-actions",
-            "trip-vote__waiting",
+            "trip-vote__state-eyebrow",
+            "trip-vote__state-header",
+            "trip-vote__state-lead",
+            "trip-vote__waiting-actions",
             "trip-vote__waiting-bar",
+            "trip-vote__waiting-caption",
+            "trip-vote__waiting-card",
+            "trip-vote__waiting-copy",
+            "trip-vote__waiting-heading",
+            "trip-vote__waiting-overview",
             "trip-vote__waiting-progress",
+            "trip-vote__waiting-summary",
             "{"
           ],
           "assetRefs": []
@@ -2855,7 +2905,9 @@
             "section",
             "trip-map-actions"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "@/assets/images/ai-profile.png"
+          ]
         },
         {
           "path": "frontend/src/pages/SearchResultsPage.vue",
@@ -3266,6 +3318,7 @@
             "swipe-guide--left",
             "swipe-guide--right",
             "swipe-guide--top",
+            "swipe-help-btn",
             "swipe-layout",
             "swipe-main-column",
             "swipe-place-placeholder",
@@ -3288,23 +3341,27 @@
             {
               "level": 1,
               "id": "",
-              "text": "{{ tr('초대 수락 완료', 'Invitation accepted') }}"
+              "text": "{{ tr('초대 수락 완료!', 'Invitation accepted!') }}"
             }
           ],
           "images": [],
           "forms": 0,
           "classNames": [
+            "`is-${state}`",
             "app-shell",
-            "btn",
-            "eyebrow",
-            "ghost",
             "invite-actions",
-            "invite-icon",
+            "invite-button",
+            "invite-lead",
+            "invite-loading",
             "invite-page",
+            "invite-shell",
             "invite-status",
+            "invite-trip-card",
+            "invite-trip-card__check",
+            "invite-trip-card__pin",
             "material-symbols-rounded",
             "primary",
-            "success"
+            "secondary"
           ],
           "assetRefs": []
         },
@@ -3349,11 +3406,6 @@
               "level": 2,
               "id": "",
               "text": "explore 여행 취향"
-            },
-            {
-              "level": 2,
-              "id": "",
-              "text": "사용자를 찾을 수 없습니다"
             }
           ],
           "images": [
@@ -3378,7 +3430,6 @@
           "classNames": [
             "account-page-hero",
             "account-page-link",
-            "btn",
             "keepsake-board",
             "keepsake-note",
             "liked-places-layout",
@@ -3425,6 +3476,15 @@
             "pref-empty-desc",
             "pref-empty-icon",
             "pref-empty-title",
+            "pref-style-bar",
+            "pref-style-fill",
+            "pref-style-header",
+            "pref-style-label",
+            "pref-style-list",
+            "pref-style-percent",
+            "pref-style-track",
+            "pref-tag-chip",
+            "pref-tag-list",
             "preference-intro",
             "preference-panel",
             "primary",
@@ -3447,15 +3507,7 @@
             "profile-stat-item",
             "profile-stat-label",
             "profile-stat-value",
-            "profile-stats-row",
-            "secondary",
-            "section",
-            "section-icon",
-            "section-icon--sky",
-            "section-icon--violet",
-            "story-magazine-author",
-            "story-magazine-author-copy",
-            "story-magazine-avatar"
+            "profile-stats-row"
           ],
           "assetRefs": []
         },
@@ -3730,6 +3782,7 @@
             "PlaceAccessibilityBatchItem",
             "PlaceAccessibilityDto",
             "PlaceSearchParams",
+            "RegionViewport",
             "mapAccessibility",
             "mapPlace",
             "placeApi"
@@ -4141,6 +4194,16 @@
           "relativePath": "src/components/onboarding/MapSectionTour.test.ts",
           "imports": [
             "./MapSectionTour.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/onboarding/SwipeIntroTour.test.ts",
+          "relativePath": "src/components/onboarding/SwipeIntroTour.test.ts",
+          "imports": [
+            "./SwipeIntroTour.vue",
             "@vue/test-utils",
             "vitest"
           ],
@@ -5233,7 +5296,8 @@
           "path": "frontend/src/types/user.ts",
           "relativePath": "src/types/user.ts",
           "imports": [
-            "./auth"
+            "./auth",
+            "./place"
           ],
           "exports": [
             "PublicUserProfile",
@@ -5418,6 +5482,8 @@
             "account-page-link",
             "danger-action-btn",
             "is-active",
+            "is-first",
+            "is-second",
             "material-symbols-rounded",
             "mypage-body-container",
             "mypage-empty-cta",
@@ -5445,6 +5511,16 @@
             "place-title-h3",
             "pref-empty-desc",
             "pref-empty-title",
+            "pref-style-bar",
+            "pref-style-fill",
+            "pref-style-header",
+            "pref-style-label",
+            "pref-style-list",
+            "pref-style-percent",
+            "pref-style-track",
+            "pref-tag-chip",
+            "pref-tag-list",
+            "preference-panel",
             "primary",
             "profile-actions-row",
             "profile-avatar-col",
@@ -5498,6 +5574,7 @@
             "summary-cover-art",
             "switch-control",
             "switch-track",
+            "taste-rank",
             "visibility-segment-btn",
             "visibility-segmented-control"
           ],
@@ -5748,6 +5825,7 @@
             "add-stop-dashed",
             "add-stop-popover",
             "advanced-modal",
+            "ai-assistant-avatar",
             "ai-chat-header",
             "ai-chat-input-row",
             "ai-chat-messages-container",
@@ -5855,8 +5933,7 @@
             "d",
             "d-day-badge",
             "danger",
-            "dashed-line",
-            "day-card"
+            "dashed-line"
           ],
           "animations": [
             "activeDotPop",
@@ -6160,10 +6237,10 @@
       "summary": {
         "routes": 20,
         "pages": 20,
-        "components": 50,
-        "sourceFiles": 154,
+        "components": 51,
+        "sourceFiles": 155,
         "styleFiles": 9,
-        "typeScriptSignals": 222
+        "typeScriptSignals": 224
       }
     },
     {

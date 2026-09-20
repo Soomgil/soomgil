@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 50 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 51 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -14,7 +14,7 @@
 - package: `soomgil-frontend`
 - language: TypeScript
 - dependencies: `@stomp/stompjs`, `@tailwindcss/vite`, `axios`, `exifr`, `express`, `html-to-image`, `mapbox-gl`, `pinia`, `qrcode`, `tailwindcss`, `vue`, `vue-router`
-- devDependencies: `@types/node`, `@types/qrcode`, `@vitejs/plugin-vue`, `@vue/test-utils`, `@vue/tsconfig`, `jsdom`, `typescript`, `vite`, `vitest`, `vue-tsc`
+- devDependencies: `@playwright/test`, `@types/node`, `@types/qrcode`, `@vitejs/plugin-vue`, `@vue/test-utils`, `@vue/tsconfig`, `jsdom`, `typescript`, `vite`, `vitest`, `vue-tsc`
 
 ### 라우트
 
@@ -194,7 +194,7 @@
 - headings: h3 {{ adjacentDragStory.title }}, h3 {{ visibleStory.title }}
 - forms: 0, images: 3
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-drag-preview`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-comment-button`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-heart-button`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`
+- classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-drag-preview`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-heart-button`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`, `story-post-photo-img`
 
 #### frontend/src/components/community/StoryPostPreview.vue
 
@@ -349,6 +349,15 @@
 - asset refs: 없음
 - classes: `===`, `active:`, `index`, `map-tour`, `map-tour-actions`, `map-tour-backdrop`, `map-tour-card`, `map-tour-footer`, `map-tour-next`, `map-tour-previous`, `map-tour-progress`, `map-tour-spotlight`, `map-tour-topline`, `material-symbols-rounded`, `stepIndex`, `{`, `}`
 
+#### frontend/src/components/onboarding/SwipeIntroTour.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 {{ step.title }}
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `===`, `active:`, `index`, `material-symbols-rounded`, `stepIndex`, `swipe-tour`, `swipe-tour-actions`, `swipe-tour-backdrop`, `swipe-tour-card`, `swipe-tour-footer`, `swipe-tour-next`, `swipe-tour-previous`, `swipe-tour-progress`, `swipe-tour-spotlight`, `swipe-tour-topline`, `{`, `}`
+
 #### frontend/src/components/place/PlaceDiscoveryPanel.vue
 
 - 종류: component
@@ -446,16 +455,16 @@
 - headings: h1 새 투표를 시작할까요?
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__footer`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--region`, `vote-setup__stepper`, `vote-setup__title`, `vote-setup__trip`
+- classes: `material-symbols-rounded`, `vote-setup`, `vote-setup__chip`, `vote-setup__chip-remove`, `vote-setup__chips`, `vote-setup__cta`, `vote-setup__destination`, `vote-setup__error`, `vote-setup__eyebrow`, `vote-setup__footer`, `vote-setup__header`, `vote-setup__hint`, `vote-setup__hint--warn`, `vote-setup__lead`, `vote-setup__panel`, `vote-setup__row`, `vote-setup__row--question`, `vote-setup__row--regions`, `vote-setup__row-copy`, `vote-setup__row-icon`, `vote-setup__row-icon--count`, `vote-setup__row-icon--region`, `vote-setup__stepper`, `vote-setup__title`
 
 #### frontend/src/components/voting/TripVoteFlow.vue
 
 - 종류: component
 - script: setup / ts
-- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h1 어디로 갈까요?, h2 제출을 마쳤어요
+- headings: h2 진행 중인 투표가 없어요, h2 투표가 진행 중이에요, h2 내 투표를 제출했어요, h1 어디로 갈까요?
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__idle-icon`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__restart`, `trip-vote__result-actions`, `trip-vote__waiting`, `trip-vote__waiting-bar`, `trip-vote__waiting-progress`, `{`
+- classes: `material-symbols-rounded`, `page-hero`, `page-hero__actions`, `page-hero__copy`, `page-hero__gradient`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `section`, `trip-vote`, `trip-vote__back`, `trip-vote__close`, `trip-vote__cta`, `trip-vote__cta--ai`, `trip-vote__ghost`, `trip-vote__hero`, `trip-vote__hero-actions`, `trip-vote__idle`, `trip-vote__layout`, `trip-vote__narrow`, `trip-vote__observer-card`, `trip-vote__observer-copy`, `trip-vote__observer-cta`, `trip-vote__observer-progress`, `trip-vote__observer-progress-head`, `trip-vote__panel`, `trip-vote__progress`, `trip-vote__restart`, `trip-vote__result-actions`, `trip-vote__state-eyebrow`
 
 #### frontend/src/components/voting/VoteCandidateDeck.vue
 
@@ -598,7 +607,7 @@
 - script: setup / ts
 - headings: 없음
 - forms: 0, images: 1
-- asset refs: 없음
+- asset refs: `@/assets/images/ai-profile.png`
 - classes: `[`, `avatar-img`, `avatars`, `avatars-group`, `full-screen`, `route-page-section`, `section`, `trip-map-actions`
 
 #### frontend/src/pages/SearchResultsPage.vue
@@ -644,16 +653,16 @@
 - headings: h1 {{ onboardingMode ? '첫 여행 취향 찾기' : '취향 수집' }}, h2 취향 수집 완료!
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `primary-page-hero`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `primary-page-hero`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-help-btn`, `swipe-layout`, `swipe-main-column`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 
 - 종류: page
 - script: setup / ts
-- headings: h1 {{ tr('초대 수락 완료', 'Invitation accepted') }}
+- headings: h1 {{ tr('초대 수락 완료!', 'Invitation accepted!') }}
 - forms: 0, images: 0
 - asset refs: 없음
-- classes: `app-shell`, `btn`, `eyebrow`, `ghost`, `invite-actions`, `invite-icon`, `invite-page`, `invite-status`, `material-symbols-rounded`, `primary`, `success`
+- classes: ``is-${state}``, `app-shell`, `invite-actions`, `invite-button`, `invite-lead`, `invite-loading`, `invite-page`, `invite-shell`, `invite-status`, `invite-trip-card`, `invite-trip-card__check`, `invite-trip-card__pin`, `material-symbols-rounded`, `primary`, `secondary`
 
 #### frontend/src/pages/UserProfilePage.vue
 
@@ -662,7 +671,7 @@
 - headings: h1 {{ user.displayName }}님의 여행 공간, h2 {{ user.displayName }}, h2 비공개 프로필입니다, h2 star 슈퍼라이크한 장소, h3 {{ place.placeName }}, h2 auto_stories {{ formatUiText("{0}님의 여행기", "Stories by {0}", [user.displayName]) }}
 - forms: 0, images: 4
 - asset refs: 없음
-- classes: `account-page-hero`, `account-page-link`, `btn`, `keepsake-board`, `keepsake-note`, `liked-places-layout`, `material-symbols-rounded`, `mypage-body-container`, `mypage-empty-desc`, `mypage-empty-icon`, `mypage-empty-state`, `mypage-empty-title`, `mypage-glass-container`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-more-link`, `mypage-page-heading`, `mypage-place-card`, `mypage-place-card--slider`, `mypage-places-slider`, `mypage-places-slider-wrapper`, `mypage-profile-card`, `mypage-section`, `mypage-section-content`, `mypage-section-header`, `mypage-section-title`, `mypage-shell`, `mypage-stories-magazine`, `mypage-story-magazine-item`
+- classes: `account-page-hero`, `account-page-link`, `keepsake-board`, `keepsake-note`, `liked-places-layout`, `material-symbols-rounded`, `mypage-body-container`, `mypage-empty-desc`, `mypage-empty-icon`, `mypage-empty-state`, `mypage-empty-title`, `mypage-glass-container`, `mypage-hero`, `mypage-hero__avatar`, `mypage-hero__content`, `mypage-more-link`, `mypage-page-heading`, `mypage-place-card`, `mypage-place-card--slider`, `mypage-places-slider`, `mypage-places-slider-wrapper`, `mypage-profile-card`, `mypage-section`, `mypage-section-content`, `mypage-section-header`, `mypage-section-title`, `mypage-shell`, `mypage-stories-magazine`, `mypage-story-magazine-item`, `page-hero`
 
 #### frontend/src/pages/VerifyEmailPage.vue
 
