@@ -209,6 +209,7 @@ docker compose --profile full down
 | `node start-soomgil.mjs frontend` | 프론트엔드만 실행 |
 | `node start-soomgil.mjs backend` | 백엔드와 필수 인프라 실행 |
 | `node start-soomgil.mjs reset` | 로컬 데모 DB 초기화 |
+| `node init-demo-dump.mjs` | 데모 데이터 v2 적재(DB 재생성 → Flyway → 덤프 → 검증). 계정·내용은 [backend/seeds/README.md](backend/seeds/README.md) |
 | `node start-soomgil.mjs stop` | 전체 컨테이너 종료 |
 
 Windows에서는 `start-soomgil.bat`, macOS에서는 `start-soomgil.command`를 사용할 수 있습니다.

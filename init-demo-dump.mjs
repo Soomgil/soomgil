@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -7,12 +7,11 @@ import { spawnSync } from 'node:child_process';
 const rootDir = dirname(fileURLToPath(import.meta.url));
 const tempRoot = '/tmp/soomgil-demo-init';
 const dbService = process.env.DB_SERVICE || 'postgres';
-const maxWaitSeconds = Number(process.env.SEED_WAIT_SECONDS || 180);
+const maxWaitSeconds = Number(process.env.SEED_WAIT_SECONDS || 480);
 
 const files = {
   demoDump: join(rootDir, 'backend', 'seeds', 'generated', 'soomgil_demo_dashboard_dump.sql'),
-  jejuTagDump: join(rootDir, 'backend', 'seeds', 'soomgil_jeju_place_tags.sql'),
-  verifier: join(rootDir, 'backend', 'seeds', 'verify_demo_data.sql'),
+  verifier: join(rootDir, 'backend', 'seeds', 'v2', 'verify_demo_v2.sql'),
 };
 
 const env = {
@@ -54,16 +53,18 @@ function main() {
   run(compose[0], [...compose.slice(1), '--profile', 'full', 'up', '--build', '-d', 'backend']);
 
   step('Waiting for backend Flyway migrations on the empty database');
+  // 테이블 몇 개가 보이는 시점은 마이그레이션 '도중'일 수 있다(예: V54가 users.onboarding_completed_at 을 추가하기 전).
+  // 저장소의 V*.sql 개수만큼 성공 기록이 쌓일 때까지 기다려 덤프가 완성된 스키마에 들어가게 한다.
+  const migrationCount = readdirSync(join(rootDir, 'backend', 'src', 'main', 'resources', 'db', 'migration')).filter((name) => /^V\d+__.*\.sql$/.test(name)).length;
   waitUntil(
-    () => queryScalar(containerId, "SELECT (to_regclass('auth.users') IS NOT NULL AND to_regclass('community.posts') IS NOT NULL AND to_regclass('tourism_source.attractions') IS NOT NULL)::int;") === '1',
-    `Required schema tables were not found within ${maxWaitSeconds} seconds. Check that the backend service finished starting.`,
+    () => queryScalar(containerId, `SELECT (to_regclass('flyway_schema_history') IS NOT NULL AND (SELECT count(*) FROM flyway_schema_history WHERE success AND version IS NOT NULL) >= ${migrationCount})::int;`) === '1',
+    `Flyway did not finish ${migrationCount} migrations within ${maxWaitSeconds} seconds. Check that the backend service finished starting.`,
   );
 
   stageSqlFiles(containerId);
 
   runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_demo_dashboard_dump.sql`, 'Applying complete dashboard demo dump');
-  runPsqlFile(containerId, `${tempRoot}/seeds/soomgil_jeju_place_tags.sql`, 'Applying Jeju AI place tag dump');
-  runPsqlFile(containerId, `${tempRoot}/seeds/verify_demo_data.sql`, 'Verifying demo data invariants');
+  runPsqlFile(containerId, `${tempRoot}/seeds/verify_demo_v2.sql`, 'Verifying demo v2 data invariants');
 
   console.log('');
   console.log('Done. The previous database was removed and the demo dump was loaded from scratch.');
@@ -90,8 +91,7 @@ Runs in order:
   2. Drop and recreate DB_NAME
   3. Start the backend and wait for Flyway
   4. Apply backend/seeds/generated/soomgil_demo_dashboard_dump.sql
-  5. Apply backend/seeds/soomgil_jeju_place_tags.sql
-  6. Apply backend/seeds/verify_demo_data.sql`);
+  5. Apply backend/seeds/v2/verify_demo_v2.sql (quality checks)`);
 }
 
 function resolveComposeCommand() {
@@ -127,8 +127,7 @@ function stageSqlFiles(containerId) {
   run('docker', ['exec', containerId, 'sh', '-c', `rm -rf ${tempRoot} && mkdir -p ${tempRoot}/seeds`]);
 
   dockerCp(files.demoDump, `${containerId}:${tempRoot}/seeds/soomgil_demo_dashboard_dump.sql`);
-  dockerCp(files.jejuTagDump, `${containerId}:${tempRoot}/seeds/soomgil_jeju_place_tags.sql`);
-  dockerCp(files.verifier, `${containerId}:${tempRoot}/seeds/verify_demo_data.sql`);
+  dockerCp(files.verifier, `${containerId}:${tempRoot}/seeds/verify_demo_v2.sql`);
 }
 
 function dockerCp(source, destination) {

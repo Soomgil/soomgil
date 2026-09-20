@@ -10,8 +10,8 @@
   현재 기동 상태: frontend `5173`, backend `8180`, redis `6479`, mailpit `1125/8125`, postgres `5432`, minio `9000/9001`.
   환경변수로 오버라이드: `FRONTEND_PORT SERVER_PORT REDIS_PORT MAIL_PORT MAIL_WEB_PORT`.
 - 도커 장애 이력: `%LOCALAPPDATA%\Docker\run\`의 고아 소켓 → `run.broken`으로 치우고 재부팅으로 해결.
-- 테스트 계정: `demo01@soomgil.local` ~ `demo20`, 비번 `Soomgil123!`.
-  (dev-seeds의 `*.@example.com` 계정은 해시가 더미라 로그인 불가.)
+- 테스트 계정(데모 v2): `demo1@soomgil.app`, `demo2@soomgil.app` + 협업 멤버 12명(`seoyeon@`…`hyunwoo@soomgil.app`), 비번 전원 `Soomgil123!`.
+  (데이터는 `node init-demo-dump.mjs`로 재생성. 자세한 건 backend/seeds/README.md)
 - 프론트 테스트: `cd frontend && npx vitest run` — 259개 통과가 기준선.
   기존 결함: `qrcode`/`html-to-image`/`exifr`가 node_modules에 없어 테스트 파일 4개 import 실패 → `npm install`로 해결.
 - 백엔드: `cd backend && ./gradlew compileJava` / 단위 테스트는 `--tests` 지정 (통합 테스트는 Testcontainers=도커 필요).
