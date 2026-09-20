@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "targetDirectory": "../my-product",
+  "project": {
+    "name": "my-product",
+    "displayName": "My Product",
+    "description": "여러 제품 저장소를 하나의 AI 하네스와 통합 검증 흐름으로 관리합니다.",
+    "defaultBranch": "main",
+    "integrationBranch": "develop"
+  },
+  "git": {
+    "remoteUrl": ""
+  },
+  "workspaces": [
+    {
+      "name": "workspace-one",
+      "path": "workspace-one",
+      "status": "planned",
+      "repoUrl": "https://github.com/your-org/my-product-workspace-one.git",
+      "branch": "develop",
+      "verify": []
+    },
+    {
+      "name": "workspace-two",
+      "path": "workspace-two",
+      "status": "planned",
+      "repoUrl": "https://github.com/your-org/my-product-workspace-two.git",
+      "branch": "develop",
+      "verify": []
+    }
+  ]
+}

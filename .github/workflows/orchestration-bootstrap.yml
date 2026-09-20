@@ -1,0 +1,44 @@
+name: Orchestration Bootstrap
+
+on:
+  pull_request:
+    paths:
+      - ".agent/bootstrap/**"
+      - ".agent/tools/create-orchestration.mjs"
+      - ".agent/tools/test-orchestration-bootstrap.mjs"
+      - ".github/workflows/orchestration-bootstrap.yml"
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - ".agent/bootstrap/**"
+      - ".agent/tools/create-orchestration.mjs"
+      - ".agent/tools/test-orchestration-bootstrap.mjs"
+      - ".github/workflows/orchestration-bootstrap.yml"
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Core bootstrap smoke
+        run: node .agent/tools/test-orchestration-bootstrap.mjs
+      - name: macOS launcher smoke
+        if: runner.os == 'macOS'
+        run: ./.agent/bootstrap/create-project.command --target ../bootstrap-wrapper-smoke --dry-run
+      - name: Windows launcher smoke
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: .agent\bootstrap\create-project.cmd --target ..\bootstrap-wrapper-smoke --dry-run

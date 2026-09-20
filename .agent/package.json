@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "project:bootstrap": "node tools/create-orchestration.mjs init",
+    "project:bootstrap:test": "node tools/test-orchestration-bootstrap.mjs",
+    "project:doctor": "node tools/create-orchestration.mjs doctor",
     "branch:status": "node tools/agent-ledger.mjs status",
     "branch:note": "node tools/agent-ledger.mjs new",
     "branch:check": "node tools/agent-ledger.mjs check",
