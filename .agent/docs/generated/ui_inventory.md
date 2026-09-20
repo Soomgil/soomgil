@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 21, components 47 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 47 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -26,7 +26,7 @@
 | `/verify-email` | VerifyEmail | `src/pages/VerifyEmailPage.vue` | 공개 | 예 |
 | `/reset-password` | ResetPassword | `src/pages/ResetPasswordPage.vue` | 공개 | 아니오 |
 | `/home` | Home | `src/pages/HomePage.vue` | 필요 | 아니오 |
-| `/onboarding/preferences` | OnboardingPreferences | `src/pages/OnboardingPreferencePage.vue` | 필요 | 아니오 |
+| `/onboarding/preferences` | OnboardingPreferences | `src/pages/SwipePage.vue` | 필요 | 아니오 |
 | `/search` | Search | `src/pages/SearchResultsPage.vue` | 필요 | 아니오 |
 | `/my-trips` | MyTrips | `src/pages/MyTripsPage.vue` | 필요 | 아니오 |
 | `/trip-invites/:inviteCode` | TripInviteAccept | `src/pages/TripInviteAcceptPage.vue` | 필요 | 아니오 |
@@ -547,15 +547,6 @@
 - asset refs: 없음
 - classes: `app-shell`, `auth-card`, `auth-form`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `btn`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `oauth-error-icon`, `oauth-spinner`, `primary`, `small`
 
-#### frontend/src/pages/OnboardingPreferencePage.vue
-
-- 종류: page
-- script: setup / ts
-- headings: h1 당신다운 여행을 골라주세요, h2 {{ currentPlace.name }}
-- forms: 0, images: 1
-- asset refs: 없음
-- classes: `!==`, `[`, `animating`, `dragStartX`, `dragging:`, `leaving:`, `like`, `material-symbols-rounded`, `nope`, `null,`, `preference-action`, `preference-actions`, `preference-address`, `preference-back`, `preference-card`, `preference-card-copy`, `preference-card-shade`, `preference-card-stage`, `preference-description`, `preference-eyebrow`, `preference-footer`, `preference-header`, `preference-image-placeholder`, `preference-onboarding`, `preference-progress`, `preference-progress-copy`, `preference-secondary`, `preference-shell`, `preference-state`, `preference-submit-error`
-
 #### frontend/src/pages/RegisterPage.vue
 
 - 종류: page
@@ -623,10 +614,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 취향 수집, h2 취향 수집 완료!
+- headings: h1 {{ onboardingMode ? '첫 여행 취향 찾기' : '취향 수집' }}, h2 취향 수집 완료!
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`, `swipe-stage`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__progress`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`, `swipe-place-placeholder`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 
