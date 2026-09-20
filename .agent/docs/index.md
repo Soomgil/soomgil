@@ -5,6 +5,7 @@
 ## 핵심 문서
 
 - `ai_harness_guide.md`: 하네스 실행 흐름.
+- `harness/project_bootstrap_guide.md`: macOS/Windows 공용 orchestration 프로젝트 생성 도구.
 - `git_workflow.md`: orchestration repo, submodule, Git Flow, commit convention 운영 규칙.
 - `branching_agent_docs.md`: 브랜치별 AI 문서 격리와 통합 규칙.
 - `domain_development_policy.md`: 도메인 개발 전 사용자 흐름 설명과 test-first 강제 정책.

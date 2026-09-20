@@ -213,6 +213,18 @@ docker compose --profile full down
 
 Windows에서는 `start-soomgil.bat`, macOS에서는 `start-soomgil.command`를 사용할 수 있습니다.
 
+## 같은 구조로 새 프로젝트 시작
+
+macOS와 Windows에서 공통으로 사용하는 Node.js 부트스트랩 도구가 있습니다.
+
+```bash
+npm --prefix .agent run project:bootstrap -- --dry-run
+```
+
+프로젝트별 설정과 사용법은 `.agent/bootstrap/project.example.json`과 `.agent/docs/harness/project_bootstrap_guide.md`를 참고합니다. 실행 환경이 없으면 `.agent/bootstrap/AI_PROJECT_BOOTSTRAP.md`를 AI 코딩 에이전트에게 전달합니다.
+
+현재 프로젝트의 workspace 경계는 `.agent/workspaces.json`, 백엔드 공통 계약 결정은 `.agent/contracts/backend_contract_decisions.md`, 브랜치별 AI 문맥은 `.agent/branch-ledger/`가 관리합니다.
+
 ## 개발 메모
 
 - 실제 제품 코드는 각 서브모듈 repo에서 커밋합니다.
