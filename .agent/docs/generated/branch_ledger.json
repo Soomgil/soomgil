@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T04:59:34.937Z",
+  "generatedAt": "2026-09-20T07:31:57.535Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -421,6 +421,16 @@
       "status": "",
       "title": "지도 협업 오브젝트 구현",
       "file": ".agent/branch-ledger/branches/feature__map-collaboration-objects/20260823T170038Z-feature__map-collaboration-objects-note.md"
+    },
+    {
+      "id": "20260918T153429Z-feature__onboarding-preference-map-tour",
+      "branch": "feature__onboarding-preference-map-tour",
+      "branchKey": "feature__onboarding-preference-map-tour",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "신규 사용자 취향 온보딩과 지도 섹션 안내",
+      "file": ".agent/branch-ledger/branches/feature__onboarding-preference-map-tour/20260918T153429Z-feature__onboarding-preference-map-tour.md"
     },
     {
       "id": "20260620T023313Z-feature__place-search-detail-tag-statistics-policy",

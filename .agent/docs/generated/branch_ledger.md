@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-18T04:59:34.937Z
+생성 시각: 2026-09-20T07:31:57.535Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -50,6 +50,7 @@
 - unknown | feature__map-action-polish | scope 없음 | 지도 취향 보기 · 투표 안내 축소 | .agent/branch-ledger/branches/feature__map-action-polish/map-taste-view.md
 - unknown | feature__map-action-polish | scope 없음 | 마이페이지 캐시와 UI 언어 일관성 | .agent/branch-ledger/branches/feature__map-action-polish/mypage-cache-and-ui-locale.md
 - unknown | feature__map-collaboration-objects | scope 없음 | 지도 협업 오브젝트 구현 | .agent/branch-ledger/branches/feature__map-collaboration-objects/20260823T170038Z-feature__map-collaboration-objects-note.md
+- unknown | feature__onboarding-preference-map-tour | scope 없음 | 신규 사용자 취향 온보딩과 지도 섹션 안내 | .agent/branch-ledger/branches/feature__onboarding-preference-map-tour/20260918T153429Z-feature__onboarding-preference-map-tour.md
 - unknown | feature__place-search-detail | scope 없음 | 태그 좋아요 통계 정책 | .agent/branch-ledger/branches/feature__place-search-detail/20260620T023313Z-feature__place-search-detail-tag-statistics-policy.md
 - unknown | feature__place-search-detail | scope 없음 | 프론트 장소 취향 추천 연결 | .agent/branch-ledger/branches/feature__place-search-detail/20260621T065741Z-feature__place-search-detail-note.md
 - unknown | feature__place-search-detail | scope 없음 | KTO swipe feed runtime integration | .agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md
