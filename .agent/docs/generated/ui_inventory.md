@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 50 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 51 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -14,7 +14,7 @@
 - package: `soomgil-frontend`
 - language: TypeScript
 - dependencies: `@stomp/stompjs`, `@tailwindcss/vite`, `axios`, `exifr`, `express`, `html-to-image`, `mapbox-gl`, `pinia`, `qrcode`, `tailwindcss`, `vue`, `vue-router`
-- devDependencies: `@types/node`, `@types/qrcode`, `@vitejs/plugin-vue`, `@vue/test-utils`, `@vue/tsconfig`, `jsdom`, `typescript`, `vite`, `vitest`, `vue-tsc`
+- devDependencies: `@playwright/test`, `@types/node`, `@types/qrcode`, `@vitejs/plugin-vue`, `@vue/test-utils`, `@vue/tsconfig`, `jsdom`, `typescript`, `vite`, `vitest`, `vue-tsc`
 
 ### 라우트
 
@@ -194,7 +194,7 @@
 - headings: h3 {{ adjacentDragStory.title }}, h3 {{ visibleStory.title }}
 - forms: 0, images: 3
 - asset refs: `/images/랜딩페이지/korea_hero.png`
-- classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-drag-preview`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-comment-button`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-heart-button`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`
+- classes: `active:`, `carousel-btn`, `fc-avatar`, `feed-drag-preview`, `feed-layout`, `feed-photo-count`, `feed-photo-nav`, `material-symbols-rounded`, `muted`, `next`, `next-btn`, `prev`, `prev-btn`, `small`, `story-action-bar`, `story-author`, `story-body`, `story-detail-panel`, `story-feed`, `story-feed-window`, `story-heart-button`, `story-like-button`, `story-overlay`, `story-overlay-backdrop`, `story-overlay-close`, `story-overlay-panel`, `story-post`, `story-post-head`, `story-post-photo-frame`, `story-post-photo-img`
 
 #### frontend/src/components/community/StoryPostPreview.vue
 
@@ -258,6 +258,15 @@
 - forms: 0, images: 0
 - asset refs: 없음
 - classes: `paper-grain`
+
+#### frontend/src/components/layout/OnboardingHeader.vue
+
+- 종류: component
+- script: setup / ts
+- headings: 없음
+- forms: 0, images: 1
+- asset refs: `@/assets/images/soomgil_logo_none_text.png`
+- classes: `material-symbols-rounded`, `onboarding-header`, `onboarding-header__actions`, `onboarding-header__brand`, `onboarding-header__inner`, `onboarding-header__message`, `onboarding-header__progress`
 
 #### frontend/src/components/layout/ServiceBackdrop.vue
 
@@ -644,7 +653,7 @@
 - headings: h1 {{ onboardingMode ? '첫 여행 취향 찾기' : '취향 수집' }}, h2 취향 수집 완료!
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__progress`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `primary-page-hero`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-help-btn`, `swipe-layout`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `primary-page-hero`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-help-btn`, `swipe-layout`, `swipe-main-column`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 

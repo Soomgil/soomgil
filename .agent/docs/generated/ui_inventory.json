@@ -32,6 +32,7 @@
         "vue-router"
       ],
       "devDependencies": [
+        "@playwright/test",
         "@types/node",
         "@types/qrcode",
         "@vitejs/plugin-vue",
@@ -674,7 +675,6 @@
             "story-action-bar",
             "story-author",
             "story-body",
-            "story-comment-button",
             "story-detail-panel",
             "story-feed",
             "story-feed-window",
@@ -923,6 +923,33 @@
             "paper-grain"
           ],
           "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/layout/OnboardingHeader.vue",
+          "relativePath": "src/components/layout/OnboardingHeader.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [],
+          "images": [
+            {
+              "src": "logoUrl",
+              "alt": "숨길"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "material-symbols-rounded",
+            "onboarding-header",
+            "onboarding-header__actions",
+            "onboarding-header__brand",
+            "onboarding-header__inner",
+            "onboarding-header__message",
+            "onboarding-header__progress"
+          ],
+          "assetRefs": [
+            "@/assets/images/soomgil_logo_none_text.png"
+          ]
         },
         {
           "path": "frontend/src/components/layout/ServiceBackdrop.vue",
@@ -3275,7 +3302,6 @@
             "page-hero__copy",
             "page-hero__eyebrow",
             "page-hero__lead",
-            "page-hero__progress",
             "page-hero__title",
             "page-with-hero",
             "panel",
@@ -4012,6 +4038,18 @@
           "imports": [
             "./AppHeader.vue",
             "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/layout/OnboardingHeader.test.ts",
+          "relativePath": "src/components/layout/OnboardingHeader.test.ts",
+          "imports": [
+            "./OnboardingHeader.vue",
+            "@/stores/onboarding.store",
+            "@vue/test-utils",
+            "pinia",
             "vitest"
           ],
           "exports": []
@@ -6199,10 +6237,10 @@
       "summary": {
         "routes": 20,
         "pages": 20,
-        "components": 50,
-        "sourceFiles": 154,
+        "components": 51,
+        "sourceFiles": 155,
         "styleFiles": 9,
-        "typeScriptSignals": 222
+        "typeScriptSignals": 224
       }
     },
     {
