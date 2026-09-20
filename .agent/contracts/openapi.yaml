@@ -3677,6 +3677,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/UserSummary'
         - type: object
+          required: [profileVisibility, superLikedPlaces]
           properties:
             bio:
               type: string
@@ -3695,6 +3696,16 @@ components:
               $ref: '#/components/schemas/FollowStatus'
             profileVisibility:
               $ref: '#/components/schemas/UserProfileVisibility'
+            superLikedPlaces:
+              type: array
+              description: 프로필 공개 범위에 따라 노출 가능한 SUPER_LIKE 저장 장소. 권한이 없으면 빈 배열이다.
+              items:
+                $ref: '#/components/schemas/SavedPlace'
+            preferences:
+              allOf:
+                - $ref: '#/components/schemas/MyPreferenceSummary'
+              nullable: true
+              description: 프로필 공개 범위에 따라 노출 가능한 여행 취향. 권한이 없으면 null이다.
     UpdateMeRequest:
       type: object
       properties:
@@ -4107,6 +4118,32 @@ components:
             $ref: '#/components/schemas/SavedPlace'
         page:
           $ref: '#/components/schemas/PageMeta'
+    MyPreferenceCategory:
+      type: object
+      required: [category, groupCode, percentage]
+      properties:
+        category:
+          type: string
+        groupCode:
+          type: string
+        percentage:
+          type: integer
+          minimum: 0
+          maximum: 100
+    MyPreferenceSummary:
+      type: object
+      required: [topCategories, travelStyle, preferredTags]
+      properties:
+        topCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyPreferenceCategory'
+        travelStyle:
+          type: string
+        preferredTags:
+          type: array
+          items:
+            type: string
     PlaceRecommendation:
       type: object
       required: [place, matchedMembers]
