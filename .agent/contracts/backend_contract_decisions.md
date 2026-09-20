@@ -163,18 +163,18 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - projection 갱신은 preference event가 발생할 때 해당 장소의 태그만 반영하는 incremental update를 기본으로 합니다.
 - 원본 이벤트 로그는 projection 복구, 가중치 공식 변경 시 재처리, 감사 용도로 남기며 일반 추천 요청에서 매번 재계산하지 않습니다.
 - 별도 선호도 snapshot 테이블은 두지 않고, 현재 선호도는 `user_preference_tag_weights` projection과 원본 이벤트 로그로 관리합니다.
-- V1 선호도 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`이며 source multiplier는 모두 `1.0`입니다.
-- source에 따른 가중치 차이는 두지 않으며 반응 강도와 활성 투표 스티커 수는 별도로 반영합니다.
+- V1 선호도 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`이며 source multiplier는 각각 `3.0`, `1.0`, `1.0`입니다.
+- `ONBOARDING`은 신규 사용자 콜드 스타트 완화를 위해서만 강화하며, 반응 강도와 활성 투표 스티커 수는 source multiplier와 별도로 반영합니다.
 - `SUPER_LIKE`는 다른 사용자에게 추천한다는 의미가 아니라, 본인 선호도를 강하게 어필하는 반응입니다.
 - `SUPER_LIKE`는 `LIKE`보다 높은 선호도 가중치이며, 언젠가 꼭 가고 싶은 장소에 가까운 의미입니다.
 - 장소 상세 조회, 일정 추가/삭제, 저장, 커뮤니티 반응은 선호도 점수에 반영하지 않습니다.
 - 선호도 projection은 사용자 개인 전역 기준으로 관리하되 원본 이벤트는 source와 source resource id를 기록합니다.
-- 여행방 투표 이벤트도 개인 전역 projection에 동일 source multiplier로 반영합니다.
+- 여행방 투표 이벤트는 개인 전역 projection에 `1.0` source multiplier로 반영합니다.
 - `TRIP_VOTE` 근거는 `preference.user_place_vote_evidences`에 별도로 기록하고, 태그 근거만 `user_preference_tag_weights`에 가산합니다.
 - `TRIP_VOTE`는 스와이프 최종 반응(`user_place_reactions`), 선호 이벤트 로그, 저장 장소를 변경하지 않습니다. 반응 되돌리기 로직과 저장 장소 정책이 오염되지 않도록 완전히 분리합니다.
 - 일정 최종 선정 여부와 무관하게 사용자가 스티커를 붙인 모든 관광지를 반영하며 장소별 스티커 개수를 보존합니다.
 - 스티커 개수를 근거 단위로 환산하는 규칙은 기존 projection 계산 공식과 분리된 `TripVoteEvidencePolicy`가 담당합니다.
-- 환산식은 `units(n) = min(baseWeight + stickerStep x (n - 1), maxWeight)`이며 기본값은 1.0 / 0.5 / 2.0입니다. 스티커 1개는 LIKE 강도, 상한은 SUPER_LIKE 강도에 맞춥니다. 이것이 "source multiplier는 1.0으로 두고 스티커 수만 별도 반영한다"는 규칙의 구현입니다.
+- 환산식은 `units(n) = min(baseWeight + stickerStep x (n - 1), maxWeight)`이며 기본값은 1.0 / 0.5 / 2.0입니다. 스티커 1개는 LIKE 강도, 상한은 SUPER_LIKE 강도에 맞춥니다. `TRIP_VOTE` source multiplier는 1.0으로 두고 스티커 수만 별도 반영합니다.
 - 환산 정책 버전은 `trip-vote-evidence-v1`이며 근거 row에 함께 저장해 재처리 대상을 식별할 수 있게 합니다.
 - 태그 근거 분배는 기존 `PlaceTagEvidenceCalculator`, 점수 재계산은 기존 `UserPreferenceWeightCalculator`를 그대로 사용합니다.
 - `(voteSessionId, userId, provider, externalPlaceId)` unique 제약으로 같은 제출을 재시도해도 근거가 중복 반영되지 않습니다.

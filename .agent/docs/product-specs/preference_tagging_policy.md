@@ -277,7 +277,7 @@ cold-start 3단계 이후에는 실제 사용자 이벤트에서 계산한 값�
 
 사용자가 회원가입 평가, 홈 배경 반응, 여행방 투표에서 선호 신호를 남기면 해당 장소의 확정 태그만 사용자 선호도에 반영한다.
 
-수집 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`이며 source multiplier는 모두 `1.0`이다. 수집 경로만으로 근거를 증폭하거나 감쇠하지 않는다. `SUPER_LIKE`, `LIKE`, `NOPE`의 반응 강도 차이와 같은 장소에 붙인 여러 투표 스티커 수는 source multiplier와 별도로 반영한다.
+수집 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`다. 신규 사용자의 콜드 스타트를 줄이기 위해 `ONBOARDING` multiplier는 `3.0`, 나머지는 `1.0`으로 적용한다. `SUPER_LIKE`, `LIKE`, `NOPE`의 반응 강도 차이와 같은 장소에 붙인 여러 투표 스티커 수는 source multiplier와 별도로 반영한다.
 
 장소의 확정 태그 원점수:
 
@@ -436,7 +436,7 @@ uplift_percent =
 - 같은 seed에서 합성 스와이프가 재현되는 테스트
 - `SYNTHETIC_PERSONA` 통계와 `REAL_USER` 통계가 serving 경로에서 섞이지 않는 테스트
 - baseline 대비 uplift 계산 테스트
-- 세 수집 경로의 source multiplier가 모두 `1.0`인 테스트
+- `ONBOARDING=3.0`, `HOME_BACKGROUND=1.0`, `TRIP_VOTE=1.0` source multiplier 테스트
 - 좋아요 취소와 투표 스티커 제거 시 projection에서 이전 근거가 되돌려지는 테스트
 
 ## 금지사항
@@ -445,5 +445,5 @@ uplift_percent =
 - `rarity` 하나로 태그 중요도를 결정하지 않는다.
 - 페르소나 정의를 무시한 무작위 스와이프 데이터를 만들지 않는다.
 - 합성 데이터와 실제 사용자 데이터를 source 구분 없이 섞지 않는다.
-- 회원가입, 홈, 여행방 투표라는 수집 경로만으로 서로 다른 가중치를 부여하지 않는다.
+- 회원가입 초기 응답 외의 수집 경로에 임의의 multiplier를 부여하지 않는다.
 - 검증되지 않은 정확도 상승률을 문서나 발표에 쓰지 않는다.

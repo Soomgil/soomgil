@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-18T06:45:50.005Z
+생성 시각: 2026-09-18T04:59:34.937Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.

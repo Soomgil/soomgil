@@ -87,6 +87,13 @@
           "guestOnly": false
         },
         {
+          "path": "/onboarding/preferences",
+          "name": "OnboardingPreferences",
+          "page": "src/pages/OnboardingPreferencePage.vue",
+          "requiresAuth": true,
+          "guestOnly": false
+        },
+        {
           "path": "/search",
           "name": "Search",
           "page": "src/pages/SearchResultsPage.vue",
@@ -885,6 +892,7 @@
             "map-object-rotation-handle",
             "map-object-rotation-line",
             "map-object-selection",
+            "map-object-sticker",
             "{"
           ],
           "assetRefs": []
@@ -1096,6 +1104,42 @@
             "story-overlay-backdrop",
             "story-overlay-close",
             "story-overlay-panel"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/components/onboarding/MapSectionTour.vue",
+          "relativePath": "src/components/onboarding/MapSectionTour.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ step.title }}"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "===",
+            "active:",
+            "index",
+            "map-tour",
+            "map-tour-actions",
+            "map-tour-backdrop",
+            "map-tour-card",
+            "map-tour-footer",
+            "map-tour-next",
+            "map-tour-previous",
+            "map-tour-progress",
+            "map-tour-spotlight",
+            "map-tour-topline",
+            "material-symbols-rounded",
+            "stepIndex",
+            "{",
+            "}"
           ],
           "assetRefs": []
         },
@@ -1616,7 +1660,6 @@
             "vote-setup__hint",
             "vote-setup__hint--warn",
             "vote-setup__lead",
-            "vote-setup__note",
             "vote-setup__panel",
             "vote-setup__row",
             "vote-setup__row--question",
@@ -1624,16 +1667,9 @@
             "vote-setup__row-copy",
             "vote-setup__row-icon",
             "vote-setup__row-icon--count",
-            "vote-setup__row-icon--rank",
             "vote-setup__row-icon--region",
             "vote-setup__step",
             "vote-setup__stepper",
-            "vote-setup__suggest",
-            "vote-setup__suggest-icon",
-            "vote-setup__suggest-label",
-            "vote-setup__suggest-list",
-            "vote-setup__suggest-title",
-            "vote-setup__suggest-unit",
             "vote-setup__title",
             "vote-setup__trip"
           ],
@@ -1802,13 +1838,7 @@
           "kind": "component",
           "scriptLang": "ts",
           "scriptSetup": true,
-          "headings": [
-            {
-              "level": 1,
-              "id": "",
-              "text": "{{ showAll ? '전체 투표 결과' : '우리의 다음 여행지' }}"
-            }
-          ],
+          "headings": [],
           "images": [
             {
               "src": "row.thumbnailUrl",
@@ -1827,18 +1857,13 @@
             "vote-result__body",
             "vote-result__count",
             "vote-result__empty",
-            "vote-result__eyebrow",
             "vote-result__favorite",
-            "vote-result__header",
-            "vote-result__lead",
             "vote-result__list",
             "vote-result__media",
             "vote-result__name",
-            "vote-result__outcome",
             "vote-result__rank",
             "vote-result__row",
             "vote-result__selected",
-            "vote-result__title",
             "{"
           ],
           "assetRefs": []
@@ -2122,6 +2147,7 @@
             "home-artwork-actions",
             "home-artwork-caption",
             "home-artwork-credit",
+            "home-artwork-cta-row",
             "home-artwork-footer",
             "home-artwork-info",
             "home-artwork-label",
@@ -2134,6 +2160,7 @@
             "home-photo-controls",
             "home-photo-count",
             "home-photo-status",
+            "home-plan-link",
             "home-search",
             "home-search-history",
             "home-search-history-heading",
@@ -2436,10 +2463,6 @@
             {
               "src": "member.user.profileImageUrl",
               "alt": "member.user.displayName"
-            },
-            {
-              "src": "user.profileImageUrl",
-              "alt": ""
             }
           ],
           "forms": 1,
@@ -2452,8 +2475,6 @@
             "app-shell",
             "btn",
             "compact-title",
-            "companion-avatar",
-            "companion-count",
             "createModal.isOpen.value",
             "eyebrow",
             "field",
@@ -2461,6 +2482,7 @@
             "form-label",
             "form-label-text",
             "getStatusCls(trip)",
+            "ghost",
             "icon-btn",
             "material-symbols-rounded",
             "modal-card",
@@ -2475,12 +2497,11 @@
             "page-hero__lead",
             "page-hero__title",
             "page-with-hero",
+            "period-card-copy",
             "primary",
             "search-box",
             "section",
             "section-title",
-            "selected-companion-chip",
-            "selected-companions",
             "show:",
             "sr-only",
             "timeline-card",
@@ -2498,17 +2519,14 @@
             "timeline-card-vote",
             "travel-page-head",
             "travel-paper",
+            "trip-create-actions",
             "trip-create-button",
             "trip-create-card",
-            "trip-create-companions",
-            "trip-create-date-grid",
-            "trip-create-duration",
+            "trip-create-error",
             "trip-create-form",
-            "trip-create-grid",
             "trip-create-hint",
             "trip-create-intro",
             "trip-create-modal",
-            "trip-create-section-head",
             "trip-dashboard-layout",
             "trip-dashboard-main",
             "trip-intent-guide",
@@ -2519,11 +2537,14 @@
             "trip-members",
             "trip-options",
             "trip-pagination",
+            "trip-period-card",
             "trip-search",
             "trip-search-actions",
             "trip-tabs",
             "trip-toolbar",
-            "trip-view-panel"
+            "trip-view-panel",
+            "{",
+            "}"
           ],
           "assetRefs": []
         },
@@ -2610,6 +2631,70 @@
             "oauth-spinner",
             "primary",
             "small"
+          ],
+          "assetRefs": []
+        },
+        {
+          "path": "frontend/src/pages/OnboardingPreferencePage.vue",
+          "relativePath": "src/pages/OnboardingPreferencePage.vue",
+          "kind": "page",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 1,
+              "id": "preference-title",
+              "text": "당신다운 여행을 골라주세요"
+            },
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ currentPlace.name }}"
+            }
+          ],
+          "images": [
+            {
+              "src": "currentPlace.thumbnailUrl",
+              "alt": "currentPlace.name"
+            }
+          ],
+          "forms": 0,
+          "classNames": [
+            "!==",
+            "[",
+            "animating",
+            "dragStartX",
+            "dragging:",
+            "leaving:",
+            "like",
+            "material-symbols-rounded",
+            "nope",
+            "null,",
+            "preference-action",
+            "preference-actions",
+            "preference-address",
+            "preference-back",
+            "preference-card",
+            "preference-card-copy",
+            "preference-card-shade",
+            "preference-card-stage",
+            "preference-description",
+            "preference-eyebrow",
+            "preference-footer",
+            "preference-header",
+            "preference-image-placeholder",
+            "preference-onboarding",
+            "preference-progress",
+            "preference-progress-copy",
+            "preference-secondary",
+            "preference-shell",
+            "preference-state",
+            "preference-submit-error",
+            "preference-submit-status",
+            "preference-tags",
+            "spin",
+            "{",
+            "}"
           ],
           "assetRefs": []
         },
@@ -2892,7 +2977,6 @@
             "danger-bullet-item",
             "email-icon",
             "error-status",
-            "field",
             "lg:px-8",
             "loading-spinner-wrap",
             "loading-text",
@@ -2913,7 +2997,6 @@
             "profile-settings-page",
             "px-4",
             "py-8",
-            "select-chevron",
             "settings-actions-buttons",
             "settings-actions-status",
             "settings-cards-group",
@@ -2928,6 +3011,7 @@
             "settings-item__info",
             "settings-item__title",
             "settings-items-list",
+            "settings-language-btn",
             "settings-layout",
             "settings-loading-card",
             "settings-page",
@@ -2939,7 +3023,6 @@
             "settings-save-status",
             "settings-section",
             "settings-section--actions",
-            "settings-select",
             "settings-select-wrap",
             "settings-summary",
             "settings-summary__avatar",
@@ -3553,6 +3636,17 @@
           ]
         },
         {
+          "path": "frontend/src/api/onboarding.api.ts",
+          "relativePath": "src/api/onboarding.api.ts",
+          "imports": [
+            "./http",
+            "@/types/onboarding"
+          ],
+          "exports": [
+            "onboardingApi"
+          ]
+        },
+        {
           "path": "frontend/src/api/place-preference.api.test.ts",
           "relativePath": "src/api/place-preference.api.test.ts",
           "imports": [
@@ -3918,7 +4012,18 @@
           "path": "frontend/src/components/map/mapStickerCatalog.ts",
           "relativePath": "src/components/map/mapStickerCatalog.ts",
           "imports": [
-            "@/assets/stickers/map-stickers.svg?url",
+            "@/assets/stickers/sketch/check.png?url",
+            "@/assets/stickers/sketch/circle.png?url",
+            "@/assets/stickers/sketch/curved-arrow.png?url",
+            "@/assets/stickers/sketch/exclamation.png?url",
+            "@/assets/stickers/sketch/flag.png?url",
+            "@/assets/stickers/sketch/heart.png?url",
+            "@/assets/stickers/sketch/location-pin.png?url",
+            "@/assets/stickers/sketch/sparkle.png?url",
+            "@/assets/stickers/sketch/speech-bubble.png?url",
+            "@/assets/stickers/sketch/star.png?url",
+            "@/assets/stickers/sketch/up-arrow.png?url",
+            "@/assets/stickers/sketch/x-mark.png?url",
             "@/types/itinerary"
           ],
           "exports": [
@@ -3952,6 +4057,16 @@
           "relativePath": "src/components/mypage/LikedPlacesModal.test.ts",
           "imports": [
             "./LikedPlacesModal.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/onboarding/MapSectionTour.test.ts",
+          "relativePath": "src/components/onboarding/MapSectionTour.test.ts",
+          "imports": [
+            "./MapSectionTour.vue",
             "@vue/test-utils",
             "vitest"
           ],
@@ -4282,6 +4397,7 @@
           "relativePath": "src/pages/MyTripsPage.test.ts",
           "imports": [
             "./MyTripsPage.vue",
+            "@/components/trip/TripDateRangeDialog.vue",
             "@/types/trip",
             "@vue/test-utils",
             "vitest"
@@ -4493,6 +4609,7 @@
           "relativePath": "src/router/guards.ts",
           "imports": [
             "@/stores/auth.store",
+            "@/stores/onboarding.store",
             "@/stores/swipe.store",
             "@/stores/voting.store",
             "vue-router"
@@ -4506,6 +4623,17 @@
           "relativePath": "src/router/index.ts",
           "imports": [
             "./guards",
+            "vue-router"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/router/onboarding-guard.test.ts",
+          "relativePath": "src/router/onboarding-guard.test.ts",
+          "imports": [
+            "./guards",
+            "pinia",
+            "vitest",
             "vue-router"
           ],
           "exports": []
@@ -4549,12 +4677,37 @@
             "@/auth/accessToken",
             "@/i18n",
             "@/realtime/collaborationSession",
+            "@/stores/onboarding.store",
             "@/types/auth",
             "pinia",
             "vue"
           ],
           "exports": [
             "useAuthStore"
+          ]
+        },
+        {
+          "path": "frontend/src/stores/onboarding.store.test.ts",
+          "relativePath": "src/stores/onboarding.store.test.ts",
+          "imports": [
+            "./onboarding.store",
+            "@/api/onboarding.api",
+            "pinia",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/stores/onboarding.store.ts",
+          "relativePath": "src/stores/onboarding.store.ts",
+          "imports": [
+            "@/api/onboarding.api",
+            "@/types/onboarding",
+            "pinia",
+            "vue"
+          ],
+          "exports": [
+            "useOnboardingStore"
           ]
         },
         {
@@ -4879,6 +5032,20 @@
           "imports": [],
           "exports": [
             "Notification"
+          ]
+        },
+        {
+          "path": "frontend/src/types/onboarding.ts",
+          "relativePath": "src/types/onboarding.ts",
+          "imports": [
+            "@/types/place"
+          ],
+          "exports": [
+            "OnboardingPreferenceAnswer",
+            "OnboardingPreferenceCompletion",
+            "OnboardingPreferencePlace",
+            "OnboardingPreferenceSurvey",
+            "OnboardingReaction"
           ]
         },
         {
@@ -5901,12 +6068,12 @@
         }
       ],
       "summary": {
-        "routes": 19,
-        "pages": 20,
-        "components": 46,
-        "sourceFiles": 146,
+        "routes": 20,
+        "pages": 21,
+        "components": 47,
+        "sourceFiles": 152,
         "styleFiles": 9,
-        "typeScriptSignals": 210
+        "typeScriptSignals": 218
       }
     },
     {
