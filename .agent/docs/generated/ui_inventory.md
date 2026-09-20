@@ -6,7 +6,7 @@
 
 | 이름 | 타입 | 경로 | 상태 | 프레임워크 | 언어 | 요약 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 49 |
+| frontend | frontend | `frontend` | active | Vue | TypeScript | routes 20, pages 20, components 50 |
 | backend | backend | `backend` | active | Spring Boot | - | active |
 
 ## Frontend
@@ -340,6 +340,15 @@
 - asset refs: 없음
 - classes: `===`, `active:`, `index`, `map-tour`, `map-tour-actions`, `map-tour-backdrop`, `map-tour-card`, `map-tour-footer`, `map-tour-next`, `map-tour-previous`, `map-tour-progress`, `map-tour-spotlight`, `map-tour-topline`, `material-symbols-rounded`, `stepIndex`, `{`, `}`
 
+#### frontend/src/components/onboarding/SwipeIntroTour.vue
+
+- 종류: component
+- script: setup / ts
+- headings: h2 {{ step.title }}
+- forms: 0, images: 0
+- asset refs: 없음
+- classes: `===`, `active:`, `index`, `material-symbols-rounded`, `stepIndex`, `swipe-tour`, `swipe-tour-actions`, `swipe-tour-backdrop`, `swipe-tour-card`, `swipe-tour-footer`, `swipe-tour-next`, `swipe-tour-previous`, `swipe-tour-progress`, `swipe-tour-spotlight`, `swipe-tour-topline`, `{`, `}`
+
 #### frontend/src/components/place/PlaceDiscoveryPanel.vue
 
 - 종류: component
@@ -635,7 +644,7 @@
 - headings: h1 {{ onboardingMode ? '첫 여행 취향 찾기' : '취향 수집' }}, h2 취향 수집 완료!
 - forms: 0, images: 1
 - asset refs: 없음
-- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__progress`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `primary-page-hero`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-layout`, `swipe-main-column`
+- classes: `[swipeClass,`, `app-shell`, `btn`, `celebration-particle`, `celebration-ring`, `lead`, `material-symbols-rounded`, `page-hero`, `page-hero__copy`, `page-hero__eyebrow`, `page-hero__lead`, `page-hero__progress`, `page-hero__title`, `page-with-hero`, `panel`, `primary`, `primary-page-hero`, `ring-echo`, `section`, `sketch-echo`, `swipe-breeze`, `swipe-card`, `swipe-celebration`, `swipe-discovery`, `swipe-guide`, `swipe-guide--left`, `swipe-guide--right`, `swipe-guide--top`, `swipe-help-btn`, `swipe-layout`
 
 #### frontend/src/pages/TripInviteAcceptPage.vue
 

@@ -1244,6 +1244,42 @@
           "assetRefs": []
         },
         {
+          "path": "frontend/src/components/onboarding/SwipeIntroTour.vue",
+          "relativePath": "src/components/onboarding/SwipeIntroTour.vue",
+          "kind": "component",
+          "scriptLang": "ts",
+          "scriptSetup": true,
+          "headings": [
+            {
+              "level": 2,
+              "id": "",
+              "text": "{{ step.title }}"
+            }
+          ],
+          "images": [],
+          "forms": 0,
+          "classNames": [
+            "===",
+            "active:",
+            "index",
+            "material-symbols-rounded",
+            "stepIndex",
+            "swipe-tour",
+            "swipe-tour-actions",
+            "swipe-tour-backdrop",
+            "swipe-tour-card",
+            "swipe-tour-footer",
+            "swipe-tour-next",
+            "swipe-tour-previous",
+            "swipe-tour-progress",
+            "swipe-tour-spotlight",
+            "swipe-tour-topline",
+            "{",
+            "}"
+          ],
+          "assetRefs": []
+        },
+        {
           "path": "frontend/src/components/place/PlaceDiscoveryPanel.vue",
           "relativePath": "src/components/place/PlaceDiscoveryPanel.vue",
           "kind": "component",
@@ -3256,6 +3292,7 @@
             "swipe-guide--left",
             "swipe-guide--right",
             "swipe-guide--top",
+            "swipe-help-btn",
             "swipe-layout",
             "swipe-main-column",
             "swipe-place-placeholder",
@@ -4119,6 +4156,16 @@
           "relativePath": "src/components/onboarding/MapSectionTour.test.ts",
           "imports": [
             "./MapSectionTour.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/components/onboarding/SwipeIntroTour.test.ts",
+          "relativePath": "src/components/onboarding/SwipeIntroTour.test.ts",
+          "imports": [
+            "./SwipeIntroTour.vue",
             "@vue/test-utils",
             "vitest"
           ],
@@ -6139,10 +6186,10 @@
       "summary": {
         "routes": 20,
         "pages": 20,
-        "components": 49,
-        "sourceFiles": 153,
+        "components": 50,
+        "sourceFiles": 154,
         "styleFiles": 9,
-        "typeScriptSignals": 220
+        "typeScriptSignals": 222
       }
     },
     {
