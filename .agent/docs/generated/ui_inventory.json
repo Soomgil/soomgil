@@ -23,6 +23,7 @@
         "axios",
         "exifr",
         "express",
+        "heic2any",
         "html-to-image",
         "mapbox-gl",
         "pinia",
@@ -5457,6 +5458,27 @@
           ]
         },
         {
+          "path": "frontend/src/utils/imageUpload.test.ts",
+          "relativePath": "src/utils/imageUpload.test.ts",
+          "imports": [
+            "./imageUpload",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/utils/imageUpload.ts",
+          "relativePath": "src/utils/imageUpload.ts",
+          "imports": [
+            "@/types/media"
+          ],
+          "exports": [
+            "IMAGE_UPLOAD_ACCEPT",
+            "ImageUploadError",
+            "prepareImageUpload"
+          ]
+        },
+        {
           "path": "frontend/src/utils/mapStyleCache.test.ts",
           "relativePath": "src/utils/mapStyleCache.test.ts",
           "imports": [
@@ -6291,9 +6313,9 @@
         "routes": 20,
         "pages": 20,
         "components": 51,
-        "sourceFiles": 158,
+        "sourceFiles": 160,
         "styleFiles": 9,
-        "typeScriptSignals": 227
+        "typeScriptSignals": 229
       }
     },
     {
