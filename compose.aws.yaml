@@ -23,6 +23,7 @@ services:
       args:
         VITE_API_BASE_URL: /api/v1
         VITE_MAPBOX_ACCESS_TOKEN: ${MAPBOX_ACCESS_TOKEN:-}
+        VITE_PUBLIC_APP_URL: ${PUBLIC_APP_URL:-https://soomgil.me}
     restart: unless-stopped
     ports:
       - '80:80'
