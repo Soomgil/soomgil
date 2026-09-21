@@ -677,10 +677,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h2 {{ tr('이메일 인증이 완료됐어요', 'Email verified') }}, h2 {{ submitting ? tr('이메일 인증 중…', 'Verifying email…') : tr('인증 메일을 확인해주세요', 'Check your verification email') }}
+- headings: h1 {{ tr('여행을 시작하기 전,\n마지막 한 걸음', 'One last step\nbefore your journey') }}, h2 {{ tr('이메일 인증이 완료됐어요', 'Email verified') }}, h2 {{ submitting ? tr('이메일 인증 중…', 'Verifying email…') : tr('인증 메일을 확인해주세요', 'Check your verification email') }}
 - forms: 1, images: 0
-- asset refs: 없음
-- classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-form-options`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `btn`, `field`, `material-symbols-rounded`, `muted`, `oauth-callback-state`, `primary`, `small`, `verification-success-icon`, `verification-token-fallback`
+- asset refs: `/images/랜딩페이지/jeju.png`
+- classes: `app-shell`, `auth-card`, `auth-field-wrap`, `auth-form`, `auth-form-head`, `auth-main-action`, `auth-modern-card`, `auth-modern-form`, `auth-modern-page`, `auth-page`, `auth-submit-error`, `auth-success-message`, `auth-visual-content`, `auth-visual-panel`, `btn`, `email-login-link`, `email-recipient`, `email-resend-button`, `email-verification-actions`, `email-verification-card`, `email-verification-description`, `email-verification-form`, `email-verification-kicker`, `email-verification-visual`, `email-verification-visual__content`, `email-verification-visual__wash`, `eyebrow`, `field`, `ghost`, `material-symbols-rounded`
 
 ### Styles
 

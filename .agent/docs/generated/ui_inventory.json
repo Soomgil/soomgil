@@ -3519,6 +3519,11 @@
           "scriptSetup": true,
           "headings": [
             {
+              "level": 1,
+              "id": "",
+              "text": "{{ tr('여행을 시작하기 전,\\n마지막 한 걸음', 'One last step\\nbefore your journey') }}"
+            },
+            {
               "level": 2,
               "id": "",
               "text": "{{ tr('이메일 인증이 완료됐어요', 'Email verified') }}"
@@ -3537,24 +3542,42 @@
             "auth-field-wrap",
             "auth-form",
             "auth-form-head",
-            "auth-form-options",
             "auth-main-action",
             "auth-modern-card",
             "auth-modern-form",
             "auth-modern-page",
             "auth-page",
             "auth-submit-error",
+            "auth-success-message",
+            "auth-visual-content",
+            "auth-visual-panel",
             "btn",
+            "email-login-link",
+            "email-recipient",
+            "email-resend-button",
+            "email-verification-actions",
+            "email-verification-card",
+            "email-verification-description",
+            "email-verification-form",
+            "email-verification-kicker",
+            "email-verification-visual",
+            "email-verification-visual__content",
+            "email-verification-visual__wash",
+            "eyebrow",
             "field",
+            "ghost",
             "material-symbols-rounded",
             "muted",
             "oauth-callback-state",
             "primary",
             "small",
-            "verification-success-icon",
+            "verification-note",
+            "verification-progress",
             "verification-token-fallback"
           ],
-          "assetRefs": []
+          "assetRefs": [
+            "/images/랜딩페이지/jeju.png"
+          ]
         }
       ],
       "sourceModules": [
@@ -3966,6 +3989,25 @@
             "getStoredAccessToken",
             "isUsableAccessToken",
             "refreshStoredAccessToken"
+          ]
+        },
+        {
+          "path": "frontend/src/auth/oauthRedirect.test.ts",
+          "relativePath": "src/auth/oauthRedirect.test.ts",
+          "imports": [
+            "./oauthRedirect",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
+          "path": "frontend/src/auth/oauthRedirect.ts",
+          "relativePath": "src/auth/oauthRedirect.ts",
+          "imports": [
+            "@/types/auth"
+          ],
+          "exports": [
+            "resolveOAuthRedirectUri"
           ]
         },
         {
@@ -4528,6 +4570,16 @@
           "exports": []
         },
         {
+          "path": "frontend/src/pages/LandingPage.test.ts",
+          "relativePath": "src/pages/LandingPage.test.ts",
+          "imports": [
+            "./LandingPage.vue",
+            "@vue/test-utils",
+            "vitest"
+          ],
+          "exports": []
+        },
+        {
           "path": "frontend/src/pages/MyPage.test.ts",
           "relativePath": "src/pages/MyPage.test.ts",
           "imports": [
@@ -4823,6 +4875,7 @@
             "@/api/auth.api",
             "@/api/user.api",
             "@/auth/accessToken",
+            "@/auth/oauthRedirect",
             "@/i18n",
             "@/realtime/collaborationSession",
             "@/stores/onboarding.store",
@@ -6238,9 +6291,9 @@
         "routes": 20,
         "pages": 20,
         "components": 51,
-        "sourceFiles": 155,
+        "sourceFiles": 158,
         "styleFiles": 9,
-        "typeScriptSignals": 224
+        "typeScriptSignals": 227
       }
     },
     {
