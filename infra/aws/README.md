@@ -14,15 +14,14 @@ Google Cloud Console의 OAuth 2.0 Client `승인된 리디렉션 URI`와 Kakao D
 ## S3 browser upload CORS
 
 브라우저는 signed PUT URL에 `content-type`, `content-length`와 AWS 서명 header를 전송한다.
-운영 media bucket에 [s3-cors.json](./s3-cors.json)을 적용해야 `https://soomgil.me`의 preflight가 통과한다.
+운영 media bucket에 [s3-cors.json](./s3-cors.json)의 규칙을 적용해야 `https://soomgil.me`의 preflight가 통과한다.
+다음 스크립트는 버킷의 기존 CORS 규칙을 보존하고 숨길 업로드 규칙만 추가하거나 갱신한다.
+`s3:GetBucketCORS`, `s3:PutBucketCORS` 권한이 있는 AWS 자격 증명과 Python `boto3`가 필요하다.
 
 ```powershell
-aws s3api put-bucket-cors `
-  --bucket <production-media-bucket> `
-  --cors-configuration file://infra/aws/s3-cors.json
-
-aws s3api get-bucket-cors --bucket <production-media-bucket>
+python -m pip install boto3
+python infra/aws/ensure_s3_cors.py --bucket soomgil-media-prod-264347117940-ap-northeast-2
+python infra/aws/ensure_s3_cors.py --bucket soomgil-media-prod-264347117940-ap-northeast-2 --apply
 ```
 
-`put-bucket-cors`는 기존 bucket CORS 규칙 전체를 교체하므로, 다른 origin이나 애플리케이션이 같은
-bucket을 사용한다면 필요한 기존 규칙을 `s3-cors.json`에 병합한 뒤 적용한다.
+적용 후 `https://soomgil.me`에서 프로필 사진을 저장해 브라우저의 S3 `OPTIONS`와 `PUT` 요청이 성공하는지 확인한다.
