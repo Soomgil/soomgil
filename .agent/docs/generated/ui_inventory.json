@@ -5905,7 +5905,6 @@
             "ai-chat-input-row",
             "ai-chat-messages-container",
             "ai-chat-panel",
-            "ai-chat-suggestions",
             "ai-chat-title-group",
             "ai-guide-fab",
             "ai-message",
@@ -6008,7 +6007,8 @@
             "d",
             "d-day-badge",
             "danger",
-            "dashed-line"
+            "dashed-line",
+            "day-card"
           ],
           "animations": [
             "activeDotPop",
