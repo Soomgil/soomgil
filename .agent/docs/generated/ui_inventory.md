@@ -533,10 +533,10 @@
 
 - 종류: page
 - script: setup / ts
-- headings: h1 함께 그리는 설렘, 여행의 모든 순간, h2 여행 계획, 이제 함께 한곳에서, h3 가고 싶은 곳을 함께 골라요, h3 한눈에 일정을 정리해요, h3 이동하기 좋은 순서로 완성해요, h2 마음에 드는 여행을 내 일정으로 시작해 보세요.
-- forms: 0, images: 2
-- asset refs: `/images/랜딩페이지/daejeon.png`, `/images/랜딩페이지/gyeongju.png`, `/images/랜딩페이지/jeju.png`, `/images/랜딩페이지/jeonju.png`, `/images/랜딩페이지/korea_hero.png`, `@/assets/images/soomgil_logo_extract.png`
-- classes: `is-visible`, `landing-button`, `landing-button--classic`, `landing-button--classic-ghost`, `landing-button--large`, `landing-button--light`, `landing-button--outline`, `landing-classic-actions`, `landing-classic-content`, `landing-classic-kicker`, `landing-classic-lead`, `landing-classic-logo`, `landing-day-demo`, `landing-final`, `landing-hero`, `landing-hero--classic`, `landing-hero-background`, `landing-hero-shade`, `landing-page`, `landing-process`, `landing-process-grid`, `landing-reveal`, `landing-route-demo`, `landing-section-heading`, `landing-step-icon`, `landing-step-icon--green`, `landing-step-icon--rose`, `landing-step-number`, `landing-stories`, `landing-stories-copy`
+- headings: h1 함께 그리는 설렘, 여행의 모든 순간, h2 여행 계획, 이제 함께 한곳에서, h3 가고 싶은 곳을 함께 골라요, h3 한 지도에서 일정을 함께 그려요, h3 AI와 함께 동선을 다듬어요, h2 피드 속 코스를 내 일정으로 가져오세요.
+- forms: 0, images: 3
+- asset refs: `/images/랜딩페이지/daejeon.png`, `/images/랜딩페이지/gyeongju.png`, `/images/랜딩페이지/jeju.png`, `/images/랜딩페이지/jeonju.png`, `/images/랜딩페이지/korea_hero.png`, `/images/한밭수목원/한밭수목원_1_공공3유형.jpg`, `@/assets/images/soomgil_logo_extract.png`
+- classes: `is-visible`, `landing-ai-demo`, `landing-ai-demo__badge`, `landing-ai-demo__route`, `landing-button`, `landing-button--classic`, `landing-button--classic-ghost`, `landing-button--large`, `landing-button--light`, `landing-button--outline`, `landing-classic-actions`, `landing-classic-content`, `landing-classic-kicker`, `landing-classic-lead`, `landing-classic-logo`, `landing-feed-preview`, `landing-feed-preview__header`, `landing-final`, `landing-hero`, `landing-hero--classic`, `landing-hero-background`, `landing-hero-shade`, `landing-itinerary-demo`, `landing-itinerary-demo__heading`, `landing-itinerary-demo__place`, `landing-match-demo`, `landing-match-demo__avatars`, `landing-match-demo__copy`, `landing-match-demo__members`, `landing-match-demo__score`
 
 #### frontend/src/pages/LoginPage.vue
 
