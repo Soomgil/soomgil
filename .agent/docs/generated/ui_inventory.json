@@ -4636,6 +4636,7 @@
           "relativePath": "src/pages/RoutePage.test.ts",
           "imports": [
             "./RoutePage.vue",
+            "@/components/map/MapTasteControl.vue",
             "@/components/map/MapboxItineraryMap.vue",
             "@/components/place/PlaceDiscoveryPanel.vue",
             "@/components/trip/TripDateRangeDialog.vue",
