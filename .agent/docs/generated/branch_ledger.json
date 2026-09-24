@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T07:31:57.535Z",
+  "generatedAt": "2026-09-24T13:51:02.296Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -371,6 +371,16 @@
       "status": "",
       "title": "화이트 먹 번짐 홈",
       "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-white-ink-gallery.md"
+    },
+    {
+      "id": "20260924T134636Z-feature__landing-copy-refresh-note",
+      "branch": "feature__landing-copy-refresh",
+      "branchKey": "feature__landing-copy-refresh",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "랜딩 문구와 취향 토스트 프론트엔드 포인터",
+      "file": ".agent/branch-ledger/branches/feature__landing-copy-refresh/20260924T134636Z-feature__landing-copy-refresh-note.md"
     },
     {
       "id": "20260917T021158Z-feature__map-action-polish-note",
