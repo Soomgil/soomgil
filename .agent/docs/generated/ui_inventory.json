@@ -367,15 +367,10 @@
           "images": [],
           "forms": 0,
           "classNames": [
-            "-translate-x-1/2",
-            "[",
-            "bottom-10",
-            "fixed",
-            "flex",
-            "flex-col",
-            "gap-2",
-            "left-1/2",
-            "z-[3000]"
+            "`toast-item--${toast.type}`",
+            "material-symbols-rounded",
+            "toast-item",
+            "toast-stack"
           ],
           "assetRefs": []
         },
@@ -2404,7 +2399,7 @@
             {
               "level": 2,
               "id": "",
-              "text": "다음 여행을 숨길에서 함께 만들어 볼까요?"
+              "text": "다음 여행을 찾아볼까요?"
             }
           ],
           "images": [
@@ -2429,7 +2424,6 @@
             "landing-ai-demo__route",
             "landing-button",
             "landing-button--classic",
-            "landing-button--classic-ghost",
             "landing-button--large",
             "landing-button--light",
             "landing-button--outline",
@@ -4655,6 +4649,7 @@
             "@/api/place.api",
             "@/api/search.api",
             "@/api/swipe.api",
+            "@/stores/ui.store",
             "@/types/search",
             "@vue/test-utils",
             "pinia",
