@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-20T07:31:57.535Z
+생성 시각: 2026-09-24T13:51:02.296Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -45,6 +45,7 @@
 - unknown | feature__home-award-background | scope 없음 | 여행 카드 탐색 및 설정 모달 후속 | .agent/branch-ledger/branches/feature__home-award-background/20260916-trip-settings-refinement.md
 - unknown | feature__home-award-background | scope 없음 | 지도 스타일 캐싱과 투표 모달 개편 (2026-09-16) | .agent/branch-ledger/branches/feature__home-award-background/20260916-vote-design-cache.md
 - unknown | feature__home-award-background | scope 없음 | 화이트 먹 번짐 홈 | .agent/branch-ledger/branches/feature__home-award-background/20260916-white-ink-gallery.md
+- unknown | feature__landing-copy-refresh | scope 없음 | 랜딩 문구와 취향 토스트 프론트엔드 포인터 | .agent/branch-ledger/branches/feature__landing-copy-refresh/20260924T134636Z-feature__landing-copy-refresh-note.md
 - unknown | feature__map-action-polish | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/feature__map-action-polish/20260917T021158Z-feature__map-action-polish-note.md
 - unknown | feature__map-action-polish | scope 없음 | 지도 관리 및 취향 UI 개선 | .agent/branch-ledger/branches/feature__map-action-polish/map-management-refinement.md
 - unknown | feature__map-action-polish | scope 없음 | 지도 취향 보기 · 투표 안내 축소 | .agent/branch-ledger/branches/feature__map-action-polish/map-taste-view.md
