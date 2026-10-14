@@ -82,6 +82,13 @@ async function checkRequiredFiles() {
     ".agent/tools/agent-ledger.mjs",
     ".agent/tools/harness-check.mjs",
     ".agent/tools/smoke-local.mjs",
+    ".agent/tools/create-orchestration.mjs",
+    ".agent/tools/test-orchestration-bootstrap.mjs",
+    ".agent/bootstrap/project.example.json",
+    ".agent/bootstrap/create-project.command",
+    ".agent/bootstrap/create-project.cmd",
+    ".agent/bootstrap/AI_PROJECT_BOOTSTRAP.md",
+    ".agent/docs/harness/project_bootstrap_guide.md",
   ];
 
   for (const filePath of required) {

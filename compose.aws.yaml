@@ -10,17 +10,11 @@ services:
       SPRING_DOCKER_COMPOSE_ENABLED: 'false'
       SERVER_PORT: 8080
       MANAGEMENT_HEALTH_MAIL_ENABLED: 'false'
-      MAIL_HOST: mailpit
-      MAIL_PORT: 1025
-      MAIL_SMTP_AUTH: 'false'
-      MAIL_SMTP_STARTTLS: 'false'
     expose:
       - '8080'
     depends_on:
       redis:
         condition: service_healthy
-      mailpit:
-        condition: service_started
 
   frontend:
     build:
@@ -29,6 +23,7 @@ services:
       args:
         VITE_API_BASE_URL: /api/v1
         VITE_MAPBOX_ACCESS_TOKEN: ${MAPBOX_ACCESS_TOKEN:-}
+        VITE_PUBLIC_APP_URL: ${PUBLIC_APP_URL:-https://soomgil.me}
     restart: unless-stopped
     ports:
       - '80:80'
@@ -46,12 +41,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  mailpit:
-    image: axllent/mailpit:v1.27
-    restart: unless-stopped
-    ports:
-      - '8025:8025'
 
 volumes:
   redis-data:

@@ -5,6 +5,7 @@
 ## 핵심 문서
 
 - `ai_harness_guide.md`: 하네스 실행 흐름.
+- `harness/project_bootstrap_guide.md`: macOS/Windows 공용 orchestration 프로젝트 생성 도구.
 - `git_workflow.md`: orchestration repo, submodule, Git Flow, commit convention 운영 규칙.
 - `branching_agent_docs.md`: 브랜치별 AI 문서 격리와 통합 규칙.
 - `domain_development_policy.md`: 도메인 개발 전 사용자 흐름 설명과 test-first 강제 정책.
@@ -15,6 +16,7 @@
 - `page_map.md`: Vue Router 기준 프론트 화면 맵.
 - `functional_spec.md`: 제품 기능 명세.
 - `product-specs/preference_tagging_policy.md`: 장소 태그, 선호도 계산, 50개 페르소나 스와이프 cold-start 필수 정책.
+- `product-specs/product_experience_policy.md`: 홈, 회원가입 취향 수집, 여행방 투표, 지도 협업, 커뮤니티 전환의 최신 결정.
 - `product-specs/tourism_source_policy.md`: 관광지 원천 DB, 콘텐츠랩 수상작 사진, S3 저장, 매칭, 이미지 노출 정책.
 - `design-docs/design.md`: `frontend/` 현재 구현 기준 디자인 문서.
 - `design-docs/design_system_todo.md`: 디자인 시스템 수렴과 Settings 화면 통일 작업 TODO.

@@ -1,0 +1,4 @@
+*.png
+*.log
+seed-roundtrip.json
+schema-validation.sql

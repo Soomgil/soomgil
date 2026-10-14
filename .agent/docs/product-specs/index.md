@@ -5,6 +5,7 @@
 현재 핵심 명세는 다음 문서를 우선 확인합니다.
 
 - `service_requirements.md`
+- `product_experience_policy.md`
 - `functional_spec.md`
 - `preference_tagging_policy.md`
 - `tourism_source_policy.md`
@@ -12,3 +13,5 @@
 - `../../contracts/backend_contract_decisions.md`
 - `../../contracts/schema.dbml`
 - `../../contracts/openapi.yaml`
+
+제품 경험 전환과 기존 문서가 충돌하면 `product_experience_policy.md`를 우선합니다.

@@ -5,6 +5,7 @@
 ## 현재 문서
 
 - `backend_contract_decisions.md`: DBML/OpenAPI 생성 전 확정된 백엔드 설계 결정.
+- `../docs/product-specs/product_experience_policy.md`: 회원가입·홈·여행방 투표·지도 협업·커뮤니티 전환의 제품 결정.
 - `schema.dbml`: PostgreSQL 기준 데이터 모델. 하나의 DBML 파일 안에서 `auth.users`, `trip.trips`처럼 schema-qualified table name으로 기능/역할을 분리합니다.
 - `openapi.yaml`: `/api/v1` REST API와 RFC7807 에러 계약.
 

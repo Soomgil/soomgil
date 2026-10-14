@@ -1,7 +1,14 @@
 # 백엔드 계약 결정 기록
 
-이 문서는 숨길 백엔드 DBML/OpenAPI를 만들기 전에 확정한 설계 결정을 저장합니다.
+이 문서는 숨길 백엔드 DBML/OpenAPI를 만들기 전에 확정한 설계 결정을 저장합니다. 제품 경험 전환은 `.agent/docs/product-specs/product_experience_policy.md`를 함께 따릅니다.
 DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
+
+## 2026-09-16 기록 기능 폐지
+
+- 기록 페이지, 기록 API와 업로드 목적 TRIP_RECORD를 제거합니다.
+- V51 마이그레이션으로 기록 본문·미디어 연결·생성 요청 데이터를 영구 삭제합니다.
+- 기록 전용 미디어는 즉시 스토리지 purge 대상으로 처리하며 삭제 실패는 기존 cleanup 작업에서 재시도합니다. 커뮤니티·프로필·지도 등 다른 리소스에서 사용하는 사진은 유지합니다.
+- 아래 기록 관련 과거 설계보다 이 결정을 우선합니다.
 
 ## 산출물 위치
 
@@ -31,8 +38,10 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 비밀번호는 강한 password policy와 로그인 실패 rate limit을 적용합니다.
 - OAuth authorization URL 생성, state 검증, authorization code 교환은 백엔드가 담당합니다.
 - 동일 이메일의 LOCAL 계정과 소셜 계정은 자동 병합하지 않고, 명시적 계정 연결 flow를 통해서만 연결합니다.
-- 계정 삭제는 즉시 hard delete가 아니라 `PENDING_DELETION` 예약 상태를 거친 뒤 익명화/삭제합니다.
-- 계정 삭제 요청자가 `owner_user_id`인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 삭제 예약을 차단하고, 사용자가 해당 여행방을 삭제 또는 보존 정책에 맞게 정리하도록 요구합니다.
+- 신규 사용자는 운영자가 버전으로 관리하는 동일한 관광지 10개에 모두 반응해야 onboarding을 완료합니다.
+- onboarding 완료 전에는 회원가입 선호도 화면 외의 인증 필요 제품 화면에 진입할 수 없습니다.
+- 계정 탈퇴는 즉시 `DELETED`로 전환하고, 인증 수단을 폐기하며 개인정보를 익명화합니다.
+- 소유 여행방은 가장 먼저 참여한 활성 구성원에게 이전하고, 승계 대상이 없으면 함께 삭제한 뒤 사용자를 모든 여행방 멤버십에서 탈퇴시킵니다.
 - 공개 커뮤니티 게시글 snapshot은 게시 시점 표시 데이터로 유지할 수 있으며, 삭제된 사용자 표시는 익명화합니다.
 - 개인 기록, 비공개 데이터, 업로드 미디어는 retention 정책에 따라 soft delete 후 purge합니다.
 - 운영 감사 로그와 보안 이벤트는 서비스 정책상 retention 기간 동안 보관하고, 사용자-facing 개인정보는 최소화 또는 마스킹합니다.
@@ -70,6 +79,14 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - `trip.trip_regions`는 UUID region id가 아니라 `legal_region_code`로 `geo.legal_regions.code`를 참조합니다.
 - 법정동 원천 동기화 이력은 `geo.legal_region_sync_logs`에 저장합니다.
 - 대표 목적지는 지역과 별도로 `trips.display_destination` 문자열로 저장합니다.
+- 멤버 투표 상태는 `INVITED`, `JOINED`, `VOTED`로 관리합니다. 초대 수락으로 `JOINED`, 개인 투표 완료로 `VOTED`가 됩니다.
+- 첫 참여자는 `VOTED` 전 지도에 진입할 수 없고 이미 완료한 멤버는 재진입 시 바로 지도에 들어갑니다.
+- 방장은 사용자별 스티커 수와 선정 관광지 수를 설정하며 기본값은 각각 5개입니다.
+- 한 사용자는 총 지급량 안에서 같은 후보에 여러 스티커를 붙일 수 있고 1개 이상 사용하면 완료할 수 있습니다.
+- 개인 투표는 방 투표 종료 전까지 수정할 수 있고 모든 active MEMBER는 후보를 추가하거나 삭제할 수 있습니다.
+- 투표는 전원 완료, OWNER 수동 종료, 마감 시각 도달 중 가장 먼저 충족한 조건으로 종료합니다.
+- 득표순으로 OWNER 설정 개수만큼 선정하되 마지막 순위 동점 후보는 모두 선정합니다.
+- 선정 장소는 `UNSCHEDULED` 일정 그룹에 추가하고 이미 같은 여행 일정에 존재하면 중복 추가하지 않습니다.
 
 ## 장소와 관광공사 데이터
 
@@ -101,13 +118,14 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 해당 관광지/지역에 연결 가능한 수상작 사진이 없으면 일반 관광지 이미지와 보유 이미지로만 구성합니다.
 - 수상작 사진은 태그 추출과 추천 display 후보에 활용할 수 있지만, 사용자 기록/커뮤니티 업로드 미디어와 소유권/삭제 정책을 섞지 않습니다.
 
-## 스와이프와 저장
+## 선호도 수집과 저장
 
-- 스와이프는 특정 여행방/목적지에 종속된 기능이 아니라, 사용자가 평소에 랜덤에 가까운 장소를 넘기며 개인 선호도를 쌓는 전역 feed를 기본으로 합니다.
-- 전역 스와이프 feed는 랜덤성을 유지하면서도 지역, 카테고리, 인기/비인기, 실내/야외 다양성을 보장해야 합니다.
+- 독립 스와이프 탭은 제거하고 회원가입 평가, 홈 관광지 배경, 여행방 투표를 선호도 수집 경로로 사용합니다.
+- 홈 관광지 feed는 랜덤성을 유지하면서도 지역, 카테고리, 인기/비인기, 실내/야외 다양성을 보장해야 합니다.
 - 이미 반응한 장소도 일정 기간이 지나거나 관광공사 원본/AI 태그가 변경되면 다시 노출할 수 있습니다.
-- 재노출 후 다시 반응하면 `user_place_reactions` 최종 상태는 갱신하고 `user_swipe_events`는 누적합니다.
-- 여행방 생성 후에는 멤버들의 누적 스와이프 반응을 여행 계획과 장소 후보 정렬에 활용합니다.
+- 재노출 후 다시 반응하면 `user_place_reactions` 최종 상태는 갱신하고 원본 preference event log는 누적합니다.
+- 좋아요 취소는 제거 이벤트를 기록한 뒤 현재 반응 상태를 해제합니다.
+- 여행방 생성 후에는 멤버들의 누적 선호 반응을 여행 계획과 장소 후보 정렬에 활용합니다.
 - 여행방 추천 장소 리스트는 경로 설계 화면의 좌측 일정/경로 추가 패널에 표시합니다.
 - 추천 리스트의 주요 목적은 장소를 바로 일정에 추가하는 것입니다.
 - 장소별로 어떤 멤버 선호도에 맞는지 프로필 아바타 목록을 카드 우측 하단에 가볍게 표시하는 UI를 전제로 합니다.
@@ -116,6 +134,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 기본 추천 후보 풀은 현재 보고 있는 지도 viewport 안의 관광공사 장소입니다.
 - 기본 추천은 현재 지도 viewport 안의 장소만 후보로 사용합니다.
 - 추천 장소 API의 `bbox`는 필수이며, 검색 실행 또는 사용자의 수동 새로고침 버튼 클릭 시점의 현재 지도 viewport를 전달합니다.
+- 단, 여행 방 투표 후보 생성은 사용자가 지도를 보고 있지 않은 서버-side 흐름이므로 `bbox` 대신 여행방 법정동 코드를 기준으로 하는 별도 내부 query(`PlaceRegionCandidateQuery`)를 사용합니다. 지역이 등록되어 있지 않으면 대표 목적지 문자열을 검색어로 사용합니다.
 - 사용자가 지도를 pan/zoom하는 것만으로 추천 장소 API를 자동 재호출하지 않습니다.
 - 기본 추천 정렬은 참여자들의 누적 스와이프 태그 매칭 점수를 중심으로 합니다.
 - 거리는 보조 점수 또는 동점 처리 기준으로 사용합니다.
@@ -128,7 +147,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 장소 태그 추천 계산은 `confidence`, `weight`, `preference_discrimination`을 중심으로 하며 `rarity`나 tree depth 기반 specificity는 MVP 추천 점수 필수 입력으로 사용하지 않습니다.
 - 추천 장소 API는 `matched_members` 또는 이에 준하는 필드로 매칭 멤버의 id, name, avatar/profile image를 반환해야 합니다.
 - 추천 장소 API는 필수 viewport bounds, 선택적 center 또는 route anchor, tab mode, pagination을 받을 수 있어야 합니다.
-- 스와이프 반응은 최종 상태 테이블과 이벤트 로그 테이블을 분리합니다.
+- 선호 반응은 최종 상태 테이블과 이벤트 로그 테이블을 분리합니다.
 - 최종 상태는 조회/집계용입니다.
 - 이벤트 로그는 분석, AI 채팅 컨텍스트, 되돌리기, 감사에 사용합니다.
 - 사용자 선호도 가중치는 이벤트 로그를 매번 재계산하지 않고 `user_preference_tag_weights` materialized projection으로 유지합니다.
@@ -137,22 +156,112 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - projection에는 사용자-장소별 최종 반응만 반영합니다. 반응 변경 시 이전 태그 근거를 되돌리고 새 최종 반응의 근거를 적용합니다.
 - 추천 리스트는 태그별 `preference_score`와 장소 내 정규화된 태그 비율의 가중평균을 사용합니다.
 - 태그 전체 평균에 주는 사전 강도와 호불호에 따른 개인 반응 반영 속도는 계산 policy version으로 관리하며, 검증 전 상수를 DB 계약에 고정하지 않습니다.
-- 스와이프 저장 후 비동기 worker가 projection을 갱신합니다.
+- 선호 이벤트 저장 후 비동기 worker가 projection을 갱신합니다.
 - cold-start 통계는 `AI_ONLY_DEFAULT`, `SYNTHETIC_PERSONA`, `REAL_USER` source를 분리하고, 실제 사용자 통계가 안정화되면 합성 통계는 serving 경로에서 제거합니다.
-- cold-start 합성 스와이프 데이터는 50개 고정 페르소나를 기반으로 생성하고 실제 사용자 `user_swipe_events`와 분리해 보관합니다.
+- cold-start 합성 스와이프 데이터는 50개 고정 페르소나를 기반으로 생성하고 실제 사용자 preference event와 분리해 보관합니다.
 - V1에서는 시간 감쇠 기반 선호도 재계산과 daily summary를 사용하지 않습니다.
-- projection 갱신은 스와이프 이벤트가 발생할 때 해당 장소의 태그만 반영하는 incremental update를 기본으로 합니다.
+- projection 갱신은 preference event가 발생할 때 해당 장소의 태그만 반영하는 incremental update를 기본으로 합니다.
 - 원본 이벤트 로그는 projection 복구, 가중치 공식 변경 시 재처리, 감사 용도로 남기며 일반 추천 요청에서 매번 재계산하지 않습니다.
 - 별도 선호도 snapshot 테이블은 두지 않고, 현재 선호도는 `user_preference_tag_weights` projection과 원본 이벤트 로그로 관리합니다.
-- V1 선호도 추론 입력은 스와이프 반응 `LIKE`, `NOPE`, `SUPER_LIKE`로 한정합니다.
+- V1 선호도 source는 `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE`이며 source multiplier는 각각 `3.0`, `1.0`, `1.0`입니다.
+- `ONBOARDING`은 신규 사용자 콜드 스타트 완화를 위해서만 강화하며, 반응 강도와 활성 투표 스티커 수는 source multiplier와 별도로 반영합니다.
 - `SUPER_LIKE`는 다른 사용자에게 추천한다는 의미가 아니라, 본인 선호도를 강하게 어필하는 반응입니다.
 - `SUPER_LIKE`는 `LIKE`보다 높은 선호도 가중치이며, 언젠가 꼭 가고 싶은 장소에 가까운 의미입니다.
 - 장소 상세 조회, 일정 추가/삭제, 저장, 커뮤니티 반응은 선호도 점수에 반영하지 않습니다.
-- MVP 스와이프 반응과 선호도 projection은 사용자 개인 전역 기준으로만 관리합니다.
-- 여행방별 선호도, trip-scoped reaction, `contextTripId` 기록은 MVP에서 제공하지 않습니다.
-- `user_swipe_events.feed_context`는 향후 feed 실험/노출 메타데이터 확장을 위한 예약 필드이며, MVP에서는 여행방 context를 저장하지 않습니다.
+- 선호도 projection은 사용자 개인 전역 기준으로 관리하되 원본 이벤트는 source와 source resource id를 기록합니다.
+- 여행방 투표 이벤트는 개인 전역 projection에 `1.0` source multiplier로 반영합니다.
+- `TRIP_VOTE` 근거는 `preference.user_place_vote_evidences`에 별도로 기록하고, 태그 근거만 `user_preference_tag_weights`에 가산합니다.
+- `TRIP_VOTE`는 스와이프 최종 반응(`user_place_reactions`), 선호 이벤트 로그, 저장 장소를 변경하지 않습니다. 반응 되돌리기 로직과 저장 장소 정책이 오염되지 않도록 완전히 분리합니다.
+- 일정 최종 선정 여부와 무관하게 사용자가 스티커를 붙인 모든 관광지를 반영하며 장소별 스티커 개수를 보존합니다.
+- 스티커 개수를 근거 단위로 환산하는 규칙은 기존 projection 계산 공식과 분리된 `TripVoteEvidencePolicy`가 담당합니다.
+- 환산식은 `units(n) = min(baseWeight + stickerStep x (n - 1), maxWeight)`이며 기본값은 1.0 / 0.5 / 2.0입니다. 스티커 1개는 LIKE 강도, 상한은 SUPER_LIKE 강도에 맞춥니다. `TRIP_VOTE` source multiplier는 1.0으로 두고 스티커 수만 별도 반영합니다.
+- 환산 정책 버전은 `trip-vote-evidence-v1`이며 근거 row에 함께 저장해 재처리 대상을 식별할 수 있게 합니다.
+- 태그 근거 분배는 기존 `PlaceTagEvidenceCalculator`, 점수 재계산은 기존 `UserPreferenceWeightCalculator`를 그대로 사용합니다.
+- `(voteSessionId, userId, provider, externalPlaceId)` unique 제약으로 같은 제출을 재시도해도 근거가 중복 반영되지 않습니다.
+- `user_preference_tag_weights.vote_evidence`와 `vote_place_count`는 감사용이며, 추천 계산은 기존과 동일하게 `positive_evidence`를 사용합니다.
 - 커뮤니티 저장/북마크는 MVP에서 별도 반응으로 두지 않고, 커뮤니티 게시글 좋아요와 리트립을 지원합니다.
 - 장소 저장은 사용자가 해당 장소를 `SUPER_LIKE`한 경우에만 허용합니다.
+
+## 여행 방 투표
+
+이 절이 현재 투표 기준입니다. 이전 `trip.trips.vote_*` / `trip.trip_vote_candidates` / `trip.trip_vote_stickers` /
+`trip_members.vote_state` 계약은 확정 요구사항과 충돌해 폐기했습니다. 폐기 사유는 아래에 함께 적습니다.
+
+폐기된 계약과의 차이:
+
+| 항목 | 폐기된 `trip.*` 계약 | 현재 `voting.*` 계약 | 사유 |
+| :--- | :--- | :--- | :--- |
+| 후보 출처 | `trip_vote_candidates.added_by_user_id`로 멤버가 직접 추가 | 추천이 자동 구성한 snapshot | 방장이 후보를 직접 고르지 않는다는 확정 요구 |
+| 참여 상태 | `trip_members.vote_state` = JOINED/VOTED | 세션별 NOT_STARTED/IN_PROGRESS/SUBMITTED | 첫 진입을 boolean 하나로 두지 않는다는 확정 요구 |
+| 세션 | 없음. 상태가 `trips` 컬럼에 있어 여행방당 1회 | `voting.vote_sessions`로 세션 단위 관리 | 세션별 참여 상태와 후보 snapshot이 필요 |
+| 후보 고정 | 없음 | 시작 시점 snapshot 저장 | 투표 도중 추천 변동 차단 |
+| 종료 조건 | ALL_VOTED / OWNER_CLOSED / DEADLINE_REACHED | ALL_SUBMITTED / OWNER_EARLY_CLOSE | 마감시한은 확정 요구에 없음 |
+| 스티커 | 활성 row 1개 = 스티커 1개 | (참여자, 후보)당 개수 컬럼 | 개수를 취향 근거로 그대로 보존해야 함 |
+
+- 방장이 여행 방을 만들고 초대 링크 또는 초대 코드로 참여자를 초대하는 기존 흐름을 그대로 재사용합니다. 초대 기능은 새로 만들지 않습니다.
+- 방장이 투표를 시작하면 그 시점의 활성 참여자(`trip_members.status = ACTIVE`) 전원이 투표 참여자로 확정됩니다.
+- 세션 시작 이후 합류한 멤버는 참여자로 추가하지 않고 지도 화면으로 보냅니다.
+- 첫 진입 여부는 boolean 하나가 아니라 세션별 참여 상태 `NOT_STARTED`, `IN_PROGRESS`, `SUBMITTED`로 모델링합니다.
+- 세션 상태는 `OPEN`, `COMPLETED`를 사용하고 `DRAFT`는 예약 값으로만 두며 V1 API로는 생성하지 않습니다.
+- 여행방당 진행 중 세션은 최대 1개이며 `status IN (DRAFT, OPEN)` 부분 unique 인덱스로 강제합니다.
+- 진입 화면 판정은 서버가 계산해 `nextScreen`(`VOTE`, `WAITING`, `MAP`)으로 내려줍니다. 클라이언트는 상태 조합을 다시 해석하지 않습니다.
+- 후보 관광지는 방장이 직접 고르지 않고, 여행 지역과 모든 활성 참여자의 누적 취향으로 추천 시스템이 자동 구성합니다.
+- 기본 후보 수는 10개입니다.
+- 투표 시작 시점의 후보를 세션 snapshot으로 저장해 투표 도중 추천 결과가 바뀌어도 후보가 변하지 않게 합니다.
+- 투표 후보 API는 다른 참여자의 raw/normalized 선호도 점수, 세부 태그 가중치, matched member 정보를 반환하지 않습니다. 노출 필드는 순위와 장소 표시 정보뿐입니다.
+- 진행 중 세션에서는 후보별 스티커 중간 집계도 노출하지 않습니다. 집계는 종료된 세션의 결과 조회에서만 채웁니다.
+- 스티커 지급 개수와 최종 선정 개수는 방장이 투표 시작 전에 정하며 시작 후에는 변경할 수 없습니다.
+- 두 값 모두 1 이상이고 실제로 생성된 후보 수를 넘을 수 없습니다. 후보가 선정 개수보다 적으면 `VOTE_CANDIDATE_POOL_INSUFFICIENT`(422)로 시작을 거절합니다.
+- 한 사용자가 같은 관광지에 스티커를 여러 개 몰아 붙일 수 있습니다.
+- 사용한 스티커 총합은 지급량을 넘을 수 없습니다. 초과하면 `VOTE_STICKER_ALLOWANCE_EXCEEDED`(422)입니다.
+- 제출 전에는 스티커를 이동하거나 회수할 수 있습니다. 배치 저장은 부분 변경이 아니라 전체 snapshot 치환이며, 목록에서 빠진 후보는 회수로 처리합니다.
+- 제출 후에는 수정할 수 없고 이중 제출은 `VOTE_ALREADY_SUBMITTED`(409)입니다.
+- 모든 활성 참여자가 제출하면 자동 종료합니다.
+- 방장은 미투표 참여자가 있다는 경고를 확인한 뒤 조기 종료할 수 있습니다. 확인 없이 요청하면 `VOTE_UNVOTED_PARTICIPANTS_NOT_ACKNOWLEDGED`(422)입니다.
+- 마지막 제출과 방장 조기 종료가 동시에 발생해도 종료는 한 번만 일어납니다. 종료 전이는 `UPDATE ... WHERE status = 'OPEN'` 조건부 UPDATE 한 곳으로만 수행하고 영향 row 수로 판정합니다.
+- 결과 반영도 `result_applied_at IS NULL` 조건부 UPDATE로 보호해 재시도해도 일정과 취향이 중복 반영되지 않습니다.
+- 최종 선정은 스티커 총합이 높은 후보부터 선정 개수만큼 고릅니다.
+- 마지막 선정 순위가 동점이면 동점 관광지를 모두 선정합니다. 이 경우 결과 개수가 선정 개수를 넘을 수 있습니다.
+- 스티커를 하나도 받지 못한 후보는 선정 개수가 남아 있어도 선정하지 않습니다.
+- 스티커 수가 같으면 후보 snapshot 순서를 유지해 결과 순서가 매번 같도록 합니다.
+- 선정된 관광지만 기존 "일차 미정"(`UNSCHEDULED`) 그룹에 추가합니다.
+- 이미 같은 관광지가 일차 미정이나 확정 일정에 있으면 중복 추가하지 않고 `SKIPPED_DUPLICATE`로 기록합니다.
+- 투표 모듈은 itinerary mapper나 DB를 직접 수정하지 않고 `AddPlacesToUnscheduledHandler` 공개 command만 호출합니다.
+- 투표 모듈은 preference mapper나 DB를 직접 수정하지 않고 `ApplyTripVotePreferenceCommandHandler` 공개 command만 호출합니다.
+- 투표 모듈은 trip/place DB도 직접 읽지 않고 `TripAccessGuard`, `ListTripMembersHandler`, `ListTripRegionCodesHandler`, `PlaceRegionCandidateQueryHandler`를 사용합니다.
+- 투표 상태 실시간 반영은 V1에서 STOMP 대신 짧은 polling(5초)을 사용합니다. 협업 topic 화이트리스트 변경은 후속 과제로 둡니다.
+
+### 투표 지역 선택과 snapshot
+
+- 방장은 투표를 시작할 때 `legalRegionCodes`로 이번 투표의 지역을 직접 고를 수 있다. 비우면 여행방에 등록된 지역을 쓰고,
+  그것도 없으면 대표 목적지 문자열로 대체 검색한다. 셋 다 없으면 `VOTE_CANDIDATE_POOL_INSUFFICIENT`로 시작을 거절한다.
+- 후보 수 `candidateCount`(기본 10)는 방장이 정한다. 지급 개수와 선정 개수는 실제로 생성된 후보 수를 넘을 수 없다.
+- 사용한 지역은 `voting.vote_session_regions`에 코드와 이름을 함께 snapshot으로 저장하고 `TripVoteSessionDetail.regions`로 내려준다.
+  이후 여행방 지역이 바뀌어도 "이 후보가 어디서 나왔는지"가 유지된다.
+- 후보 query(`ListTripVoteCandidatesQuery.regionCodes`)는 지역 override를 받는다. 비어 있으면 trip의 `ListTripRegionCodesHandler`를 호출하는 기존 흐름과 같다.
+
+### 법정동 코드와 관광공사(KTO) 지역 코드
+
+- 여행방·투표는 10자리 법정동 코드로 지역을 저장하지만 관광 원천(KTO)은 자체 `areaCode`/`sigunguCode`를 쓴다. 그동안 법정동 코드가
+  그대로 KTO에 전달돼 지역 필터가 항상 비었고, 후보는 대표 목적지 문자열 검색으로만 만들어졌다.
+- place 모듈의 `LegalRegionKtoCodeResolver`가 법정동 코드를 KTO 코드로 바꾼다. 시도는 `LegalRegionKtoAreaPolicy`의 고정 대응표(강원 42→51,
+  전북 45→52 전환 코드 포함)를 쓰고, 시군구는 geo의 공개 query(`FindLegalRegionsByCodesHandler`)로 이름을 얻어 `tourism_source.guguns`에서
+  같은 이름의 KTO 시군구 코드를 찾는다. 이름을 못 찾으면 시도 범위로 넓힌다.
+- KTO 라이브 지역 조회의 제주 고정(`areaCode` 39만 허용)을 해제했다. `areaCode`가 오면 그대로 쓰고, 없을 때만 검색어·viewport의 제주 휴리스틱을 쓴다.
+- 지역 기준값: 공식 법정동 sync 전에도 지역 검색과 투표가 동작하도록 V48이 시도 17개와 서울·부산·대전·제주 시군구, KTO `sidos`/`guguns`
+  기준값을 심는다. 정식 sync는 같은 코드를 upsert하므로 seed와 충돌하지 않는다.
+- 여행 상세(`TripDetail.regions`)는 그동안 항상 빈 목록이었다. `FindTripDetailHandler`가 trip 지역 코드를 geo 공개 query로 이름과 함께 채운다.
+- 여행 생성 화면은 검색 결과에서 고른 지역을 필수로 받는다. 지역 없이 만든 여행은 추천도 투표도 동작하지 않기 때문이다.
+
+### 투표 진입 방식과 개수 제안
+
+- 진입: 라우터 가드는 투표 상태를 미리 읽기만 하고 강제로 `/vote`로 보내지 않는다. 투표는 지도 화면 위 모달(`TripVoteFlow`)로 열린다.
+  제출하지 않은 진행 중 투표가 있으면 지도 진입 시 모달을 한 번 자동으로 띄우고, 닫으면 여행 카드 버튼(`투표 중 · 미제출`)과 지도 상단 배너를 빨갛게 남겨 이어서 투표하게 한다.
+  `/trips/:tripId/vote` 페이지는 딥링크용으로 유지하며 같은 흐름 컴포넌트를 쓴다.
+- 개수 제안: 방장에게는 "하루에 몇 곳 갈지"(1~6, 기본 3) 하나만 묻는다. 여행 일수는 여행방의 시작·종료일에서 계산하고, 없으면 2일로 가정하고 그 사실을 표시한다.
+  선정 = 일수 × 하루 개수(최대 24), 후보 = 선정 × 2(6~24), 1인당 스티커 = 후보 ÷ 4 올림(3~8). 서버 계약(`stickerAllowance`, `selectionCount`, `candidateCount`)은 그대로이고 프론트가 계산해 보낸다.
+- 종료 후: 결과 화면에서 `AI에게 일정 배치 맡기기`를 누르면 선정 장소 이름으로 배치 프롬프트를 만들어 AI 패널을 열고 입력창에 채운다(`?panel=ai&aiPrompt=` 딥링크도 같은 동작).
+  프롬프트 문장은 `voteArrangePrompt.ts` 한 곳에서 관리한다.
 
 ## 일정과 협업
 
@@ -175,23 +284,25 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 일정 아이템 삭제처럼 route endpoint 밖에서 route 연결이 사라지는 변경은 영향을 받는 route segment를 응답에 포함해 프론트가 즉시 정리하게 합니다.
 - 일정 아이템에는 `start_at`, `end_at` 같은 시간 필드를 두지 않습니다.
 - 일정 협업은 REST 저장 + STOMP over WebSocket broadcast + version 충돌 처리로 설계합니다.
-- REST 요청은 `baseVersion`을 포함합니다.
-- 서버는 저장 성공 후 여행방 최신 `itineraryVersion`을 증가시키고 STOMP topic으로 broadcast합니다.
-- 버전 불일치 시 `409 Conflict` Problem Details를 반환합니다.
+- 일정/지도 REST 요청은 여행방의 `baseVersion`을 포함하고, 저장 성공 후 최신 `itineraryVersion`을 증가시켜 STOMP topic으로 broadcast합니다.
+- 메모 저장·삭제 요청은 메모별 `baseVersion`을 포함하고, 응답의 `Note.version`으로 다음 변경 기준을 전달합니다.
+- 메모 버전 불일치 시 `409 Conflict`와 `PLANNING_VERSION_CONFLICT`를 반환하며 기존 내용을 덮어쓰지 않습니다.
+- 체크리스트와 멤버별 완료 상태는 MVP에서 별도 version 없이 last-write-wins로 처리합니다.
 
 ## 협업 변경 이력과 Undo/Redo
 
-- 사용자 직접 UI 조작과 AI tool write는 같은 협업 command pipeline을 사용합니다.
-- undo/redo 대상 협업 command 예시: 일정 아이템 재정렬/day 이동/추가, snapped route 생성/수정/삭제, 저장된 지도 도형/경로 수정, 메모 생성/수정, 체크리스트 생성/수정/완료 처리.
+- 사용자 직접 일정/지도 UI 조작과 해당 AI tool write는 같은 협업 command pipeline을 사용합니다.
+- undo/redo 대상 협업 command 예시: 일정 아이템 재정렬/day 이동/추가, snapped route 생성/수정/삭제, 저장된 지도 도형/경로 수정.
+- 메모와 체크리스트 변경은 MVP undo/redo stack에 쌓지 않습니다.
 - undo/redo 가능 상태는 영구 히스토리가 아니라 사용자별 활성 WebSocket 세션별 command stack으로 관리합니다.
 - 사용자는 본인이 현재 활성 WebSocket 세션에서 실행한 command만 undo/redo할 수 있습니다.
-- AI tool write는 해당 tool을 요청한 사용자와 활성 WebSocket 세션의 command stack에만 쌓입니다.
+- undo 가능한 AI tool write는 해당 tool을 요청한 사용자와 활성 WebSocket 세션의 command stack에만 쌓입니다.
 - 사용자별 활성 WebSocket 세션의 undo stack과 redo stack은 각각 최대 5개로 제한합니다.
 - 새로고침, 재접속, 다른 기기 접속, WebSocket 세션 종료 이후에는 이전 세션의 undo/redo를 허용하지 않습니다.
 - 저장 전 자유 드로잉 preview는 프론트엔드 로컬 undo/redo로 처리하고, 백엔드 undo/redo는 저장된 snapped route나 저장된 도형/경로 command에만 적용합니다.
 - undo는 DB 트랜잭션 롤백이 아니라 보상 명령으로 구현합니다.
 - redo는 직전에 undo된 command의 보상 명령을 다시 적용하는 별도 command로 구현합니다.
-- undo/redo 가능한 command는 실행 시 이전 상태 또는 inverse/redo command를 저장해야 합니다. 예: 재정렬 전후 sort order, memo 수정 전후 본문, checklist 완료 전후 상태, route geometry 수정 전후 geometry, 새로 추가한 일정 아이템 ID.
+- undo/redo 가능한 command는 실행 시 이전 상태 또는 inverse/redo command를 저장해야 합니다. 예: 재정렬 전후 sort order, route geometry 수정 전후 geometry, 새로 추가한 일정 아이템 ID.
 - undo/redo 실행도 권한, 멤버십, 현재 version, 대상 리소스 변경 여부를 검사하고 성공 시 version 증가, 이벤트 저장, STOMP broadcast를 수행합니다.
 - undo 이후 새 write command가 실행되면 해당 세션의 redo stack은 비웁니다.
 - undo/redo 대상이 이후 다른 사용자 또는 같은 사용자의 다른 세션에 의해 변경되어 충돌이 있으면 자동 undo/redo를 거절하고 409 Problem Details로 응답합니다.
@@ -217,8 +328,41 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - route matching 결과에는 provider, provider request id 또는 hash, confidence, distance, duration, geometry, tracepoints, matchings metadata를 저장할 수 있어야 합니다.
 - Mapbox 일반 좌표 요청은 2~100개 좌표 제한이 있으므로 stroke simplification/downsampling 정책이 필요합니다.
 - Mapbox 결과는 Mapbox 지도 위에 표시하는 것을 전제로 합니다.
+- 지도 오브젝트는 자유 드로잉, 기본 스티커, 사용자 업로드 이미지를 공통 collaboration object로 관리합니다.
+- 사용자 이미지 purpose는 `MAP_OVERLAY`이며 JPG, PNG, WebP만 허용하고 파일당 최대 10MB입니다.
+- 지도 오브젝트는 조작 종료 시 REST로 저장하고 조작 중 좌표는 WebSocket preview로만 중계합니다.
+- 같은 오브젝트는 먼저 편집을 시작한 WebSocket 세션에 lease 기반 임시 잠금을 부여하며, 잠금 이벤트의 서버 발급 `clientId`로 같은 사용자의 복수 세션도 구분합니다.
+- lease는 15초이며 편집 중 5초마다 갱신합니다. update/delete REST는 사용자 소유 WebSocket session header와 활성 lease를 모두 검사합니다.
+- 지도 오브젝트 transform은 `centerLng`, `centerLat`, `widthMeters`, `heightMeters`, `rotationDeg`로 저장하고 화면 픽셀 크기는 영구 저장하지 않습니다.
+- 기본 스티커 code는 `HEART`, `STAR`, `CHECK`, `CAMERA`, `FOOD`, `CAFE`, `SHOPPING`, `HOTEL`, `NATURE`, `BEACH`, `MUSEUM`, `TRANSPORT` 12개로 고정합니다.
+- 재접속 시 로컬 미저장 상태를 버리고 서버 최신 snapshot으로 동기화합니다.
+- 같은 여행방 접속자의 커서는 presence topic으로 중계하고 영구 저장하지 않습니다.
 
-## 커뮤니티
+## 커뮤니티 쓰레드
+
+- 기존 여행기 게시물/스토리 발행 형식을 제거하고 `community.threads`와 `community.thread_replies` 기반 대화형 구조로 전환합니다.
+- 쓰레드는 작성자, 본문, 공개 범위, 생성/수정/삭제 시각을 저장하고 답글은 시간순으로 조회합니다.
+- 쓰레드와 답글 작성자는 자신의 콘텐츠를 soft delete할 수 있고 삭제 응답은 tombstone을 유지합니다.
+- 쓰레드 좋아요는 로그인 사용자 기준 토글형 1회 반응이며 `thread_id + user_id` unique 제약을 둡니다.
+- 쓰레드 좋아요는 선호도 점수에 반영하지 않습니다.
+- 신고와 모더레이션 대상은 쓰레드와 답글입니다.
+- 쓰레드 본문은 1~500자이며 DB CHECK 제약과 application 정책이 함께 보장합니다.
+- 쓰레드 이미지는 선택 항목으로 최대 4장이며 `community.thread_media`로 순서를 관리합니다.
+- 이미지 purpose는 기존 `COMMUNITY_POST`를 재사용하고, 연결 전에 요청자 소유의 ACTIVE 미디어인지 media 모듈 application 경계로 검증합니다.
+- 답글 중첩은 기존 댓글 정책과 같은 방향으로 최대 1단계까지만 허용하며 `parent_reply_id`와 `depth`로 표현합니다.
+- 2단계 이상 중첩 시도는 `THREAD_REPLY_DEPTH_EXCEEDED`(422)로 거절하고 DB CHECK 제약으로도 막습니다.
+- 쓰레드 수정과 삭제는 작성자만 가능합니다. 답글 삭제는 답글 작성자와 쓰레드 작성자가 가능합니다.
+- 좋아요는 `PUT`/`DELETE`로 멱등 처리하며 `(thread_id, user_id)` 복합 PK가 제약이자 멱등성의 근거입니다.
+- 좋아요 수와 답글 수는 denormalized counter를 두지 않고 조회 시 COUNT로 계산합니다. 따라서 counter 보정 job이 필요 없습니다.
+- 쓰레드에는 공개 범위 컬럼을 두지 않습니다. 공개 피드 전용이며 `UNLISTED`는 지원하지 않습니다.
+- 목록/상세/답글 조회는 비로그인도 가능하며 이때 `likedByMe`와 `editableByMe`는 항상 false입니다.
+- 공개 피드 정렬은 `created_at DESC, id DESC`로 고정하고 `page`/`size` 페이지네이션을 사용합니다.
+- 신고와 모더레이션은 기존 `community.content_reports`, `community.moderation_actions`를 재사용하고 `target_type`에 `THREAD`, `THREAD_REPLY`를 추가합니다. 두 컬럼은 `varchar(20)`이고 CHECK 제약이 없어 값 추가에 migration이 필요 없습니다.
+- 기존 `community.posts` 계열 테이블과 API는 즉시 삭제하지 않고 deprecated 상태로 보존합니다. 신규 커뮤니티 표면에서는 사용하지 않지만, 마이페이지 등 기존 화면이 아직 참조하고 있어 API 자체는 살려 둡니다. 신규 발행 UI는 제거했습니다.
+
+### 폐기된 게시물 계약
+
+아래 게시물 snapshot/retrip 규칙은 신규 제품 계약에 사용하지 않으며 기존 데이터 migration 판단을 위해서만 남깁니다.
 
 - MVP에는 완성된 여행방을 공개 게시글로 공유하는 기능을 포함합니다.
 - 여행방 소유자와 active MEMBER 모두 커뮤니티 게시글을 발행할 수 있습니다.
@@ -278,23 +422,24 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - 업로드는 백엔드 proxy upload가 아니라 signed URL 직접 업로드를 기본으로 합니다.
 - `POST /media/upload-urls`는 purpose, mime type, byte size를 검증한 뒤 제한 시간 있는 signed URL과 object key를 발급합니다.
 - `POST /media/files`는 업로드 완료 후 metadata 확정 단계이며, object 존재 여부, byte size, mime sniffing 결과, linked resource 권한을 검증해야 합니다.
-- mime allowlist와 size limit은 purpose별로 분리합니다. MVP purpose는 `PROFILE_IMAGE`, `TRIP_RECORD`, `COMMUNITY_POST`입니다.
+- mime allowlist와 size limit은 purpose별로 분리합니다. 신규 purpose는 `PROFILE_IMAGE`, `TRIP_RECORD`, `COMMUNITY_THREAD`, `MAP_OVERLAY`이며 `COMMUNITY_POST`는 migration-only입니다.
+- `MAP_OVERLAY`는 JPG, PNG, WebP, 파일당 최대 10MB로 제한하고 MIME sniffing, 메타데이터 제거, 리사이징을 적용합니다.
 - public URL은 공개 가능한 용도에만 저장/반환하고, 비공개 기록 미디어는 필요 시 signed read URL 또는 프록시 조회로 확장합니다.
+- 로컬 `compose.yaml`은 파일 저장소를 MinIO로 고정합니다. 백엔드 object I/O용 내부 endpoint와 브라우저 signed URL용 presign endpoint를 분리하며, AWS 값은 `compose.aws.yaml`/`.env.aws`에서만 주입합니다.
 - 프로필 이미지, 여행 기록 사진, 커뮤니티 게시글 사진은 모두 `media.media_files`를 실제 파일 메타데이터의 기준으로 사용합니다.
 - 각 기능의 소유권/권한/정렬은 `record.trip_record_media`, `community.post_media` 같은 도메인별 연결 테이블에서 관리합니다.
 - soft delete 후 retention 기간이 지나면 object도 purge합니다.
 
 ## 여행 기록
 
-- `/record` 화면의 여행 기록 기능은 trip에 묶어 관리합니다.
+- 전역 `/record` 탭과 화면은 제거하고 여행 기록 기능이 유지되는 경우 trip 내부에서만 접근합니다.
 - 여행 기록 엔트리는 `record.trip_record_entries`에 저장합니다.
 - 기록 엔트리는 `trip_id`, `uploaded_by_user_id`, 선택적 `itinerary_day_id`, 선택적 `itinerary_item_id`를 가집니다.
 - 기록 사진/영상은 `record.trip_record_media`로 `media.media_files`와 연결합니다.
 - 기록에는 누가 올렸는지, 언제 찍었는지, 위치/장소 메모, caption을 저장할 수 있어야 합니다.
-- MVP 기록 공개 범위는 여행방 멤버 기준이며, 공개 커뮤니티 노출은 `community.posts` 발행 흐름을 사용합니다.
+- MVP 기록 공개 범위는 여행방 멤버 기준이며 커뮤니티 쓰레드에 자동 공개하지 않습니다.
 - 기록 CRUD는 MVP에서 trip scoped API로 유지합니다.
-- 전역 `/record` 화면은 여행방별 선택 조회와 내가 참여한 모든 여행방의 사진 모아보기를 함께 제공합니다.
-- 기록 CRUD는 trip scoped API로 유지하고, 전체 사진 모아보기는 `GET /records/photos`로 제공합니다.
+- 기록 CRUD는 trip scoped API로만 유지하며 전역 `GET /records/photos`는 신규 제품 화면에서 사용하지 않습니다.
 
 ## AI
 
@@ -332,6 +477,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - MVP 메모는 여행방 전체 메모와 일차(day) 관리 메모만 지원합니다.
 - MVP 메모는 특정 itinerary item, place, map object에 직접 연결하지 않습니다.
 - 메모는 scope별 단일 관리 문서로 취급합니다.
+- 메모는 리소스별 `version`을 가지며 저장·삭제 요청의 `baseVersion`과 다르면 `PLANNING_VERSION_CONFLICT`로 거절합니다.
 - 여행방 전체 메모는 trip당 1개만 둡니다.
 - 일차(day) 관리 메모는 각 실제 itinerary day와 `UNSCHEDULED` group마다 1개만 둡니다.
 - 여행방 멤버는 메모를 soft delete할 수 있습니다.
@@ -339,6 +485,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - MVP 체크리스트는 여행방 전체 체크리스트와 일차(day) 관리 체크리스트만 지원합니다.
 - MVP 체크리스트는 특정 itinerary item, place, map object에 직접 연결하지 않습니다.
 - 체크리스트는 scope별 단일 리스트로 취급합니다.
+- 체크리스트와 멤버별 완료 상태는 MVP에서 별도 version 없이 last-write-wins로 처리합니다.
 - 여행방 전체 체크리스트는 trip당 1개만 둡니다.
 - 일차(day) 관리 체크리스트는 각 실제 itinerary day와 `UNSCHEDULED` group마다 1개만 둡니다.
 - MVP 체크리스트 항목에는 담당자 필드를 두지 않습니다.
@@ -363,13 +510,13 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - tool action은 허용된 tool registry 안에서만 실행하며, 임의 SQL/임의 API 호출은 허용하지 않습니다.
 - tool action은 `READ`, `REVERSIBLE_WRITE`, `BLOCKED_HIGH_RISK` 같은 execution policy를 가져야 합니다.
 - read/search tool은 확인 없이 실행합니다.
-- reversible write tool은 명시적인 사용자 요청이 있을 때 확인 없이 즉시 실행하고, 실행 결과에 undo/redo 가능 여부를 포함합니다.
+- write tool은 명시적인 사용자 요청이 있을 때 확인 없이 즉시 실행하며, 일정 command에만 실제 undo/redo 가능 여부를 포함합니다.
 - V1 AI tool은 pending confirmation 흐름을 만들지 않습니다.
 - 확인이 필요할 만큼 위험한 작업은 V1 AI tool registry에 등록하지 않고 `BLOCKED_HIGH_RISK`로 차단합니다.
 - blocked high-risk 예시: 일정/메모/체크리스트 삭제, 대량 변경, 공개 공유, 초대/권한/설정 변경, 되돌리기 어려운 외부 API 호출.
 - AI tool 호출은 `ai_tool_calls` 성격의 감사 로그에 요청자, 여행방, tool name, execution policy, arguments, status, version before/after, undo/redo 가능 여부를 기록해야 합니다.
-- AI tool write도 공통 협업 undo/redo command stack을 사용합니다.
-- 공유 AI agent session에서 실행된 AI tool write라도 command/undo/redo 소유권은 해당 tool을 요청한 사용자와 활성 WebSocket 세션에 귀속됩니다.
+- undo 가능한 AI 일정 tool write는 공통 협업 undo/redo command stack을 사용합니다.
+- 공유 AI agent session에서 실행된 undo 가능 command의 소유권은 해당 tool을 요청한 사용자와 활성 WebSocket 세션에 귀속됩니다.
 - `ai_tool_calls` 감사 로그는 영구 보관 정책을 따르지만, 감사 로그만으로 오래된 변경을 undo할 수 있게 만들지는 않습니다.
 
 ## 여행방 사용자 소통
@@ -392,7 +539,7 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 ## 알림
 
 - MVP 알림 채널은 인앱 알림만 지원합니다.
-- MVP 인앱 알림 생성 이벤트는 여행방 초대 관련 이벤트로 제한합니다.
+- 인앱 알림은 직접 여행방 초대와 투표 시작·결과 확정 이벤트에서 생성합니다. (2026-09-17 사용자 승인 확장)
 - MVP 초대 알림은 앱 가입자인 사용자를 직접 초대했을 때 초대받은 사용자에게만 생성합니다.
 - 직접 초대 알림 payload는 `tripId`, `inviteId`, `inviteCode` 등 라우팅과 수락/거절에 필요한 안정 필드로 고정합니다.
 - 초대 링크/코드로 참여하는 흐름은 별도 인앱 알림을 생성하지 않습니다.
@@ -421,6 +568,25 @@ DBML과 OpenAPI는 이 문서를 기준으로 생성합니다.
 - rate limit은 endpoint 그룹별 quota key를 사용합니다. 인증은 IP+email, 일반 API는 user, 협업 write는 user+trip, 외부 provider 호출은 user/provider 또는 trip/provider 기준으로 제한합니다.
 - rate limit 초과는 `429`, `Retry-After`, `ProblemDetails(code=RATE_LIMITED)`를 반환합니다.
 - preference enrichment는 tag dictionary, prompt, model version을 관리하고, 새 version 배포 시 stale marking 후 background re-enrichment를 수행합니다.
-- 사용자 preference tag weight는 `user_swipe_events`에서 재생성 가능한 projection으로 유지합니다.
+- 사용자 preference tag weight는 `user_preference_events`에서 재생성 가능한 projection으로 유지합니다.
 - 초반에는 `.agent/contracts/openapi.yaml`을 contract source로 두고, backend 구현/생성 OpenAPI와의 diff 검증을 CI 후보로 둡니다.
 - 프론트 타입 생성은 tagged release 또는 PR 단위로 고정된 OpenAPI 파일에서 수행합니다.
+
+
+## 2026-09-17 관광공사 API 호출 최소화
+
+- 사용자 요청에 따라 스케줄러를 두지 않는다. DB 관광지 목록을 우선 조회하고, 비어 있을 때 외부 목록 한 페이지만 수집한다.
+- 성공 원천 응답은 tourism_source.kto_responses에 영속 저장하며 인증키는 제거한다. 동일 요청은 DB 잠금으로 수집을 합친다.
+- 실패 시 기존 데이터를 유지하고 요청별 재시도 제한을 적용한다. 자동 재시도 작업은 없다.
+- 상세의 includeInfo=false는 이용·접근성 API 조회를 생략한다. UI의 정보 펼치기에서만 요청한다.
+- 관광 데이터 전용 seed는 중복 식별자와 원천 수정 시각으로 병합한다. 사용자·여행 데이터는 제외한다.
+- 갱신은 수동 장소 갱신 표시 또는 seed 가져오기로 수행한다. DB 검색 결과가 전체 최신 관광공사 데이터임을 보장하지 않는다.
+
+
+## 2026-09-17 일정 브리핑 및 투표 알림
+
+- 일정 날짜는 한국 시간 기준이며 오늘 또는 가장 가까운 미래 일차를 표시한다. 과거 일차를 오늘 일정으로 대체하지 않는다.
+- 투표 시작과 결과 알림은 시작 시 확정된 참여자 중 현재 활성 여행 멤버에게만 저장한다. 결과 반영과 같은 트랜잭션에 속한다.
+- 알림 ID는 세션·종류·수신자로 고정하여 재시도 중 중복 생성하지 않는다. 기존 알림에 소급하여 만들지는 않는다.
+- 투표 알림 payload의 voteSessionId를 유지하며 오래된 알림은 그 세션의 결과를 조회한다.
+- 헤더 미읽음 수는 서버 전체 개수로 조회한다. 활성 탭에서 30초 간격과 포커스 복귀 시 갱신하며 외부 관광 API는 호출하지 않는다.

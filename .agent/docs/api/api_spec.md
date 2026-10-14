@@ -1,16 +1,17 @@
 ﻿# 숨길 백엔드 API 명세 초안
 
-작성일: 2026-06-09  
+최종 정책 갱신일: 2026-08-23
 상태: OpenAPI 3.1 협의 초안
 
 ## 작성 범위와 근거
 
-이 문서는 프론트엔드 구현 상태가 아니라 현재 레포에 있는 기획/계약 문서를 기준으로 작성했다. `frontend/`와 `backend/`는 현재 제품 코드가 사실상 비어 있는 submodule 포인터 상태이므로, 프론트엔드 라우트 문서는 화면 연결을 위한 보조 자료로만 사용했다.
+이 문서는 현재 레포의 기획/계약 문서를 기준으로 작성하며 프론트엔드 라우트 문서는 구현 현황을 대조하는 보조 자료로 사용합니다.
 
 확정 근거:
 
 - `README.md`: 서비스 한 줄 설명, orchestration repo 구조, backend contract 위치.
-- `.agent/docs/product-specs/service_requirements.md`: V1 서비스 요구사항, 스와이프/추천/일정/지도/커뮤니티/AI/기록/알림/협업 규칙.
+- `.agent/docs/product-specs/service_requirements.md`: V1 서비스 요구사항, 선호도/추천/투표/일정/지도/커뮤니티/AI/기록/알림/협업 규칙.
+- `.agent/docs/product-specs/product_experience_policy.md`: 회원가입·홈·여행방 투표·지도 협업·커뮤니티 전환의 최신 제품 결정.
 - `.agent/contracts/backend_contract_decisions.md`: 백엔드 계약 결정, REST/Problem Details/권한/데이터 정책.
 - `.agent/contracts/schema.dbml`: PostgreSQL 기준 V1 데이터 모델.
 - `.agent/docs/product-specs/functional_spec.md`: 사용자 유형, 화면 범위, 백엔드 필요 기능.
@@ -18,8 +19,7 @@
 
 브랜치 ledger:
 
-- `npm --prefix .agent run branch:status` 기준 현재 ledger key는 `detached-unknown`이다.
-- `.agent/branch-ledger/branches/detached-unknown/`가 없으므로 브랜치별 ledger는 참고하지 않았다.
+- 현재 변경 문맥은 `.agent/branch-ledger/branches/chore__product-policy-realignment/`에 기록합니다.
 
 표기 규칙:
 
@@ -49,43 +49,49 @@
 
 | 도메인 | 리소스 | 설명 |
 | :--- | :--- | :--- |
-| Auth | User, UserEmailAddress, UserProfile, UserSettings, AuthProvider, Session, PolicyDocument, SecurityEvent, Role | 이메일/비밀번호와 Kakao/Google 소셜 로그인, 약관 동의, 세션/보안 이벤트, 운영 RBAC |
+| Auth | User, UserEmailAddress, UserProfile, UserSettings, AuthProvider, Session, PolicyDocument, Role | 이메일/비밀번호와 Kakao/Google 소셜 로그인, 약관 동의, 내부 refresh 세션, 운영 RBAC |
 | Social | Follow | 앱 내부 directed follow edge |
 | Geo | LegalRegion | 법정동코드 10자리 기반 지역 |
-| Trip | Trip, TripRegion, TripMember, TripInvite | 여행방, 다중 지역, 멤버십, 초대 |
-| Place/Preference | PlaceRef, SwipeReaction, SwipeEvent, PreferenceTag, SavedPlace | 관광공사 장소 참조, 스와이프 기반 선호도 projection |
-| Itinerary | ItineraryDay, ItineraryItem, RouteSegment, MapDrawing | 일차/일차 미정, 장소 아이템, Mapbox snapped route, 저장된 도형 |
+| Trip | Trip, TripRegion, TripMember, TripInvite, VoteCandidate, VoteSticker | 여행방, 초대, 첫 참여 투표 |
+| Place/Preference | PlaceRef, PreferenceReaction, PreferenceEvent, OnboardingSurvey, PreferenceTag | 회원가입·홈·투표 기반 선호도 projection |
+| Itinerary | ItineraryDay, ItineraryItem, RouteSegment, MapObject | 일차/일차 미정, 경로, 그림·스티커·이미지 |
 | Collaboration | CollaborationCommand, UndoRedoSession | REST 저장 + STOMP broadcast + 버전 충돌 처리 |
 | Planning | Note, Checklist, ChecklistItem, MemberChecklistStatus | 여행방/일차 scope 단일 메모와 체크리스트 |
 | Chat | TripChatMessage | 여행방 전체 텍스트 채팅 |
 | AI | AiChatSession, AiChatMessage, AiToolCall | trip당 공유 AI 세션과 제한된 tool calling |
 | Record | TripRecordEntry, TripRecordMedia | 여행방 멤버용 사적 여행 기록 |
-| Community | Post, SnapshotDay/Item/Route, Comment, Like, Retrip, Report | 여행방 snapshot 공개 공유, 댓글, 좋아요, 리트립, 신고 |
+| Community | Thread, ThreadReply, ThreadLike, Report | 쓰레드, 답글, 좋아요, 신고 |
 | Media | MediaFile, UploadUrl | S3 호환 object storage 파일 metadata |
 | Notification | Notification | MVP 직접 초대 인앱 알림 |
 
 ### 주요 유스케이스
 
-- 사용자는 전역 스와이프 feed에서 `LIKE`, `NOPE`, `SUPER_LIKE`로 취향 데이터를 쌓는다.
+- 사용자는 회원가입 관광지 10개, 홈 관광지 배경, 여행방 투표에서 취향 데이터를 쌓으며 회원가입 응답은 콜드 스타트 완화를 위해 3배로 반영한다.
 - 사용자는 `SUPER_LIKE`한 장소만 저장할 수 있다.
-- 여행방 멤버는 누적 스와이프 선호도를 바탕으로 viewport 안 추천 장소를 받고, 추천 카드를 일정에 바로 추가한다.
+- 첫 참여자는 스티커 투표를 완료해야 지도에 진입하고 선정 장소는 `UNSCHEDULED` 일정에 추가된다.
+- 여행방 멤버는 누적 선호도를 바탕으로 viewport 안 추천 장소를 받고, 추천 카드를 일정에 바로 추가한다.
 - 여행방 멤버는 일정, route segment, 지도 도형, 메모, 체크리스트를 협업 편집한다.
 - 지도 선 그리기는 Mapbox Map Matching으로 `DRIVING`/`WALKING` snapped route를 생성한다.
 - 협업 write는 `baseVersion` 충돌 검사를 통과해야 하며 성공 시 `itineraryVersion`이 증가하고 WebSocket/STOMP로 broadcast된다.
 - 같은 WebSocket 세션 안에서 본인이 수행한 최근 협업 command는 undo/redo 가능하다.
 - 여행방에는 공유 AI agent session이 하나 있고, AI는 일정 편집/미정 장소 배치/장소 탐색/메모/체크리스트 도구만 실행한다.
-- 완성된 여행방은 게시 시점 snapshot으로 커뮤니티에 발행되고, 리트립하면 snapshot 전체가 새 여행방으로 복제된다.
-- 여행 기록은 여행방 멤버에게만 보이는 사적 기록이며, 공개 공유는 커뮤니티 게시글 발행을 통해 수행한다.
+- 커뮤니티는 기존 게시물/스토리 대신 쓰레드와 시간순 답글을 사용한다.
+- 전역 기록 탭은 제거하고 유지되는 여행 기록은 여행방 안에서만 접근한다.
 
 ### 상태값과 비즈니스 규칙
 
 | 상태/enum | 값 | 규칙 |
 | :--- | :--- | :--- |
-| UserStatus | `ACTIVE`, `SUSPENDED`, `PENDING_DELETION`, `DELETED` | 계정 삭제는 예약 상태를 거친 뒤 soft delete/purge 정책을 적용 |
+| UserStatus | `ACTIVE`, `SUSPENDED`, `PENDING_DELETION`, `DELETED` | 신규 탈퇴 요청은 즉시 `DELETED` 처리하며 `PENDING_DELETION`은 하위 호환을 위해 유지 |
 | TripStatus | `ACTIVE`, `ARCHIVED`, `DELETED` | 소유자만 설정/삭제 가능으로 설계 |
 | TripMemberRole | `MEMBER` | MVP `trip_members.role`에는 MEMBER만 저장. OWNER 표시는 `ownerUserId`에서 파생 |
 | TripMemberStatus | `ACTIVE`, `LEFT`, `REMOVED` | 제거/탈퇴 이력 보존 |
 | InviteStatus | `PENDING`, `ACCEPTED`, `REVOKED`, `EXPIRED` | 초대 링크/코드 지원 |
+| VoteSessionStatus | `DRAFT`, `OPEN`, `COMPLETED` | `DRAFT`는 예약 값이며 V1 API로는 생성하지 않는다. 여행방당 진행 중 세션은 1개 |
+| VoteParticipantStatus | `NOT_STARTED`, `IN_PROGRESS`, `SUBMITTED` | 세션별 참여 상태. 첫 진입을 boolean 하나로 두지 않는다 |
+| VoteCompletionReason | `ALL_SUBMITTED`, `OWNER_EARLY_CLOSE` | 전원 제출 자동 종료와 방장 조기 종료 |
+| VoteNextScreen | `VOTE`, `WAITING`, `MAP` | 서버가 계산해 내려주는 여행 방 진입 화면 |
+| PreferenceSource | `ONBOARDING`, `HOME_BACKGROUND`, `TRIP_VOTE` | multiplier는 각각 `3.0`, `1.0`, `1.0` |
 | ItineraryDayGroupType | `DAY`, `UNSCHEDULED` | trip당 `UNSCHEDULED` 최대 1개 |
 | ItineraryItemType | `PLACE`, `CUSTOM_PLACE` | 외부 장소는 `provider + externalPlaceId`, 커스텀 장소는 item 안에 저장 |
 | PlaceSourceStatus | `AVAILABLE`, `DELETED`, `UNKNOWN` | 외부 원본 불가 시 snapshot/item에서 상태 표시 |
@@ -204,21 +210,29 @@ RFC7807 Problem Details를 사용한다.
 
 ### 실시간 협업 방식
 
-REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool write 결과 반영에 부족하므로 STOMP over WebSocket을 병행한다.
+영구 변경은 REST로 저장하고 지도 preview, 투표 상태, 접속자 커서, 일정 동시 편집, 채팅, AI tool 결과는 STOMP over WebSocket으로 전파한다.
 
 제안 endpoint/channel:
 
 - Handshake: `GET /ws`
 - Subscribe: `/topic/trips/{tripId}/itinerary`
 - Subscribe: `/topic/trips/{tripId}/map-drawings`
+- Subscribe: `/topic/trips/{tripId}/vote` (V1 미사용. 투표 상태는 짧은 polling으로 갱신하고 STOMP topic 확장은 후속 과제로 둔다)
+- Subscribe: `/topic/trips/{tripId}/presence`
 - Subscribe: `/topic/trips/{tripId}/route-matching`
 - Subscribe: `/topic/trips/{tripId}/chat`
 - Subscribe: `/topic/trips/{tripId}/ai`
 - Send preview: `/app/trips/{tripId}/map-drawing-preview`
+- Send object lease: `/app/trips/{tripId}/map-object-lock` (`ACQUIRE`, `RENEW`, `RELEASE`)
+- Send object transform preview: `/app/trips/{tripId}/map-object-transform-preview` (`UPDATE`, `END`, `CANCEL`)
+- Send cursor: `/app/trips/{tripId}/cursor`
 
-확인 필요:
+확정:
 
-- STOMP destination naming, auth handshake 방식, preview stroke payload 크기 제한.
+- 오브젝트 lease는 15초이며 편집 중 5초마다 갱신한다. 상태는 `/topic/trips/{tripId}/map-drawings`로 전파하고, 잠금 소유권은 서버가 부여한 `clientId`(WebSocket session ID)로 구분한다.
+- 오브젝트 transform preview는 활성 lease 소유 세션만 발행할 수 있고 `/topic/trips/{tripId}/map-drawings`로 중계한다. 다른 참여자는 preview를 즉시 표시하되 `END`/`CANCEL`에서 제거하고, 영구 상태는 조작 종료 후 REST 응답으로 확정한다.
+- cursor는 인증된 session의 lng/lat만 50ms 간격으로 중계하고 클라이언트는 10초 후 만료시킨다.
+- preview stroke는 클라이언트와 서버 모두 최대 100개 좌표로 제한한다. 제한을 넘는 입력은 균일 간격 추출이 아니라 시작·끝과 큰 굴곡을 우선 보존해 단순화하며, `END`는 영구 저장 좌표와 같은 좌표 집합을 즉시 중계한다.
 
 ## 3. Endpoint 목록
 
@@ -410,17 +424,17 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 
 #### DELETE `/me`
 
-- 설명: 계정 삭제를 예약한다. 즉시 hard delete가 아니라 `PENDING_DELETION` 상태와 삭제 예정 시각을 기록한다. 요청자가 `ownerUserId`인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 삭제 예약을 차단한다.
+- 설명: 계정을 즉시 `DELETED` 상태로 전환하고 세션·비밀번호·OAuth 연결을 폐기하며 이메일과 프로필 개인정보를 익명화한다. 소유 여행방은 가장 먼저 참여한 활성 구성원에게 이전하고, 다른 활성 구성원이 없으면 함께 삭제한 뒤 모든 여행방 멤버십에서 탈퇴한다.
 - 인증/권한: 로그인 사용자.
 - Path parameters: 없음.
 - Query parameters: 없음.
 - Request body schema: 없음.
-- Response body schema: 없음, `202 Accepted`.
-- 성공 응답 예시: `202`.
-- 실패 응답 예시: `409 ProblemDetails(code=ACCOUNT_DELETION_BLOCKED_BY_ACTIVE_OWNER_TRIP)`.
+- Response body schema: 없음, `204 No Content`.
+- 성공 응답 예시: `204`.
+- 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
 - 관련 화면: `/settings`.
-- 근거: `auth.users.status`, `deletion_requested_at`, `deletion_scheduled_at`.
-- 확정: 소유자인 활성 여행방이 있으면 삭제 예약을 차단하고, 사용자가 해당 여행방을 삭제 또는 보존 정책에 맞게 정리하도록 요구한다.
+- 근거: `auth.users.status`, `deleted_at`, 인증·프로필 관련 테이블.
+- 확정: 방장 승계는 활성 구성원의 `joinedAt`, 멤버십 ID 오름차순으로 결정한다. 승계 대상이 없는 여행방은 탈퇴와 함께 삭제한다.
 
 #### GET `/me/settings`
 
@@ -450,48 +464,6 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 근거: `auth.user_settings`.
 - 확인 필요: 마케팅 동의를 `policy_acceptances`와 함께 관리할지.
 
-#### GET `/me/sessions`
-
-- 설명: 내 refresh session 목록을 조회한다.
-- 인증/권한: 로그인 사용자.
-- Path parameters: 없음.
-- Query parameters: `page`, `size`.
-- Request body schema: 없음.
-- Response body schema: `PagedUserSession`.
-- 성공 응답 예시: `200 {"items":[{"id":"...","deviceName":"Chrome on Windows","expiresAt":"..."}]}`
-- 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
-- 관련 화면: `/settings`.
-- 근거: `auth.user_sessions`.
-- 확인 필요: IP/user agent hash를 사용자에게 역변환 표시하지 않고 device label만 저장할지.
-
-#### DELETE `/me/sessions/{sessionId}`
-
-- 설명: 특정 로그인 세션을 revoke한다.
-- 인증/권한: 로그인 사용자. 본인 세션만 가능.
-- Path parameters: `sessionId`.
-- Query parameters: 없음.
-- Request body schema: 없음.
-- Response body schema: 없음, `204 No Content`.
-- 성공 응답 예시: `204`.
-- 실패 응답 예시: `404 ProblemDetails(code=SESSION_NOT_FOUND)`.
-- 관련 화면: `/settings`.
-- 근거: `auth.user_sessions.revoked_at`, `revoked_by_user_id`, `revocation_reason`.
-- 확인 필요: 현재 세션 revoke 시 즉시 로그아웃 UX.
-
-#### GET `/me/security-events`
-
-- 설명: 내 계정 보안 이벤트를 조회한다.
-- 인증/권한: 로그인 사용자.
-- Path parameters: 없음.
-- Query parameters: `page`, `size`.
-- Request body schema: 없음.
-- Response body schema: `PagedSecurityEvent`.
-- 성공 응답 예시: `200 {"items":[{"eventType":"LOGIN_SUCCESS","success":true,"createdAt":"..."}]}`
-- 실패 응답 예시: `401 ProblemDetails(code=UNAUTHORIZED)`.
-- 관련 화면: `/settings`.
-- 근거: `auth.user_security_events`.
-- 확인 필요: 실패 사유와 위치/IP 정보를 어느 수준까지 사용자에게 보여줄지.
-
 ### Social / Users / Regions
 
 #### GET `/users`
@@ -510,13 +482,13 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 
 #### GET `/users/{userId}`
 
-- 설명: 사용자 프로필 조회. `PRIVATE` 프로필은 승인된 follower에게만 전체 프로필을 반환한다.
+- 설명: 사용자 프로필 조회. `PUBLIC` 프로필은 슈퍼라이크 장소와 여행 취향을 포함하며, `PRIVATE` 프로필은 본인과 승인된 follower에게만 해당 상세 정보를 반환한다.
 - 인증/권한: 로그인 사용자. 미승인 사용자는 제한된 summary만 조회한다.
 - Path parameters: `userId`.
 - Query parameters: 없음.
 - Request body schema: 없음.
 - Response body schema: `UserPublicProfile`.
-- 성공 응답 예시: `200 {"id":"...","displayName":"현우","profileImageUrl":"https://...","profileVisibility":"PRIVATE","followStatus":"ACTIVE"}`
+- 성공 응답 예시: `200 {"id":"...","displayName":"현우","profileImageUrl":"https://...","profileVisibility":"PUBLIC","superLikedPlaces":[{"id":"...","place":{"provider":"KTO","externalPlaceId":"126508","name":"성산일출봉"},"createdAt":"..."}],"preferences":{"topCategories":[],"travelStyle":"...","preferredTags":[]}}`
 - 실패 응답 예시: `404 ProblemDetails(code=USER_NOT_FOUND)`.
 - 관련 화면: 팔로우/커뮤니티 작성자 프로필.
 - 근거: `auth.users`, `social.user_follows`.
@@ -731,7 +703,108 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 근거: `trip.trip_members.status`.
 - 확인 필요: MEMBER 자진 탈퇴 허용 여부, 소유자 계정 삭제 시 여행방 삭제/보존 정책.
 
-### Places / Swipe / Preference
+### Onboarding / Home Preference
+
+- `GET /onboarding/preference-survey`: active 버전의 동일한 관광지 10개 조회.
+- `PUT /onboarding/preference-survey/responses`: 10개 전체 `LIKE`/`NOPE` 응답을 원자적으로 제출하고 onboarding을 완료.
+- `GET /home/place-background`: 다음 관광지 배경과 현재 사용자 반응 조회.
+- `PUT /places/{provider}/{externalPlaceId}/preference-reaction`: source와 반응을 저장.
+- `DELETE /places/{provider}/{externalPlaceId}/preference-reaction`: 제거 이벤트를 남기고 현재 상태 해제.
+
+### Trip Vote
+
+이전 `/trips/{tripId}/vote*` 계약은 폐기했습니다. 후보를 멤버가 직접 추가하는 구조와 2단계 참여 상태가
+확정 요구사항과 충돌해, 세션 기반 계약으로 교체했습니다. 상세 사유는
+`.agent/contracts/backend_contract_decisions.md`의 `## 여행 방 투표`를 참고합니다.
+
+- `GET /trips/{tripId}/vote-sessions/current`: 여행 방 진입 화면 판정과 현재 투표 상태 조회. 프론트 라우터 가드가 쓰는 단일 진입점.
+- `POST /trips/{tripId}/vote-sessions`: OWNER가 스티커 지급 개수와 선정 개수를 정해 투표 시작.
+- `GET /trips/{tripId}/vote-sessions/{sessionId}/result`: 종료된 투표 결과 조회.
+- `PUT /trips/{tripId}/vote-sessions/{sessionId}/my-stickers`: 제출 전 스티커 배치 전체 치환 저장.
+- `POST /trips/{tripId}/vote-sessions/{sessionId}/my-submission`: 개인 투표 제출. 마지막 제출이면 자동 종료.
+- `POST /trips/{tripId}/vote-sessions/{sessionId}/completion`: OWNER 조기 종료. 자동 종료와 동일한 선정/`UNSCHEDULED` 추가 pipeline 사용.
+
+#### GET `/trips/{tripId}/vote-sessions/current`
+
+- 설명: 여행 방에 들어갈 때 지도와 투표 중 무엇을 먼저 보여줄지 서버가 판정해 반환한다.
+- 인증/권한: 여행방 active member.
+- Path parameters: `tripId`.
+- Query parameters: 없음.
+- Request body schema: 없음.
+- Response body schema: `TripVoteSessionState`.
+- 성공 응답 예시: `200 {"hasSession":true,"nextScreen":"VOTE","session":{"id":"...","status":"OPEN","stickerAllowance":5,"selectionCount":3},"myParticipation":{"status":"IN_PROGRESS","remainingStickerCount":3}}`
+- 실패 응답 예시: `403 ProblemDetails(code=FORBIDDEN)`.
+- 관련 화면: `/trips/:tripId/vote`, `/trips/:tripId/route`.
+- 확정: 세션이 없거나 요청자가 참여자가 아니거나 이미 종료된 투표면 `MAP`을 반환한다. 클라이언트는 상태 조합을 다시 해석하지 않는다.
+
+#### POST `/trips/{tripId}/vote-sessions`
+
+- 설명: 투표를 시작하고 참여자와 추천 후보를 snapshot으로 고정한다.
+- 인증/권한: 여행방 OWNER.
+- Path parameters: `tripId`.
+- Query parameters: 없음.
+- Request body schema: `OpenVoteSessionRequest`.
+- Response body schema: `TripVoteSessionDetail`.
+- 성공 응답 예시: `201 {"id":"...","status":"OPEN","stickerAllowance":5,"selectionCount":3,"candidateCount":10,"regions":[{"code":"5013000000","name":"서귀포시"}]}`
+- 실패 응답 예시: `403 ProblemDetails(code=FORBIDDEN)`, `409 ProblemDetails(code=VOTE_SESSION_ALREADY_OPEN)`, `422 ProblemDetails(code=VOTE_CANDIDATE_POOL_INSUFFICIENT)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 후보는 방장이 고르지 않고 여행 지역과 활성 참여자 누적 취향으로 자동 구성한다. 기본 10개이며 지급 개수와 선정 개수는 후보 수를 넘을 수 없고 시작 후 변경할 수 없다.
+- 지역: 요청의 `legalRegionCodes`(10자리 법정동 코드, 최대 20개)로 이번 투표의 지역을 직접 고를 수 있다. 생략하면 여행방 지역, 그것도 없으면 대표 목적지 검색어를 쓴다. 셋 다 없으면 `422 VOTE_CANDIDATE_POOL_INSUFFICIENT`, 형식이 다른 코드는 `400 VALIDATION_FAILED`. 사용한 지역은 `regions`로 snapshot이 내려온다.
+- 후보 수: 요청의 `candidateCount`(1~100, 기본 10)로 정한다. 프론트 설정 패널은 5~30 범위를 제공한다.
+
+#### PUT `/trips/{tripId}/vote-sessions/{sessionId}/my-stickers`
+
+- 설명: 제출 전 스티커 배치를 저장한다.
+- 인증/권한: 투표 시작 시점에 확정된 참여자.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: `SaveVoteStickersRequest`.
+- Response body schema: `MyVoteStickerState`.
+- 성공 응답 예시: `200 {"sessionId":"...","myParticipation":{"status":"IN_PROGRESS","usedStickerCount":3,"remainingStickerCount":2}}`
+- 실패 응답 예시: `403 ProblemDetails(code=VOTE_NOT_PARTICIPANT)`, `409 ProblemDetails(code=VOTE_ALREADY_SUBMITTED)`, `422 ProblemDetails(code=VOTE_STICKER_ALLOWANCE_EXCEEDED)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 부분 변경이 아니라 배치 전체를 보내는 snapshot 방식이다. 목록에서 빠진 후보는 스티커 회수로 처리하므로 이동과 회수에 별도 endpoint를 두지 않는다. 한 후보에 여러 개를 몰아 붙일 수 있다.
+
+#### POST `/trips/{tripId}/vote-sessions/{sessionId}/my-submission`
+
+- 설명: 개인 투표를 제출한다.
+- 인증/권한: 확정된 참여자.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: `SubmitVoteRequest` (생략 가능).
+- Response body schema: `TripVoteSessionState`.
+- 성공 응답 예시: `200 {"nextScreen":"WAITING","myParticipation":{"status":"SUBMITTED"}}`
+- 실패 응답 예시: `409 ProblemDetails(code=VOTE_ALREADY_SUBMITTED)`, `409 ProblemDetails(code=VOTE_SESSION_CLOSED)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 제출 후에는 수정할 수 없다. 이 제출로 전원이 제출을 마치면 같은 transaction 안에서 자동 종료하고 결과를 확정한다.
+
+#### POST `/trips/{tripId}/vote-sessions/{sessionId}/completion`
+
+- 설명: 방장이 투표를 조기 종료한다.
+- 인증/권한: 여행방 OWNER.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: `CloseVoteSessionRequest`.
+- Response body schema: `TripVoteSessionResult`.
+- 성공 응답 예시: `200 {"sessionId":"...","status":"COMPLETED","completionReason":"OWNER_EARLY_CLOSE","results":[{"stickerCount":7,"selected":true,"selectedRank":1,"itineraryOutcome":"ADDED"}]}`
+- 실패 응답 예시: `422 ProblemDetails(code=VOTE_UNVOTED_PARTICIPANTS_NOT_ACKNOWLEDGED)`.
+- 관련 화면: `/trips/:tripId/vote`.
+- 확정: 이미 종료된 세션에 호출해도 실패가 아니라 같은 결과를 반환하는 멱등 연산이다. 마지막 제출과 동시에 실행돼도 종료와 결과 반영은 각각 한 번만 일어난다.
+
+#### GET `/trips/{tripId}/vote-sessions/{sessionId}/result`
+
+- 설명: 종료된 투표의 후보별 결과와 일정 반영 상태를 조회한다.
+- 인증/권한: 여행방 active member.
+- Path parameters: `tripId`, `sessionId`.
+- Query parameters: 없음.
+- Request body schema: 없음.
+- Response body schema: `TripVoteSessionResult`.
+- 성공 응답 예시: `200 {"selectionCount":3,"results":[{"selectedRank":2,"itineraryOutcome":"SKIPPED_DUPLICATE"}]}`
+- 실패 응답 예시: `404 ProblemDetails(code=VOTE_SESSION_NOT_FOUND)`.
+- 관련 화면: `/trips/:tripId/vote`, `/trips/:tripId/route`.
+- 확정: 진행 중 세션의 중간 집계는 노출하지 않는다. 마지막 순위 동점은 모두 선정되어 같은 `selectedRank`를 가진다.
+
+### Places / Preference
 
 #### GET `/places/search`
 
@@ -776,6 +849,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 확정: 화면 route의 `tripId`를 API에 전달하지 않고, MVP 선호도는 사용자 개인 전역 기준으로만 저장/계산한다.
 
 #### PUT `/places/{provider}/{externalPlaceId}/swipe-reaction`
+
+이 endpoint는 migration 호환용 deprecated 계약입니다. 신규 화면은 `/preference-reaction`을 사용합니다.
 
 - 설명: 현재 사용자의 최종 스와이프 반응을 upsert하고 이벤트 로그를 누적한다.
 - 인증/권한: 로그인 사용자.
@@ -1003,38 +1078,38 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 
 #### POST `/trips/{tripId}/map-drawings`
 
-- 설명: 명시적으로 저장한 지도 도형/그림 생성.
+- 설명: 명시적으로 저장한 지도 도형, 12종 기본 스티커, 사용자 이미지를 생성한다.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`.
-- Query parameters: 없음.
+- Query parameters: 없음. 생성 command의 undo/redo 귀속을 위해 `X-Soomgil-WebSocket-Session-Id` header가 필수다.
 - Request body schema: `CreateMapDrawingRequest` with `baseVersion`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `201 {"itineraryVersion":23,"drawing":{"drawingType":"POLYGON"}}`
-- 실패 응답 예시: `422 ProblemDetails(code=INVALID_GEOJSON)`.
+- 실패 응답 예시: `422 ProblemDetails(code=VALIDATION_FAILED)`, `403 ProblemDetails(code=MEDIA_LINK_FORBIDDEN)`.
 - 관련 화면: 지도 드로잉.
 - 근거: `itinerary.map_drawings`.
-- 확인 필요: style JSON whitelist.
+- 확정: STICKER/IMAGE geometry는 Point이며 transform 중심과 일치한다. transform 크기는 화면 픽셀이 아닌 meter다.
 
 #### PATCH `/trips/{tripId}/map-drawings/{drawingId}`
 
-- 설명: 저장된 지도 도형 수정.
+- 설명: 저장된 지도 도형/오브젝트의 위치, meter 크기, 회전을 수정한다.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`, `drawingId`.
-- Query parameters: 없음.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 대상 drawing lease가 필수다.
 - Request body schema: `UpdateMapDrawingRequest` with `baseVersion`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `200 {"itineraryVersion":24,"drawing":{"id":"...","version":2}}`
 - 실패 응답 예시: `409 ProblemDetails(code=DRAWING_VERSION_CONFLICT)`.
 - 관련 화면: 지도 드로잉.
 - 근거: `itinerary.map_drawings.version`.
-- 확인 필요: drawing 자체 version과 trip itineraryVersion 동시 사용 방식.
+- 확정: trip `baseVersion`과 drawing `drawingVersion`을 함께 검사한다.
 
 #### DELETE `/trips/{tripId}/map-drawings/{drawingId}`
 
 - 설명: 저장된 지도 도형 soft delete.
 - 인증/권한: active trip member.
 - Path parameters: `tripId`, `drawingId`.
-- Query parameters: 없음.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 대상 drawing lease가 필수다.
 - Request body schema: `VersionedCommandRequest`.
 - Response body schema: `ItineraryMutationResponse`.
 - 성공 응답 예시: `200 {"itineraryVersion":25}`
@@ -1042,6 +1117,20 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 관련 화면: 지도 드로잉.
 - 근거: `itinerary.map_drawings.deleted_at`.
 - 확인 필요: AI tool registry에서 drawing 삭제 제외 유지.
+
+#### POST `/trips/{tripId}/map-drawings/batch-delete`
+
+- 설명: 한 번의 지우개 드래그 경로에 닿은 지도 도형·스티커·이미지를 일괄 soft delete한다.
+- 인증/권한: active trip member.
+- Path parameters: `tripId`.
+- Query parameters: 없음. `X-Soomgil-WebSocket-Session-Id` header와 모든 대상 drawing lease가 필수다.
+- Request body schema: `DeleteMapDrawingsRequest` with `baseVersion`, `drawingIds`(1~100개).
+- Response body schema: `ItineraryMutationResponse`.
+- 성공 응답 예시: `200 {"itineraryVersion":26}`
+- 실패 응답 예시: `404 ProblemDetails(code=MAP_DRAWING_NOT_FOUND)`, `409 ProblemDetails(code=ITINERARY_VERSION_CONFLICT)`.
+- 관련 화면: 지도 지우개 드래그.
+- 근거: `itinerary.map_drawings.deleted_at`, `collab.collaboration_command_events`.
+- 확정: 전체 삭제는 itinerary version을 한 번만 증가시키고 단일 `DELETE_MAP_DRAWINGS` command event로 기록한다. undo/redo는 해당 목록 전체를 원자적으로 복원/재삭제한다.
 
 #### POST `/trips/{tripId}/collaboration/undo`
 
@@ -1055,7 +1144,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 실패 응답 예시: `409 ProblemDetails(code=UNDO_CONFLICT)`.
 - 관련 화면: route/planning 공통 undo.
 - 근거: `.agent/docs/product-specs/service_requirements.md`.
-- 확인 필요: session id 헤더 필수화.
+- 확정: `X-Soomgil-WebSocket-Session-Id` header가 필수이며 프론트 toolbar는 서버 stack을 호출한 뒤 최신 itinerary snapshot을 다시 조회한다.
+- WebSocket 연결 성공 시 서버는 최종 STOMP `CONNECTED` frame의 `X-Soomgil-WebSocket-Session-Id` header로 현재 session ID를 반환한다.
 
 #### POST `/trips/{tripId}/collaboration/redo`
 
@@ -1069,7 +1159,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 실패 응답 예시: `409 ProblemDetails(code=REDO_CONFLICT)`.
 - 관련 화면: route/planning 공통 redo.
 - 근거: `.agent/docs/product-specs/service_requirements.md`.
-- 확인 필요: redo stack 초기화 이벤트 payload.
+- 확정: `X-Soomgil-WebSocket-Session-Id` header가 필수이며 응답의 `undoAvailable`, `redoAvailable`로 toolbar 상태를 갱신한다.
 
 ### Notes / Checklists
 
@@ -1303,6 +1393,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 
 #### GET `/records/photos`
 
+Deprecated: 전역 기록 탭 제거로 신규 화면에서 사용하지 않습니다. 여행방 내부 기록 endpoint를 사용합니다.
+
 - 설명: 현재 사용자가 참여 중인 모든 여행방의 기록 사진을 한 번에 모아 조회한다.
 - 인증/권한: 로그인 사용자. active member인 여행방 기록 사진만 반환한다.
 - Path parameters: 없음.
@@ -1327,6 +1419,8 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 확정: client는 이미지 로드 실패 URL별로 한 번만 재발급을 요청하며, 새로 발급된 URL이 나중에 만료되면 다시 요청할 수 있다.
 
 #### POST `/records/photo-summaries`
+
+Deprecated: 전역 기록 탭 제거로 신규 화면에서 사용하지 않습니다.
 
 - 설명: 요청한 여러 여행방의 기록 사진 개수와 대표 사진을 한 번의 집계 요청으로 조회한다.
 - 인증/권한: 로그인 사용자. 요청한 모든 여행방의 소유자 또는 active member여야 한다.
@@ -1461,6 +1555,28 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 - 확인 필요: 이미 게시글/기록에 연결된 media 삭제 제한.
 
 ### Community / Reports / Notifications / Admin
+
+신규 커뮤니티 계약:
+
+- `GET /community/threads`, `POST /community/threads`
+- `GET /community/threads/{threadId}`, `PATCH /community/threads/{threadId}`, `DELETE /community/threads/{threadId}`
+- `GET /community/threads/{threadId}/replies`, `POST /community/threads/{threadId}/replies`
+- `PATCH /community/threads/{threadId}/replies/{replyId}`, `DELETE /community/threads/{threadId}/replies/{replyId}`
+- `PUT /community/threads/{threadId}/like`, `DELETE /community/threads/{threadId}/like`
+
+커뮤니티 쓰레드 확정 규칙:
+
+- 목록/상세/답글 조회는 공개이며 비로그인 조회에서는 `likedByMe`와 `editableByMe`가 항상 false다.
+- 목록 정렬은 `createdAt desc, id desc`로 고정하고 `page`, `size`를 사용한다. `size`는 최대 100으로 보정한다.
+- 본문은 1~500자, 이미지는 선택 항목으로 최대 4장이다. 이미지는 요청자 소유의 ACTIVE media만 연결할 수 있다.
+- 답글 중첩은 1단계까지만 허용한다. 2단계 시도는 `THREAD_REPLY_DEPTH_EXCEEDED`(422)다.
+- 수정과 삭제는 작성자만 가능하고, 답글 삭제는 답글 작성자와 쓰레드 작성자가 가능하다.
+- 삭제/숨김된 쓰레드와 답글은 본문을 응답에 포함하지 않고 tombstone으로만 표시한다.
+- 좋아요는 `PUT`/`DELETE`로 멱등 처리한다. 같은 요청을 반복해도 `likeCount`가 변하지 않는다.
+- 신고는 기존 `POST /community/reports`에 `targetType`을 `THREAD` 또는 `THREAD_REPLY`로 보내 재사용한다.
+- 모더레이션도 기존 `POST /admin/moderation-actions`를 같은 `targetType`으로 재사용한다.
+
+아래 `/community/posts*`와 retrip endpoint는 기존 데이터 migration 호환용 deprecated 계약이며 신규 화면에서 사용하지 않습니다.
 
 #### GET `/community/posts`
 
@@ -1762,7 +1878,7 @@ REST만으로는 지도 드로잉 preview, 일정 동시 편집, 채팅, AI tool
 
 | Entity | 주요 필드 | 생성/수정/삭제 정책 |
 | :--- | :--- | :--- |
-| User | `id`, `status`, `statusReason`, `deletionRequestedAt`, `deletionScheduledAt` | 계정 생명주기 anchor. 삭제 예약 시 `PENDING_DELETION`을 거쳐 soft delete |
+| User | `id`, `status`, `statusReason`, `deletionRequestedAt`, `deletionScheduledAt` | 계정 생명주기 anchor. 즉시 탈퇴 시 `DELETED`와 `deletedAt`을 기록 |
 | UserEmailAddress | `userId`, `email`, `normalizedEmail`, `isPrimary`, `verifiedAt` | 로그인 식별자와 이메일 인증 상태. raw verification token은 저장하지 않음 |
 | UserProfile | `userId`, `displayName`, `profileImageUrl`, `profileMediaFileId`, `bio` | `PATCH /me`로 수정하는 표시 프로필 |
 | UserSettings | `userId`, `displayLanguage`, `timezone`, `marketingEmailOptIn`, `tripInviteEmailOptIn` | `GET/PATCH /me/settings`로 관리 |
@@ -1884,9 +2000,9 @@ DBML 최신 반영 요약:
 
 Best practice: 선택된 **A**를 따른다. 이메일 인증 완료 전 계정 활성화를 막고, refresh token은 rotation과 family revoke를 적용한다. 필수 약관은 가입 완료 조건으로 두고, 강제 재동의는 별도 policy acceptance flow로 처리한다.
 
-API/DBML 반영 지점: `auth.user_email_addresses`, `auth.user_email_verification_tokens`, `auth.user_password_credentials`, `auth.user_password_reset_tokens`, `auth.user_sessions`, `auth.policy_documents`, `auth.user_policy_acceptances`, `auth.user_security_events`, `POST /auth/register`, `POST /auth/refresh`, `POST /auth/logout`, `GET /me/sessions`, `GET /me/security-events`.
+API/DBML 반영 지점: `auth.user_email_addresses`, `auth.user_email_verification_tokens`, `auth.user_password_credentials`, `auth.user_password_reset_tokens`, `auth.user_sessions`, `auth.policy_documents`, `auth.user_policy_acceptances`, `POST /auth/register`, `POST /auth/refresh`, `POST /auth/logout`.
 
-결정 후 반영: 인증/재설정 token TTL과 재발송 cooldown, access/refresh token TTL, 전체 기기 로그아웃, 계정 삭제 예약 중 로그인 허용 여부.
+결정 후 반영: 인증/재설정 token TTL과 재발송 cooldown, access/refresh token TTL, 전체 기기 로그아웃, 탈퇴 직후 기존 access token 차단 여부.
 
 #### P0-2. OAuth/계정 연결: Kakao/Google callback, provider identity 충돌, 소셜 가입 보완
 
@@ -2042,18 +2158,18 @@ API/DBML 반영 지점: `media.media_files`, `auth.user_profiles.profile_media_f
 
 #### P0-10. 개인정보/삭제: user deletion, soft delete, 공개 콘텐츠 잔존
 
-문제 상세: `auth.users`는 삭제 예약/soft delete 필드를 갖고, 여러 도메인은 `deleted_at` 또는 moderation status를 갖는다. 계정 삭제가 곧 모든 콘텐츠 삭제인지, 공개 게시글은 익명화 후 유지되는지, 감사 로그는 보관되는지 정하지 않으면 사용자 요청 처리와 법적 보관 정책이 충돌한다. 소유자 계정이 삭제될 때 여행방 관리 주체가 사라지는 문제도 함께 해결해야 한다.
+문제 상세: `auth.users`는 계정 생명주기 필드를 갖고, 여러 도메인은 `deleted_at` 또는 moderation status를 갖는다. 계정 탈퇴가 곧 모든 콘텐츠 삭제인지, 공개 게시글은 익명화 후 유지되는지, 감사 로그는 보관되는지 정하지 않으면 사용자 요청 처리와 법적 보관 정책이 충돌한다. 소유자 계정이 삭제될 때 여행방 관리 주체가 사라지는 문제도 함께 해결해야 한다.
 
 | 선택 | 정책안 | 장점 | 리스크 |
 | :--- | :--- | :--- | :--- |
 | A | 계정 삭제 요청 즉시 hard delete cascade | 사용자가 기대하는 삭제감이 큼 | 협업/감사/공개 콘텐츠 무결성 붕괴 |
-| B | `PENDING_DELETION` 예약 후 익명화/삭제, 공개 snapshot은 정책에 따라 유지, 소유자인 여행방은 삭제 전 정리 요구 | 데이터 무결성과 개인정보 요구 균형 | retention/익명화 job 필요 |
+| B | 즉시 `DELETED` 전환 및 개인정보 익명화, 공개 snapshot은 정책에 따라 유지, 소유자인 여행방은 삭제 전 정리 요구 | 데이터 무결성과 개인정보 요구 균형 | 콘텐츠 보존 정책 명시 필요 |
 | C | 계정은 `DELETED` 상태만 두고 데이터는 영구 보관 | 구현 단순 | 개인정보 삭제 요구 대응 취약 |
 | D | 공개/비공개 콘텐츠를 모두 삭제하고 감사 로그도 제거 | 개인정보 최소화 | 운영 감사와 신고 처리 근거 상실 |
 
 선택 결과: **B**.
 
-Best practice: 선택된 **B**를 따른다. 계정 삭제는 예약 상태를 거쳐 처리하고, 소유자인 활성 여행방이 있으면 MVP에서는 이관이 없으므로 삭제 예약을 차단한다. 공개 커뮤니티 콘텐츠는 작성자 표시를 익명화하되 snapshot 유지 여부는 약관/개인정보 정책에 명시한다.
+Best practice: 선택된 **B**를 따른다. 계정은 즉시 탈퇴 처리하고, 소유 여행방은 다음 활성 구성원에게 이전하며 승계 대상이 없으면 함께 삭제한다. 공개 커뮤니티 콘텐츠는 작성자 표시를 익명화하되 snapshot 유지 여부는 약관/개인정보 정책에 명시한다.
 
 API/DBML 반영 지점: `auth.users.status/deletion_*`, `trip.trip_members.status`, 각 도메인의 `deleted_at`, `community.posts.moderation_status`, `ops.audit_logs`, `DELETE /me`, `DELETE /trips/{tripId}`, `DELETE /community/posts/{postId}`.
 

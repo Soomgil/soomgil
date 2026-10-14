@@ -1,0 +1,2646 @@
+[
+ {
+  "awardContentId": "DVvwaI",
+  "koTitle": "가야산 설경",
+  "koFilmst": "경상남도 합천군, 가야산국립공원",
+  "placeName": "가야산국립공원",
+  "lDongRegnCd": "48",
+  "matches": [
+   {
+    "contentId": "2747464",
+    "title": "가야산국립공원 백운동 자동차야영장",
+    "contentTypeId": "28",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 성주군 수륜면 가야산식물원길 49",
+    "mapx": "128.1425451229",
+    "mapy": "35.8047165173",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "126023",
+    "title": "가야산국립공원(백운동 지구)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 성주군 수륜면 가야산식물원길 17",
+    "mapx": "128.14185659744928",
+    "mapy": "35.80021925538283",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "126022",
+    "title": "가야산국립공원(합천)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 합천군 가야산로 1200 가야산국립공원관리사무소",
+    "mapx": "128.132202679667",
+    "mapy": "35.7675207559747",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2739362",
+    "title": "가야산국립공원 치인자동차야영장",
+    "contentTypeId": "28",
+    "areaCode": "36",
+    "sigunguCode": "21",
+    "addr1": "경상남도 합천군 가야면 가야산로 1645-8",
+    "mapx": "128.1004474677",
+    "mapy": "35.7886535023",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "3MciEo",
+  "koTitle": "가을 산사",
+  "koFilmst": "경상북도 청도군 운문면, 운문사",
+  "placeName": "운문사",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "2743807",
+    "title": "운문사계절 캠핑장",
+    "contentTypeId": "28",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 청도군 운문면 운문로 1742",
+    "mapx": "128.9717218804",
+    "mapy": "35.6948811980",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "Qyxdj5",
+  "koTitle": "겨울왕국",
+  "koFilmst": "전북특별자치도 무주군, 덕유산국립공원 설천봉",
+  "placeName": "덕유산국립공원 설천봉",
+  "lDongRegnCd": "52",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "DXzaHH",
+  "koTitle": "경주 우연히 5",
+  "koFilmst": "경상북도 경주시 인왕동, 대릉원 일원",
+  "placeName": "대릉원 일원",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "1492402",
+    "title": "경주 대릉원 일원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 경주시 황남동",
+    "mapx": "129.2128000000",
+    "mapy": "35.8382000000",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "buVutY",
+  "koTitle": "구인사 설경",
+  "koFilmst": "충청북도 단양군 영춘면, 구인사",
+  "placeName": "구인사",
+  "lDongRegnCd": "43",
+  "matches": [
+   {
+    "contentId": "127677",
+    "title": "구인사(단양)",
+    "contentTypeId": "12",
+    "areaCode": "33",
+    "sigunguCode": "2",
+    "addr1": "충청북도 단양군 영춘면 구인사길 73",
+    "mapx": "128.4811562387",
+    "mapy": "37.0331852014",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "EX4HJ8",
+  "koTitle": "구인사의 야경",
+  "koFilmst": "충청북도 단양군 영춘면, 구인사",
+  "placeName": "구인사",
+  "lDongRegnCd": "43",
+  "matches": [
+   {
+    "contentId": "127677",
+    "title": "구인사(단양)",
+    "contentTypeId": "12",
+    "areaCode": "33",
+    "sigunguCode": "2",
+    "addr1": "충청북도 단양군 영춘면 구인사길 73",
+    "mapx": "128.4811562387",
+    "mapy": "37.0331852014",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "dKQq4A",
+  "koTitle": "군산 옥녀교차로 청보리밭",
+  "koFilmst": "전북특별자치도 군산시, 옥녀교차로 청보리밭",
+  "placeName": "옥녀교차로 청보리밭",
+  "lDongRegnCd": "",
+  "matches": [
+   {
+    "contentId": "2724127",
+    "title": "옥녀교차로 청보리밭",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 군산시 옥녀로 102 (내초동)",
+    "mapx": "126.6199",
+    "mapy": "35.9538",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "JwyMUQ",
+  "koTitle": "금강굴 풍경",
+  "koFilmst": "강원특별자치도 속초시, 금강굴",
+  "placeName": "금강굴",
+  "lDongRegnCd": "51",
+  "matches": [
+   {
+    "contentId": "125730",
+    "title": "금강굴",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "강원특별자치도 속초시 설악동",
+    "mapx": "128.4639",
+    "mapy": "38.1645",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "0n6Sc9",
+  "koTitle": "금성산성의 봄",
+  "koFilmst": "전남광주통합특별시 담양군 용면, 금성산성",
+  "placeName": "금성산성",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "126407",
+    "title": "담양 금성산성",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 담양군 용면 도림리",
+    "mapx": "127.035619651121",
+    "mapy": "35.3778448950462",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "YR0kVt",
+  "koTitle": "꽃피는 섬",
+  "koFilmst": "충청북도 진천군, 초평저수지",
+  "placeName": "초평저수지",
+  "lDongRegnCd": "43",
+  "matches": [
+   {
+    "contentId": "131041",
+    "title": "초평저수지",
+    "contentTypeId": "28",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청북도 진천군 초평면 초평로",
+    "mapx": "127.5196679905",
+    "mapy": "36.8184725044",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "Uw2lO1",
+  "koTitle": "남미륵사의 봄꽃 아침 ",
+  "koFilmst": "전남광주통합특별시 강진군 군동면, 남미륵사",
+  "placeName": "남미륵사",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "2714792",
+    "title": "남미륵사",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 강진군 군동면 풍동1길 24-13",
+    "mapx": "126.855454866787",
+    "mapy": "34.6531499089295",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "mByCuM",
+  "koTitle": "눈 내린 어촌마을",
+  "koFilmst": "강원특별자치도 삼척시 정하동, 벽너머엔 나릿골 감성마을",
+  "placeName": "벽너머엔 나릿골 감성마을",
+  "lDongRegnCd": "51",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "i5JG9R",
+  "koTitle": "단풍 물든 설악산 주전골",
+  "koFilmst": "강원특별자치도 양양군, 설악산국립공원",
+  "placeName": "설악산국립공원",
+  "lDongRegnCd": "",
+  "matches": [
+   {
+    "contentId": "125586",
+    "title": "설악산국립공원(남설악)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "강원특별자치도 양양군 서면 설악로 801",
+    "mapx": "128.449327966942",
+    "mapy": "38.0854190277304",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "125584",
+    "title": "설악산국립공원(내설악)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "강원특별자치도 인제군 북면 백담로 150",
+    "mapx": "128.3578890792047",
+    "mapy": "38.19173316751972",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2612292",
+    "title": "설악산국립공원 자동차야영장",
+    "contentTypeId": "28",
+    "areaCode": "32",
+    "sigunguCode": "5",
+    "addr1": "강원특별자치도 속초시 설악동 370번지",
+    "mapx": "128.5437914439",
+    "mapy": "38.1629502190",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1853446",
+    "title": "설악산국립공원의 비경을 만나다",
+    "contentTypeId": "25",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "",
+    "mapx": "128.6083808764",
+    "mapy": "38.1629715977",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "dEkSTn",
+  "koTitle": "대가야의 숨결",
+  "koFilmst": "경상북도 고령군 대가야읍, 고령 지산동 고분군",
+  "placeName": "고령 지산동 고분군",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "128038",
+    "title": "고령 지산동 고분군",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 고령군 대가야읍 지산리",
+    "mapx": "128.2534000000",
+    "mapy": "35.7263000000",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "wjM5eR",
+  "koTitle": "대둔산 일출과 함께",
+  "koFilmst": "전북특별자치도 완주군 운주면, 대둔산도립공원",
+  "placeName": "대둔산도립공원",
+  "lDongRegnCd": "52",
+  "matches": [
+   {
+    "contentId": "128002",
+    "title": "대둔산도립공원(논산)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청남도 논산시 벌곡면 수락계곡길 559",
+    "mapx": "127.3091761981",
+    "mapy": "36.1404337305",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "127673",
+    "title": "대둔산도립공원(전북)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 완주군 운주면 대둔산공원길 23",
+    "mapx": "127.3328817362",
+    "mapy": "36.1170800484",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "128001",
+    "title": "대둔산도립공원(금산)",
+    "contentTypeId": "12",
+    "areaCode": "34",
+    "sigunguCode": "2",
+    "addr1": "충청남도 금산군 진산면 대둔산로 2",
+    "mapx": "127.3416665299",
+    "mapy": "36.1374586362",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "g2ugw7",
+  "koTitle": "대왕암 일출",
+  "koFilmst": "울산광역시 동구 일산동, 대왕암공원",
+  "placeName": "대왕암공원",
+  "lDongRegnCd": "31",
+  "matches": [
+   {
+    "contentId": "127515",
+    "title": "대왕암공원",
+    "contentTypeId": "12",
+    "areaCode": "7",
+    "sigunguCode": "3",
+    "addr1": "울산광역시 동구 등대로 95 (일산동)",
+    "mapx": "129.4352747432",
+    "mapy": "35.4904590082",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2728939",
+    "title": "대왕암공원 출렁다리",
+    "contentTypeId": "12",
+    "areaCode": "7",
+    "sigunguCode": "3",
+    "addr1": "울산광역시 동구 등대로 95",
+    "mapx": "129.4352775223",
+    "mapy": "35.4904034587",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2728918",
+    "title": "대왕암공원오토캠핑장",
+    "contentTypeId": "28",
+    "areaCode": "7",
+    "sigunguCode": "3",
+    "addr1": "울산광역시 동구 등대로 80-61 (일산동)",
+    "mapx": "129.4391939093",
+    "mapy": "35.4882232221",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "j8JbT8",
+  "koTitle": "대왕암의 가을",
+  "koFilmst": "울산광역시 동구 일산동, 대왕암공원",
+  "placeName": "대왕암공원",
+  "lDongRegnCd": "31",
+  "matches": [
+   {
+    "contentId": "127515",
+    "title": "대왕암공원",
+    "contentTypeId": "12",
+    "areaCode": "7",
+    "sigunguCode": "3",
+    "addr1": "울산광역시 동구 등대로 95 (일산동)",
+    "mapx": "129.4352747432",
+    "mapy": "35.4904590082",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2728939",
+    "title": "대왕암공원 출렁다리",
+    "contentTypeId": "12",
+    "areaCode": "7",
+    "sigunguCode": "3",
+    "addr1": "울산광역시 동구 등대로 95",
+    "mapx": "129.4352775223",
+    "mapy": "35.4904034587",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2728918",
+    "title": "대왕암공원오토캠핑장",
+    "contentTypeId": "28",
+    "areaCode": "7",
+    "sigunguCode": "3",
+    "addr1": "울산광역시 동구 등대로 80-61 (일산동)",
+    "mapx": "129.4391939093",
+    "mapy": "35.4882232221",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "YFHFNL",
+  "koTitle": "덕룡산의 진달래",
+  "koFilmst": "전남광주통합특별시 강진군, 덕룡산",
+  "placeName": "덕룡산",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "578656",
+    "title": "덕룡산",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 강진군 도암면 봉황리",
+    "mapx": "126.69918962256216",
+    "mapy": "34.538526129292705",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "CBJO4l",
+  "koTitle": "덕유산 겨울 왕국",
+  "koFilmst": "전북특별자치도 무주군, 덕유산국립공원 설천봉",
+  "placeName": "덕유산국립공원 설천봉",
+  "lDongRegnCd": "52",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "G0dF2v",
+  "koTitle": "동백숲",
+  "koFilmst": "제주특별자치도 서귀포시 남원읍, 동백포레스트",
+  "placeName": "동백포레스트",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "2806043",
+    "title": "동백포레스트",
+    "contentTypeId": "12",
+    "areaCode": "39",
+    "sigunguCode": "3",
+    "addr1": "제주특별자치도 서귀포시 남원읍 생기악로 53-38",
+    "mapx": "126.6362150996",
+    "mapy": "33.3003486310",
+    "exact": true,
+    "contains": true,
+    "enriched": true
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "lCE7C9",
+  "koTitle": "동화 속에 살아요",
+  "koFilmst": "부산광역시 사하구 감천동, 감천문화마을",
+  "placeName": "감천문화마을",
+  "lDongRegnCd": "26",
+  "matches": [
+   {
+    "contentId": "3110783",
+    "title": "감천문화마을기념품숍",
+    "contentTypeId": "38",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 사하구 감내2로 201 (감천동)",
+    "mapx": "129.010574678678",
+    "mapy": "35.0975941352998",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "4039289",
+    "title": "감천문화마을 어린왕자 전시관",
+    "contentTypeId": "14",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 사하구 감내1로 200 (감천동)",
+    "mapx": "129.009426440728",
+    "mapy": "35.0962593359206",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1997221",
+    "title": "부산 감천문화마을",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 사하구 감내2로 203",
+    "mapx": "129.010596996534",
+    "mapy": "35.0974606978369",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "7ypkf5",
+  "koTitle": "등나무 우주선",
+  "koFilmst": "전남광주통합특별시 담양군 담양읍, 한국대나무박물관",
+  "placeName": "한국대나무박물관",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "129777",
+    "title": "한국대나무박물관",
+    "contentTypeId": "14",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 담양군 담양읍 죽향문화로 35",
+    "mapx": "126.97646",
+    "mapy": "35.309359",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "Ay9Nfo",
+  "koTitle": "마이산의 봄",
+  "koFilmst": "전북특별자치도 진안군, 마이산도립공원",
+  "placeName": "마이산도립공원",
+  "lDongRegnCd": "52",
+  "matches": [
+   {
+    "contentId": "126235",
+    "title": "마이산도립공원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 진안군 진안읍 마이산로 130",
+    "mapx": "127.412782",
+    "mapy": "35.760823",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2939664",
+    "title": "마이산도립공원 북부",
+    "contentTypeId": "12",
+    "areaCode": "37",
+    "sigunguCode": "14",
+    "addr1": "전북특별자치도 진안군 마이산로 255 마이산 도립공원 관리 사무소",
+    "mapx": "127.4149198778",
+    "mapy": "35.7663910580",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2939667",
+    "title": "마이산도립공원 남부",
+    "contentTypeId": "12",
+    "areaCode": "37",
+    "sigunguCode": "14",
+    "addr1": "전북특별자치도 진안군 마이산남로 182",
+    "mapx": "127.3938497716",
+    "mapy": "35.7570528603",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "pxJg0k",
+  "koTitle": "메밀꽃 필 무렵",
+  "koFilmst": "제주특별자치도 서귀포시 안덕면, 동광리 메밀밭",
+  "placeName": "동광리 메밀밭",
+  "lDongRegnCd": "50",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "pjM5DM",
+  "koTitle": "목장의 저녁",
+  "koFilmst": "강원특별자치도 평창군 대관령면, 대관령 양떼목장",
+  "placeName": "대관령 양떼목장",
+  "lDongRegnCd": "51",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "t0YvB7",
+  "koTitle": "뫼산을 그리다",
+  "koFilmst": "서울특별시 강북구, 북한산국립공원",
+  "placeName": "북한산국립공원",
+  "lDongRegnCd": "11",
+  "matches": [
+   {
+    "contentId": "127220",
+    "title": "북한산국립공원(서울)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "서울특별시 성북구 보국문로 262 (정릉동)",
+    "mapx": "126.99395569761465",
+    "mapy": "37.62117635092582",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "KBDU5d",
+  "koTitle": "물 들어오는 그 시간",
+  "koFilmst": "충청남도 서산시 부석면, 간월암",
+  "placeName": "간월암",
+  "lDongRegnCd": "44",
+  "matches": [
+   {
+    "contentId": "125880",
+    "title": "간월암(서산)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청남도 서산시 부석면 간월도1길 119-29",
+    "mapx": "126.41140862077368",
+    "mapy": "36.60378976091961",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "23CAi6",
+  "koTitle": "물고기의 겨울나기",
+  "koFilmst": "전북특별자치도 남원시 천거동, 광한루원",
+  "placeName": "광한루원",
+  "lDongRegnCd": "52",
+  "matches": [
+   {
+    "contentId": "126397",
+    "title": "광한루원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 남원시 요천로 1447",
+    "mapx": "127.379445",
+    "mapy": "35.403321",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "UJkwbS",
+  "koTitle": "물안개가 빚은 한폭의 수채화 ",
+  "koFilmst": "전남광주통합특별시 나주시, 영산강",
+  "placeName": "영산강",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "2603506",
+    "title": "영산강 황포돛배",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 나주시 등대길 80",
+    "mapx": "126.7074824191",
+    "mapy": "35.0027033036",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "3009344",
+    "title": "나주영산강축제",
+    "contentTypeId": "15",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 나주시 영산동",
+    "mapx": "126.7222730000",
+    "mapy": "35.0012960000",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1623794",
+    "title": "영산강",
+    "contentTypeId": "12",
+    "areaCode": "38",
+    "sigunguCode": "7",
+    "addr1": "전남광주통합특별시 담양군 수북면 개동신기길 ",
+    "mapx": "126.9472239597",
+    "mapy": "35.2772856399",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2554189",
+    "title": "영산강문화관",
+    "contentTypeId": "12",
+    "areaCode": "5",
+    "sigunguCode": "2",
+    "addr1": "전남광주통합특별시 남구 승촌보길 90",
+    "mapx": "126.7611568167",
+    "mapy": "35.0659535982",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2675030",
+    "title": "영산강 자전거길",
+    "contentTypeId": "12",
+    "areaCode": "5",
+    "sigunguCode": "5",
+    "addr1": "전남광주통합특별시 서구 서창둑길 377",
+    "mapx": "126.8287545923",
+    "mapy": "35.1384632138",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "pjPR9D",
+  "koTitle": "바다 협곡과 어부",
+  "koFilmst": "경상북도 포항시 남구, 모포항 물통바위",
+  "placeName": "모포항 물통바위",
+  "lDongRegnCd": "47",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "mZc1ms",
+  "koTitle": "반영",
+  "koFilmst": "전남광주통합특별시 장성군 북하면, 백양사 쌍계루",
+  "placeName": "백양사 쌍계루",
+  "lDongRegnCd": "12",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "wF3XJh",
+  "koTitle": "방화수류정의 여름",
+  "koFilmst": "경기도 수원시 팔달구, 수원화성 화홍문",
+  "placeName": "수원화성 화홍문",
+  "lDongRegnCd": "41",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "umPKjw",
+  "koTitle": "법주사의 가을",
+  "koFilmst": "충청북도 보은군 속리산면, 법주사",
+  "placeName": "법주사",
+  "lDongRegnCd": "43",
+  "matches": [
+   {
+    "contentId": "125906",
+    "title": "보은 법주사 [유네스코 세계유산]",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청북도 보은군 속리산면 법주사로 405",
+    "mapx": "127.8328568589",
+    "mapy": "36.5410422035",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "309839",
+    "title": "법주사(군위)",
+    "contentTypeId": "12",
+    "areaCode": "4",
+    "sigunguCode": "9",
+    "addr1": "대구광역시 군위군 소보면 달산3길 215",
+    "mapx": "128.4383208315",
+    "mapy": "36.2726297081",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "WI7vya",
+  "koTitle": "벚꽃나라 테라스",
+  "koFilmst": "경상북도 포항시 북구, 스페이스워크",
+  "placeName": "스페이스워크",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "2784715",
+    "title": "환호공원 스페이스워크",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 포항시 북구 환호공원길 30 (환호동)",
+    "mapx": "129.3903000000",
+    "mapy": "36.0652000000",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "3551357",
+    "title": "카페 스페이스워크",
+    "contentTypeId": "39",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 포항시 북구 해안로 273 (환호동)",
+    "mapx": "129.39238890671882",
+    "mapy": "36.06504044285421",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "26PsTH",
+  "koTitle": "보리밭 사이길",
+  "koFilmst": "전북특별자치도 고창군 공음면, 보리나라 학원농장",
+  "placeName": "보리나라 학원농장",
+  "lDongRegnCd": "52",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "0daXCd",
+  "koTitle": "보문정의 봄밤",
+  "koFilmst": "경상북도 경주시 신평동, 보문정",
+  "placeName": "보문정",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "2015553",
+    "title": "보문정(경주)",
+    "contentTypeId": "12",
+    "areaCode": "35",
+    "sigunguCode": "2",
+    "addr1": "경상북도 경주시 신평동",
+    "mapx": "129.2892803112",
+    "mapy": "35.8413250823",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "MeOlrI",
+  "koTitle": "봄이 춤추는 매화마을",
+  "koFilmst": "전남광주통합특별시 광양시 다압면, 광양 매화마을",
+  "placeName": "광양 매화마을",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "126669",
+    "title": "광양 매화마을",
+    "contentTypeId": "12",
+    "areaCode": "38",
+    "sigunguCode": "4",
+    "addr1": "전남광주통합특별시 광양시 다압면 목길 34-2",
+    "mapx": "127.7205191898",
+    "mapy": "35.0785796984",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "SMictx",
+  "koTitle": "불갑사 상사화",
+  "koFilmst": "전남광주통합특별시 영광군 불갑면, 불갑사",
+  "placeName": "불갑사",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "126349",
+    "title": "불갑사(영광)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 영광군 불갑면 불갑사로 450",
+    "mapx": "126.549453583343",
+    "mapy": "35.2007326961184",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "a0LPoa",
+  "koTitle": "불로동 고분군 겨울이야기",
+  "koFilmst": "대구광역시 동구 불로동, 대구 불로동 고분군",
+  "placeName": "대구 불로동 고분군",
+  "lDongRegnCd": "27",
+  "matches": [
+   {
+    "contentId": "126834",
+    "title": "대구 불로동 고분군",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "대구광역시 동구 불로동",
+    "mapx": "128.6456306294",
+    "mapy": "35.9145099760",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "BK01wA",
+  "koTitle": "빛 축제 거리의 아침",
+  "koFilmst": "부산광역시 해운대구, 해운대 빛축제",
+  "placeName": "해운대 빛축제",
+  "lDongRegnCd": "26",
+  "matches": [
+   {
+    "contentId": "2048902",
+    "title": "해운대 빛축제",
+    "contentTypeId": "15",
+    "areaCode": "6",
+    "sigunguCode": "16",
+    "addr1": "부산광역시 해운대구 해운대해변로 280 (중동)",
+    "mapx": "129.1626049105",
+    "mapy": "35.1595354549",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "MHtHDG",
+  "koTitle": "산그리메",
+  "koFilmst": "전북특별자치도 완주군 운주면, 대둔산도립공원",
+  "placeName": "대둔산도립공원",
+  "lDongRegnCd": "52",
+  "matches": [
+   {
+    "contentId": "128002",
+    "title": "대둔산도립공원(논산)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청남도 논산시 벌곡면 수락계곡길 559",
+    "mapx": "127.3091761981",
+    "mapy": "36.1404337305",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "127673",
+    "title": "대둔산도립공원(전북)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 완주군 운주면 대둔산공원길 23",
+    "mapx": "127.3328817362",
+    "mapy": "36.1170800484",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "128001",
+    "title": "대둔산도립공원(금산)",
+    "contentTypeId": "12",
+    "areaCode": "34",
+    "sigunguCode": "2",
+    "addr1": "충청남도 금산군 진산면 대둔산로 2",
+    "mapx": "127.3416665299",
+    "mapy": "36.1374586362",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "FhmdcF",
+  "koTitle": "산사의 설야 ",
+  "koFilmst": "인천광역시 강화군 길상면, 전등사",
+  "placeName": "전등사",
+  "lDongRegnCd": "28",
+  "matches": [
+   {
+    "contentId": "125534",
+    "title": "강화 전등사",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "인천광역시 강화군 길상면 전등사로 37-41",
+    "mapx": "126.4829013920",
+    "mapy": "37.6316384450",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "DinUkz",
+  "koTitle": "산정 호수",
+  "koFilmst": "경상남도 하동군 청암면, 삼성궁",
+  "placeName": "삼성궁",
+  "lDongRegnCd": "48",
+  "matches": [
+   {
+    "contentId": "3480222",
+    "title": "삼성궁1분 자연산장",
+    "contentTypeId": "39",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 하동군 청암면 청학동길 15-16",
+    "mapx": "127.7103080708",
+    "mapy": "35.2431247867",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "126631",
+    "title": "삼성궁",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 하동군 청암면 삼성궁길 13",
+    "mapx": "127.704",
+    "mapy": "35.239",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2788011",
+    "title": "삼성궁맛집 성남식당",
+    "contentTypeId": "39",
+    "areaCode": "36",
+    "sigunguCode": "18",
+    "addr1": "경상남도 하동군 청암면 청학동길 15-18",
+    "mapx": "127.7101408345",
+    "mapy": "35.2431443218",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1967407",
+    "title": "화개장터, 최참판댁부터 삼성궁까지 하동의 명물을 만나는 길",
+    "contentTypeId": "25",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "",
+    "mapx": "127.6239578457",
+    "mapy": "35.1879276769",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "QBN5Dc",
+  "koTitle": "상고대핀 양촌리",
+  "koFilmst": "충청북도 충주시 소태면, 양촌리철새전망대",
+  "placeName": "양촌리철새전망대",
+  "lDongRegnCd": "43",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "E6F3Ai",
+  "koTitle": "새해 소원",
+  "koFilmst": "서울특별시 영등포구, 선유교",
+  "placeName": "선유교",
+  "lDongRegnCd": "11",
+  "matches": [
+   {
+    "contentId": "2674968",
+    "title": "봉화선유교",
+    "contentTypeId": "12",
+    "areaCode": "35",
+    "sigunguCode": "8",
+    "addr1": "경상북도 봉화군 명호면 고계리",
+    "mapx": "128.8905258437",
+    "mapy": "36.8247474191",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "s1a97r",
+  "koTitle": "설대목 모란 전통오일장",
+  "koFilmst": "경기도 성남시 중원구, 모란민속5일장",
+  "placeName": "모란민속5일장",
+  "lDongRegnCd": "41",
+  "matches": [
+   {
+    "contentId": "132266",
+    "title": "모란민속5일장",
+    "contentTypeId": "38",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경기도 성남시 중원구 둔촌대로 68",
+    "mapx": "127.126583157027",
+    "mapy": "37.4292718823618",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "SXFxHp",
+  "koTitle": "소수서원의 설경",
+  "koFilmst": "경상북도 영주시 순흥면, 소수서원",
+  "placeName": "소수서원",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "126201",
+    "title": "영주 소수서원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 영주시 순흥면 소백로 2740",
+    "mapx": "128.5790692856",
+    "mapy": "36.9252494012",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "Rk57jc",
+  "koTitle": "송림의 아침",
+  "koFilmst": "경상북도 경주시 배동, 경주 배동 삼릉",
+  "placeName": "경주 배동 삼릉",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "128634",
+    "title": "경주 배동 삼릉",
+    "contentTypeId": "12",
+    "areaCode": "35",
+    "sigunguCode": "2",
+    "addr1": "경상북도 경주시 배동",
+    "mapx": "129.2089274882",
+    "mapy": "35.7974424048",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "bXP5Io",
+  "koTitle": "수종사의 가을",
+  "koFilmst": "경기도 남양주시 조안면, 수종사",
+  "placeName": "수종사",
+  "lDongRegnCd": "41",
+  "matches": [
+   {
+    "contentId": "129516",
+    "title": "수종사",
+    "contentTypeId": "12",
+    "areaCode": "31",
+    "sigunguCode": "9",
+    "addr1": "경기도 남양주시 조안면 북한강로433번길 186",
+    "mapx": "127.3017415319",
+    "mapy": "37.5687820481",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "utONYZ",
+  "koTitle": "순간의 찰나",
+  "koFilmst": "제주특별자치도 서귀포시 성산읍, 광치기해변",
+  "placeName": "광치기해변",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "2564158",
+    "title": "광치기해변",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "제주특별자치도 서귀포시 성산읍 고성리",
+    "mapx": "126.9246360000",
+    "mapy": "33.4515100000",
+    "exact": true,
+    "contains": true,
+    "enriched": true
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "IE6N32",
+  "koTitle": "순천 선암사의 오색빛깔 봄",
+  "koFilmst": "전남광주통합특별시 순천시 승주읍, 선암사",
+  "placeName": "선암사",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "126369",
+    "title": "선암사 [유네스코 세계유산]",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 승주읍 선암사길 450",
+    "mapx": "127.3311181522",
+    "mapy": "34.9965396644",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "126267",
+    "title": "선암사계곡",
+    "contentTypeId": "12",
+    "areaCode": "38",
+    "sigunguCode": "11",
+    "addr1": "전남광주통합특별시 순천시 승주읍 죽학리",
+    "mapx": "127.3414158254",
+    "mapy": "34.9923189536",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "128053",
+    "title": "선암사(부산)",
+    "contentTypeId": "12",
+    "areaCode": "6",
+    "sigunguCode": "7",
+    "addr1": "부산광역시 부산진구 백양산로 138",
+    "mapx": "129.0275328529",
+    "mapy": "35.1768587956",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "3xAT9t",
+  "koTitle": "신라천년의 도시의 봄",
+  "koFilmst": "경상북도 경주시 인왕동, 대릉원 일원",
+  "placeName": "대릉원 일원",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "1492402",
+    "title": "경주 대릉원 일원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 경주시 황남동",
+    "mapx": "129.2128000000",
+    "mapy": "35.8382000000",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "K37pZf",
+  "koTitle": "신비의 낙안읍성",
+  "koFilmst": "전남광주통합특별시 순천시 낙안면, 낙안읍성",
+  "placeName": "낙안읍성",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "127931",
+    "title": "순천 낙안읍성",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 낙안면 충민길 30",
+    "mapx": "127.3417276358",
+    "mapy": "34.9060616206",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "527789",
+    "title": "순천 낙안읍성 민속문화축제",
+    "contentTypeId": "15",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 낙안면 충민길 30",
+    "mapx": "127.3417276358",
+    "mapy": "34.9060616206",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "3076316",
+    "title": "낙안읍성 벚꽃길",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 낙안면 충민길 30",
+    "mapx": "127.341822652758",
+    "mapy": "34.906401074793",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "TQKzAk",
+  "koTitle": "아가페 공원의 가을",
+  "koFilmst": "전북특별자치도 익산시 황등면, 아가페정원",
+  "placeName": "아가페정원",
+  "lDongRegnCd": "52",
+  "matches": [
+   {
+    "contentId": "2783713",
+    "title": "아가페정원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 익산시 황등면 율촌길 9",
+    "mapx": "126.9561910569",
+    "mapy": "36.0198779710",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "ZXTDwv",
+  "koTitle": "아름다운 돌리네",
+  "koFilmst": "강원특별자치도 정선군 남면, 민둥산",
+  "placeName": "민둥산",
+  "lDongRegnCd": "51",
+  "matches": [
+   {
+    "contentId": "125616",
+    "title": "민둥산",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "강원특별자치도 정선군 남면 무릉리",
+    "mapx": "128.7749000000",
+    "mapy": "37.2709000000",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "HkM10e",
+  "koTitle": "안개속 대가야 고분",
+  "koFilmst": "경상북도 고령군 대가야읍, 고령 지산동 고분군",
+  "placeName": "고령 지산동 고분군",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "128038",
+    "title": "고령 지산동 고분군",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 고령군 대가야읍 지산리",
+    "mapx": "128.2534000000",
+    "mapy": "35.7263000000",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "RZL4LI",
+  "koTitle": "안개속의 낙안읍성",
+  "koFilmst": "전남광주통합특별시 순천시 낙안면, 낙안읍성",
+  "placeName": "낙안읍성",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "127931",
+    "title": "순천 낙안읍성",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 낙안면 충민길 30",
+    "mapx": "127.3417276358",
+    "mapy": "34.9060616206",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "527789",
+    "title": "순천 낙안읍성 민속문화축제",
+    "contentTypeId": "15",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 낙안면 충민길 30",
+    "mapx": "127.3417276358",
+    "mapy": "34.9060616206",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "3076316",
+    "title": "낙안읍성 벚꽃길",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 순천시 낙안면 충민길 30",
+    "mapx": "127.341822652758",
+    "mapy": "34.906401074793",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "fgfdvq",
+  "koTitle": "안동 하회마을의 봄",
+  "koFilmst": "경상북도 안동시 풍천면, 안동하회마을",
+  "placeName": "안동하회마을",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "1871081",
+    "title": "세계문화유산에 빛나는 안동하회마을",
+    "contentTypeId": "25",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "",
+    "mapx": "128.5195107989",
+    "mapy": "36.5393385272",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "8Z9SyZ",
+  "koTitle": "야간 고궁 특별함",
+  "koFilmst": "충청남도 부여군 규암면, 백제문화단지",
+  "placeName": "백제문화단지",
+  "lDongRegnCd": "44",
+  "matches": [
+   {
+    "contentId": "1103949",
+    "title": "백제문화단지",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청남도 부여군 규암면 백제문로 455",
+    "mapx": "126.906760402927",
+    "mapy": "36.3065343564356",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "HMK6uW",
+  "koTitle": "역사와 함께 깊어진 가을",
+  "koFilmst": "서울특별시 종로구 명륜3가, 문묘와 성균관",
+  "placeName": "문묘와 성균관",
+  "lDongRegnCd": "11",
+  "matches": [
+   {
+    "contentId": "126517",
+    "title": "서울 문묘와 성균관",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "서울특별시 종로구 성균관로 31 (명륜3가)",
+    "mapx": "126.996705105892",
+    "mapy": "37.5854861328543",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "SgGUHU",
+  "koTitle": "연천의 가을",
+  "koFilmst": "경기도 연천군 중면, 임진강 댑싸리공원",
+  "placeName": "임진강 댑싸리공원",
+  "lDongRegnCd": "41",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "XdKGHw",
+  "koTitle": "염전체험",
+  "koFilmst": "전남광주통합특별시 신안군 증도면, 신안 증도 태평염전",
+  "placeName": "신안 증도 태평염전",
+  "lDongRegnCd": "12",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "TlfxCN",
+  "koTitle": "영취산의 봄",
+  "koFilmst": "전남광주통합특별시 여수시 중흥동, 영취산",
+  "placeName": "영취산",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "128017",
+    "title": "영취산(여수)",
+    "contentTypeId": "12",
+    "areaCode": "38",
+    "sigunguCode": "13",
+    "addr1": "전남광주통합특별시 여수시 중흥동",
+    "mapx": "127.7140598088",
+    "mapy": "34.8167367653",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "GN6Gc3",
+  "koTitle": "오도리주상절리2",
+  "koFilmst": "경상북도 포항시 북구, 오도리주상절리",
+  "placeName": "오도리주상절리",
+  "lDongRegnCd": "47",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "Cg2yEk",
+  "koTitle": "오름의 아침",
+  "koFilmst": "제주특별자치도 제주시, 아끈다랑쉬오름",
+  "placeName": "아끈다랑쉬오름",
+  "lDongRegnCd": "50",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "5vQvob",
+  "koTitle": "용굴촛대바위와 카약",
+  "koFilmst": "강원특별자치도 삼척시 근덕면, 초곡 용굴 촛대바위길",
+  "placeName": "초곡 용굴 촛대바위길",
+  "lDongRegnCd": "48",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "7uOv2p",
+  "koTitle": "우포의 가을아침",
+  "koFilmst": "경상남도 창녕군 유어면, 창녕 우포늪",
+  "placeName": "창녕 우포늪",
+  "lDongRegnCd": "48",
+  "matches": [
+   {
+    "contentId": "126737",
+    "title": "창녕 우포늪",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 창녕군 유어면 우포늪길 220",
+    "mapx": "128.4140000000",
+    "mapy": "35.5518000000",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1966900",
+    "title": "자연을 품은 곳, 창녕 우포늪과 의령 한우산",
+    "contentTypeId": "25",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "",
+    "mapx": "128.4160595509",
+    "mapy": "35.5538680022",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "xXeYfq",
+  "koTitle": "운해를 품은 밀양 영산정사의 와불상",
+  "koFilmst": "경상남도 밀양시 무안면, 영산정사",
+  "placeName": "영산정사",
+  "lDongRegnCd": "48",
+  "matches": [
+   {
+    "contentId": "2744548",
+    "title": "밀양 영산정사",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 밀양시 무안면 가례로 233",
+    "mapx": "128.584898208206",
+    "mapy": "35.4901981030858",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "W53ZkX",
+  "koTitle": "위양지의 아침 ",
+  "koFilmst": "경상남도 밀양시 부북면, 위양못",
+  "placeName": "위양못",
+  "lDongRegnCd": "48",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "Do6EMM",
+  "koTitle": "장자도의 겨울 아침",
+  "koFilmst": "전북특별자치도 군산시 옥도면, 고군산군도",
+  "placeName": "고군산군도",
+  "lDongRegnCd": "52",
+  "matches": [
+   {
+    "contentId": "4065077",
+    "title": "고군산군도",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전북특별자치도 군산시 옥도면 대장도리",
+    "mapx": "126.4712000000",
+    "mapy": "35.8168000000",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "yy0Bky",
+  "koTitle": "제주 사계해변의 여명",
+  "koFilmst": "제주특별자치도 서귀포시 안덕면, 사계해변",
+  "placeName": "사계해변",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "2715650",
+    "title": "사계해변",
+    "contentTypeId": "12",
+    "areaCode": "39",
+    "sigunguCode": "3",
+    "addr1": "제주특별자치도 서귀포시 안덕면 사계리",
+    "mapx": "126.3084395842",
+    "mapy": "33.2282014158",
+    "exact": true,
+    "contains": true,
+    "enriched": true
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "kuMdoS",
+  "koTitle": "제주도 이른 봄의 시작",
+  "koFilmst": "제주특별자치도 서귀포시 대정읍, 송악산",
+  "placeName": "송악산",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "3013283",
+    "title": "송악산둘레길",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "제주특별자치도 서귀포시 대정읍 상모리",
+    "mapx": "126.28931",
+    "mapy": "33.204334",
+    "exact": false,
+    "contains": true,
+    "enriched": true
+   },
+   {
+    "contentId": "126672",
+    "title": "송악산",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "제주특별자치도 서귀포시 대정읍 송악관광로 421-1",
+    "mapx": "126.2903",
+    "mapy": "33.1989",
+    "exact": true,
+    "contains": true,
+    "enriched": true
+   },
+   {
+    "contentId": "2765245",
+    "title": "송악산 진지동굴",
+    "contentTypeId": "12",
+    "areaCode": "39",
+    "sigunguCode": "3",
+    "addr1": "제주특별자치도 서귀포시 대정읍 상모리 238",
+    "mapx": "126.2935109685",
+    "mapy": "33.1991210589",
+    "exact": false,
+    "contains": true,
+    "enriched": true
+   },
+   {
+    "contentId": "2765237",
+    "title": "송악산전망대",
+    "contentTypeId": "12",
+    "areaCode": "39",
+    "sigunguCode": "3",
+    "addr1": "제주특별자치도 서귀포시 대정읍 상모리 2-13",
+    "mapx": "126.2943831374",
+    "mapy": "33.1981045181",
+    "exact": false,
+    "contains": true,
+    "enriched": true
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "CHBJeW",
+  "koTitle": "제주의 일몰",
+  "koFilmst": "제주특별자치도 서귀포시 대정읍, 뿔소라공원",
+  "placeName": "뿔소라공원",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "4071128",
+    "title": "뿔소라공원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "제주특별자치도 서귀포시 대정읍 신도리 3125-5",
+    "mapx": "126.1719610000",
+    "mapy": "33.2736770000",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "nzA1iq",
+  "koTitle": "천상의 화원 소백산",
+  "koFilmst": "충청북도 단양군, 소백산국립공원",
+  "placeName": "소백산국립공원",
+  "lDongRegnCd": "43",
+  "matches": [
+   {
+    "contentId": "127670",
+    "title": "소백산국립공원(경북)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 영주시 봉현면 소백로 1794",
+    "mapx": "128.52955223390995",
+    "mapy": "36.85866631969222",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2761974",
+    "title": "소백산국립공원남천야영장",
+    "contentTypeId": "28",
+    "areaCode": "33",
+    "sigunguCode": "2",
+    "addr1": "충청북도 단양군 영춘면 남천계곡로 381-7",
+    "mapx": "128.5136476387",
+    "mapy": "37.0378491678",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "125813",
+    "title": "소백산국립공원(북부)",
+    "contentTypeId": "12",
+    "areaCode": "33",
+    "sigunguCode": "2",
+    "addr1": "충청북도 단양군 가곡면 남한강로 494",
+    "mapx": "128.3841596278",
+    "mapy": "37.0242816200",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "Ajv2qS",
+  "koTitle": "철쭉을 물든 아침의 빛",
+  "koFilmst": "경상남도 합천군, 황매산",
+  "placeName": "황매산",
+  "lDongRegnCd": "48",
+  "matches": [
+   {
+    "contentId": "126041",
+    "title": "황매산(산청)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 산청군 차황면 법평리",
+    "mapx": "127.9747000000",
+    "mapy": "35.4953000000",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1622663",
+    "title": "황매산 군립공원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 합천군 가회면 황매산공원길 331",
+    "mapx": "127.9830804848",
+    "mapy": "35.4822399582",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "3370645",
+    "title": "황매산숲속야영장",
+    "contentTypeId": "28",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 합천군 가회면 황매산공원길 263",
+    "mapx": "127.98354487892738",
+    "mapy": "35.48713945734879",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2746399",
+    "title": "황매산 억새군락지",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 합천군 가회면 둔내리",
+    "mapx": "127.9777",
+    "mapy": "35.4836",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1914082",
+    "title": "황매산 모산재",
+    "contentTypeId": "12",
+    "areaCode": "36",
+    "sigunguCode": "21",
+    "addr1": "경상남도 합천군 가회면 황매산로 607",
+    "mapx": "128.0015370114",
+    "mapy": "35.4691156475",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "PSfzKS",
+  "koTitle": "청보리밭 여명",
+  "koFilmst": "전북특별자치도 고창군 공음면, 보리나라 학원농장",
+  "placeName": "보리나라 학원농장",
+  "lDongRegnCd": "52",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "VHXh8U",
+  "koTitle": "체화정의 겨울",
+  "koFilmst": "경상북도 안동시 풍산읍, 체화정",
+  "placeName": "체화정",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "1621549",
+    "title": "안동 체화정",
+    "contentTypeId": "12",
+    "areaCode": "35",
+    "sigunguCode": "11",
+    "addr1": "경상북도 안동시 풍산읍 풍산태사로 1123-10",
+    "mapx": "128.5785885217",
+    "mapy": "36.5793584574",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "c45epf",
+  "koTitle": "폭설로 뒤덮인 속초 시내와 설악산의 해질녘",
+  "koFilmst": "강원특별자치도 속초시, 울산바위",
+  "placeName": "울산바위",
+  "lDongRegnCd": "51",
+  "matches": [
+   {
+    "contentId": "2747957",
+    "title": "[강원평화누리자전거길 16코스] 고성 울산바위비경길",
+    "contentTypeId": "28",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "강원특별자치도 고성군 토성면 잼버리로 244",
+    "mapx": "128.49657341561854",
+    "mapy": "38.222823680882556",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "125805",
+    "title": "설악산 울산바위",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "강원특별자치도 속초시 설악산로 1140-115 (설악동)",
+    "mapx": "128.474776",
+    "mapy": "38.193157",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2790003",
+    "title": "미시령옛길 울산바위 은하수",
+    "contentTypeId": "12",
+    "areaCode": "32",
+    "sigunguCode": "2",
+    "addr1": "강원특별자치도 고성군 토성면 원암리",
+    "mapx": "128.4785319190",
+    "mapy": "38.2133125360",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "38aJBy",
+  "koTitle": "표충사의 여름",
+  "koFilmst": "경상남도 밀양시 단장면, 표충사",
+  "placeName": "표충사",
+  "lDongRegnCd": "48",
+  "matches": [
+   {
+    "contentId": "250301",
+    "title": "표충사(해남)",
+    "contentTypeId": "12",
+    "areaCode": "38",
+    "sigunguCode": "23",
+    "addr1": "전남광주통합특별시 해남군 삼산면 대흥사길 400",
+    "mapx": "126.6155562159",
+    "mapy": "34.4768841031",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "127277",
+    "title": "청주 표충사",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청북도 청주시 상당구 수동로53번길 9",
+    "mapx": "127.493336450755",
+    "mapy": "36.6466399716647",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "126873",
+    "title": "조헌사당(표충사)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "충청남도 금산군 복수면 수심대길 32",
+    "mapx": "127.394898048441",
+    "mapy": "36.1639017747058",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "126174",
+    "title": "표충사(밀양)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 밀양시 단장면 표충로 1338",
+    "mapx": "128.960418",
+    "mapy": "35.532554",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2782605",
+    "title": "표충사 계곡",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상남도 밀양시 단장면 표충로 1338",
+    "mapx": "128.959361874149",
+    "mapy": "35.5331583291641",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "Dpe9EJ",
+  "koTitle": "푸른 바다목장",
+  "koFilmst": "전남광주통합특별시 완도군, 완도 매생이 양식장",
+  "placeName": "완도 매생이 양식장",
+  "lDongRegnCd": "12",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "tWaoN3",
+  "koTitle": "푸른초원의 월출산",
+  "koFilmst": "전남광주통합특별시 영암군, 월출산국립공원",
+  "placeName": "월출산국립공원",
+  "lDongRegnCd": "12",
+  "matches": [
+   {
+    "contentId": "127672",
+    "title": "월출산국립공원",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 영암군 영암읍 천황사로 280-43",
+    "mapx": "126.721720023754",
+    "mapy": "34.7752193625758",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2747100",
+    "title": "월출산국립공원 경포대지구",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 강진군 성전면 백운로 148-4",
+    "mapx": "126.709288587276",
+    "mapy": "34.7456893121542",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "1885596",
+    "title": "월출산국립공원의 절경을 감상하다",
+    "contentTypeId": "25",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "",
+    "mapx": "126.7206035229",
+    "mapy": "34.7727557463",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "gJtQtU",
+  "koTitle": "하늘에서 본 첨성대",
+  "koFilmst": "경상북도 경주시 황남동, 첨성대",
+  "placeName": "첨성대",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "126207",
+    "title": "경주 첨성대",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 경주시 첨성로 140-25",
+    "mapx": "129.2185345378",
+    "mapy": "35.8343303427",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "Avrggd",
+  "koTitle": "하늘을 걷는 시간",
+  "koFilmst": "경상북도 포항시 북구, 스페이스워크",
+  "placeName": "스페이스워크",
+  "lDongRegnCd": "47",
+  "matches": [
+   {
+    "contentId": "2784715",
+    "title": "환호공원 스페이스워크",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 포항시 북구 환호공원길 30 (환호동)",
+    "mapx": "129.3903000000",
+    "mapy": "36.0652000000",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "3551357",
+    "title": "카페 스페이스워크",
+    "contentTypeId": "39",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 포항시 북구 해안로 273 (환호동)",
+    "mapx": "129.39238890671882",
+    "mapy": "36.06504044285421",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "rMQEcP",
+  "koTitle": "한라산이 품은 차밭",
+  "koFilmst": "제주특별자치도 서귀포시 도순동, 도순다원",
+  "placeName": "도순다원",
+  "lDongRegnCd": "50",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "7PzDye",
+  "koTitle": "해운대 일몰",
+  "koFilmst": "부산광역시 해운대구, 해운대해수욕장",
+  "placeName": "해운대해수욕장",
+  "lDongRegnCd": "26",
+  "matches": [
+   {
+    "contentId": "126081",
+    "title": "해운대해수욕장",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 해운대구 해운대해변로 264",
+    "mapx": "129.160278564827",
+    "mapy": "35.1590840227225",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2929116",
+    "title": "다비치안경 해운대해수욕장입구점",
+    "contentTypeId": "38",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 해운대구 구남로 11-1 (우동)",
+    "mapx": "129.159811309804",
+    "mapy": "35.1628751551535",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "cuu41J",
+  "koTitle": "핸드폰 속으로",
+  "koFilmst": "서울특별시 서초구, 반포대교",
+  "placeName": "반포대교",
+  "lDongRegnCd": "11",
+  "matches": [
+   {
+    "contentId": "729167",
+    "title": "반포대교 달빛무지개분수",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "서울특별시 서초구 반포동",
+    "mapx": "126.9985",
+    "mapy": "37.5126",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "v3milD",
+  "koTitle": "화려한 하늘 멋진 타워",
+  "koFilmst": "충청남도 홍성군 서부면, 홍성 스카이타워",
+  "placeName": "홍성 스카이타워",
+  "lDongRegnCd": "44",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "vROs9I",
+  "koTitle": "황금빛 운석충돌구",
+  "koFilmst": "경상남도 합천군, 적중-초계분지",
+  "placeName": "적중-초계분지",
+  "lDongRegnCd": "48",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "JOVVes",
+  "koTitle": "흔적",
+  "koFilmst": "제주특별자치도 서귀포시 안덕면, 사계해변",
+  "placeName": "사계해변",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "2715650",
+    "title": "사계해변",
+    "contentTypeId": "12",
+    "areaCode": "39",
+    "sigunguCode": "3",
+    "addr1": "제주특별자치도 서귀포시 안덕면 사계리",
+    "mapx": "126.3084395842",
+    "mapy": "33.2282014158",
+    "exact": true,
+    "contains": true,
+    "enriched": true
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "n9ACFT",
+  "koTitle": "힐링 서프",
+  "koFilmst": "부산광역시 사하구 다대동, 다대포해수욕장",
+  "placeName": "다대포해수욕장",
+  "lDongRegnCd": "26",
+  "matches": [
+   {
+    "contentId": "126079",
+    "title": "다대포해수욕장",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 사하구 몰운대1길 14",
+    "mapx": "128.963151",
+    "mapy": "35.046247",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "yyL3SD",
+  "koTitle": "10월의 축제 진주남강 유등축제",
+  "koFilmst": "경상남도 진주시 본성동, 진주 남강유등축제",
+  "placeName": "진주 남강유등축제",
+  "lDongRegnCd": "48",
+  "matches": [],
+  "matchStatus": "NO_RESULT"
+ },
+ {
+  "awardContentId": "3jj2M1",
+  "koTitle": "1월 한파가 엄습한 돌문화공원",
+  "koFilmst": "제주특별자치도 제주시 조천읍, 제주돌문화공원",
+  "placeName": "제주돌문화공원",
+  "lDongRegnCd": "50",
+  "matches": [
+   {
+    "contentId": "1544730",
+    "title": "제주돌문화공원",
+    "contentTypeId": "14",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "제주특별자치도 제주시 조천읍 남조로 2023",
+    "mapx": "126.6639928720",
+    "mapy": "33.4466214020",
+    "exact": true,
+    "contains": true,
+    "enriched": true
+   }
+  ],
+  "matchStatus": "EXACT"
+ },
+ {
+  "awardContentId": "jsx6C4",
+  "koTitle": "2월 늦은 폭설이 만든 설경액자",
+  "koFilmst": "충청북도 단양군, 소백산국립공원",
+  "placeName": "소백산국립공원",
+  "lDongRegnCd": "43",
+  "matches": [
+   {
+    "contentId": "127670",
+    "title": "소백산국립공원(경북)",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "경상북도 영주시 봉현면 소백로 1794",
+    "mapx": "128.52955223390995",
+    "mapy": "36.85866631969222",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2761974",
+    "title": "소백산국립공원남천야영장",
+    "contentTypeId": "28",
+    "areaCode": "33",
+    "sigunguCode": "2",
+    "addr1": "충청북도 단양군 영춘면 남천계곡로 381-7",
+    "mapx": "128.5136476387",
+    "mapy": "37.0378491678",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "125813",
+    "title": "소백산국립공원(북부)",
+    "contentTypeId": "12",
+    "areaCode": "33",
+    "sigunguCode": "2",
+    "addr1": "충청북도 단양군 가곡면 남한강로 494",
+    "mapx": "128.3841596278",
+    "mapy": "37.0242816200",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "hxNPKJ",
+  "koTitle": "6월 바다 안개가 건물을 감싸 안은 부산 해운대의 풍경",
+  "koFilmst": "부산광역시 해운대구, 해운대",
+  "placeName": "해운대",
+  "lDongRegnCd": "",
+  "matches": [
+   {
+    "contentId": "987810",
+    "title": "해운대 동백섬",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 해운대구 동백로 67",
+    "mapx": "129.1521516870",
+    "mapy": "35.1539511410",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "4099100",
+    "title": "팔라티움 해운대 바이 소노펠리체",
+    "contentTypeId": "32",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 해운대구 구남로30번길 18 (우동)",
+    "mapx": "129.1596001550",
+    "mapy": "35.1611438623",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2786779",
+    "title": "해운대 가야밀면",
+    "contentTypeId": "39",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 해운대구 좌동순환로 27 (좌동)",
+    "mapx": "129.1663319180",
+    "mapy": "35.1688507148",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "2840308",
+    "title": "해운대식당",
+    "contentTypeId": "39",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "전남광주통합특별시 장성군 청운길 5",
+    "mapx": "126.7810957707",
+    "mapy": "35.3002469936",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   },
+   {
+    "contentId": "4011312",
+    "title": "CU 해운대마리안느점",
+    "contentTypeId": "38",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "부산광역시 해운대구 해운대해변로 310 (중동)",
+    "mapx": "129.1646660509",
+    "mapy": "35.1614458583",
+    "exact": false,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "PARTIAL"
+ },
+ {
+  "awardContentId": "yxiAjW",
+  "koTitle": "7월 고분군",
+  "koFilmst": "대구광역시 동구 불로동, 대구 불로동 고분군",
+  "placeName": "대구 불로동 고분군",
+  "lDongRegnCd": "27",
+  "matches": [
+   {
+    "contentId": "126834",
+    "title": "대구 불로동 고분군",
+    "contentTypeId": "12",
+    "areaCode": "",
+    "sigunguCode": "",
+    "addr1": "대구광역시 동구 불로동",
+    "mapx": "128.6456306294",
+    "mapy": "35.9145099760",
+    "exact": true,
+    "contains": true,
+    "enriched": false
+   }
+  ],
+  "matchStatus": "EXACT"
+ }
+]

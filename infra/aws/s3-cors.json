@@ -1,0 +1,25 @@
+{
+  "CORSRules": [
+    {
+      "ID": "soomgil-browser-media-upload",
+      "AllowedOrigins": [
+        "https://soomgil.me"
+      ],
+      "AllowedMethods": [
+        "PUT",
+        "GET",
+        "HEAD"
+      ],
+      "AllowedHeaders": [
+        "content-type",
+        "content-length",
+        "x-amz-*"
+      ],
+      "ExposeHeaders": [
+        "ETag",
+        "x-amz-request-id"
+      ],
+      "MaxAgeSeconds": 3600
+    }
+  ]
+}

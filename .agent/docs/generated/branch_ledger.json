@@ -1,7 +1,37 @@
 {
-  "generatedAt": "2026-06-23T08:10:14.982Z",
+  "generatedAt": "2026-10-14T05:10:30.373Z",
   "integrationBranch": "develop",
   "entries": [
+    {
+      "id": "20260823T230734Z-bugfix__map-collaboration-reliability-note",
+      "branch": "bugfix__map-collaboration-reliability",
+      "branchKey": "bugfix__map-collaboration-reliability",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 협업 신뢰성 보강",
+      "file": ".agent/branch-ledger/branches/bugfix__map-collaboration-reliability/20260823T230734Z-bugfix__map-collaboration-reliability-note.md"
+    },
+    {
+      "id": "20260824T102149Z-bugfix__route-tool-popover-position-note",
+      "branch": "bugfix__route-tool-popover-position",
+      "branchKey": "bugfix__route-tool-popover-position",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/bugfix__route-tool-popover-position/20260824T102149Z-bugfix__route-tool-popover-position-note.md"
+    },
+    {
+      "id": "20260907T112700Z-bugfix__settings-preferences-note",
+      "branch": "bugfix__settings-preferences",
+      "branchKey": "bugfix__settings-preferences",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "환경 설정 기능 정리 및 동작 보강",
+      "file": ".agent/branch-ledger/branches/bugfix__settings-preferences/20260907T112700Z-bugfix__settings-preferences-note.md"
+    },
     {
       "id": "20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold",
       "branch": "chore__api-contract-spec",
@@ -23,6 +53,26 @@
       "file": ".agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md"
     },
     {
+      "id": "20260823T100816Z-chore__product-policy-realignment-note",
+      "branch": "chore/product-policy-realignment",
+      "branchKey": "chore__product-policy-realignment",
+      "createdAt": "2026-08-23T10:08:16.689Z",
+      "scope": "shared",
+      "status": "active",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md"
+    },
+    {
+      "id": "20261014T044245Z-chore__readme-pptx-pptx-iread-readme",
+      "branch": "chore__readme-pptx",
+      "branchKey": "chore__readme-pptx",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "PPTX와 iRead 구성을 참고한 숨길 README 개편",
+      "file": ".agent/branch-ledger/branches/chore__readme-pptx/20261014T044245Z-chore__readme-pptx-pptx-iread-readme.md"
+    },
+    {
       "id": "20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration",
       "branch": "chore__record-api-integration-tracking",
       "branchKey": "chore__record-api-integration-tracking",
@@ -31,6 +81,36 @@
       "status": "",
       "title": "FEI-100-110 record API integration",
       "file": ".agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md"
+    },
+    {
+      "id": "20260825T031654Z-feature__community-trip-voting-community-thread-feed-and-trip-sticker-voting",
+      "branch": "feature__community-trip-voting",
+      "branchKey": "feature__community-trip-voting",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "community thread feed and trip sticker voting",
+      "file": ".agent/branch-ledger/branches/feature__community-trip-voting/20260825T031654Z-feature__community-trip-voting-community-thread-feed-and-trip-sticker-voting.md"
+    },
+    {
+      "id": "20260913T165524Z-feature__community-trip-voting-vote-region-selection-and-candidate-count",
+      "branch": "feature__community-trip-voting",
+      "branchKey": "feature__community-trip-voting",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "vote region selection and candidate count",
+      "file": ".agent/branch-ledger/branches/feature__community-trip-voting/20260913T165524Z-feature__community-trip-voting-vote-region-selection-and-candidate-count.md"
+    },
+    {
+      "id": "implementation",
+      "branch": "feature__feed-slide-polish",
+      "branchKey": "feature__feed-slide-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "홈 배치 및 커뮤니티 슬라이드",
+      "file": ".agent/branch-ledger/branches/feature__feed-slide-polish/implementation.md"
     },
     {
       "id": "20260623T003736Z-feature__frontend-api-integration-fei-141-180-fei-141-180-frontend-api-integration",
@@ -93,6 +173,286 @@
       "file": ".agent/branch-ledger/branches/feature__home-api-integration/20260622T115949Z-feature__home-api-integration-api-ui-ux.md"
     },
     {
+      "id": "20260915T130850Z-feature__home-award-background-note",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "홈 수상작 배경 재설계",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260915T130850Z-feature__home-award-background-note.md"
+    },
+    {
+      "id": "20260916-community-magazine",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "커뮤니티 화이트 매거진",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-community-magazine.md"
+    },
+    {
+      "id": "20260916-develop-integration",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "develop integration (2026-09-16)",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-develop-integration.md"
+    },
+    {
+      "id": "20260916-home-search-position",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "홈 검색 위치 조정",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-home-search-position.md"
+    },
+    {
+      "id": "20260916-map-voting-record-retirement",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "기록 기능 폐지와 지도 투표·테마 통합",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-map-voting-record-retirement.md"
+    },
+    {
+      "id": "20260916-member-profiles",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "멤버 프로필 및 설정 정리",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-member-profiles.md"
+    },
+    {
+      "id": "20260916-paper-search-results",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "홈 검색 단순화와 검색 결과 테마 통일",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-paper-search-results.md"
+    },
+    {
+      "id": "20260916-route-hide-header",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 공통 헤더 숨김",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-hide-header.md"
+    },
+    {
+      "id": "20260916-route-interactions",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 작업공간 상호작용 개선 (2026-09-16)",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-interactions.md"
+    },
+    {
+      "id": "20260916-route-navigation-controls",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 복귀 위치 및 관리 버튼 크기",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-navigation-controls.md"
+    },
+    {
+      "id": "20260916-route-single-header",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 이중 헤더 제거",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-single-header.md"
+    },
+    {
+      "id": "20260916-route-sky-theme",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 스카이 테마",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-sky-theme.md"
+    },
+    {
+      "id": "20260916-route-visible-info",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "여행정보 및 참가자 상시 표시",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-visible-info.md"
+    },
+    {
+      "id": "20260916-route-workspace-bar",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 여행방 바와 일정 전용 좌측 패널",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-route-workspace-bar.md"
+    },
+    {
+      "id": "20260916-shared-header",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "공통 화이트 헤더",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-shared-header.md"
+    },
+    {
+      "id": "20260916-sky-palette",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "스카이 컬러 테마",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-sky-palette.md"
+    },
+    {
+      "id": "20260916-swipe-design",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "취향 수집: 내 여행 스타일 통일 (2026-09-16)",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-swipe-design.md"
+    },
+    {
+      "id": "20260916-travel-album",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "내 여행 화이트 앨범",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-travel-album.md"
+    },
+    {
+      "id": "20260916-trip-settings-refinement",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "여행 카드 탐색 및 설정 모달 후속",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-trip-settings-refinement.md"
+    },
+    {
+      "id": "20260916-vote-design-cache",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 스타일 캐싱과 투표 모달 개편 (2026-09-16)",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-vote-design-cache.md"
+    },
+    {
+      "id": "20260916-white-ink-gallery",
+      "branch": "feature__home-award-background",
+      "branchKey": "feature__home-award-background",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "화이트 먹 번짐 홈",
+      "file": ".agent/branch-ledger/branches/feature__home-award-background/20260916-white-ink-gallery.md"
+    },
+    {
+      "id": "20260924T134636Z-feature__landing-copy-refresh-note",
+      "branch": "feature__landing-copy-refresh",
+      "branchKey": "feature__landing-copy-refresh",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "랜딩 문구와 취향 토스트 프론트엔드 포인터",
+      "file": ".agent/branch-ledger/branches/feature__landing-copy-refresh/20260924T134636Z-feature__landing-copy-refresh-note.md"
+    },
+    {
+      "id": "20260917T021158Z-feature__map-action-polish-note",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "작업 기록",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/20260917T021158Z-feature__map-action-polish-note.md"
+    },
+    {
+      "id": "map-management-refinement",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 관리 및 취향 UI 개선",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/map-management-refinement.md"
+    },
+    {
+      "id": "map-taste-view",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 취향 보기 · 투표 안내 축소",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/map-taste-view.md"
+    },
+    {
+      "id": "mypage-cache-and-ui-locale",
+      "branch": "feature__map-action-polish",
+      "branchKey": "feature__map-action-polish",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "마이페이지 캐시와 UI 언어 일관성",
+      "file": ".agent/branch-ledger/branches/feature__map-action-polish/mypage-cache-and-ui-locale.md"
+    },
+    {
+      "id": "20260823T170038Z-feature__map-collaboration-objects-note",
+      "branch": "feature__map-collaboration-objects",
+      "branchKey": "feature__map-collaboration-objects",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "지도 협업 오브젝트 구현",
+      "file": ".agent/branch-ledger/branches/feature__map-collaboration-objects/20260823T170038Z-feature__map-collaboration-objects-note.md"
+    },
+    {
+      "id": "20260918T153429Z-feature__onboarding-preference-map-tour",
+      "branch": "feature__onboarding-preference-map-tour",
+      "branchKey": "feature__onboarding-preference-map-tour",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "신규 사용자 취향 온보딩과 지도 섹션 안내",
+      "file": ".agent/branch-ledger/branches/feature__onboarding-preference-map-tour/20260918T153429Z-feature__onboarding-preference-map-tour.md"
+    },
+    {
       "id": "20260620T023313Z-feature__place-search-detail-tag-statistics-policy",
       "branch": "feature__place-search-detail",
       "branchKey": "feature__place-search-detail",
@@ -121,6 +481,16 @@
       "status": "",
       "title": "KTO swipe feed runtime integration",
       "file": ".agent/branch-ledger/branches/feature__place-search-detail/20260621T080741Z-feature__place-search-detail-kto-swipe-feed.md"
+    },
+    {
+      "id": "20260910T035310Z-feature__planning-collision-protection-note",
+      "branch": "feature__planning-collision-protection",
+      "branchKey": "feature__planning-collision-protection",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "메모 동시 수정 충돌 방지",
+      "file": ".agent/branch-ledger/branches/feature__planning-collision-protection/20260910T035310Z-feature__planning-collision-protection-note.md"
     },
     {
       "id": "20260623T072024Z-feature__product-fix-workboard-non-trip-note",
@@ -161,6 +531,16 @@
       "status": "",
       "title": "FEI-120 and FEI-121: HomePage API Integration",
       "file": ".agent/branch-ledger/branches/feature__route-api-integration/20260622T104801Z-feature__route-api-integration-fei-120-and-fei-121-homepage-api-integration.md"
+    },
+    {
+      "id": "20260916T131417Z-feature__swipe-card-details-note",
+      "branch": "feature__swipe-card-details",
+      "branchKey": "feature__swipe-card-details",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "취향 수집 사진 탐색과 애니메이션, 홈 상단 검색, 인기 여행기 캐러셀",
+      "file": ".agent/branch-ledger/branches/feature__swipe-card-details/20260916T131417Z-feature__swipe-card-details-note.md"
     },
     {
       "id": "20260618T065800Z-feature__trip-basic-access-note",

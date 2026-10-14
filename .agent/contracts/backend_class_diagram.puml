@@ -65,8 +65,6 @@ package "auth" {
     class "FindUserRolesQueryHandler" as auth_application_handler_FindUserRolesQueryHandler
     class "GetCurrentUserQueryHandler" as auth_application_handler_GetCurrentUserQueryHandler
     class "ListPoliciesQueryHandler" as auth_application_handler_ListPoliciesQueryHandler
-    class "ListSecurityEventsQueryHandler" as auth_application_handler_ListSecurityEventsQueryHandler
-    class "ListSessionsQueryHandler" as auth_application_handler_ListSessionsQueryHandler
     class "LoginCommandHandler" as auth_application_handler_LoginCommandHandler
     class "LogoutCommandHandler" as auth_application_handler_LogoutCommandHandler
     class "OAuthLoginCommandHandler" as auth_application_handler_OAuthLoginCommandHandler
@@ -75,7 +73,6 @@ package "auth" {
     class "RegisterCommandHandler" as auth_application_handler_RegisterCommandHandler
     class "RequestPasswordResetCommandHandler" as auth_application_handler_RequestPasswordResetCommandHandler
     class "ResetPasswordCommandHandler" as auth_application_handler_ResetPasswordCommandHandler
-    class "RevokeSessionCommandHandler" as auth_application_handler_RevokeSessionCommandHandler
     class "SendEmailVerificationCommandHandler" as auth_application_handler_SendEmailVerificationCommandHandler
     class "VerifyEmailCommandHandler" as auth_application_handler_VerifyEmailCommandHandler
   }
@@ -107,7 +104,6 @@ package "auth" {
     class "PasswordCredentialMapper" as auth_infrastructure_persistence_PasswordCredentialMapper
     class "PasswordResetTokenMapper" as auth_infrastructure_persistence_PasswordResetTokenMapper
     class "PolicyDocumentMapper" as auth_infrastructure_persistence_PolicyDocumentMapper
-    class "SecurityEventMapper" as auth_infrastructure_persistence_SecurityEventMapper
     class "UserMapper" as auth_infrastructure_persistence_UserMapper
     class "UserPolicyAcceptanceMapper" as auth_infrastructure_persistence_UserPolicyAcceptanceMapper
     class "UserProfileMapper" as auth_infrastructure_persistence_UserProfileMapper
@@ -639,8 +635,6 @@ package "user" {
     class "UpdateMySettingsCommandHandler" as user_application_handler_UpdateMySettingsCommandHandler
   }
   package "application.service" {
-    class "ActiveOwnerTripChecker" as user_application_service_ActiveOwnerTripChecker
-    class "TripActiveOwnerTripChecker" as user_application_service_TripActiveOwnerTripChecker
   }
   package "domain.model" {
     class "UserException" as user_domain_model_UserException

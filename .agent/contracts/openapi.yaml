@@ -5,6 +5,7 @@ info:
   description: >
     숨길(Soomgil) V1 백엔드 REST API 협의 초안입니다.
     근거 문서: .agent/docs/product-specs/service_requirements.md,
+    .agent/docs/product-specs/product_experience_policy.md,
     .agent/contracts/backend_contract_decisions.md, .agent/contracts/schema.dbml.
     미확정 사항은 TODO 또는 확인 필요로 표시했습니다.
 servers:
@@ -22,16 +23,98 @@ tags:
   - name: Trips
   - name: Places
   - name: Swipe
+    description: Migration-only legacy swipe endpoints.
+  - name: Preference
+  - name: TripVote
   - name: Itinerary
   - name: Planning
   - name: Chat
   - name: AI
-  - name: Records
   - name: Media
   - name: Community
   - name: Notifications
   - name: Admin
 paths:
+  /onboarding/preference-survey:
+    get:
+      tags: [Preference]
+      summary: 회원가입 관광지 10개 조회
+      operationId: getOnboardingPreferenceSurvey
+      responses:
+        '200':
+          description: Active survey with exactly 10 ordered places
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingPreferenceSurvey'
+  /onboarding/preference-survey/responses:
+    put:
+      tags: [Preference]
+      summary: 회원가입 관광지 10개 평가 완료
+      operationId: completeOnboardingPreferenceSurvey
+      description: 모든 10개 장소의 LIKE 또는 NOPE 응답을 원자적으로 저장한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteOnboardingPreferenceSurveyRequest'
+      responses:
+        '200':
+          description: Onboarding completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingPreferenceCompletion'
+  /home/place-background:
+    get:
+      tags: [Preference]
+      summary: 홈 관광지 배경 조회
+      operationId: getHomePlaceBackground
+      responses:
+        '200':
+          description: Place background card
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /places/{provider}/{externalPlaceId}/preference-reaction:
+    parameters:
+      - $ref: '#/components/parameters/provider'
+      - $ref: '#/components/parameters/externalPlaceId'
+    put:
+      tags: [Preference]
+      summary: 장소 선호 반응 저장
+      operationId: upsertPreferenceReaction
+      description: ONBOARDING source multiplier는 3.0, HOME_BACKGROUND와 TRIP_VOTE는 1.0이다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [source, reaction]
+              properties:
+                source:
+                  type: string
+                  enum: [ONBOARDING, HOME_BACKGROUND, TRIP_VOTE]
+                reaction:
+                  type: string
+                  enum: [LIKE, NOPE, SUPER_LIKE]
+                sourceResourceId:
+                  type: string
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags: [Preference]
+      summary: 장소 선호 반응 취소
+      operationId: removePreferenceReaction
+      description: 제거 이벤트를 남기고 현재 반응 상태를 해제한다.
+      responses:
+        '204':
+          description: Removed
   /auth/register:
     post:
       tags: [Auth]
@@ -316,18 +399,17 @@ paths:
           $ref: '#/components/responses/ValidationError'
     delete:
       tags: [Me]
-      summary: 계정 삭제 예약
+      summary: 계정 즉시 탈퇴
       operationId: requestAccountDeletion
       description: >
-        auth.users.status=PENDING_DELETION과 deletion_requested_at/deletion_scheduled_at에 대응한다.
-        즉시 hard delete하지 않는다. 요청자가 owner_user_id인 활성 여행방이 있으면 MVP에서는 OWNER 이관이 없으므로 409를 반환하고 삭제 예약을 차단한다.
+        auth.users.status를 즉시 DELETED로 전환하고 세션·인증 수단을 폐기하며 개인정보를 익명화한다.
+        소유한 여행방은 가장 먼저 참여한 활성 구성원에게 이전하고, 다른 활성 구성원이 없으면 함께 삭제한다.
+        이후 사용자의 모든 활성 여행방 멤버십을 LEFT로 전환한다.
       responses:
-        '202':
-          description: Accepted
+        '204':
+          description: No Content
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '409':
-          $ref: '#/components/responses/Conflict'
   /me/settings:
     get:
       tags: [Me]
@@ -357,51 +439,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserSettings'
-  /me/sessions:
-    get:
-      tags: [Me]
-      summary: 내 로그인 세션 목록
-      operationId: listMySessions
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedUserSession'
-  /me/sessions/{sessionId}:
-    delete:
-      tags: [Me]
-      summary: 특정 로그인 세션 revoke
-      operationId: revokeMySession
-      parameters:
-        - name: sessionId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '204':
-          description: No Content
-  /me/security-events:
-    get:
-      tags: [Me]
-      summary: 내 보안 이벤트 조회
-      operationId: listMySecurityEvents
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedSecurityEvent'
   /users:
     get:
       tags: [Users]
@@ -630,6 +667,176 @@ paths:
                 $ref: '#/components/schemas/SimplifiedCoordinates'
         '422':
           $ref: '#/components/responses/ValidationError'
+  /trips/{tripId}/vote-sessions/current:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+    get:
+      tags: [TripVote]
+      summary: 여행 방 진입 화면 판정과 현재 투표 상태
+      operationId: getCurrentTripVoteSession
+      description: >-
+        프론트 라우터 가드가 사용하는 단일 진입점이다. 서버가 세션 상태와 참여 상태를 조합해
+        nextScreen(VOTE, WAITING, MAP)을 계산하므로 클라이언트는 이 값만 보고 분기한다.
+        세션이 없거나 요청자가 참여자가 아니면 MAP을 반환한다.
+      responses:
+        '200':
+          description: Vote gate state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripVoteSessionState'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /trips/{tripId}/vote-sessions:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+    post:
+      tags: [TripVote]
+      summary: 투표 시작
+      operationId: openTripVoteSession
+      description: >-
+        방장만 호출할 수 있다. 시작 시점의 활성 참여자 전원을 투표 참여자로 확정하고,
+        여행 지역과 참여자 누적 취향으로 만든 추천 후보를 세션 snapshot으로 고정한다.
+        stickerAllowance와 selectionCount는 시작 후 변경할 수 없고 후보 수를 넘을 수 없다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenVoteSessionRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripVoteSessionDetail'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: ProblemDetails(code=VOTE_SESSION_ALREADY_OPEN)
+        '422':
+          description: ProblemDetails(code=VOTE_CANDIDATE_POOL_INSUFFICIENT)
+  /trips/{tripId}/vote-sessions/{sessionId}/my-stickers:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+      - name: sessionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    put:
+      tags: [TripVote]
+      summary: 내 스티커 배치 저장
+      operationId: saveMyVoteStickers
+      description: >-
+        부분 변경이 아니라 현재 배치 전체를 보내는 snapshot 방식이다. 목록에서 빠진 후보는
+        스티커가 회수된 것으로 처리되므로 이동과 회수를 별도 API 없이 표현한다.
+        한 후보에 여러 개를 몰아 붙일 수 있고 총합은 지급량을 넘을 수 없다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveVoteStickersRequest'
+      responses:
+        '200':
+          description: Saved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyVoteStickerState'
+        '403':
+          description: ProblemDetails(code=VOTE_NOT_PARTICIPANT)
+        '409':
+          description: ProblemDetails(code=VOTE_ALREADY_SUBMITTED or VOTE_SESSION_CLOSED)
+        '422':
+          description: ProblemDetails(code=VOTE_STICKER_ALLOWANCE_EXCEEDED or VOTE_CANDIDATE_NOT_FOUND)
+  /trips/{tripId}/vote-sessions/{sessionId}/my-submission:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+      - name: sessionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    post:
+      tags: [TripVote]
+      summary: 내 투표 제출
+      operationId: submitMyVote
+      description: >-
+        제출 후에는 수정할 수 없다. 이 제출로 모든 활성 참여자가 제출을 마치면 서버가 같은
+        transaction 안에서 세션을 자동 종료하고 결과를 확정한다.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitVoteRequest'
+      responses:
+        '200':
+          description: Submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripVoteSessionState'
+        '403':
+          description: ProblemDetails(code=VOTE_NOT_PARTICIPANT)
+        '409':
+          description: ProblemDetails(code=VOTE_ALREADY_SUBMITTED or VOTE_SESSION_CLOSED)
+  /trips/{tripId}/vote-sessions/{sessionId}/completion:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+      - name: sessionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    post:
+      tags: [TripVote]
+      summary: 방장 조기 종료
+      operationId: closeTripVoteSession
+      description: >-
+        방장만 호출할 수 있다. 미투표 참여자가 있으면 acknowledgeUnvotedParticipants가 true여야 한다.
+        이미 종료된 세션에 호출해도 실패가 아니라 같은 결과를 반환하는 멱등 연산이다.
+        종료 전이와 결과 반영이 모두 조건부 UPDATE로 보호되어 재시도해도 일정과 취향이 중복 반영되지 않는다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseVoteSessionRequest'
+      responses:
+        '200':
+          description: Completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripVoteSessionResult'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          description: ProblemDetails(code=VOTE_UNVOTED_PARTICIPANTS_NOT_ACKNOWLEDGED)
+  /trips/{tripId}/vote-sessions/{sessionId}/result:
+    parameters:
+      - $ref: '#/components/parameters/tripId'
+      - name: sessionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [TripVote]
+      summary: 투표 결과 조회
+      operationId: getTripVoteSessionResult
+      description: >-
+        종료된 세션만 조회할 수 있다. 진행 중 세션의 중간 집계는 노출하지 않는다.
+        선정된 관광지는 일차 미정 일정에 추가되며 이미 일정에 있던 관광지는 SKIPPED_DUPLICATE로 표시된다.
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripVoteSessionResult'
+        '404':
+          description: ProblemDetails(code=VOTE_SESSION_NOT_FOUND)
   /trips:
     get:
       tags: [Trips]
@@ -848,6 +1055,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/provider'
         - $ref: '#/components/parameters/externalPlaceId'
+        - name: includeInfo
+          in: query
+          description: false이면 이용·접근성 상세 정보 호출을 생략한다. 사진과 기본 장소 정보는 반환한다.
+          schema:
+            type: boolean
+            default: true
       responses:
         '200':
           description: OK
@@ -897,9 +1110,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/SwipeFeedResponse'
   /places/{provider}/{externalPlaceId}/swipe-reaction:
+    get:
+      tags: [Preference]
+      summary: 현재 사용자의 장소 반응 조회
+      operationId: getMyPlaceReaction
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema: { type: string }
+        - name: externalPlaceId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 저장된 반응. 미선택은 null.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reaction:
+                    type: string
+                    nullable: true
+                    enum: [NOPE, LIKE, SUPER_LIKE]
     put:
       tags: [Swipe]
       summary: 최종 스와이프 반응 upsert
+      deprecated: true
       operationId: upsertSwipeReaction
       parameters:
         - $ref: '#/components/parameters/provider'
@@ -965,6 +1204,50 @@ paths:
           description: No Content
         '404':
           $ref: '#/components/responses/NotFound'
+  /trips/{tripId}/preference-places:
+    get:
+      tags: [Places]
+      summary: 여행 멤버가 실제 좋아한 지도 관광지
+      operationId: listTripPreferencePlaces
+      description: >
+        ACTIVE 여행 멤버만 조회할 수 있다. DB에 저장된 KTO 관광지 최대 200개의
+        LIKE/SUPER_LIKE 반응을 반환하며 외부 관광 API를 호출하지 않는다.
+        본인, PUBLIC 프로필, 승인된 팔로워에게 공개되는 PRIVATE 프로필만 포함한다.
+        지도 이동만으로 재호출하지 않고 열기 또는 이 지역 다시 찾기로 갱신한다.
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - name: bbox
+          in: query
+          required: true
+          description: 서쪽,남쪽,동쪽,북쪽 경위도. 날짜변경선을 가로지르지 않는다.
+          schema: { type: string }
+      responses:
+        '200':
+          description: 장소별로 각 멤버의 최종 긍정 반응 한 행씩 반환
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required: [provider, externalPlaceId, name, lat, lng, userId, displayName, reaction]
+                  properties:
+                    provider: { type: string, enum: [KTO] }
+                    externalPlaceId: { type: string }
+                    name: { type: string }
+                    address: { type: string, nullable: true }
+                    lat: { type: number, format: double }
+                    lng: { type: number, format: double }
+                    thumbnailUrl: { type: string, nullable: true }
+                    category: { type: string, nullable: true }
+                    userId: { type: string, format: uuid }
+                    displayName: { type: string }
+                    profileImageUrl: { type: string, nullable: true }
+                    reaction: { type: string, enum: [LIKE, SUPER_LIKE] }
+        '400':
+          description: 지도 범위가 올바르지 않음
+        '403':
+          description: 여행방 접근 권한 없음
   /trips/{tripId}/place-recommendations:
     get:
       tags: [Places]
@@ -1290,7 +1573,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/drawingId'
-        - $ref: '#/components/parameters/websocketSessionId'
+        - name: X-Soomgil-WebSocket-Session-Id
+          in: header
+          required: true
+          description: 현재 사용자가 소유하고 대상 drawing의 15초 lease를 획득한 WebSocket session ID.
+          schema:
+            type: string
+            maxLength: 120
       requestBody:
         required: true
         content:
@@ -1311,13 +1600,40 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/drawingId'
-        - $ref: '#/components/parameters/websocketSessionId'
+        - name: X-Soomgil-WebSocket-Session-Id
+          in: header
+          required: true
+          description: 현재 사용자가 소유하고 대상 drawing의 15초 lease를 획득한 WebSocket session ID.
+          schema:
+            type: string
+            maxLength: 120
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/VersionedCommandRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItineraryMutationResponse'
+  /trips/{tripId}/map-drawings/batch-delete:
+    post:
+      tags: [Itinerary]
+      summary: 지우개 경로의 지도 오브젝트 일괄 삭제
+      operationId: deleteMapDrawings
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - $ref: '#/components/parameters/websocketSessionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteMapDrawingsRequest'
       responses:
         '200':
           description: OK
@@ -1371,15 +1687,16 @@ paths:
                 $ref: '#/components/schemas/CollaborationActionResponse'
         '409':
           $ref: '#/components/responses/Conflict'
-  /trips/{tripId}/notes:
+  /trips/{tripId}/planning/notes:
     get:
       tags: [Planning]
-      summary: 메모 목록 조회
-      operationId: listNotes
+      summary: scope별 메모 조회
+      operationId: getNote
       parameters:
         - $ref: '#/components/parameters/tripId'
         - name: scopeType
           in: query
+          required: true
           schema:
             $ref: '#/components/schemas/PlanningScopeType'
         - name: itineraryDayId
@@ -1393,16 +1710,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Note'
+                $ref: '#/components/schemas/Note'
+        '204':
+          description: 해당 scope에 메모 없음
     put:
       tags: [Planning]
       summary: scope별 메모 upsert
       operationId: upsertNote
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1416,7 +1732,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/notes/{noteId}:
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /trips/{tripId}/planning/notes/{noteId}:
     delete:
       tags: [Planning]
       summary: 메모 삭제
@@ -1429,21 +1747,18 @@ paths:
           schema:
             type: string
             format: uuid
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VersionedCommandRequest'
+              $ref: '#/components/schemas/DeleteNoteRequest'
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists:
+        '204':
+          description: No Content
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /trips/{tripId}/planning/checklists:
     get:
       tags: [Planning]
       summary: 체크리스트 목록 조회
@@ -1474,7 +1789,6 @@ paths:
       operationId: upsertChecklist
       parameters:
         - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1488,7 +1802,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items:
+  /trips/{tripId}/planning/checklists/{checklistId}:
+    delete:
+      tags: [Planning]
+      summary: 체크리스트 삭제
+      operationId: deleteChecklist
+      parameters:
+        - $ref: '#/components/parameters/tripId'
+        - $ref: '#/components/parameters/checklistId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanningMutationResponse'
+  /trips/{tripId}/planning/checklists/{checklistId}/items:
     post:
       tags: [Planning]
       summary: 체크리스트 항목 생성
@@ -1496,7 +1825,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1510,7 +1838,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items/{itemId}:
+  /trips/{tripId}/planning/checklists/{checklistId}/items/{itemId}:
     patch:
       tags: [Planning]
       summary: 체크리스트 항목 수정
@@ -1519,7 +1847,6 @@ paths:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
         - $ref: '#/components/parameters/itemId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1541,21 +1868,10 @@ paths:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
         - $ref: '#/components/parameters/itemId'
-        - $ref: '#/components/parameters/websocketSessionId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VersionedCommandRequest'
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items/reorder:
+        '204':
+          description: No Content
+  /trips/{tripId}/planning/checklists/{checklistId}/items/order:
     put:
       tags: [Planning]
       summary: 체크리스트 항목 재정렬
@@ -1563,7 +1879,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1577,18 +1892,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PlanningMutationResponse'
-  /trips/{tripId}/checklists/{checklistId}/items/{itemId}/member-statuses/{userId}:
-    put:
+  /trips/{tripId}/planning/checklists/{checklistId}/items/{itemId}/members/me:
+    patch:
       tags: [Planning]
       summary: 체크리스트 멤버별 완료 상태 변경
       operationId: updateChecklistMemberStatus
-      description: MVP에서는 현재 사용자 본인의 member status만 수정할 수 있다. userId가 현재 사용자와 다르면 403을 반환한다.
+      description: 현재 인증 사용자의 member status만 수정한다.
       parameters:
         - $ref: '#/components/parameters/tripId'
         - $ref: '#/components/parameters/checklistId'
         - $ref: '#/components/parameters/itemId'
-        - $ref: '#/components/parameters/userId'
-        - $ref: '#/components/parameters/websocketSessionId'
       requestBody:
         required: true
         content:
@@ -1714,166 +2027,6 @@ paths:
                 $ref: '#/components/schemas/AiMessageResponse'
         '409':
           $ref: '#/components/responses/Conflict'
-  /records/photos:
-    get:
-      tags: [Records]
-      summary: 내가 참여한 모든 여행방의 기록 사진 모아보기
-      operationId: listMyTripRecordPhotos
-      description: 현재 사용자가 active member로 참여 중인 모든 여행방의 기록 사진을 모아 반환한다. 기록 CRUD는 trip scoped endpoint를 사용한다.
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/sort'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedTripRecordPhoto'
-  /records/photos/{mediaFileId}/read-url:
-    get:
-      tags: [Records]
-      summary: 여행 기록 사진 읽기 URL 재발급
-      operationId: refreshTripRecordPhotoReadUrl
-      description: 현재 사용자가 접근 가능한 활성 여행 기록 사진의 읽기 URL을 반환한다. 비공개 사진은 30분 만료 signed URL을 새로 발급한다.
-      parameters:
-        - name: mediaFileId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripRecordPhotoReadUrl'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /records/photo-summaries:
-    post:
-      tags: [Records]
-      summary: 여러 여행방의 기록 사진 요약 조회
-      operationId: summarizeMyTripRecordPhotos
-      description: 요청한 여행방별 기록 사진 개수와 대표 사진을 한 번에 집계한다. 모든 여행방에 대한 접근 권한이 있어야 한다.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TripRecordPhotoSummaryRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripRecordPhotoSummaryResponse'
-        '400':
-          $ref: '#/components/responses/ValidationError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-  /trips/{tripId}/records/photos:
-    get:
-      tags: [Records]
-      summary: 여행방별 기록 사진 조회
-      operationId: listTripRecordPhotos
-      parameters:
-        - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/sort'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedTripRecordPhoto'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-  /trips/{tripId}/records:
-    get:
-      tags: [Records]
-      summary: 여행 기록 목록
-      operationId: listTripRecords
-      parameters:
-        - $ref: '#/components/parameters/tripId'
-        - name: itineraryDayId
-          in: query
-          schema:
-            type: string
-            format: uuid
-        - name: itineraryItemId
-          in: query
-          schema:
-            type: string
-            format: uuid
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/size'
-        - $ref: '#/components/parameters/sort'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PagedTripRecordEntry'
-    post:
-      tags: [Records]
-      summary: 여행 기록 생성
-      operationId: createTripRecord
-      parameters:
-        - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/idempotencyKey'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateTripRecordRequest'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripRecordEntry'
-  /trips/{tripId}/records/{recordId}:
-    patch:
-      tags: [Records]
-      summary: 여행 기록 수정
-      operationId: updateTripRecord
-      description: uploader만 수정할지 여행방 소유자도 가능한지 확인 필요.
-      parameters:
-        - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/recordId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTripRecordRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TripRecordEntry'
-    delete:
-      tags: [Records]
-      summary: 여행 기록 삭제
-      operationId: deleteTripRecord
-      parameters:
-        - $ref: '#/components/parameters/tripId'
-        - $ref: '#/components/parameters/recordId'
-      responses:
-        '204':
-          description: No Content
   /media/upload-urls:
     post:
       tags: [Media]
@@ -1925,11 +2078,225 @@ paths:
       responses:
         '204':
           description: No Content
+  /community/threads:
+    get:
+      tags: [Community]
+      summary: 커뮤니티 공개 피드 조회
+      operationId: listCommunityThreads
+      description: >-
+        공개 API이므로 인증 없이 호출할 수 있다. 비로그인 조회에서는 likedByMe와 editableByMe가 항상 false다.
+        삭제되거나 숨김 처리된 쓰레드는 목록에서 제외한다. 정렬은 createdAt desc, id desc로 고정한다.
+      parameters:
+        - name: authorId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: query
+          in: query
+          schema: { type: string }
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: Thread page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedCommunityThread'
+    post:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 작성
+      operationId: createCommunityThread
+      description: 본문 1~500자, 이미지 0~4장. 이미지는 요청자 소유의 ACTIVE media만 연결할 수 있다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommunityThreadRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThread'
+        '403':
+          description: ProblemDetails(code=MEDIA_LINK_FORBIDDEN)
+        '422':
+          description: ProblemDetails(code=THREAD_MEDIA_LIMIT_EXCEEDED)
+  /community/threads/{threadId}:
+    parameters:
+      - name: threadId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 상세
+      operationId: getCommunityThread
+      description: 삭제되거나 숨김 처리된 쓰레드는 존재를 은닉하기 위해 404로 응답한다.
+      responses:
+        '200':
+          description: Thread
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThread'
+        '404':
+          description: ProblemDetails(code=THREAD_NOT_FOUND)
+    patch:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 수정
+      operationId: updateCommunityThread
+      description: 작성자만 수정할 수 있다. mediaFileIds를 생략하면 기존 첨부를 유지하고, 값을 보내면 전체 교체한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommunityThreadRequest'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThread'
+        '403':
+          description: ProblemDetails(code=THREAD_AUTHOR_REQUIRED)
+        '404':
+          description: ProblemDetails(code=THREAD_NOT_FOUND)
+    delete:
+      tags: [Community]
+      summary: 커뮤니티 쓰레드 삭제
+      operationId: deleteCommunityThread
+      description: 작성자만 삭제할 수 있고 soft delete로 처리한다. 삭제 후에는 tombstone으로만 남는다.
+      responses:
+        '204':
+          description: Deleted
+        '403':
+          description: ProblemDetails(code=THREAD_AUTHOR_REQUIRED)
+  /community/threads/{threadId}/replies:
+    parameters:
+      - name: threadId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Community]
+      summary: 쓰레드 답글 목록
+      operationId: listCommunityThreadReplies
+      description: >-
+        page 단위는 root 답글이며 각 root 답글의 1단계 하위 답글은 replies에 포함되지만 page 계산에는 넣지 않는다.
+        정렬은 createdAt asc, id asc로 고정한다.
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/size'
+      responses:
+        '200':
+          description: Reply page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedCommunityThreadReply'
+    post:
+      tags: [Community]
+      summary: 쓰레드 답글 작성
+      operationId: createCommunityThreadReply
+      description: parentReplyId를 지정하면 1단계 하위 답글이 된다. 이미 1단계인 답글을 부모로 지정하면 거절한다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommunityThreadReplyRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThreadReply'
+        '422':
+          description: ProblemDetails(code=THREAD_REPLY_DEPTH_EXCEEDED)
+  /community/threads/{threadId}/replies/{replyId}:
+    parameters:
+      - name: threadId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+      - name: replyId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    patch:
+      tags: [Community]
+      summary: 쓰레드 답글 수정
+      operationId: updateCommunityThreadReply
+      description: 답글 작성자만 수정할 수 있다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCommunityThreadReplyRequest'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThreadReply'
+        '403':
+          description: ProblemDetails(code=THREAD_AUTHOR_REQUIRED)
+    delete:
+      tags: [Community]
+      summary: 쓰레드 답글 삭제
+      operationId: deleteCommunityThreadReply
+      description: 답글 작성자와 쓰레드 작성자가 삭제할 수 있다. soft delete로 처리해 tombstone을 남긴다.
+      responses:
+        '204':
+          description: Deleted
+        '403':
+          description: ProblemDetails(code=THREAD_AUTHOR_REQUIRED)
+  /community/threads/{threadId}/like:
+    parameters:
+      - name: threadId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    put:
+      tags: [Community]
+      summary: 쓰레드 좋아요
+      operationId: likeCommunityThread
+      description: 멱등 연산이다. 같은 사용자가 여러 번 호출해도 좋아요는 1개만 유지된다.
+      responses:
+        '200':
+          description: Liked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThreadReactionSummary'
+        '404':
+          description: ProblemDetails(code=THREAD_NOT_FOUND)
+    delete:
+      tags: [Community]
+      summary: 쓰레드 좋아요 취소
+      operationId: unlikeCommunityThread
+      description: 좋아요가 없는 상태에서 호출해도 실패하지 않는 멱등 연산이다.
+      responses:
+        '200':
+          description: Unliked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityThreadReactionSummary'
   /community/posts:
     get:
       tags: [Community]
       summary: 커뮤니티 게시글 목록
       operationId: listCommunityPosts
+      deprecated: true
       security:
         - {}
         - bearerAuth: []
@@ -1957,6 +2324,7 @@ paths:
       tags: [Community]
       summary: 여행방 snapshot 게시글 발행
       operationId: createCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/idempotencyKey'
       requestBody:
@@ -1979,6 +2347,7 @@ paths:
       tags: [Community]
       summary: 커뮤니티 게시글 상세
       operationId: getCommunityPost
+      deprecated: true
       security:
         - {}
         - bearerAuth: []
@@ -2004,6 +2373,7 @@ paths:
       tags: [Community]
       summary: 커뮤니티 게시글 수정
       operationId: updateCommunityPost
+      deprecated: true
       description: snapshot 재발행 허용 여부 확인 필요.
       parameters:
         - $ref: '#/components/parameters/postId'
@@ -2024,6 +2394,7 @@ paths:
       tags: [Community]
       summary: 커뮤니티 게시글 삭제
       operationId: deleteCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
@@ -2034,6 +2405,7 @@ paths:
       tags: [Community]
       summary: UNLISTED 공유 토큰 재발급
       operationId: rotateCommunityPostShareToken
+      deprecated: true
       description: 게시글 작성자만 호출할 수 있다. 새 raw shareToken은 이 응답에서만 반환하며, 서버는 hash만 저장한다.
       parameters:
         - $ref: '#/components/parameters/postId'
@@ -2050,6 +2422,7 @@ paths:
       tags: [Community]
       summary: 게시글 좋아요
       operationId: likeCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
@@ -2063,6 +2436,7 @@ paths:
       tags: [Community]
       summary: 게시글 좋아요 취소
       operationId: unlikeCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
@@ -2077,6 +2451,7 @@ paths:
       tags: [Community]
       summary: 게시글 snapshot을 새 여행방으로 리트립
       operationId: retripCommunityPost
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
         - $ref: '#/components/parameters/idempotencyKey'
@@ -2098,6 +2473,7 @@ paths:
       tags: [Community]
       summary: 게시글 댓글 목록
       operationId: listCommunityComments
+      deprecated: true
       security:
         - {}
         - bearerAuth: []
@@ -2117,6 +2493,7 @@ paths:
       tags: [Community]
       summary: 게시글 댓글 또는 1단계 대댓글 작성
       operationId: createCommunityComment
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/postId'
       requestBody:
@@ -2386,13 +2763,6 @@ components:
       schema:
         type: string
         format: uuid
-    recordId:
-      name: recordId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
     mediaFileId:
       name: mediaFileId
       in: path
@@ -2548,6 +2918,90 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
   schemas:
+    OnboardingPreferenceSurvey:
+      type: object
+      required: [surveyVersionId, code, requiredPlaceCount, completed, places]
+      properties:
+        surveyVersionId:
+          type: string
+          format: uuid
+        code:
+          type: string
+        requiredPlaceCount:
+          type: integer
+          const: 10
+        completedAt:
+          type: [string, 'null']
+          format: date-time
+        completed:
+          type: boolean
+        places:
+          type: array
+          minItems: 10
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/OnboardingPreferencePlace'
+    OnboardingPreferencePlace:
+      type: object
+      required: [provider, externalPlaceId, name, tags, sortOrder]
+      properties:
+        provider:
+          $ref: '#/components/schemas/PlaceProvider'
+        externalPlaceId:
+          type: string
+        name:
+          type: string
+        address:
+          type: [string, 'null']
+        thumbnailUrl:
+          type: [string, 'null']
+          format: uri
+        category:
+          type: [string, 'null']
+        description:
+          type: [string, 'null']
+        tags:
+          type: array
+          items:
+            type: string
+        sortOrder:
+          type: integer
+          minimum: 1
+          maximum: 10
+    CompleteOnboardingPreferenceSurveyRequest:
+      type: object
+      required: [surveyVersionId, responses]
+      properties:
+        surveyVersionId:
+          type: string
+          format: uuid
+        responses:
+          type: array
+          minItems: 10
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/OnboardingPreferenceAnswer'
+    OnboardingPreferenceAnswer:
+      type: object
+      required: [provider, externalPlaceId, reaction]
+      properties:
+        provider:
+          $ref: '#/components/schemas/PlaceProvider'
+        externalPlaceId:
+          type: string
+        reaction:
+          type: string
+          enum: [LIKE, NOPE]
+    OnboardingPreferenceCompletion:
+      type: object
+      required: [surveyVersionId, completedAt]
+      properties:
+        surveyVersionId:
+          type: string
+          format: uuid
+        completedAt:
+          type: string
+          format: date-time
     ProblemDetails:
       type: object
       required: [type, title, status, code]
@@ -2673,7 +3127,7 @@ components:
       enum: [GEOJSON]
     DrawingType:
       type: string
-      enum: [FREEHAND, LINE, POLYGON, MARKER, TEXT]
+      enum: [FREEHAND, LINE, POLYGON, MARKER, TEXT, STICKER, IMAGE]
     PlanningScopeType:
       type: string
       enum: [TRIP, DAY]
@@ -2686,10 +3140,6 @@ components:
     AiToolCallStatus:
       type: string
       enum: [REQUESTED, SUCCEEDED, FAILED, BLOCKED]
-    RecordVisibility:
-      type: string
-      enum: [TRIP_MEMBERS]
-      description: PUBLIC은 community post 발행 흐름으로 처리.
     PostVisibility:
       type: string
       enum: [PUBLIC, UNLISTED]
@@ -2930,6 +3380,287 @@ components:
           type: boolean
         tripInviteEmailOptIn:
           type: boolean
+    CommunityThread:
+      type: object
+      description: >-
+        커뮤니티 공개 피드의 쓰레드. content가 null이면 삭제되거나 숨김 처리된 tombstone이며
+        클라이언트는 본문 대신 안내 문구를 표시해야 한다. likeCount와 replyCount는 denormalized
+        counter가 아니라 조회 시점 집계값이다.
+      required: [id, media, likeCount, replyCount, likedByMe, editableByMe, moderationStatus, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        author: { $ref: '#/components/schemas/UserSummary' }
+        content:
+          type: string
+          nullable: true
+          maxLength: 500
+          description: 삭제 또는 숨김 상태이면 null
+        media:
+          type: array
+          items: { $ref: '#/components/schemas/MediaFile' }
+          maxItems: 4
+        likeCount: { type: integer }
+        replyCount: { type: integer }
+        likedByMe: { type: boolean, description: 비로그인 조회에서는 항상 false }
+        editableByMe: { type: boolean, description: 작성자 본인만 true }
+        moderationStatus: { type: string, enum: [VISIBLE, HIDDEN, DELETED] }
+        deletedAt: { type: string, format: date-time, nullable: true }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time, nullable: true }
+    CommunityThreadReply:
+      type: object
+      description: >-
+        쓰레드 답글. 중첩은 1단계까지만 허용하므로 replies는 depth 0에서만 채워지고
+        depth 1인 답글의 replies는 항상 빈 배열이다.
+      required: [id, threadId, depth, editableByMe, moderationStatus, createdAt, replies]
+      properties:
+        id: { type: string, format: uuid }
+        threadId: { type: string, format: uuid }
+        parentReplyId: { type: string, format: uuid, nullable: true }
+        author: { $ref: '#/components/schemas/UserSummary' }
+        content: { type: string, nullable: true, maxLength: 500 }
+        depth: { type: integer, enum: [0, 1] }
+        editableByMe: { type: boolean }
+        moderationStatus: { type: string, enum: [VISIBLE, HIDDEN, DELETED] }
+        deletedAt: { type: string, format: date-time, nullable: true }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time, nullable: true }
+        replies:
+          type: array
+          items: { $ref: '#/components/schemas/CommunityThreadReply' }
+    PagedCommunityThread:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/CommunityThread' }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    PagedCommunityThreadReply:
+      type: object
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/CommunityThreadReply' }
+        page: { $ref: '#/components/schemas/PageMeta' }
+    CommunityThreadReactionSummary:
+      type: object
+      description: 좋아요 처리 결과. 멱등이므로 같은 요청을 반복해도 값이 변하지 않는다.
+      required: [threadId, liked, likeCount]
+      properties:
+        threadId: { type: string, format: uuid }
+        liked: { type: boolean }
+        likeCount: { type: integer }
+    CreateCommunityThreadRequest:
+      type: object
+      required: [content]
+      properties:
+        content: { type: string, minLength: 1, maxLength: 500 }
+        mediaFileIds:
+          type: array
+          items: { type: string, format: uuid }
+          maxItems: 4
+    UpdateCommunityThreadRequest:
+      type: object
+      required: [content]
+      properties:
+        content: { type: string, minLength: 1, maxLength: 500 }
+        mediaFileIds:
+          type: array
+          nullable: true
+          items: { type: string, format: uuid }
+          maxItems: 4
+          description: 생략하면 기존 첨부를 유지하고, 빈 배열이면 모두 제거한다.
+    CreateCommunityThreadReplyRequest:
+      type: object
+      required: [content]
+      properties:
+        parentReplyId: { type: string, format: uuid, nullable: true }
+        content: { type: string, minLength: 1, maxLength: 500 }
+    UpdateCommunityThreadReplyRequest:
+      type: object
+      required: [content]
+      properties:
+        content: { type: string, minLength: 1, maxLength: 500 }
+    TripVoteCandidate:
+      type: object
+      description: >-
+        투표 후보. 투표 시작 시점 snapshot이며 다른 참여자의 취향 점수나 태그는 포함하지 않는다.
+        stickerCount는 진행 중에는 중간 집계를 감추기 위해 null이고 종료된 세션에서만 채워진다.
+      required: [id, rank]
+      properties:
+        id: { type: string, format: uuid }
+        rank: { type: integer }
+        provider: { type: string, nullable: true }
+        externalPlaceId: { type: string, nullable: true }
+        name: { type: string, nullable: true }
+        address: { type: string, nullable: true }
+        lat: { type: number, format: double, nullable: true }
+        lng: { type: number, format: double, nullable: true }
+        thumbnailUrl: { type: string, format: uri, nullable: true }
+        category: { type: string, nullable: true }
+        stickerCount: { type: integer, nullable: true }
+    VoteStickerPlacement:
+      type: object
+      required: [candidateId, stickerCount]
+      properties:
+        candidateId: { type: string, format: uuid }
+        stickerCount: { type: integer, minimum: 1, description: 같은 관광지에 몰아 붙일 수 있어 1보다 클 수 있다 }
+    TripVoteParticipantSummary:
+      type: object
+      description: 개별 참여자가 무엇에 스티커를 붙였는지는 노출하지 않고 진행률만 제공한다.
+      required: [total, submitted]
+      properties:
+        total: { type: integer }
+        submitted: { type: integer }
+    MyVoteParticipation:
+      type: object
+      description: 세션별 참여 상태. status가 SUBMITTED이면 더 이상 수정할 수 없다.
+      required: [participantId, status, stickerAllowance, usedStickerCount, remainingStickerCount, placements]
+      properties:
+        participantId: { type: string, format: uuid }
+        status: { type: string, enum: [NOT_STARTED, IN_PROGRESS, SUBMITTED] }
+        stickerAllowance: { type: integer }
+        usedStickerCount: { type: integer }
+        remainingStickerCount: { type: integer }
+        placements:
+          type: array
+          items: { $ref: '#/components/schemas/VoteStickerPlacement' }
+        submittedAt: { type: string, format: date-time, nullable: true }
+    TripVoteSessionDetail:
+      type: object
+      required: [id, tripId, status, stickerAllowance, selectionCount, candidateCount, candidates]
+      properties:
+        id: { type: string, format: uuid }
+        tripId: { type: string, format: uuid }
+        status: { type: string, enum: [DRAFT, OPEN, COMPLETED] }
+        stickerAllowance: { type: integer, description: 시작 후 변경 불가 }
+        selectionCount: { type: integer, description: 시작 후 변경 불가 }
+        candidateCount: { type: integer }
+        openedAt: { type: string, format: date-time, nullable: true }
+        completedAt: { type: string, format: date-time, nullable: true }
+        completionReason:
+          type: string
+          nullable: true
+          enum: [ALL_SUBMITTED, OWNER_EARLY_CLOSE]
+        participantSummary: { $ref: '#/components/schemas/TripVoteParticipantSummary' }
+        candidates:
+          type: array
+          items: { $ref: '#/components/schemas/TripVoteCandidate' }
+        regions:
+          type: array
+          description: 후보를 뽑은 지역 snapshot. 방장이 고른 지역 또는 시작 시점의 여행방 지역이며 이름까지 고정된다.
+          items: { $ref: '#/components/schemas/TripVoteRegion' }
+    TripVoteRegion:
+      type: object
+      required: [code, name]
+      properties:
+        code: { type: string, minLength: 10, maxLength: 10, description: 10자리 법정동 코드 }
+        name: { type: string, description: 투표 시작 시점의 지역 이름 }
+    TripVoteSessionState:
+      type: object
+      description: >-
+        여행 방 진입 시 프론트 라우터 가드가 사용하는 단일 응답. 클라이언트는 nextScreen만 보고 분기한다.
+      required: [hasSession, nextScreen]
+      properties:
+        hasSession: { type: boolean }
+        nextScreen: { type: string, enum: [VOTE, WAITING, MAP] }
+        session: { $ref: '#/components/schemas/TripVoteSessionDetail' }
+        myParticipation: { $ref: '#/components/schemas/MyVoteParticipation' }
+    MyVoteStickerState:
+      type: object
+      required: [sessionId, myParticipation]
+      properties:
+        sessionId: { type: string, format: uuid }
+        myParticipation: { $ref: '#/components/schemas/MyVoteParticipation' }
+    TripVoteResultItem:
+      type: object
+      description: >-
+        selectedRank가 같은 항목이 여러 개면 마지막 순위 동점으로 함께 선정된 것이다.
+        itineraryOutcome이 SKIPPED_DUPLICATE이면 이미 일정에 있어 추가하지 않은 경우다.
+      required: [candidateId, stickerCount, selected]
+      properties:
+        candidateId: { type: string, format: uuid }
+        provider: { type: string, nullable: true }
+        externalPlaceId: { type: string, nullable: true }
+        name: { type: string, nullable: true }
+        thumbnailUrl: { type: string, format: uri, nullable: true }
+        stickerCount: { type: integer }
+        selected: { type: boolean }
+        selectedRank: { type: integer, nullable: true }
+        itineraryOutcome:
+          type: string
+          nullable: true
+          enum: [ADDED, SKIPPED_DUPLICATE]
+        itineraryItemId: { type: string, format: uuid, nullable: true }
+    TripVoteSessionResult:
+      type: object
+      description: 재시도해도 결과가 달라지지 않는 멱등 응답이다.
+      required: [sessionId, tripId, status, selectionCount, results]
+      properties:
+        sessionId: { type: string, format: uuid }
+        tripId: { type: string, format: uuid }
+        status: { type: string, enum: [COMPLETED] }
+        completionReason:
+          type: string
+          nullable: true
+          enum: [ALL_SUBMITTED, OWNER_EARLY_CLOSE]
+        completedAt: { type: string, format: date-time, nullable: true }
+        selectionCount: { type: integer }
+        results:
+          type: array
+          items: { $ref: '#/components/schemas/TripVoteResultItem' }
+        unscheduledDayId: { type: string, format: uuid, nullable: true }
+        itineraryVersion: { type: integer, format: int64, nullable: true }
+    OpenVoteSessionRequest:
+      type: object
+      required: [stickerAllowance, selectionCount]
+      properties:
+        stickerAllowance:
+          type: integer
+          minimum: 1
+          description: 사용자당 스티커 지급 개수. 후보 수를 넘을 수 없다.
+        selectionCount:
+          type: integer
+          minimum: 1
+          description: 최종 선정 관광지 개수. 후보 수를 넘을 수 없다.
+        candidateCount:
+          type: integer
+          minimum: 1
+          nullable: true
+          description: 만들 후보 수. 생략하면 기본 10개.
+        legalRegionCodes:
+          type: array
+          maxItems: 20
+          nullable: true
+          items: { type: string, minLength: 10, maxLength: 10 }
+          description: >-
+            이번 투표에서 후보를 뽑을 10자리 법정동 코드. 생략하면 여행방에 등록된 지역을 쓰고,
+            그것도 없으면 대표 목적지 문자열로 대체 검색한다. 셋 다 없으면 422 VOTE_CANDIDATE_POOL_INSUFFICIENT.
+            형식이 다른 코드는 400 VALIDATION_FAILED.
+    SaveVoteStickersRequest:
+      type: object
+      description: 부분 변경이 아니라 현재 배치 전체를 보내는 snapshot 방식이다.
+      properties:
+        placements:
+          type: array
+          items: { $ref: '#/components/schemas/VoteStickerPlacement' }
+    SubmitVoteRequest:
+      type: object
+      description: placements를 생략하면 이미 저장된 배치로 제출한다.
+      properties:
+        placements:
+          type: array
+          nullable: true
+          items: { $ref: '#/components/schemas/VoteStickerPlacement' }
+    CloseVoteSessionRequest:
+      type: object
+      required: [acknowledgeUnvotedParticipants]
+      properties:
+        acknowledgeUnvotedParticipants:
+          type: boolean
+          description: 미투표 참여자가 있으면 true여야 조기 종료할 수 있다.
     UserSummary:
       type: object
       required: [id, displayName]
@@ -2946,6 +3677,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/UserSummary'
         - type: object
+          required: [profileVisibility, superLikedPlaces]
           properties:
             bio:
               type: string
@@ -2964,6 +3696,16 @@ components:
               $ref: '#/components/schemas/FollowStatus'
             profileVisibility:
               $ref: '#/components/schemas/UserProfileVisibility'
+            superLikedPlaces:
+              type: array
+              description: 프로필 공개 범위에 따라 노출 가능한 SUPER_LIKE 저장 장소. 권한이 없으면 빈 배열이다.
+              items:
+                $ref: '#/components/schemas/SavedPlace'
+            preferences:
+              allOf:
+                - $ref: '#/components/schemas/MyPreferenceSummary'
+              nullable: true
+              description: 프로필 공개 범위에 따라 노출 가능한 여행 취향. 권한이 없으면 null이다.
     UpdateMeRequest:
       type: object
       properties:
@@ -3015,73 +3757,6 @@ components:
         publishedAt:
           type: string
           format: date-time
-    UserSession:
-      type: object
-      required: [id, refreshTokenFamilyId, refreshTokenVersion, expiresAt, createdAt]
-      properties:
-        id:
-          type: string
-          format: uuid
-        refreshTokenFamilyId:
-          type: string
-          format: uuid
-        refreshTokenVersion:
-          type: integer
-        deviceName:
-          type: string
-        deviceOs:
-          type: string
-        lastUsedAt:
-          type: string
-          format: date-time
-        lastRefreshedAt:
-          type: string
-          format: date-time
-        expiresAt:
-          type: string
-          format: date-time
-        revokedAt:
-          type: string
-          format: date-time
-        revocationReason:
-          type: string
-    PagedUserSession:
-      type: object
-      required: [items, page]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserSession'
-        page:
-          $ref: '#/components/schemas/PageMeta'
-    SecurityEvent:
-      type: object
-      required: [id, eventType, success, createdAt]
-      properties:
-        id:
-          type: integer
-          format: int64
-        eventType:
-          type: string
-          enum: [LOGIN_SUCCESS, LOGIN_FAILURE, PASSWORD_RESET_REQUESTED, PASSWORD_CHANGED, SESSION_REVOKED]
-        success:
-          type: boolean
-        failureReason:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-    PagedSecurityEvent:
-      type: object
-      required: [items, page]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SecurityEvent'
-        page:
-          $ref: '#/components/schemas/PageMeta'
     Follow:
       type: object
       required: [followerUserId, followingUserId, status, createdAt]
@@ -3443,6 +4118,32 @@ components:
             $ref: '#/components/schemas/SavedPlace'
         page:
           $ref: '#/components/schemas/PageMeta'
+    MyPreferenceCategory:
+      type: object
+      required: [category, groupCode, percentage]
+      properties:
+        category:
+          type: string
+        groupCode:
+          type: string
+        percentage:
+          type: integer
+          minimum: 0
+          maximum: 100
+    MyPreferenceSummary:
+      type: object
+      required: [topCategories, travelStyle, preferredTags]
+      properties:
+        topCategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyPreferenceCategory'
+        travelStyle:
+          type: string
+        preferredTags:
+          type: array
+          items:
+            type: string
     PlaceRecommendation:
       type: object
       required: [place, matchedMembers]
@@ -3606,11 +4307,50 @@ components:
           description: TODO style whitelist 확인 필요.
         label:
           type: string
+        mediaFileId:
+          type: string
+          format: uuid
+          description: IMAGE일 때 MAP_OVERLAY media file.
+        stickerCode:
+          type: string
+          enum: [HEART, STAR, CHECK, CAMERA, FOOD, CAFE, SHOPPING, HOTEL, NATURE, BEACH, MUSEUM, TRANSPORT]
+          description: STICKER일 때 기본 스티커 코드.
+        transform:
+          $ref: '#/components/schemas/MapObjectTransform'
         sortOrder:
           type: integer
         version:
           type: integer
           format: int64
+    MapObjectTransform:
+      type: object
+      required: [centerLng, centerLat, widthMeters, heightMeters, rotationDeg]
+      additionalProperties: false
+      description: 지도 좌표 중심과 meter 단위 크기. 줌에 따라 지도와 함께 투영한다.
+      properties:
+        centerLng:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+        centerLat:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+        widthMeters:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+          maximum: 1000000
+        heightMeters:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+          maximum: 1000000
+        rotationDeg:
+          type: number
+          format: double
     VersionedCommandRequest:
       type: object
       required: [baseVersion]
@@ -3618,6 +4358,21 @@ components:
         baseVersion:
           type: integer
           format: int64
+          minimum: 0
+    DeleteMapDrawingsRequest:
+      allOf:
+        - $ref: '#/components/schemas/VersionedCommandRequest'
+        - type: object
+          required: [drawingIds]
+          properties:
+            drawingIds:
+              type: array
+              minItems: 1
+              maxItems: 100
+              uniqueItems: true
+              items:
+                type: string
+                format: uuid
     CreateItineraryDayRequest:
       allOf:
         - $ref: '#/components/schemas/VersionedCommandRequest'
@@ -3831,6 +4586,14 @@ components:
               additionalProperties: true
             label:
               type: string
+            mediaFileId:
+              type: string
+              format: uuid
+            stickerCode:
+              type: string
+              enum: [HEART, STAR, CHECK, CAMERA, FOOD, CAFE, SHOPPING, HOTEL, NATURE, BEACH, MUSEUM, TRANSPORT]
+            transform:
+              $ref: '#/components/schemas/MapObjectTransform'
             sortOrder:
               type: integer
     UpdateMapDrawingRequest:
@@ -3845,6 +4608,8 @@ components:
               additionalProperties: true
             label:
               type: string
+            transform:
+              $ref: '#/components/schemas/MapObjectTransform'
             sortOrder:
               type: integer
             drawingVersion:
@@ -3927,9 +4692,17 @@ components:
               format: uuid
             content:
               type: string
+    DeleteNoteRequest:
+      type: object
+      required: [baseVersion]
+      properties:
+        baseVersion:
+          type: integer
+          format: int64
+          minimum: 1
     Checklist:
       type: object
-      required: [id, tripId, scopeType, version, items]
+      required: [id, tripId, scopeType, items]
       properties:
         id:
           type: string
@@ -3944,9 +4717,6 @@ components:
           format: uuid
         title:
           type: string
-        version:
-          type: integer
-          format: int64
         items:
           type: array
           items:
@@ -3987,75 +4757,81 @@ components:
           type: string
           format: date-time
     UpsertChecklistRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [scopeType]
-          properties:
-            scopeType:
-              $ref: '#/components/schemas/PlanningScopeType'
-            itineraryDayId:
-              type: string
-              format: uuid
-            title:
-              type: string
+      type: object
+      required: [scopeType]
+      properties:
+        scopeType:
+          $ref: '#/components/schemas/PlanningScopeType'
+        itineraryDayId:
+          type: string
+          format: uuid
+        title:
+          type: string
     CreateChecklistItemRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [content]
-          properties:
-            content:
-              type: string
-            sortOrder:
-              type: integer
+      type: object
+      required: [content]
+      properties:
+        content:
+          type: string
+        sortOrder:
+          type: integer
     UpdateChecklistItemRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          properties:
-            content:
-              type: string
-            sortOrder:
-              type: integer
+      type: object
+      properties:
+        content:
+          type: string
+        sortOrder:
+          type: integer
     ReorderChecklistItemsRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [itemOrders]
-          properties:
-            itemOrders:
-              type: array
-              items:
-                type: object
-                required: [itemId, sortOrder]
-                properties:
-                  itemId:
-                    type: string
-                    format: uuid
-                  sortOrder:
-                    type: integer
+      type: object
+      required: [itemOrders]
+      properties:
+        itemOrders:
+          type: array
+          items:
+            type: object
+            required: [itemId, sortOrder]
+            properties:
+              itemId:
+                type: string
+                format: uuid
+              sortOrder:
+                type: integer
     UpdateChecklistMemberStatusRequest:
-      allOf:
-        - $ref: '#/components/schemas/VersionedCommandRequest'
-        - type: object
-          required: [isCompleted]
-          properties:
-            isCompleted:
-              type: boolean
+      type: object
+      required: [isCompleted]
+      properties:
+        isCompleted:
+          type: boolean
     PlanningMutationResponse:
-      allOf:
-        - $ref: '#/components/schemas/CollaborationActionResponse'
-        - type: object
-          properties:
-            note:
-              $ref: '#/components/schemas/Note'
-            checklist:
-              $ref: '#/components/schemas/Checklist'
-            item:
-              $ref: '#/components/schemas/ChecklistItem'
-            memberStatus:
-              $ref: '#/components/schemas/ChecklistMemberStatus'
+      type: object
+      required: [tripId, undoAvailable, redoAvailable]
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        itineraryVersion:
+          type: integer
+          format: int64
+          nullable: true
+        commandEventId:
+          type: integer
+          format: int64
+          nullable: true
+        undoAvailable:
+          type: boolean
+          description: 메모·체크리스트 mutation에서는 false
+        redoAvailable:
+          type: boolean
+          description: 메모·체크리스트 mutation에서는 false
+        note:
+          $ref: '#/components/schemas/Note'
+        checklist:
+          $ref: '#/components/schemas/Checklist'
+        item:
+          $ref: '#/components/schemas/ChecklistItem'
+        memberStatus:
+          $ref: '#/components/schemas/ChecklistMemberStatus'
     TripChatMessage:
       type: object
       required: [id, tripId, sender, createdAt]
@@ -4272,206 +5048,6 @@ components:
           type: integer
           minimum: 2
           maximum: 100
-    TripRecordEntry:
-      type: object
-      required: [id, tripId, uploadedBy, visibility, status, createdAt]
-      properties:
-        id:
-          type: string
-          format: uuid
-        tripId:
-          type: string
-          format: uuid
-        itineraryDayId:
-          type: string
-          format: uuid
-        itineraryItemId:
-          type: string
-          format: uuid
-        uploadedBy:
-          $ref: '#/components/schemas/UserSummary'
-        title:
-          type: string
-        caption:
-          type: string
-        locationName:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        takenAt:
-          type: string
-          format: date-time
-        visibility:
-          $ref: '#/components/schemas/RecordVisibility'
-        status:
-          type: string
-          enum: [ACTIVE, DELETED]
-        media:
-          type: array
-          items:
-            $ref: '#/components/schemas/MediaFile'
-        createdAt:
-          type: string
-          format: date-time
-    CreateTripRecordRequest:
-      type: object
-      properties:
-        itineraryDayId:
-          type: string
-          format: uuid
-        itineraryItemId:
-          type: string
-          format: uuid
-        title:
-          type: string
-          maxLength: 160
-        caption:
-          type: string
-        locationName:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        takenAt:
-          type: string
-          format: date-time
-        mediaFileIds:
-          type: array
-          items:
-            type: string
-            format: uuid
-    UpdateTripRecordRequest:
-      type: object
-      properties:
-        itineraryDayId:
-          type: string
-          format: uuid
-        itineraryItemId:
-          type: string
-          format: uuid
-        title:
-          type: string
-        caption:
-          type: string
-        locationName:
-          type: string
-        lat:
-          type: number
-        lng:
-          type: number
-        takenAt:
-          type: string
-          format: date-time
-        mediaFileIds:
-          type: array
-          items:
-            type: string
-            format: uuid
-    PagedTripRecordEntry:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TripRecordEntry'
-        page:
-          $ref: '#/components/schemas/PageMeta'
-    TripRecordPhoto:
-      type: object
-      required: [tripId, recordId, media, createdAt]
-      properties:
-        tripId:
-          type: string
-          format: uuid
-        tripTitle:
-          type: string
-        recordId:
-          type: string
-          format: uuid
-        itineraryDayId:
-          type: string
-          format: uuid
-        itineraryItemId:
-          type: string
-          format: uuid
-        media:
-          $ref: '#/components/schemas/MediaFile'
-        uploadedBy:
-          $ref: '#/components/schemas/UserSummary'
-        takenAt:
-          type: string
-          format: date-time
-        createdAt:
-          type: string
-          format: date-time
-    PagedTripRecordPhoto:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TripRecordPhoto'
-        page:
-          $ref: '#/components/schemas/PageMeta'
-    TripRecordPhotoSummaryRequest:
-      type: object
-      required: [tripIds]
-      properties:
-        tripIds:
-          type: array
-          minItems: 1
-          maxItems: 100
-          items:
-            type: string
-            format: uuid
-    TripRecordPhotoSummary:
-      type: object
-      required: [tripId, photoCount, coverMediaFileId, coverUrl, coverUrlExpiresAt]
-      properties:
-        tripId:
-          type: string
-          format: uuid
-        photoCount:
-          type: integer
-          format: int64
-          minimum: 0
-        coverMediaFileId:
-          type: string
-          format: uuid
-          nullable: true
-        coverUrl:
-          type: string
-          format: uri
-          nullable: true
-        coverUrlExpiresAt:
-          type: string
-          format: date-time
-          nullable: true
-    TripRecordPhotoSummaryResponse:
-      type: object
-      required: [items]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TripRecordPhotoSummary'
-    TripRecordPhotoReadUrl:
-      type: object
-      required: [mediaFileId, url, expiresAt]
-      properties:
-        mediaFileId:
-          type: string
-          format: uuid
-        url:
-          type: string
-          format: uri
-        expiresAt:
-          type: string
-          format: date-time
-          nullable: true
     CreateUploadUrlRequest:
       type: object
       required: [fileName, mimeType, byteSize]
@@ -4485,8 +5061,8 @@ components:
           format: int64
         purpose:
           type: string
-          enum: [PROFILE_IMAGE, TRIP_RECORD, COMMUNITY_POST]
-          description: purpose별 mime allowlist와 size limit을 적용한다.
+          enum: [PROFILE_IMAGE, COMMUNITY_THREAD, MAP_OVERLAY, COMMUNITY_POST]
+          description: MAP_OVERLAY는 JPG/PNG/WebP와 10MB 제한을 적용한다. COMMUNITY_POST는 migration-only legacy 값이다.
     UploadUrlResponse:
       type: object
       required: [uploadUrl, objectKey, expiresAt]
@@ -4545,7 +5121,7 @@ components:
         servingUrl:
           type: string
           format: uri
-          description: 권한 확인 후 발급하는 비공개 media 표시 URL. TRIP_RECORD는 30분 동안 유효한 signed read URL을 반환한다.
+          description: 권한 확인 후 발급하는 비공개 media 표시 URL.
         servingUrlExpiresAt:
           type: string
           format: date-time
@@ -4912,14 +5488,14 @@ components:
           format: uuid
         type:
           type: string
-          enum: [TRIP_INVITE]
-          description: MVP는 직접 여행방 초대 알림만 생성.
+          enum: [TRIP_INVITE, VOTE_STARTED, VOTE_COMPLETED]
+          description: 직접 여행 초대 및 참여 중인 투표의 시작·결과 확정 알림.
         title:
           type: string
         body:
           type: string
         payload:
-          $ref: '#/components/schemas/TripInviteNotificationPayload'
+          $ref: '#/components/schemas/NotificationPayload'
         readAt:
           type: string
           format: date-time
@@ -4941,6 +5517,25 @@ components:
         route:
           type: string
           example: /trips/invites/{inviteCode}
+    NotificationPayload:
+      type: object
+      required: [tripId]
+      description: 초대는 inviteId·inviteCode, 투표는 voteSessionId로 대상이 고정된다.
+      properties:
+        tripId:
+          type: string
+          format: uuid
+        inviteId:
+          type: [string, 'null']
+          format: uuid
+        inviteCode:
+          type: [string, 'null']
+        voteSessionId:
+          type: [string, 'null']
+          format: uuid
+        route:
+          type: [string, 'null']
+          example: /trips/00000000-0000-0000-0000-000000000001/route?vote=1&voteSession=00000000-0000-0000-0000-000000000002
     PagedNotification:
       type: object
       properties:
