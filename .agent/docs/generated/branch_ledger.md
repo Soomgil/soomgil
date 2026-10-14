@@ -1,7 +1,7 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-10-14T05:10:30.373Z
-통합 브랜치: develop
+생성 시각: 2026-10-14T05:42:23.582Z
+통합 브랜치: main
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
 기능 브랜치에서는 이 파일을 수정하지 않습니다.
@@ -13,7 +13,7 @@
 - unknown | bugfix__settings-preferences | scope 없음 | 환경 설정 기능 정리 및 동작 보강 | .agent/branch-ledger/branches/bugfix__settings-preferences/20260907T112700Z-bugfix__settings-preferences-note.md
 - unknown | chore__api-contract-spec | scope 없음 | Backend Spring Boot CQRS-lite scaffold | .agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md
 - unknown | chore__fei-131-tracking | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md
-- 2026-08-23T10:08:16.689Z | chore/product-policy-realignment | shared | 작업 기록 | .agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md
+- unknown | chore__product-policy-realignment | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md
 - unknown | chore__readme-pptx | scope 없음 | PPTX와 iRead 구성을 참고한 숨길 README 개편 | .agent/branch-ledger/branches/chore__readme-pptx/20261014T044245Z-chore__readme-pptx-pptx-iread-readme.md
 - unknown | chore__record-api-integration-tracking | scope 없음 | FEI-100-110 record API integration | .agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md
 - unknown | feature__community-trip-voting | scope 없음 | community thread feed and trip sticker voting | .agent/branch-ledger/branches/feature__community-trip-voting/20260825T031654Z-feature__community-trip-voting-community-thread-feed-and-trip-sticker-voting.md
@@ -66,4 +66,5 @@
 - unknown | feature__trip-basic-access | scope 없음 | 프론트엔드 3인 역할 배분 | .agent/branch-ledger/branches/feature__trip-basic-access/20260619T131321Z-feature__trip-basic-access-note.md
 - unknown | feature__trip-basic-access | scope 없음 | 프론트 역할 최종 검토 보완 | .agent/branch-ledger/branches/feature__trip-basic-access/20260619T132309Z-feature__trip-basic-access-note.md
 - unknown | feature__ui-functional-audit | scope 없음 | 작업 기록 | .agent/branch-ledger/branches/feature__ui-functional-audit/20260623T080800Z-feature__ui-functional-audit-note.md
+- unknown | release__v1.1.0 | scope 없음 | develop 전체와 README의 main 릴리즈 검증 | .agent/branch-ledger/branches/release__v1.1.0/20261014T052129Z-release__v1.1.0-develop-readme-main.md
 

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-14T05:10:30.373Z",
-  "integrationBranch": "develop",
+  "generatedAt": "2026-10-14T05:42:23.582Z",
+  "integrationBranch": "main",
   "entries": [
     {
       "id": "20260823T230734Z-bugfix__map-collaboration-reliability-note",
@@ -54,11 +54,11 @@
     },
     {
       "id": "20260823T100816Z-chore__product-policy-realignment-note",
-      "branch": "chore/product-policy-realignment",
+      "branch": "chore__product-policy-realignment",
       "branchKey": "chore__product-policy-realignment",
-      "createdAt": "2026-08-23T10:08:16.689Z",
-      "scope": "shared",
-      "status": "active",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
       "title": "작업 기록",
       "file": ".agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md"
     },
@@ -581,6 +581,16 @@
       "status": "",
       "title": "작업 기록",
       "file": ".agent/branch-ledger/branches/feature__ui-functional-audit/20260623T080800Z-feature__ui-functional-audit-note.md"
+    },
+    {
+      "id": "20261014T052129Z-release__v1.1.0-develop-readme-main",
+      "branch": "release__v1.1.0",
+      "branchKey": "release__v1.1.0",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "develop 전체와 README의 main 릴리즈 검증",
+      "file": ".agent/branch-ledger/branches/release__v1.1.0/20261014T052129Z-release__v1.1.0-develop-readme-main.md"
     }
   ]
 }
