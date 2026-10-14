@@ -1,6 +1,6 @@
 # 브랜치 AI Ledger 통합 인덱스
 
-생성 시각: 2026-09-24T13:51:02.296Z
+생성 시각: 2026-10-14T05:10:30.373Z
 통합 브랜치: develop
 
 이 파일은 통합 브랜치에서 `npm --prefix .agent run branch:index`로 재생성합니다.
@@ -14,6 +14,7 @@
 - unknown | chore__api-contract-spec | scope 없음 | Backend Spring Boot CQRS-lite scaffold | .agent/branch-ledger/branches/chore__api-contract-spec/20260614T060435Z-chore__api-contract-spec-backend-spring-boot-cqrs-lite-scaffold.md
 - unknown | chore__fei-131-tracking | scope 없음 | FEI-140: RoutePage API 연동 완료 (mockPlaces 제거) | .agent/branch-ledger/branches/chore__fei-131-tracking/20260622T102945Z-chore__fei-131-tracking-fei-140-routepage-api-mockplaces.md
 - 2026-08-23T10:08:16.689Z | chore/product-policy-realignment | shared | 작업 기록 | .agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md
+- unknown | chore__readme-pptx | scope 없음 | PPTX와 iRead 구성을 참고한 숨길 README 개편 | .agent/branch-ledger/branches/chore__readme-pptx/20261014T044245Z-chore__readme-pptx-pptx-iread-readme.md
 - unknown | chore__record-api-integration-tracking | scope 없음 | FEI-100-110 record API integration | .agent/branch-ledger/branches/chore__record-api-integration-tracking/20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration.md
 - unknown | feature__community-trip-voting | scope 없음 | community thread feed and trip sticker voting | .agent/branch-ledger/branches/feature__community-trip-voting/20260825T031654Z-feature__community-trip-voting-community-thread-feed-and-trip-sticker-voting.md
 - unknown | feature__community-trip-voting | scope 없음 | vote region selection and candidate count | .agent/branch-ledger/branches/feature__community-trip-voting/20260913T165524Z-feature__community-trip-voting-vote-region-selection-and-candidate-count.md
