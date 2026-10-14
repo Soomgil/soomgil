@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T13:51:02.296Z",
+  "generatedAt": "2026-10-14T05:10:30.373Z",
   "integrationBranch": "develop",
   "entries": [
     {
@@ -61,6 +61,16 @@
       "status": "active",
       "title": "작업 기록",
       "file": ".agent/branch-ledger/branches/chore__product-policy-realignment/20260823T100816Z-chore__product-policy-realignment-note.md"
+    },
+    {
+      "id": "20261014T044245Z-chore__readme-pptx-pptx-iread-readme",
+      "branch": "chore__readme-pptx",
+      "branchKey": "chore__readme-pptx",
+      "createdAt": "",
+      "scope": "",
+      "status": "",
+      "title": "PPTX와 iRead 구성을 참고한 숨길 README 개편",
+      "file": ".agent/branch-ledger/branches/chore__readme-pptx/20261014T044245Z-chore__readme-pptx-pptx-iread-readme.md"
     },
     {
       "id": "20260621T152928Z-chore__record-api-integration-tracking-fei-100-110-record-api-integration",
